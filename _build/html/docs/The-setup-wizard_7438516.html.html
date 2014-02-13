@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : The setup wizard &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-the-setup-wizard">
+<h1>eZ Publish Platform 5.&lt;next&gt; : The setup wizard<a class="headerlink" href="#ez-publish-platform-5-next-the-setup-wizard" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep 26,
+2013</p>
+<p>This section contains a comprehensive guide through the web-based setup
+wizard of eZ Publish. The setup wizard is designed to ease the initial
+configuration of the system. It can be started using a web browser when
+the necessary installation steps (described in the previous sections)
+are completed. The setup wizard will automatically start the first time
+the &#8220;index.php&#8221; file (located in the root of the eZ Publish directory)
+is accessed/browsed.</p>
+<p>The setup wizard does not store or modify any data before the final
+step; thus, it can be safely restarted by reloading the URL containing
+only the &#8220;index.php&#8221; part. The back button (located at the bottom) can
+be used to jump back to previous steps in order to modify settings. A
+typical setup cycle consists of 13 steps:</p>
+<ul class="simple">
+<li>1 <a class="reference external" href="#Thesetupwizard-Welcomepage">Welcome page</a></li>
+<li>2 <a class="reference external" href="#Thesetupwizard-Systemfinetuning">System finetuning</a></li>
+<li>3 <a class="reference external" href="#Thesetupwizard-Systemcheck">System check</a></li>
+<li>4 <a class="reference external" href="#Thesetupwizard-OutgoingEmail">Outgoing Email</a></li>
+<li>5 <a class="reference external" href="#Thesetupwizard-Databasetype">Database type</a></li>
+<li>6 <a class="reference external" href="#Thesetupwizard-Databaseinitialization">Database
+initialization</a></li>
+<li>7 <a class="reference external" href="#Thesetupwizard-Languagesupport">Language support</a></li>
+<li>8 <a class="reference external" href="#Thesetupwizard-Siteselection">Site selection</a></li>
+<li>9 <a class="reference external" href="#Thesetupwizard-Accessmethod">Access method</a></li>
+<li>10 <a class="reference external" href="#Thesetupwizard-Sitedetails">Site details</a></li>
+<li>11 <a class="reference external" href="#Thesetupwizard-Sitesecurity">Site security</a></li>
+<li>12 <a class="reference external" href="#Thesetupwizard-Siteregistration">Site registration</a></li>
+<li>13 <a class="reference external" href="#Thesetupwizard-Finished">Finished</a></li>
+</ul>
+<p><strong>*Note:</strong> Some of the steps will be omitted when an eZ Publish bundle
+is being installed.*</p>
+<div class="section" id="welcome-page">
+<h2>Welcome page<a class="headerlink" href="#welcome-page" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image0" src="docs/attachments/16286504/16679153.png" /></div>
+<div class="line"><sup>*Setup Wizard Welcome Page*</sup></div>
+</div>
+<p>This is the initial page of the setup wizard. This step allows the user
+to select which language will be used during the installation process.
+In addition, the wizard also checks the system configuration and
+displays a note if it is not optimal (in this case, an additional button
+called &#8220;Finetune&#8221; will be available at the bottom of the page).</p>
+<p>The system automatically pre-selects one of the languages according to
+your browser&#8217;s language settings. You can choose another language by
+selecting the desired language using the drop-down list. (The list of
+available languages is built using the INI files located in the
+&#8220;share/locale&#8221; directory).</p>
+<p>After you click &#8220;Finetune&#8221; (if available), the wizard will load the
+&#8220;System finetuning&#8221; page, which contains information about configuration
+issues. The following screenshot shows an example of this page.</p>
+</div>
+<div class="section" id="system-finetuning">
+<h2>System finetuning<a class="headerlink" href="#system-finetuning" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/attachments/16286504/16679163.png" /></div>
+<div class="line"><sup>*Setup Wizard Finetuning*</sup></div>
+</div>
+<p>After you click &#8220;Next&#8221;, the wizard will either load the &#8220;System check&#8221;
+page (if some critical issues need to be fixed) or the &#8220;Outgoing Email&#8221;
+page (if everything is okay).</p>
+</div>
+<div class="section" id="system-check">
+<h2>System check<a class="headerlink" href="#system-check" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image2" src="docs/download/attachments/16286504/899722085" /></div>
+<div class="line"><sup>*Setup Wizard System Check*</sup></div>
+</div>
+<p>This page usually appears if critical issues/problems are detected. The
+setup wizard will display information about the issues that need to be
+fixed and suggestions describing how they can be fixed.</p>
+<div class="section" id="issues">
+<h3>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h3>
+<p>There may be several issues/problems. A suggestion to each problem is
+presented below the description of the problem itself. The setup wizard
+will probably suggest the execution of miscellaneous shell commands (in
+order to fix ownerships, permissions, etc.). These commands must be
+executed using a system shell. Simply copy the commands from the browser
+window and paste them into an open shell. The setup wizard will run the
+system check again when the &#8220;Next&#8221; button is clicked. The &#8220;System check&#8221;
+page will keep reappearing until all issues have been fixed (or ignored,
+see the next section). Once everything is okay, the setup wizard will
+display the next step.</p>
+</div>
+<div class="section" id="ignoring-tests">
+<h3>Ignoring tests<a class="headerlink" href="#ignoring-tests" title="Permalink to this headline">¶</a></h3>
+<p><strong>*Important:</strong> Some issues/problems may be ignored using a check-box
+labeled &#8220;Ignore this test&#8221;. <strong>However, it is recommended to fix all
+issues rather than ignoring them.*</strong></p>
+</div>
+</div>
+<div class="section" id="outgoing-email">
+<h2>Outgoing Email<a class="headerlink" href="#outgoing-email" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image3" src="docs/attachments/16286504/16679164.png" /></div>
+<div class="line"><sup>*Setup Wizard Outgoing Email*</sup></div>
+</div>
+<p>eZ Publish uses Email to send out miscellaneous notices. This step is
+used to configure how eZ Publish delivers outgoing Email. There are two
+options:</p>
+<ul class="simple">
+<li>Direct delivery through sendmail (must be available on the server)</li>
+<li>Indirect delivery using an SMTP (Simple Mail Transfer Protocol) relay
+server</li>
+</ul>
+<p>On Linux/UNIX: try to use sendmail; use SMTP if sendmail is unavailable.
+On Windows: use the SMTP setting.</p>
+<div class="section" id="sendmail">
+<h3>Sendmail<a class="headerlink" href="#sendmail" title="Permalink to this headline">¶</a></h3>
+<p>Mail is delivered directly using the sendmail transfer agent. The agent
+must be running on the same host as the webserver is running on. The
+sendmail binary is usually available on most Linux/UNIX systems. If
+sendmail is not available then SMTP should be used.</p>
+</div>
+<div class="section" id="smtp">
+<h3>SMTP<a class="headerlink" href="#smtp" title="Permalink to this headline">¶</a></h3>
+<p>Mail is delivered through an SMTP server. At the minimum, the hostname
+of the SMTP server must be specified.</p>
+</div>
+</div>
+<div class="section" id="database-type">
+<h2>Database type<a class="headerlink" href="#database-type" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image4" src="docs/attachments/16286504/16679165.png" /></div>
+<div class="line"><sup>*Setup Wizard Database Type*</sup></div>
+</div>
+<p>The setup will automatically detect database support that has been made
+available for the PHP scripting engine. If both MySQL and PostgreSQL are
+supported, the database choice dialog will appear. If PHP is setup only
+to support one type of database, eZ Publish will automatically use it
+and thus the database choice dialog will not be displayed.</p>
+<p>Note that if the <a class="reference external" href="http://php.net/mysqli">MySQLi extension</a> is enabled
+in PHP, the &#8220;MySQL Improved&#8221; option will be available on the list. If
+you are going to use a MySQL database, it is recommended to select
+&#8220;MySQL Improved&#8221; instead of &#8220;MySQL&#8221;.</p>
+</div>
+<div class="section" id="database-initialization">
+<h2>Database initialization<a class="headerlink" href="#database-initialization" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image5" src="docs/attachments/16286504/16679166.png" /></div>
+<div class="line"><sup>*Setup Wizard Database Initialization*</sup></div>
+</div>
+<p>Information about the host name of the server running the database
+engine, and a user name/password combination needs to be provided. After
+you click &#8220;Next&#8221;, if MySQL or MySQL Improved are used, the setup wizard
+will attempt to connect to the database. The setup will only continue if
+it is able to connect to the specified MySQL server with the specified
+user name/password combination. PostgreSQL parameters are tested at a
+later stage during the setup wizard. (Note that even if the eZ Publish
+Extension for Oracle® Database is installed, the setup wizard will not
+let you use an Oracle database. The configuration must be done manually
+as described in the <a class="reference external" href="http://doc.ez.no/Extensions/eZ-Publish-extensions/eZ-Publish-Extension-for-Oracle-R-database">documentation of the database
+extension</a>.)</p>
+<p><strong>*Known issue with running PHP5.3 on MySQL:</strong> Some people (like Windows
+users with both IPv4 and IPv6 installed ) experience problems connecting
+to the database server using host names like &#8220;localhost&#8221;... If you
+experience problems, try using IPv4 address like &#8220;127.0.0.1&#8221;. This is
+due to a connectivity problem when running PHP5.3 on MySQL. So, please
+replace the database server name &#8220;localhost&#8221; with the IP address of the
+machine, or &#8220;127.0.0.1&#8221;, which is reserved for the local host.*</p>
+</div>
+<div class="section" id="language-support">
+<h2>Language support<a class="headerlink" href="#language-support" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image6" src="docs/attachments/16286504/16679167.png" /></div>
+<div class="line"><sup>*Setup Wizard Language Support*</sup></div>
+</div>
+<p>This step allows the user to choose a language configuration for the
+site that is being installed. The setup wizard automatically pre-selects
+one of the languages according to your browser language settings. Use
+the radio buttons to choose the default language (required), and the
+check-boxes to choose the additional languages (optional). All the
+selected languages will be added to the system and put on the list of
+<a class="reference external" href="https://confluence.ez.no/doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Multi-language">prioritized
+languages</a>.
+You will be able to use any of these languages for creating and
+translating your content after the setup wizard is finished.</p>
+<p>Note that choosing the default language at this step will determine
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Multi-language">default
+language</a>,
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Multi-language/Configuring-your-site-locale">system
+locale</a>
+and the most prioritized language for your site. If you select for
+example &#8220;German&#8221; as default language, then both locale and default
+language will be set to &#8220;ger-DE&#8221;, your administration interface will be
+translated into German, and this language will be recorded as the most
+prioritized one for your site. Languages can be reconfigured at any time
+(even when a site is up and running) using the administration interface.</p>
+<p><strong>*Important:</strong> Note that regardless of the selected language
+configuration, the site will be created using UTF-8 as the character
+set.*</p>
+<p>Icon</p>
+<p>As of eZ Publish 5.2 the maximum number of languages supported for 64
+bit servers&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/5.2-beta1+Release+Notes#id-5.2-beta1ReleaseNotes-Supportformorethan30languages">has been
+improved</a>,
+allowing up to 62 languages simultaneously. For 32 bit servers the
+maximum number of simultaneous languages supported is 30.</p>
+<ul class="simple">
+<li></li>
+<li></li>
+</ul>
+</div>
+<div class="section" id="site-selection">
+<h2>Site selection<a class="headerlink" href="#site-selection" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image7" src="docs/attachments/16286504/16679154.png" /></div>
+<div class="line"><sup>*Setup Wizard Site Selection*</sup></div>
+</div>
+<p>This step allows the user to select one of the standard <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages/Package-types">site
+packages</a>.
+These packages are intended to provide basic examples mostly for the
+purpose of demonstration and learning. However, it is possible to use
+them as a basic framework which you can extend/tweak in order to make it
+suitable for a specific purpose. A demo site usually contains some
+artwork (images), CSS code, actual content and template files. The plain
+type should be used when starting from scratch.</p>
+<p>The setup wizard automatically fetches the list of available site
+packages from
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages#remote_repository">remote</a>
+and
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages#internal_repository">internal</a>
+repositories and asks the user to choose one. The default remote
+repository is
+<a class="reference external" href="http://packages.ez.no/ezpublish/">http://packages.ez.no/ezpublish/</a>
+(you can browse packages in this repository, to find the ones applicable
+to the new release).</p>
+<p>Icon</p>
+<p>Note that, as of eZ Publish 5.2, the setup wizard only retrieves the
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Front-End-Demo-Design">Demo
+Site</a>
+design.</p>
+<p>However, the following other design are still available for download in
+the repository at
+<a class="reference external" href="http://packages.ez.no/ezpublish/">http://packages.ez.no/ezpublish/</a>
+for manual installation:</p>
+<ul class="simple">
+<li>Plain site</li>
+<li><a class="reference external" href="http://doc.ez.no/Extensions/eZ-Publish-extensions/Website-Interface">Website
+Interface</a></li>
+<li>eZ Flow</li>
+</ul>
+<p><em>Older site packages such as &#8220;News site&#8221;, &#8220;Shop site&#8221; and &#8220;Gallery site&#8221;
+are currently not available for eZ Publish 4.</em></p>
+<p>The wizard will automatically download the selected site package and all
+its dependent packages, import them to the system and display a list of
+successfully imported packages as shown in the following screenshot.
+(This step will be omitted if all these packages are already stored
+under internal repositories.)</p>
+<p><strong>*Note:</strong> You may download and extract these packages and required
+files for offline installation. Read the requirements for such an
+offline installation by clicking on this
+<a class="reference external" href="Requirements-for-doing-an-automated-installation_7438626.html">link</a>.*</p>
+<p>All dependent packages except for the site style package will be
+automatically installed.</p>
+<div class="section" id="package-language-options">
+<h3>Package language options<a class="headerlink" href="#package-language-options" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><img alt="image8" src="docs/attachments/16286504/16679155.png" /></div>
+<div class="line"><sup>*Setup Wizard Package Language Options*</sup></div>
+</div>
+<p>If the language configuration selected at the &#8220;Language support&#8221; step
+doesn&#8217;t match the languages used in the packages being installed, the
+&#8220;Package language options&#8221; interface will appear as shown on the
+screenshot above. For example, the &#8220;Website interface&#8221; site package
+makes it possible to have demo content created in 2 languages: English
+(United Kingdom) and French. If the same languages are selected at the
+&#8220;Language support&#8221; step, the packages will be installed silently.
+Otherwise, the user will need to specify how the system should act
+towards the &#8220;superfluous&#8221; languages (i.e. languages that exist in the
+package but aren&#8217;t present in the selected language configuration for
+the site). Possible actions are:</p>
+<ul class="simple">
+<li>Skip content in this language</li>
+<li>Create language (extend the language configuration of the site and
+create demo content in this language)</li>
+<li>Map to another language (use demo data to create content in another
+language)</li>
+</ul>
+<p>If the web server is not able to contact the remote repository (due to
+firewall rules for example), the setup wizard will display an error
+message at the &#8220;Site selection&#8221; step. To fix this, allow outbound
+connections to <a class="reference external" href="http://packages.ez.no">http://packages.ez.no</a> in your
+firewall (port 80) or download the packages manually.</p>
+<div class="section" id="outbound-connections-via-proxy">
+<h4>Outbound connections via proxy<a class="headerlink" href="#outbound-connections-via-proxy" title="Permalink to this headline">¶</a></h4>
+<p>If you allow only outbound connections via a proxy server, then you need
+to configure eZ Publish in the following way:</p>
+<ol class="arabic">
+<li><p class="first">Create a file called &#8220;site.ini.append.php&#8221; in the &#8220;settings/override&#8221;
+directory and make sure it contains the following lines:</p>
+<div class="highlight-python"><pre>[ProxySettings]
+ProxyServer=proxy.example.com:3128
+User=myuser
+Password=secret</pre>
+</div>
+<p>Replace &#8220;<tt class="docutils literal"><span class="pre">proxy.example.com:3128</span></tt>&#8221; with the actual address and
+port number that can be used to access the web through the proxy
+server. If the proxy server requires authentication, you will also
+need to provide a valid username/password combination.</p>
+</li>
+<li><p class="first">Restart the setup wizard.</p>
+</li>
+</ol>
+<p><em>Note that `CURL &lt;http://www.php.net/curl&gt;`__ support must be enabled in
+PHP, otherwise outbound connections via proxy will not work.</em></p>
+</div>
+<div class="section" id="manual-download-of-packages">
+<h4>Manual download of packages<a class="headerlink" href="#manual-download-of-packages" title="Permalink to this headline">¶</a></h4>
+<p>If the wizard fails to connect the external packages repository, you can
+manually download the desired site package and all the dependent
+packages it requires and then upload/import them via the setup wizard.
+The following instructions reveal how this can be done.</p>
+<ol class="arabic">
+<li><p class="first">Go to the <a class="reference external" href="http://packages.ez.no/ezpublish/">packages download
+page</a>. The &#8220;Sites&#8221; section of
+this page contains the list of available site packages including the
+following information for each of them:</p>
+<ul class="simple">
+<li>Name</li>
+<li>Description</li>
+<li>Dependencies (if any)</li>
+</ul>
+<p>Click on the name of the desired site package to download it. (A
+package is downloaded as an &#8220;<tt class="docutils literal"><span class="pre">.ezpkg</span></tt>&#8221; file.)</p>
+</li>
+<li><p class="first">Download all the dependent packages required by this site package
+(these are listed under &#8220;Dependencies&#8221;). You can download a package
+by clicking on its name. The packages are downloaded as
+&#8220;<tt class="docutils literal"><span class="pre">.ezpkg</span></tt>&#8221; files.</p>
+</li>
+<li><p class="first">Use the package import interface located at the bottom of the page in
+the setup wizard to upload/import the downloaded site package (click
+the &#8220;Choose&#8221; button, select the downloaded &#8220;<tt class="docutils literal"><span class="pre">ezpkg</span></tt>&#8221; file that
+contains the site package and click the &#8220;Upload&#8221; button). The
+imported site package will appear on the list.</p>
+</li>
+<li><p class="first">Upload/import all the dependent packages using the same import
+interface.</p>
+</li>
+</ol>
+<p><strong>*Note:</strong> it is also possible to download packages manually from the
+remote repository. The following instructions reveal how this can be
+done.*</p>
+<ol class="arabic simple">
+<li>Go to the <a class="reference external" href="http://packages.ez.no/ezpublish/4.6/4.6.0/">packages
+repository</a>, find the
+desired site package and download it manually. (A package is
+downloaded as an &#8220;<tt class="docutils literal"><span class="pre">.ezpkg</span></tt>&#8221; file.)</li>
+<li>Unpack the &#8220;<tt class="docutils literal"><span class="pre">ezpkg</span></tt>&#8221; file into a temporary folder and view the
+&#8220;<tt class="docutils literal"><span class="pre">package.xml</span></tt>&#8221; file in order to figure out which dependent
+packages are required (these are listed between the
+<tt class="docutils literal"><span class="pre">&lt;dependencies&gt;</span></tt> and <tt class="docutils literal"><span class="pre">&lt;/dependencies&gt;</span></tt> XML tags as described
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages/package.xml-format">here</a>).
+Download all the dependent packages that are required.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="additional-functionality">
+<h3>Additional functionality<a class="headerlink" href="#additional-functionality" title="Permalink to this headline">¶</a></h3>
+<p>In eZ Publish 3.7 and earlier versions, the setup wizard included one
+more step called &#8220;Site functionality&#8221; that allowed to select additional
+features that should be installed. This step is no longer used.
+Additional functionality can be added after the setup wizard is finished
+by downloading the desired packages from the &#8220;Content objects&#8221; section
+of the <a class="reference external" href="http://packages.ez.no/ezpublish/">packages download page</a>,
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages/Importing-packages-to-the-system">importing</a>
+the packages and
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Packages/Installing-packages">installing</a>
+them.</p>
+</div>
+</div>
+<div class="section" id="access-method">
+<h2>Access method<a class="headerlink" href="#access-method" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image9" src="docs/attachments/16286504/16679156.png" /></div>
+<div class="line"><sup>*Setup Wizard Siteaccess Configuration*</sup></div>
+</div>
+<p>This step allows the configuration of the access method that should be
+used when eZ Publish receives a request. There are three options:</p>
+<ul class="simple">
+<li>URL</li>
+<li>Port</li>
+<li>Hostname</li>
+</ul>
+<div class="section" id="url">
+<h3>URL<a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
+<p>When the URL access method is used, eZ Publish selects the site that
+should be accessed based on the contents of the URL (in particular the
+part that comes right after &#8220;<tt class="docutils literal"><span class="pre">index.php</span></tt>&#8221;). This is the default and
+most generic option. It doesn&#8217;t require any additional configuration.
+Use this setting when installing eZ Publish for the first time.</p>
+</div>
+<div class="section" id="port">
+<h3>Port<a class="headerlink" href="#port" title="Permalink to this headline">¶</a></h3>
+<p>When the port access method is used, eZ Publish selects the site that
+should be accessed based on a port number that is specified in the URL.
+The port number must be appended to the host name of the web server:
+&#8220;<tt class="docutils literal"><span class="pre">http://www.example.com:81/index.php</span></tt>&#8221;. This option requires
+additional web server and firewall configuration. Use this setting only
+if you know what you&#8217;re doing.</p>
+</div>
+<div class="section" id="host-name">
+<h3>Host name<a class="headerlink" href="#host-name" title="Permalink to this headline">¶</a></h3>
+<p>When this access method is used, each site is assigned a unique host
+name. For example, &#8220;<tt class="docutils literal"><span class="pre">www.example.com</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">admin.example.com</span></tt>&#8221;
+can be assigned to the public and the administration interface
+respectively. This option requires additional web and DNS server
+configuration. Use this setting only if you know what you&#8217;re doing.</p>
+</div>
+</div>
+<div class="section" id="site-details">
+<h2>Site details<a class="headerlink" href="#site-details" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image10" src="docs/attachments/16286504/16679157.png" />*
+:sup:<a href="#id1"><span class="problematic" id="id2">`</span></a>Setup Wizard Site Details`*</p>
+<p>This step allows the modification of settings related to the site that
+is being installed. Note that the &#8220;User path&#8221; and &#8220;Admin path&#8221; access
+values depend on which access method you choose. When the port access
+method is used these values are port numbers. If you use the URL access
+method then &#8220;User path&#8221; and &#8220;Admin path&#8221; should only contain letters,
+digits and underscores. If the host name access method is used then some
+additional symbols like dashes, dots and colons are allowed whereas
+underscores aren&#8217;t.</p>
+<p>The available databases will be displayed in the database drop-down
+menu. The &#8220;Refresh&#8221; button can be used to update the list (if a database
+is being created at this point). It is required that the database uses
+UTF-8 as character set.</p>
+<p>If the selected database already contains data, the &#8220;Site Details&#8221; page
+will reappear and ask what to do. Possible actions are:</p>
+<ul class="simple">
+<li>Leave the data and add new</li>
+<li>Remove existing data</li>
+<li>Leave the data and do nothing</li>
+<li>I&#8217;ve chosen a new database</li>
+</ul>
+<p>Use the last option if another database has been chosen.</p>
+</div>
+<div class="section" id="site-security">
+<h2>Site security<a class="headerlink" href="#site-security" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image11" src="docs/attachments/16286504/16679159.png" />*
+:sup:<a href="#id3"><span class="problematic" id="id4">`</span></a>Setup Wizard Site administrator`*</p>
+<p>This step suggests some basic modifications that should be carried out
+in order to secure the site being installed. The suggested security
+tweak protects the configuration files from unwanted access. Don&#8217;t worry
+about this unless you&#8217;re setting up a site for public use.</p>
+<p>Note that the administrator&#8217;s user name (log-in) is set to &#8220;admin&#8221; by
+default and can not be changed. If you need another user name for site
+administrator, you can install eZ Publish, create a new administrator
+user, log in as this user and remove the old one.</p>
+</div>
+<div class="section" id="site-registration">
+<h2>Site registration<a class="headerlink" href="#site-registration" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image12" src="docs/attachments/16286504/16679158.png" /><sup>*
+Setup Wizard Site Registration*</sup></p>
+<p>On this step the Setup Wizard will ask the user for the following
+information:</p>
+<ul class="simple">
+<li>First name</li>
+<li>Last name</li>
+<li>Email</li>
+<li>Country</li>
+<li>Company</li>
+</ul>
+<p><strong>*Note:</strong>First name, last name, email and country are mandatory
+fields, thus must be filled.&nbsp;*</p>
+<p>If you are installing eZ Publish for the first time, you should check
+the following option: <strong>Is this the first time you are installing eZ
+Publish?</strong></p>
+<p>If you also checks this option: <strong>Is it ok that some simple technical
+information is included?</strong></p>
+<p>the following information will also be sent to eZ Systems:</p>
+<ul class="simple">
+<li>System details (OS type, etc)</li>
+<li>The test results</li>
+<li>The type of database that is being used</li>
+<li>The name of the site</li>
+<li>The URL of the site</li>
+<li>The languages that were chosen</li>
+</ul>
+<p><strong>*Important Note:</strong> All the information above will be sent to eZ
+Systems in an information Email and will be used internally for
+statistics and for improving eZ Publish. No confidential data will be
+transmitted and eZ Systems will not misuse or sell these details.*</p>
+</div>
+<div class="section" id="finished">
+<h2>Finished<a class="headerlink" href="#finished" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image13" src="docs/attachments/16286504/16679160.png" /></div>
+<div class="line"><sup>*Setup Wizard Finished*</sup></div>
+</div>
+<p>The setup wizard has finished. eZ Publish is ready for use. Click on one
+of the links to access the various interfaces (public site,
+administration interface, etc.).</p>
+<p>Note that it is possible to restart the installation wizard after its
+successful finishing by specifying &#8220;<tt class="docutils literal"><span class="pre">CheckValidity=true</span></tt>&#8221; in the
+&#8220;<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_path&gt;/ezpublish_legacysettings/override/site.ini.append.php</span></tt>&#8221;
+file so that the setup wizard will be initiated when trying to access
+the site.</p>
+</div>
+<div class="section" id="attachments">
+<h2>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image14" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798807.jpg">Setup Wizard_1.jpg</a></div>
+</div>
+<p>(image/jpeg)
+|  <img alt="image15" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798808.jpg">Setup Wizard_2.jpg</a>
+(image/jpeg)
+|  <img alt="image16" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798809.jpg">Setup Wizard_3.jpg</a>
+(image/jpeg)
+|  <img alt="image17" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798810.jpg">Setup Wizard_4.jpg</a>
+(image/jpeg)
+|  <img alt="image18" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798811.jpg">Setup Wizard_5.jpg</a>
+(image/jpeg)
+|  <img alt="image19" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798812.jpg">Setup Wizard_6.jpg</a>
+(image/jpeg)
+|  <img alt="image20" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798813.jpg">Setup Wizard_7.jpg</a>
+(image/jpeg)
+|  <img alt="image21" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798814.jpg">Setup Wizard_8.jpg</a>
+(image/jpeg)
+|  <img alt="image22" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798815.jpg">Setup Wizard_9.jpg</a>
+(image/jpeg)
+|  <img alt="image23" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798816.jpg">Setup Wizard_10.jpg</a>
+(image/jpeg)
+|  <img alt="image24" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798817.jpg">Setup Wizard_11.jpg</a>
+(image/jpeg)
+|  <img alt="image25" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798818.jpg">Setup Wizard_13.jpg</a>
+(image/jpeg)
+|  <img alt="image26" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/7438516/7798819.jpg">Setup Wizard_14.jpg</a>
+(image/jpeg)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : The setup wizard</a><ul>
+<li><a class="reference internal" href="#welcome-page">Welcome page</a></li>
+<li><a class="reference internal" href="#system-finetuning">System finetuning</a></li>
+<li><a class="reference internal" href="#system-check">System check</a><ul>
+<li><a class="reference internal" href="#issues">Issues</a></li>
+<li><a class="reference internal" href="#ignoring-tests">Ignoring tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#outgoing-email">Outgoing Email</a><ul>
+<li><a class="reference internal" href="#sendmail">Sendmail</a></li>
+<li><a class="reference internal" href="#smtp">SMTP</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#database-type">Database type</a></li>
+<li><a class="reference internal" href="#database-initialization">Database initialization</a></li>
+<li><a class="reference internal" href="#language-support">Language support</a></li>
+<li><a class="reference internal" href="#site-selection">Site selection</a><ul>
+<li><a class="reference internal" href="#package-language-options">Package language options</a><ul>
+<li><a class="reference internal" href="#outbound-connections-via-proxy">Outbound connections via proxy</a></li>
+<li><a class="reference internal" href="#manual-download-of-packages">Manual download of packages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-functionality">Additional functionality</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#access-method">Access method</a><ul>
+<li><a class="reference internal" href="#url">URL</a></li>
+<li><a class="reference internal" href="#port">Port</a></li>
+<li><a class="reference internal" href="#host-name">Host name</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#site-details">Site details</a></li>
+<li><a class="reference internal" href="#site-security">Site security</a></li>
+<li><a class="reference internal" href="#site-registration">Site registration</a></li>
+<li><a class="reference internal" href="#finished">Finished</a></li>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/The-setup-wizard_7438516.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

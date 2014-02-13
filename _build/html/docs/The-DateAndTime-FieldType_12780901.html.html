@@ -1,0 +1,214 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : The DateAndTime FieldType &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Reference_10158191.html">Reference</a></li>
+<li><a class="reference external" href="FieldTypes_10158198.html">FieldTypes</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-the-dateandtime-fieldtype">
+<h1>eZ Publish Platform 5.&lt;next&gt; : The DateAndTime FieldType<a class="headerlink" href="#ez-publish-platform-5-next-the-dateandtime-fieldtype" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:petar&#46;spanja&#37;&#52;&#48;ez&#46;no">petar<span>&#46;</span>spanja<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on Jul
+16, 2013</p>
+<div class="section" id="dateandtime">
+<h2>DateAndTime<a class="headerlink" href="#dateandtime" title="Permalink to this headline">¶</a></h2>
+<p>This field type represents a full date including time information.</p>
+<p>Name</p>
+<p>Internal name</p>
+<p>Expected input type</p>
+<p><tt class="docutils literal"><span class="pre">DateAndTime</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">ezdatetime</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mixed</span></tt></p>
+<div class="section" id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>This FieldType makes it possible to store and retrieve a full date
+including time information.</p>
+</div>
+<div class="section" id="input-expectations">
+<h3>Input expectations<a class="headerlink" href="#input-expectations" title="Permalink to this headline">¶</a></h3>
+<p>If input value is of type <tt class="docutils literal"><span class="pre">string</span></tt> or <tt class="docutils literal"><span class="pre">integer</span></tt>, it will be passed
+directly to the <cite>PHP&#8217;s built-in `</cite>DateTime`` class
+constructor &lt;<a class="reference external" href="http://www.php.net/manual/en/datetime.construct.php">http://www.php.net/manual/en/datetime.construct.php</a>&gt;`__,
+therefore the same input format expectations apply.</p>
+<p>It is also possible to directly pass an instance of <tt class="docutils literal"><span class="pre">\DateTime</span></tt>.</p>
+<p>Type</p>
+<p>Example</p>
+<p><tt class="docutils literal"><span class="pre">string</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&quot;2012-08-28</span> <span class="pre">12:20</span> <span class="pre">Europe/Berlin&quot;</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">integer</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1346149200</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>\DateTime</pre>
+</div>
+<div class="highlight-python"><pre>new \DateTime()</pre>
+</div>
+</div>
+<div class="section" id="validation">
+<h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h3>
+<p>This FieldType does not use any special validation of the input value.</p>
+</div>
+<div class="section" id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h3>
+<p>The field definition of this FieldType can be configured with several
+options:</p>
+<p>Name</p>
+<p>Type</p>
+<p>Default value</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">useSeconds</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">boolean</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>Used to control displaying of seconds in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">defaultType</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>Type::DEFAULT_EMPTYType::DEFAULT_CURRENT_DATEType::DEFAULT_CURRENT_DATE_ADJUSTED</pre>
+</div>
+<div class="highlight-python"><pre>Type::DEFAULT_EMPTY</pre>
+</div>
+<p>The constant used here defines default input value when using
+administration interface.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dateInterval</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>null|\DateInterval</pre>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">null</span>
+</pre></div>
+</div>
+<p>This setting complements <tt class="docutils literal"><span class="pre">defaultType</span></tt> setting and can be used only
+when latter is set to <tt class="docutils literal"><span class="pre">Type::DEFAULT_CURRENT_DATE_ADJUSTED</span></tt>.</p>
+<p>In that case the default input value when using administration interface
+will be adjusted by the given <tt class="docutils literal"><span class="pre">\DateInterval</span></tt>.</p>
+<p><strong>DateAndTime FieldType example settings</strong></p>
+</div>
+<div class="section" id="value-object">
+<h3>Value object<a class="headerlink" href="#value-object" title="Permalink to this headline">¶</a></h3>
+<p>Properties</p>
+<p>The Value class of this field type contains the following properties:</p>
+<p>Property</p>
+<p>Type</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">$value</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">\DateTime</span></tt></p>
+<p>The date and time value as an instance of <tt class="docutils literal"><span class="pre">\DateTime</span></tt>.</p>
+<p>String representation</p>
+<p>String representation of the date value will generate the date string in
+the format &#8220;D Y-d-m H:i:s&#8221; as accepted by <cite>PHP&#8217;s built-in ``date()`</cite>
+function &lt;<a class="reference external" href="http://www.php.net/manual/en/function.date.php">http://www.php.net/manual/en/function.date.php</a>&gt;`__.</p>
+<p>Example: Wed 2013-22-05 12:19:18</p>
+<p>Constructor</p>
+<p>The constructor for this value object will&nbsp;initialize a new Value object
+with the value provided. It accepts an instance of PHP&#8217;s built-in
+<tt class="docutils literal"><span class="pre">\DateTime</span></tt> class.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : The DateAndTime FieldType</a><ul>
+<li><a class="reference internal" href="#dateandtime">DateAndTime</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#input-expectations">Input expectations</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#settings">Settings</a></li>
+<li><a class="reference internal" href="#value-object">Value object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/The-DateAndTime-FieldType_12780901.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

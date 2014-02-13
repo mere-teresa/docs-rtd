@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Virtual host setup &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-virtual-host-setup">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Virtual host setup<a class="headerlink" href="#ez-publish-platform-5-next-virtual-host-setup" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan 14,
+2014</p>
+<p>This section describes how to set up a virtual host for eZ Publish using
+the Apache web-server. A virtual host setup is only needed if eZ Publish
+has been configured to use the host access method, which is the
+recommended, most secure method.</p>
+<p>For an introduction and thorough description of the concept of virtual
+hosts, you can refer to the <a class="reference external" href="http://httpd.apache.org/docs/2.2/vhosts/">Apache
+documentation</a>.</p>
+<p>Do not forget to restart the web server after any change of the
+configuration files.</p>
+<div class="section" id="generic-virtual-host-setup">
+<h2>Generic virtual host setup<a class="headerlink" href="#generic-virtual-host-setup" title="Permalink to this headline">¶</a></h2>
+<p>Virtual hosts are usually defined at the bottom of &#8220;<tt class="docutils literal"><span class="pre">httpd.conf</span></tt>&#8221;,
+which is the main configuration file for Apache, or in a separate
+configuration file included from <tt class="docutils literal"><span class="pre">httpd.conf</span></tt>.</p>
+<p>Adding a virtual host for eZ Publish can be done by copying the
+following lines and replacing the text encapsulated by the square
+brackets with actual values. Please refer to the next section for a real
+life example of using virtual hosts.</p>
+<p>New in eZ Publish 5.2 / 2013.07</p>
+<p>Icon</p>
+<p>The front controller can now be altered with environment variables,
+without the need to modify <tt class="docutils literal"><span class="pre">index.php</span></tt>.</p>
+<div class="highlight-python"><pre>NameVirtualHost [IP_ADDRESS]
+
+&lt;VirtualHost [IP_ADDRESS]:[PORT]&gt;
+    &lt;Directory [PATH_TO_EZPUBLISH]/web&gt;
+        Options FollowSymLinks
+        AllowOverride None
+        # depending on your global Apache settings, you may need to uncomment and adapt
+        # for Apache 2.2 and earlier:
+        #Allow from all
+        # for Apache 2.4:
+        #Require all granted
+    &lt;/Directory&gt;
+
+    # Environment.
+    # Possible values: "prod" and "dev" out-of-the-box, other values possible with proper configuration
+    # Defaults to "prod" if omitted
+    SetEnv ENVIRONMENT "prod"
+
+    # Whether to use Symfony's ApcClassLoader.
+    # Possible values: 0 or 1
+    # Defaults to 0 if omitted
+    #SetEnv USE_APC_CLASSLOADER 0
+
+    # Prefix used when USE_APC_CLASSLOADER is set to 1.
+    # Use a unique prefix in order to prevent cache key conflicts
+    # with other applications also using APC.
+    # Defaults to "ezpublish" if omitted
+    #SetEnv APC_CLASSLOADER_PREFIX "ezpublish"
+
+    # Whether to use debugging.
+    # Possible values: 0 or 1
+    # Defaults to 0 if omitted, unless ENVIRONMENT is set to: "dev"
+    #SetEnv USE_DEBUGGING 0
+
+    # Whether to use Symfony's HTTP Caching.
+    # Disable it if you are using an external reverse proxy (e.g. Varnish)
+    # Possible values: 0 or 1
+    # Defaults to 1 if omitted, unless ENVIRONMENT is set to: "dev"
+    #SetEnv USE_HTTP_CACHE 1
+
+    # Defines the proxies to trust.
+    # Separate entries by a comma
+    # Example: "proxy1.example.com,proxy2.example.org"
+    # By default, no trusted proxies are set
+    #SetEnv TRUSTED_PROXIES "127.0.0.1"
+
+    &lt;IfModule mod_php5.c&gt;
+        php_admin_flag safe_mode Off
+        php_admin_value register_globals 0
+        php_value magic_quotes_gpc 0
+        php_value magic_quotes_runtime 0
+        php_value allow_call_time_pass_reference 0
+    &lt;/IfModule&gt;
+
+    DirectoryIndex index.php
+
+    &lt;IfModule mod_rewrite.c&gt;
+        RewriteEngine On
+
+        # Uncomment in FastCGI mode or when using PHP-FPM, to get basic auth working.
+        #RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+        # v1 rest API is on Legacy
+        RewriteRule ^/api/[^/]+/v1/ /index_rest.php [L]
+
+        # If using cluster, uncomment the following two lines:
+        #RewriteRule ^/var/([^/]+/)?storage/images(-versioned)?/.* /index_cluster.php [L]
+        #RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* /index_cluster.php [L]
+
+        RewriteRule ^/var/([^/]+/)?storage/images(-versioned)?/.* - [L]
+        RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]
+        RewriteRule ^/design/[^/]+/(stylesheets|images|javascript|fonts)/.* - [L]
+        RewriteRule ^/share/icons/.* - [L]
+        RewriteRule ^/extension/[^/]+/design/[^/]+/(stylesheets|flash|images|lib|javascripts?)/.* - [L]
+        RewriteRule ^/packages/styles/.+/(stylesheets|images|javascript)/[^/]+/.* - [L]
+        RewriteRule ^/packages/styles/.+/thumbnail/.* - [L]
+        RewriteRule ^/var/storage/packages/.* - [L]
+
+        # Makes it possible to place your favicon at the root of your
+        # eZ Publish instance. It will then be served directly.
+        RewriteRule ^/favicon\.ico - [L]
+        # Uncomment the line below if you want you favicon be served
+        # from the standard design. You can customize the path to
+        # favicon.ico by changing /design/standard/images/favicon\.ico
+        #RewriteRule ^/favicon\.ico /design/standard/images/favicon.ico [L]
+        RewriteRule ^/design/standard/images/favicon\.ico - [L]
+
+        # Give direct access to robots.txt for use by crawlers (Google,
+        # Bing, Spammers..)
+        RewriteRule ^/robots\.txt - [L]
+
+        # Platform for Privacy Preferences Project ( P3P ) related files
+        # for Internet Explorer
+        # More info here : http://en.wikipedia.org/wiki/P3p
+        RewriteRule ^/w3c/p3p\.xml - [L]
+
+        # Uncomment the following lines when using popup style debug in legacy
+        #RewriteRule ^/var/([^/]+/)?cache/debug\.html.* - [L]
+
+        # Following rule is needed to correctly display assets from eZ Publish5 / Symfony bundles
+        RewriteRule ^/bundles/ - [L]
+
+        # Additional Assetic rules for eZ Publish 5.1 / 2013.4 and higher.
+        ## Don't forget to run php ezpublish/console assetic:dump --env=prod
+        ## and make sure to comment these out in dev environment.
+        RewriteRule ^/css/.*\.css - [L]
+        RewriteRule ^/js/.*\.js - [L]
+
+        RewriteRule .* /index.php
+    &lt;/IfModule&gt;
+
+    DocumentRoot [PATH_TO_EZPUBLISH]/web/
+    ServerName [SERVER_NAME]
+    ServerAlias [SERVER_ALIAS]
+
+&lt;/VirtualHost&gt;</pre>
+</div>
+<p>Icon</p>
+<p>For instructions on how to set custom environments please refer to
+the&nbsp;<a class="reference external" href="Installing-eZ-Publish-on-a-Linux-UNIX-based-system_7438581.html">Installing eZ Publish on a Linux-UNIX based
+system</a>
+documentation page, under &#8220;Defining the desired environment&#8221;.</p>
+<p>Reference</p>
+<p>Description</p>
+<p>[IP_ADDRESS]</p>
+<p>The IP address of the virtual host, for example &#8220;<tt class="docutils literal"><span class="pre">128.39.140.28</span></tt>&#8221;.
+Apache allows the usage of a wildcards here (&#8220;*&#8221;).</p>
+<p>[PORT]</p>
+<p>The port on which the web server listens for incoming requests. This is
+an optional setting, the default port is 80. The combination of an IP
+address and a port is often referred to as a socket. Apache allows the
+usage of a wildcards here (&#8220;*&#8221;).</p>
+<p>[PATH_TO_EZPUBLISH]</p>
+<p>Path to the directory that contains eZ Publish. This must be the full
+path, for example &#8220;<tt class="docutils literal"><span class="pre">/var/www/ezpublish-3.6.0</span></tt>&#8221;.</p>
+<p>[SERVER_NAME]</p>
+<p>The host or the IP address that Apache should look for. If a match is
+found, the virtual host settings will be used.</p>
+<p>[SERVER_ALIAS]</p>
+<p>Additional hosts/IP addresses that Apache should look for. If a match is
+found, the virtual host settings will be used.</p>
+<p>Icon</p>
+<p>Please note that the &#8220;<tt class="docutils literal"><span class="pre">mod_rewrite</span></tt>&#8221; module must be enabled in
+&#8220;<tt class="docutils literal"><span class="pre">httpd.conf</span></tt>&#8221; in order to use the Rewrite Rules.</p>
+</div>
+<div class="section" id="namevirtualhost">
+<h2>NameVirtualHost<a class="headerlink" href="#namevirtualhost" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;<tt class="docutils literal"><span class="pre">NameVirtualHost</span></tt>&#8221; setting might already exist in the default
+configuration. Defining a new one will result in a conflict. If Apache
+reports errors such as
+&#8220;<tt class="docutils literal"><span class="pre">NameVirtualHost</span> <span class="pre">[IP_ADDRESS]</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">VirtualHosts</span></tt>&#8221; or
+&#8220;<em>``Mixing * ports and non-</em> ports with a NameVirtualHost address is not supported``*&#8221;,
+try skipping the <tt class="docutils literal"><span class="pre">NameVirtualHost</span></tt> line. For more info about the
+<tt class="docutils literal"><span class="pre">NameVirtualHost</span></tt> directive, see
+<a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/core.html#namevirtualhost">http://httpd.apache.org/docs/2.2/mod/core.html#namevirtualhost</a>.</p>
+</div>
+<div class="section" id="soap-and-webdav">
+<h2>SOAP and WebDAV<a class="headerlink" href="#soap-and-webdav" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">If you would like to use the SOAP and/or the WebDAV features of eZ</div>
+</div>
+<p>Publish, you&#8217;ll have to add the following lines in the virtual host
+configuration (replace appropriately the host names used):</p>
+<div class="highlight-python"><pre>RewriteCond %{HTTP_HOST} ^webdav\..*
+RewriteRule ^(.*) /webdav.php [L]
+
+RewriteCond %{HTTP_HOST} ^soap\..*
+RewriteRule ^(.*) /soap.php [L]
+
+ServerAlias soap.example.com
+ServerAlias webdav.example.com</pre>
+</div>
+</div>
+<div class="section" id="optional-re-write-rules-to-improve-performance">
+<h2>Optional re-write rules to improve performance<a class="headerlink" href="#optional-re-write-rules-to-improve-performance" title="Permalink to this headline">¶</a></h2>
+<p>Using the Apache module <tt class="docutils literal"><span class="pre">mod_expires</span></tt> is recommended to improve site
+performance, by preventing users from downloading too frequently static
+assets. The following lines can added to the virtualhost configuration
+to take advantage of it:</p>
+<div class="highlight-python"><pre># Everything below is optional to improve performance by forcing
+# clients to cache image and design files, change the expires time
+# to suite project needs.
+&lt;IfModule mod_expires.c&gt;
+    &lt;LocationMatch "^/var/[^/]+/storage/images/.*"&gt;
+        # eZ Publish appends the version number to image URL (ezimage
+        # datatype) so when an image is updated, its URL changes to
+        ExpiresActive on
+        ExpiresDefault "now plus 10 years"
+    &lt;/LocationMatch&gt;
+
+    &lt;LocationMatch "^/extension/[^/]+/design/[^/]+/(stylesheets|images|javascripts?|flash)/.*"&gt;
+        # A good optimization if you don't change your design often
+        ExpiresActive on
+        ExpiresDefault "now plus 5 days"
+    &lt;/LocationMatch&gt;
+
+    &lt;LocationMatch "^/extension/[^/]+/design/[^/]+/lib/.*"&gt;
+        # Libraries get a new url (version number) on updates
+        ExpiresActive on
+        ExpiresDefault "now plus 90 days"
+    &lt;/LocationMatch&gt;
+
+    &lt;LocationMatch "^/design/[^/]+/(stylesheets|images|javascripts?|lib|flash)/.*"&gt;
+        # Same as above for bundled eZ Publish designs
+        ExpiresActive on
+        ExpiresDefault "now plus 7 days"
+    &lt;/LocationMatch&gt;
+
+    &lt;LocationMatch "^/share/icons/.*"&gt;
+        # Icons as used by admin interface, barly change
+        ExpiresActive on
+        ExpiresDefault "now plus 7 days"
+    &lt;/LocationMatch&gt;
+
+    # When ezjscore.ini/[Packer]/AppendLastModifiedTime=enabled
+    # so that file names change when source files are modified
+    #&lt;LocationMatch "^/var/[^/]+/cache/public/.*"&gt;
+        # Force ezjscore packer js/css files to be cached 30 days
+        # at client side
+        #ExpiresActive on
+        #ExpiresDefault "now plus 30 days"
+    #&lt;/LocationMatch&gt;
+    &lt;/IfModule&gt;</pre>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Maybe we should add note for those who are migrating to apache 2.4.
+Actually there are some changes on the Access Control part</p>
+<p><a class="reference external" href="http://httpd.apache.org/docs/current/upgrading.html">http://httpd.apache.org/docs/current/upgrading.html</a></p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by desorden at Jan 11, 2014 17:40</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Virtual host setup</a><ul>
+<li><a class="reference internal" href="#generic-virtual-host-setup">Generic virtual host setup</a></li>
+<li><a class="reference internal" href="#namevirtualhost">NameVirtualHost</a></li>
+<li><a class="reference internal" href="#soap-and-webdav">SOAP and WebDAV</a></li>
+<li><a class="reference internal" href="#optional-re-write-rules-to-improve-performance">Optional re-write rules to improve performance</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Virtual-host-setup_7438507.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

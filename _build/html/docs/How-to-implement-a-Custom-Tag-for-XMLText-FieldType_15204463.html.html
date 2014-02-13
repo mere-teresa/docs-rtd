@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : How to implement a Custom Tag for XMLText FieldType &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-how-to-implement-a-custom-tag-for-xmltext-fieldtype">
+<h1>eZ Publish Platform 5.&lt;next&gt; : How to implement a Custom Tag for XMLText FieldType<a class="headerlink" href="#ez-publish-platform-5-next-how-to-implement-a-custom-tag-for-xmltext-fieldtype" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Jul 24, 2013</p>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>This recipe is compatible with <strong>eZ Publish 5.2 / 2013.07</strong></p>
+</div>
+<div class="section" id="custom-tags">
+<h1>Custom tags<a class="headerlink" href="#custom-tags" title="Permalink to this headline">¶</a></h1>
+<p><strong>XMLText fieldtype</strong> supports a limited number of tags in its internal
+eZXML format to render HTML5. However, it is possible to extend the
+rendering by implementing <strong>custom tags</strong>.</p>
+<p>As HTML5 rendering in eZ Publish is done through
+<a class="reference external" href="http://en.wikipedia.org/wiki/XSLT">XSLT</a>, you will need to create an
+XSL stylesheet to extend the rendering.</p>
+<p>Note on legacy custom tags</p>
+<p>Icon</p>
+<p>To be able to edit a custom tag from admin interface, you&#8217;ll still need
+to <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Datatypes/XML-block/Custom-tags">register your custom tag in the legacy
+kernel</a>
+(at least the configuration part, template not being mandatory for
+edition).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-Customtags">Custom
+tags</a><ul>
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-RegisteryourcustomXSLstylesheet">Register your custom XSL
+stylesheet</a><ul>
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-ExampleofacustomXSL">Example of a custom
+XSL</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-UsingPre-converters">Using
+Pre-converters</a><ul>
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-Registeringapre-converter">Registering a
+pre-converter</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#HowtoimplementaCustomTagforXMLTextFieldType-OverridingexistingXSLtemplates">Overriding existing XSL
+templates</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="register-your-custom-xsl-stylesheet">
+<h2>Register your custom XSL stylesheet<a class="headerlink" href="#register-your-custom-xsl-stylesheet" title="Permalink to this headline">¶</a></h2>
+<p>To activate your custom tag rendering, you need to create an XSL
+stylesheet and to register it properly:</p>
+<p><strong>ezpublish.yml</strong></p>
+<p>Each entry under <tt class="docutils literal"><span class="pre">custom_tags</span></tt> is a hash having the following
+properties:</p>
+<p><tt class="docutils literal"><span class="pre">path</span></tt></p>
+<p><strong>Absolute path</strong> to the XSL to import.</p>
+<p>Tip</p>
+<p>Icon</p>
+<p>Use <tt class="docutils literal"><span class="pre">%kernel.root_dir%</span></tt> parameter to start from <tt class="docutils literal"><span class="pre">ezpublish/</span></tt> folder.</p>
+<p><tt class="docutils literal"><span class="pre">priority</span></tt></p>
+<p>Priority of your stylesheet in the sequence of importing. The higher it
+is, the higher precedence it will have.</p>
+<p>Icon</p>
+<p>In XSL imports, in case of template overrides, the last imported XSL
+always wins. Hence custom XSL are loaded in reverse priority order.</p>
+<div class="section" id="example-of-a-custom-xsl">
+<h3>Example of a custom XSL<a class="headerlink" href="#example-of-a-custom-xsl" title="Permalink to this headline">¶</a></h3>
+<p>The following example shows how to render the <a class="reference external" href="https://github.com/lolautruche/jvEmbedTag/blob/master/design/standard/templates/content/datatype/view/ezxmltags/youtube.tpl">YouTube embed custom tag
+from jvEmbed legacy
+extension</a>
+(see also <a class="reference external" href="https://github.com/lolautruche/jvEmbedTag/blob/master/settings/content.ini.append.php">related legacy configuration for
+content</a>).</p>
+<p>Note that all selected attributes are in <tt class="docutils literal"><span class="pre">custom</span></tt> namespace (this is
+the case for all custom tags attributes in internal eZXML).</p>
+<p><strong>youtube.xsl</strong></p>
+<p>Tip</p>
+<p>Icon</p>
+<p>PHP functions are registered in the XSLTProcessor, so you can use PHP
+functions and static method calls to enhance the XSLT process (using
+<tt class="docutils literal"><span class="pre">php-function</span></tt> and <tt class="docutils literal"><span class="pre">php-functionString</span></tt> XSLT functions).</p>
+<p><strong>However, consider using those for simple use cases</strong>. For more complex
+cases, you&#8217;ll need to register pre-converters instead.</p>
+</div>
+</div>
+<div class="section" id="using-pre-converters">
+<h2>Using Pre-converters<a class="headerlink" href="#using-pre-converters" title="Permalink to this headline">¶</a></h2>
+<p>Pre-converters are services that pre-process the internal XML before the
+XSLT rendering occurs. It can be useful if you need to manipulate the
+data stored in eZXML.</p>
+<p>An example of use is <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/FieldType/XmlText/Converter/EzLinkToHtml5.php">what is done for internal
+links</a>.
+Indeed, internal location or content are linked by their
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/FieldType/XmlText/Converter/EzLinkToHtml5.php">locationId/contentId which need to be transformed in a usable
+URI</a>.</p>
+<p>Pre-converters receive the whole DOMDocument object for the current
+field. So you can easily do XPath queries and do some DOM manipulation
+against it.</p>
+<div class="section" id="registering-a-pre-converter">
+<h3>Registering a pre-converter<a class="headerlink" href="#registering-a-pre-converter" title="Permalink to this headline">¶</a></h3>
+<p>All pre-converters need to:</p>
+<ul class="simple">
+<li>Implement&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\XmlText\Converter</span></tt>
+interface.</li>
+<li>Be registered as a service, with&nbsp;<tt class="docutils literal"><span class="pre">ezpublish.ezxml.converter</span></tt> tag.</li>
+</ul>
+<p><strong>services.yml in a bundle</strong></p>
+<p><strong>MyPreConverter</strong></p>
+</div>
+</div>
+<div class="section" id="overriding-existing-xsl-templates">
+<h2>Overriding existing XSL templates<a class="headerlink" href="#overriding-existing-xsl-templates" title="Permalink to this headline">¶</a></h2>
+<p>As XSL stylesheets apply for the whole resulted DOM, you can of course
+override existing templates. This is where the <tt class="docutils literal"><span class="pre">priority</span></tt> property in
+configuration takes its sense.</p>
+<p>Icon</p>
+<p>Built-in XSL templates have <strong>0</strong> as priority</p>
+<p>Consider the following example to switch from usage of <tt class="docutils literal"><span class="pre">&lt;b&gt;</span></tt> to
+<tt class="docutils literal"><span class="pre">&lt;strong&gt;</span></tt>:</p>
+<p><strong>strong.xsl</strong></p>
+<p><strong>ezpublish.yml</strong></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : How to implement a Custom Tag for XMLText FieldType</a></li>
+<li><a class="reference internal" href="#custom-tags">Custom tags</a><ul>
+<li><a class="reference internal" href="#register-your-custom-xsl-stylesheet">Register your custom XSL stylesheet</a><ul>
+<li><a class="reference internal" href="#example-of-a-custom-xsl">Example of a custom XSL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-pre-converters">Using Pre-converters</a><ul>
+<li><a class="reference internal" href="#registering-a-pre-converter">Registering a pre-converter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overriding-existing-xsl-templates">Overriding existing XSL templates</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/How-to-implement-a-Custom-Tag-for-XMLText-FieldType_15204463.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

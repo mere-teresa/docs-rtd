@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : eZ Publish Platform Documentation &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+</ol>
+<div class="section" id="home-page-ez-publish-platform-5-next-ez-publish-platform-documentation">
+<h1><img alt="Home Page" src="docs/images/icons/contenttypes/home_page_16.png" /> eZ Publish Platform 5.&lt;next&gt; : eZ Publish Platform Documentation<a class="headerlink" href="#home-page-ez-publish-platform-5-next-ez-publish-platform-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan 14,
+2014</p>
+</div>
+<div class="section" id="what-is-ez-publish">
+<h1>What is eZ Publish?<a class="headerlink" href="#what-is-ez-publish" title="Permalink to this headline">¶</a></h1>
+<p>eZ Publish is an Enterprise Open-Source Content Management
+System/Framework
+(<a class="reference external" href="http://en.wikipedia.org/wiki/Content_management_system">CMS</a>/<a class="reference external" href="http://en.wikipedia.org/wiki/Content_management_framework">F</a>)
+at its core. It is highly extendable so with extensions it provides
+&#8220;<a class="reference external" href="http://en.wikipedia.org/wiki/Web_content_management_system">WCMS</a>&#8221;
+capabilities. Its default Enterprise offering as of version 5, &#8220;eZ
+Publish Platform&#8221;, is extended to provide full set of Customer
+Experience Management
+(<a class="reference external" href="http://en.wikipedia.org/wiki/Customer_experience">CXM</a>)
+capabilities.</p>
+<div class="section" id="what-is-ez-publish-5-x">
+<h2>What is eZ Publish 5.x?<a class="headerlink" href="#what-is-ez-publish-5-x" title="Permalink to this headline">¶</a></h2>
+<p>Version 5 represents a big step forward for eZ Publish, as it introduces
+a whole new architecture and embraces the full Symfony2 stack and
+community around it. As is often the case with architecture, most of it
+is under the hood in&nbsp;5.x releases, and there is no new User Interfaces
+(UI) yet running on the new kernel; however with our &#8220;Dual-kernel&#8221;
+approach all existing UI&#8217;s are still here running on legacy kernel, and
+same goes for all extensions and solutions made for eZ Publish 4.x.</p>
+<p>When 5.x is considered &#8220;feature complete&#8221; enough to be able to stand on
+its own both in terms of kernel and user interfaces, then it will become
+&#8220;6.x&#8221; (working title) and will ship without legacy stack (kernel &amp;
+extensions).</p>
+<p>From high level&nbsp;5.x is:</p>
+<ul class="simple">
+<li>“Ready for the future, data compatible with the past”:&nbsp;Content
+Repository&nbsp;accessible&nbsp;via&nbsp;<a class="reference external" href="eZ-Publish-Public-API_1736723.html">Public
+API</a>&nbsp;&amp;&nbsp;<a class="reference external" href="eZ-Publish-REST-API_6292277.html">REST API
+v2</a>&nbsp;&nbsp;(full read &amp; write support)</li>
+<li>“Full Symfony2
+access”:&nbsp;<a class="reference external" href="http://symfony.com/about">Symfony2</a>&nbsp;Full-stack as
+the&nbsp;framework, extended with eZ Publish features</li>
+<li>DemoBundle front-end on top of eZ&#8217;s Symfony2 stack (read only)</li>
+<li>“Dual kernel: Full code and data backwards compatibility”: 5.x stack
+is not fully functional on its own, it&#8217;s combined with 4.x (&#8220;legacy
+stack&#8221;) in a &#8220;Dual-kernel&#8221; setup
+(see&nbsp;<a class="reference external" href="6291674.html">developer</a>&nbsp;section for more) to be able to
+provide all features you would expect, this is fully exposed to
+website&nbsp;developers who want/need to take advantage of legacy stack,
+5.x stack or both.</li>
+</ul>
+<p>For more information on the status eZ Publish 5.x, known issues,&nbsp;change
+logs&nbsp;and architecture updates, see the <a class="reference external" href="eZ-Publish-Platform-Releases_12781017.html">latest release
+notes</a>.</p>
+</div>
+<div class="section" id="quick-links">
+<h2>Quick links<a class="headerlink" href="#quick-links" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="Installation_7438500.html">Installing eZ Publish 5</a> (includes
+detailed specification of requirements)</li>
+<li><a class="reference external" href="http://doc.ez.no/eZ-Publish/Upgrading/">Upgrading to eZ Publish
+5</a></li>
+<li><a class="reference external" href="11403666.html">Architecture overview of eZ Publish 5</a></li>
+<li>Public API <a class="reference external" href="Public-API-basics_6293122.html">basics</a> &amp;
+<a class="reference external" href="Public-API-Cookbook_5046311.html">Cookbook</a></li>
+<li><a class="reference external" href="eZ-Publish-REST-API_6292277.html">eZ Publish REST API</a></li>
+</ul>
+</div>
+<div class="section" id="recently-updated">
+<h2>Recently Updated<a class="headerlink" href="#recently-updated" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="Content-view_8323263.html">Content view</a>
+about 3 hours ago • updated by <a class="reference external" href="mailto:/display/~jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">Jérôme
+Vieilledent</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=8323263&amp;selectedPageVersions=38&amp;selectedPageVersions=37">view
+change</a></li>
+<li><a class="reference external" href="Parameters-injection-in-content-views_8323330.html">Parameters injection in content
+views</a>
+Feb 10, 2014 • updated by <a class="reference external" href="mailto:/display/~jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">Jérôme
+Vieilledent</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=8323330&amp;selectedPageVersions=2&amp;selectedPageVersions=1">view
+change</a></li>
+<li><a class="reference external" href="Persistence-cache-configuration_12781293.html">Persistence cache
+configuration</a>
+Feb 06, 2014 • updated by <a class="reference external" href="mailto:/display/~sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">Sarah
+Haïm-Lubczanski</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=12781293&amp;selectedPageVersions=18&amp;selectedPageVersions=17">view
+change</a></li>
+<li><a class="reference external" href="Authentication_19891028.html">Authentication</a>
+Feb 03, 2014 • updated by <a class="reference external" href="mailto:/display/~sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">Sarah
+Haïm-Lubczanski</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=19891028&amp;selectedPageVersions=7&amp;selectedPageVersions=6">view
+change</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a>
+Feb 03, 2014 • updated by <a class="reference external" href="mailto:/display/~sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">Sarah
+Haïm-Lubczanski</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=2719826&amp;selectedPageVersions=16&amp;selectedPageVersions=15">view
+change</a></li>
+<li><a class="reference external" href="Setting-the-Index-Page_19890549.html">Setting the Index Page</a>
+Feb 03, 2014 • updated by <a class="reference external" href="mailto:/display/~sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">Sarah
+Haïm-Lubczanski</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=19890549&amp;selectedPageVersions=13&amp;selectedPageVersions=12">view
+change</a></li>
+<li><a class="reference external" href="Upgrading-from-5.2-to-5.3_19891003.html">Upgrading from 5.2 to
+5.3</a>
+Feb 03, 2014 • created by <a class="reference external" href="mailto:/display/~jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">Jérôme
+Vieilledent</a></li>
+<li><a class="reference external" href="6292980.html">2. Browsing, finding, viewing</a>
+Jan 31, 2014 • updated by <a class="reference external" href="mailto:/display/~ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">Ricardo
+Correia</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=6292980&amp;selectedPageVersions=71&amp;selectedPageVersions=70">view
+change</a></li>
+<li><a class="reference external" href="19890973.html">2. Browsing, finding, viewing</a>
+Jan 31, 2014 • updated by <a class="reference external" href="mailto:/display/~andre&#46;romcke&#37;&#52;&#48;ez&#46;no">André
+Rømcke</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=6292980&amp;selectedPageVersions=70&amp;selectedPageVersions=69">view
+change</a></li>
+<li><a class="reference external" href="Requirements_7438502.html">Requirements</a>
+Jan 30, 2014 • updated by <a class="reference external" href="mailto:/display/~andre&#46;romcke&#37;&#52;&#48;ez&#46;no">André
+Rømcke</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=7438502&amp;selectedPageVersions=37&amp;selectedPageVersions=36">view
+change</a></li>
+<li><a class="reference external" href="Settings-and-Configurations_14123147.html">Settings and
+Configurations</a>
+Jan 30, 2014 • updated by <a class="reference external" href="mailto:/display/~andre&#46;romcke&#37;&#52;&#48;ez&#46;no">André
+Rømcke</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=14123147&amp;selectedPageVersions=7&amp;selectedPageVersions=6">view
+change</a></li>
+<li><a class="reference external" href="Using-eZ-Publish-as-a-Service-Platform_2720526.html">Using eZ Publish as a Service
+Platform</a>
+Jan 30, 2014 • updated by <a class="reference external" href="mailto:/display/~andre&#46;romcke&#37;&#52;&#48;ez&#46;no">André
+Rømcke</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=2720526&amp;selectedPageVersions=9&amp;selectedPageVersions=8">view
+change</a></li>
+<li><a class="reference external" href="Using-Varnish_12124722.html">Using Varnish</a>
+Jan 30, 2014 • updated by <a class="reference external" href="mailto:/display/~jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">Jérôme
+Vieilledent</a> • <a class="reference external" href="/pages/diffpagesbyversion.action?pageId=12124722&amp;selectedPageVersions=11&amp;selectedPageVersions=10">view
+change</a></li>
+<li><a class="reference external" href="/display/EZP/Using+Varnish?focusedCommentId=19890870#comment-19890870">Using
+Varnish</a>
+Jan 30, 2014 • commented by <a class="reference external" href="mailto:/display/~jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">Jérôme
+Vieilledent</a></li>
+<li><a class="reference external" href="/display/EZP/Using+Varnish?focusedCommentId=19890851#comment-19890851">Using
+Varnish</a>
+Jan 29, 2014 • commented by <a class="reference external" href="/display/~desorden">Carlos Revillo</a></li>
+</ul>
+<p><a class="reference external" href="/plugins/recently-updated/changes.action?theme=concise&amp;pageSize=15&amp;startHandle=com.atlassian.confluence.pages.Comment-19890845&amp;spaceKeys=EZP&amp;contentType=-mail,page,comment,blogpost,attachment,userinfo,spacedesc,personalspacedesc,status,space,draft,custom">Show
+More</a>
+<img alt="Please wait" src="docs/images/icons/wait.gif" /></p>
+<p>Navigate space</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"> eZ Publish Platform 5.&lt;next&gt; : eZ Publish Platform Documentation</a></li>
+<li><a class="reference internal" href="#what-is-ez-publish">What is eZ Publish?</a><ul>
+<li><a class="reference internal" href="#what-is-ez-publish-5-x">What is eZ Publish 5.x?</a></li>
+<li><a class="reference internal" href="#quick-links">Quick links</a></li>
+<li><a class="reference internal" href="#recently-updated">Recently Updated</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/eZ-Publish-Platform-Documentation_1114149.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

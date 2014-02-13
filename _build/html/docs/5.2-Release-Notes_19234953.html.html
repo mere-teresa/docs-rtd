@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 5.2 Release Notes &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Releases_12781017.html">eZ Publish Platform
+Releases</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-5-2-release-notes">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 5.2 Release Notes<a class="headerlink" href="#ez-publish-platform-5-next-5-2-release-notes" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Dec 04,
+2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#id-5.2ReleaseNotes-MeettheupdatedeZPublishPlatform5.2">Meet the updated&nbsp;eZ Publish
+Platform&nbsp;5.2</a><ul>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-5.2isonadirectpathto5.3LTS">5.2 is on a direct path to
+5.3LTS</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Quicklinks">Quick links</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-5.2Features">5.2 Features</a><ul>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Context-awareHTTPcachewithUserHash">Context-aware HTTP cache with
+UserHash</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Symfony2.3.*">Symfony 2.3.*</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-ContentControlleroverridesupport">Content Controller override
+support</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-APISignalslistenable%2CalsoviaSymfonyeventsystem">API Signals listenable, also via Symfony event
+system</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Multirepositorypersistencecachesupport">Multi repository persistence cache
+support</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Supportformorethan30languages">Support for more than 30
+languages</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-ExtendedsupportforcommentswithCommentsBundle">Extended support for comments with
+CommentsBundle</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Pagerfantasupportforpagination">Pagerfanta support for
+pagination</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-CustomtagsforXMLTextfieldtype">Custom tags for XMLText field
+type</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-ExtensibleRESTAPI">Extensible REST API</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-DFStablesplit">DFS table split</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-JavascriptRESTClient">Javascript REST
+Client</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Configurablefrontcontroller">Configurable front
+controller</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-Miscellaneoushelpers">Miscellaneous
+helpers</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-5.2Contributors">5.2 Contributors</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-5.2FullChangelog">5.2 Full Changelog</a></li>
+<li><a class="reference external" href="#id-5.2ReleaseNotes-5.2Knownissues">5.2 Known issues</a></li>
+</ul>
+<div class="section" id="meet-the-updated-ez-publish-platform-5-2">
+<h2>Meet the updated&nbsp;eZ Publish Platform&nbsp;5.2<a class="headerlink" href="#meet-the-updated-ez-publish-platform-5-2" title="Permalink to this headline">¶</a></h2>
+<p><em>Tag line: We highly recommend 5.2.x as a baseline for creating new
+Symfony / eZ Publish Platform 5.x based web sites, as it will make your
+life easier.</em></p>
+<p><img alt="image0" src="docs/attachments/19234953/19628052.jpg" /></p>
+<p>eZ Publish Platform 5.2 is a STS (Short term supported)&nbsp;release towards
+5.3 LTS (Long term supported) which enhances several aspects of the 5.x
+kernel for usability and extensibility, in addition
+to&nbsp;additional&nbsp;performance&nbsp;improvements&nbsp;on top of what 5.1 delivered.&nbsp;The
+main topic of 5.2 has been to improved a lot in terms of building
+websites, DemoBundle should now serve as an good example.</p>
+<div class="section" id="is-on-a-direct-path-to-5-3lts">
+<h3>5.2 is on a direct path to 5.3LTS<a class="headerlink" href="#is-on-a-direct-path-to-5-3lts" title="Permalink to this headline">¶</a></h3>
+<p>Even if you plan to launch on 5.3 LTS, no worries, we plan to add richer
+composer support in the next couple of months providing you a more
+streamlined update process allowing you to start using 5.2 right now.</p>
+</div>
+<div class="section" id="quick-links">
+<h3>Quick links<a class="headerlink" href="#quick-links" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="Installation_7438500.html">Install 5.2</a></li>
+<li><a class="reference external" href="Upgrading-from-5.1-to-5.2_7439125.html">Upgrade from 5.1 to 5.2</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="features">
+<h2>5.2 Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>5.2 introduces several new features which makes it easier to use, faster
+to develop on and also improves performance across the board.
+Performance tests using jMeter* internally have shown up to 25%
+improvement (from 361 to 452) to requests per seconds when testing on
+pure new stack using eZ Demo, while also improving legacy fallback
+performance 18% on ezflow (from 37 to 43 requests per second).</p>
+<p>With eZ Publish Platform 5.2, new stack&#8217;s HTTP cache is finally on par
+and beyond what was possible in eZ Publish 4.x/legacy. With <em>UserHash</em>,
+by default all internal controllers, including the ViewController, will
+return cacheable responses, based on user access rules. This behavior is
+also applicable to custom controllers by making their response <em>vary</em> on
+<tt class="docutils literal"><span class="pre">X-User-Hash</span></tt> header. Moreover, UserHash generation, initially based
+on current user&#8217;s assigned roles and policies, is extensible.</p>
+<p>Purging is furthermore done in a <strong>stale cache</strong> like way, making sure
+stale cache gets served while the new one is being generated.</p>
+<ul class="simple">
+<li><a class="reference external" href="Context-aware-HTTP-cache_14712846.html">Context-aware HTTP cache
+documentation</a>.</li>
+<li><a class="reference external" href="How-to-customize-UserHash-generation_14712852.html">Extend UserHash
+generation</a>.</li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/368">Original
+pull-request</a>.</li>
+</ul>
+<p>Updated our web framework foundation to Symfony 2.3 LTS, more info on
+this release can be found
+<a class="reference external" href="http://symfony.com/blog/symfony-2-3-0-the-first-lts-is-now-available">here</a>.</p>
+<div class="line-block">
+<div class="line">Have you ever been missing a way to extend the provided content</div>
+</div>
+<p>controller? Had needs to do custom cache logic and been missing the good
+old <tt class="docutils literal"><span class="pre">cache_ttl</span> <span class="pre">=</span> <span class="pre">0</span></tt> hack?
+| 5.2 brings with it a powerful way to use the existing override system
+to, instead of overriding just a template, <strong>override the whole
+controller</strong>. This allows you to extend the built-in controller and for
+instance get full access to tune the cache headers for a specific
+content type that has different use than normal content, or just enrich
+the final template.</p>
+<ul class="simple">
+<li><a class="reference external" href="How-to-use-a-custom-controller-to-display-a-content-or-location_13468497.html">How to use a custom controller to display a content or
+location</a>.</li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/426">Original
+pull-request</a>.</li>
+</ul>
+<p>Signal slot events are now fully <em>listenable</em>, which makes it possible
+to react on core API signals. These events are now also dispatched over
+Symfony&#8217;s event system so you can listen to them there synchronously,
+while custom slots (listeners for signals) can in the future be
+dispatched asynchronously.</p>
+<p>This enhancement makes it possible to define micro-workflows.</p>
+<ul class="simple">
+<li><a class="reference external" href="How-to-listen-to-Core-events_14123362.html">How to listen to Core
+events</a>.</li>
+<li><a class="reference external" href="https://confluence.ez.no/display/EZP/Signals+reference">Signals
+reference</a>.</li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/440">Original
+pull-request</a>.</li>
+</ul>
+<p>This release resolves a limitation with persistence caching introduced
+in 5.1, a new caching service &#8220;ezpublish.cache_pool&#8221; takes a siteaccess
+group setting &#8220;cache_pool&#8221; into consideration for selecting cache
+service, and hence can be configured with multi repository setups in
+mind. In addition you can now safely reuse this cache pool as the
+persistence cache is prefixed within &#8220;spi&#8221; cache key and will not clear
+your data if you reuse it.</p>
+<ul class="simple">
+<li><a class="reference external" href="Persistence-cache_10158280.html">Updated documentation on reusing the cache
+service</a></li>
+<li><a class="reference external" href="Persistence-cache-configuration_12781293.html">Updated documentation on configuring multi repository
+setup</a></li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/491">Original
+pull-request</a></li>
+</ul>
+<p>With 64-bits servers now being common, this release takes advantage of
+that if present and provides support for <strong>up to 62 languages on 64-bits
+environments</strong> and <strong>30 languages on 32-bits platforms</strong>.&nbsp;This feature
+is supported across both <em>Symfony stack</em> and <em>legacy stack</em>, and is
+accomplished by increasing the size of the integer field used for
+language bit masks. Improved storage engines still has the possibility
+to provide even more languages on pure <em>Symfony stack</em>&nbsp;in the future.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://jira.ez.no/browse/EZP-15040">JIRA issue</a></li>
+<li>Original Pull requests:
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/pull/746">legacy</a>,
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/493">5.x</a></li>
+</ul>
+<p>Brand new CommendsBundle provides an abstracted way to display
+comments.&nbsp;It is&nbsp;<strong>provider based</strong>, which means that it is open
+to&nbsp;<strong>any kind of commenting system</strong>.</p>
+<p>It has native support for <strong>Disqus</strong> and <strong>Facebook comments</strong>.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ezsystems/CommentsBundle">CommentsBundle</a></li>
+<li><a class="reference external" href="https://github.com/ezsystems/CommentsBundle/blob/master/Resources/doc/index.md">Documentation</a></li>
+</ul>
+<p>Pagination can easily become cumbersome when done by hand.
+<strong>Pagerfanta</strong> is a powerful library for object oriented pagination,
+standard in the Symfony world. eZ Publish Platform 5.2 comes with native
+support of PagerFanta, with dedicated adapters.</p>
+<ul class="simple">
+<li><a class="reference external" href="How-to-paginate-API-search-results_17105786.html">How to paginate API search
+results</a></li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/558">Initial
+pull-request</a></li>
+<li>External links<ul>
+<li><a class="reference external" href="https://github.com/whiteoctober/Pagerfanta">Pagerfanta</a></li>
+<li><a class="reference external" href="https://github.com/whiteoctober/WhiteOctoberPagerfantaBundle">WhiteOctoberPagerfantaBundle</a></li>
+</ul>
+</li>
+</ul>
+<p>3rd party custom tags support have been greatly improved and
+implementation is now much easier. It is now possible add a custom XSL
+stylesheet to the main one and to assign a priority. This also makes it
+possible to easily override existing eZXML tags rendering.</p>
+<ul class="simple">
+<li><a class="reference external" href="How-to-implement-a-Custom-Tag-for-XMLText-FieldType_15204463.html">How to implement a Custom Tag for XMLText
+FieldType</a></li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/pull/456">Initial
+pull-request</a></li>
+</ul>
+<div class="line-block">
+<div class="line">The eZ Publish Platform REST API can now easily be extended: custom</div>
+</div>
+<p>routes, media-types...
+| Our framework will easily handle input parsing, error handling and
+output generation (to XML or JSON) for you.</p>
+<ul class="simple">
+<li>See&nbsp;<a class="reference external" href="Extending-the-REST-API_13468575.html">Extending the REST
+API</a>.</li>
+</ul>
+<p>The DFS MySQLi implementation now uses two distinct tables for storage
+and cache. The main benefit is that clearing cache is as simple as
+truncating the cache table without affecting storage in any way. This
+feature is enabled by default, and can easily be disabled.</p>
+<ul class="simple">
+<li>Pull
+request:&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/pull/750">https://github.com/ezsystems/ezpublish-legacy/pull/750</a></li>
+<li><a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/blob/master/doc/features/5.2/dfs_split_tables.md">Technical
+documentation</a></li>
+<li>Initial feature suggestion by&nbsp;<a class="reference external" href="https://github.com/omh">&#64;omh</a></li>
+</ul>
+<p>As part of this release we have made the Javascript REST client which we
+aim to use in our future user interface open, this can be found on
+github and can be used for your own REST needs.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ezsystems/ez-js-rest-client">github.com/ezsystems/ez-js-rest-client</a></li>
+</ul>
+<p>The standard symfony like index*.php files can now be configured using
+environment&nbsp;variables, no need to change the file anymore.</p>
+<ul class="simple">
+<li><a class="reference external" href="Virtual-host-setup_7438507.html">Apache Virtual host setup</a></li>
+<li>For all possibilities check at any time, check
+your&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-community/blob/master/web/index.php">web/index.php</a>
+and
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-community/blob/master/web/index_dev.php">web/index_dev.php</a>&nbsp;(note:
+links goes to &#8220;master&#8221; and might include features not found in your
+version)</li>
+</ul>
+<p>Various Twig helpers were added to ease daily tasks, such as:</p>
+<ul class="simple">
+<li><a class="reference external" href="ez_content_name_17105551.html">ez_content_name</a>, to display a
+Content name in the current language.</li>
+<li><a class="reference external" href="ez_field_value_17105557.html">ez_field_value</a>, to get a Field
+value in the current language.</li>
+<li><a class="reference external" href="ez_is_field_empty_17105612.html">ez_is_field_empty</a>, to check
+if a given field is empty for the current language.</li>
+</ul>
+<p>Icon</p>
+<p>These helpers are also available in PHP code through <tt class="docutils literal"><span class="pre">FieldHelper</span></tt>
+(service ID: <tt class="docutils literal"><span class="pre">ezpublish.field_helper</span></tt>) and <tt class="docutils literal"><span class="pre">TranslationHelper</span></tt>
+(service ID: <tt class="docutils literal"><span class="pre">ezpublish.translation_helper</span></tt>) services.</p>
+</div>
+<div class="section" id="contributors">
+<h2>5.2 Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>For 5.2 we want to reach out a special thank you to those that have
+contributed to this release, especially the brave few who have helped
+out on the
+&#8220;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/graphs/contributors?from=2013-05-01&amp;to=2013-09-30&amp;type=c">new</a>
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-community/graphs/contributors?from=2013-05-01&amp;to=2013-09-30&amp;type=c">stack</a>&#8221;:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/bchoquet-heliopsis">bchoquet-heliopsis</a></li>
+<li><a class="reference external" href="https://github.com/masev">masev</a></li>
+<li><a class="reference external" href="https://github.com/pborreli">pborreli</a></li>
+<li><a class="reference external" href="https://github.com/paradoxe">paradoxe</a></li>
+<li><a class="reference external" href="https://github.com/tharkun">tharkun</a></li>
+<li><a class="reference external" href="https://github.com/crevillo">crevillo</a></li>
+<li><a class="reference external" href="https://github.com/jeromegamez">jeromegamez</a></li>
+<li><a class="reference external" href="https://github.com/Plopix">Plopix</a></li>
+<li><a class="reference external" href="https://github.com/itagent">itagent</a></li>
+<li><a class="reference external" href="https://github.com/mmaury-heliopsis">mmaury-heliopsis</a></li>
+</ul>
+<p>In addition ezpublish-legacy is still receiving a lot of pull requests,
+contributions to this part of the release can be found
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/graphs/contributors?from=2013-05-01&amp;to=2013-09-30&amp;type=c">here</a>.</p>
+</div>
+<div class="section" id="full-changelog">
+<h2>5.2 Full Changelog<a class="headerlink" href="#full-changelog" title="Permalink to this headline">¶</a></h2>
+<p>For the full 5.2 changelog please refer to the&nbsp;<a class="reference external" href="5.2-Changelog_19234955.html">5.2
+Changelog</a> dedicated page.</p>
+</div>
+<div class="section" id="known-issues">
+<h2>5.2 Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>The complete list of know issues is available in the&nbsp;<a class="reference external" href="Known-issues-in-5.2_19234957.html">5.2 Known
+issues</a> page.</p>
+<p><sub>*\* jMeter&nbsp;numbers reflect a load of 800 users.*</sub></p>
+</div>
+<div class="section" id="attachments">
+<h2>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/19234953/19628052.jpg">demobundle_sc.jpg</a></div>
+</div>
+<p>(image/jpeg)
+|  <img alt="image2" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/19234953/19628053.png">eZ Publish 5.2 demo
+frontend.png</a> (image/png)</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>The link &#8220;Upgrade from 5.1 to 5.2&#8221; is broken.</p>
+<p><img alt="image3" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:support&#37;&#52;&#48;netmaking&#46;no">support<span>&#64;</span>netmaking<span>&#46;</span>no</a> at Nov 20, 2013 07:51</p>
+<p>Thanks Netmaking support, link is now working again&nbsp;<img alt="(smile)" src="docs/images/icons/emoticons/smile.png" /></p>
+<p><img alt="image5" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> at Nov 20, 2013 08:45</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 5.2 Release Notes</a><ul>
+<li><a class="reference internal" href="#meet-the-updated-ez-publish-platform-5-2">Meet the updated&nbsp;eZ Publish Platform&nbsp;5.2</a><ul>
+<li><a class="reference internal" href="#is-on-a-direct-path-to-5-3lts">5.2 is on a direct path to 5.3LTS</a></li>
+<li><a class="reference internal" href="#quick-links">Quick links</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#features">5.2 Features</a></li>
+<li><a class="reference internal" href="#contributors">5.2 Contributors</a></li>
+<li><a class="reference internal" href="#full-changelog">5.2 Full Changelog</a></li>
+<li><a class="reference internal" href="#known-issues">5.2 Known issues</a></li>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/5.2-Release-Notes_19234953.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

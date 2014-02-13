@@ -1,0 +1,195 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Legacy configuration &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Configuration_2720538.html">Configuration</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-legacy-configuration">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Legacy configuration<a class="headerlink" href="#ez-publish-platform-5-next-legacy-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+May 21, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#Legacyconfiguration-LegacyConfigResolver">LegacyConfigResolver</a><ul>
+<li><a class="reference external" href="#Legacyconfiguration-Example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Legacyconfiguration-Bestpracticesformigration">Best practices for
+migration</a><ul>
+<li><a class="reference external" href="#Legacyconfiguration-Noteforextensiondevelopers">Note for extension
+developers</a><ul>
+<li><a class="reference external" href="#Legacyconfiguration-ExampleforSQLIImport">Example for
+SQLIImport</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>As eZ Publish legacy is part of eZ Publish 5, you might want to access
+its settings (i.e. not migrated extension). Regarding this, a
+<strong>LegacyConfigResolver</strong> has been implemented, allowing the access to
+the legacy settings.</p>
+<div class="section" id="legacyconfigresolver">
+<h2>LegacyConfigResolver<a class="headerlink" href="#legacyconfigresolver" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">LegacyConfigResolver</span></tt> works in the same way the main
+<tt class="docutils literal"><span class="pre">ConfigResolver</span></tt> presented in the <a class="reference external" href="Configuration_2720538.html">configuration
+documentation</a>. However, it has its own
+specification.</p>
+<ul class="simple">
+<li><strong>Parameter name</strong> must be the combination of the INI block and
+parameter name
+(<strong>``&lt;iniGroupName&gt;.&lt;paramName&gt;``</strong>,&nbsp;e.g.&nbsp;<tt class="docutils literal"><span class="pre">DebugSettings.DebugOutput</span></tt>).</li>
+<li><strong>Namespace</strong> is the <strong>INI file name</strong>, without .ini suffix (e.g.
+<strong>image</strong> for <em>image.ini</em>).</li>
+<li><strong>Scope</strong> can still be a specific siteaccess to look into (still
+defaults to current siteaccess)</li>
+</ul>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="best-practices-for-migration">
+<h2>Best practices for migration<a class="headerlink" href="#best-practices-for-migration" title="Permalink to this headline">¶</a></h2>
+<p>It might happen that your eZ Publish application still relies on legacy
+extensions (yours or from the community) that have not been migrated yet
+to eZ Publish 5. In this case the <strong>LegacyConfigResolver</strong> can be
+useful, but the problem is that once the extension is migrated you will
+then need to change your code to use the main config resolver, which can
+be a bit tedious on large applications.</p>
+<p>Actually, the <em>main</em> config resolver is set in such a way that <strong>it
+chains the different available resolvers</strong> (i.e. the main one and the
+legacy one). The <strong>ChainConfigResolver</strong> always checks the main
+<tt class="docutils literal"><span class="pre">ConfigResolver</span></tt> first, and if no parameter is found, it fallbacks to
+the <tt class="docutils literal"><span class="pre">LegacyConfigResolver</span></tt>.</p>
+<p>So the example described above could be done in the following way:</p>
+<p>The main difference is that <strong>we don&#8217;t explicitly call the
+LegacyConfigResolver</strong>. The benefit is that once the settings are
+migrated to work with eZ Publish 5 (and assuming that these settings are
+named in the same way), there will be absolutely no change to do in your
+code! The <strong>ChainConfigResolver</strong> will seamlessly use the new
+configuration files.</p>
+<div class="section" id="note-for-extension-developers">
+<h3>Note for extension developers<a class="headerlink" href="#note-for-extension-developers" title="Permalink to this headline">¶</a></h3>
+<p>Considering what was explained above, the best practice for extension
+migration regarding configuration is to keep a compatible format.</p>
+<div class="section" id="example-for-sqliimport">
+<h4>Example for SQLIImport<a class="headerlink" href="#example-for-sqliimport" title="Permalink to this headline">¶</a></h4>
+<p><strong>Legacy INI settings:</strong></p>
+<p><strong>sqliimport.ini for ezdemo_site siteaccess</strong></p>
+<p><strong>Would become:</strong></p>
+<p><strong>Usage in a controller:</strong></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Legacy configuration</a><ul>
+<li><a class="reference internal" href="#legacyconfigresolver">LegacyConfigResolver</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#best-practices-for-migration">Best practices for migration</a><ul>
+<li><a class="reference internal" href="#note-for-extension-developers">Note for extension developers</a><ul>
+<li><a class="reference internal" href="#example-for-sqliimport">Example for SQLIImport</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Legacy-configuration_2720546.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

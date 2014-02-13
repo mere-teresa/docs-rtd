@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : REST Development notes &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Using-eZ-Publish-as-a-Service-Platform_2720526.html">Using eZ Publish as a Service
+Platform</a></li>
+<li><a class="reference external" href="Hacking-the-REST-API_2720423.html">Hacking the REST API</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-rest-development-notes">
+<h1>eZ Publish Platform 5.&lt;next&gt; : REST Development notes<a class="headerlink" href="#ez-publish-platform-5-next-rest-development-notes" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:toby&#46;schlitt&#37;&#52;&#48;ez&#46;no">toby<span>&#46;</span>schlitt<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21,
+2013</p>
+</div>
+<div class="section" id="sdk">
+<h1>SDK<a class="headerlink" href="#sdk" title="Permalink to this headline">¶</a></h1>
+<p>The REST SDK realizes an incarnation of the Public API on basis of the
+REST Server.</p>
+<div class="section" id="related-objects">
+<h2>Related objects<a class="headerlink" href="#related-objects" title="Permalink to this headline">¶</a></h2>
+<p>The REST API supports having related objects embedded into the returned
+response for a certain requested object.</p>
+<p><strong>For example</strong>, when requesting a <tt class="docutils literal"><span class="pre">Content</span></tt> object via a <tt class="docutils literal"><span class="pre">GET</span></tt>
+request to <tt class="docutils literal"><span class="pre">/content/objects/23/versions/2</span></tt>, in addition to the
+requested data, the related <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object is included in the
+response.</p>
+<p>The SDK must handle such embedded objects properly. Since embedded and
+referenced objects may change over time, <strong>the client acts by default as
+if no objects are embedded at all, when responding through the server</strong>.</p>
+<p>Therefore, loaded value objects that reference other value objects need
+to receive a lazy loading mechanism in any case (e.g. a <tt class="docutils literal"><span class="pre">VersionInfo</span></tt>
+to load the related <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> object). Lazy loading is achieved by
+setting a closure into a corresponding (internal) property of the value
+object that is executed on request of the related object.</p>
+<p><strong>For example</strong>, a loaded <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object receives a closure
+during creation that can be used to retrieve the related <tt class="docutils literal"><span class="pre">VersionInfo</span></tt>
+object. This closure is then used either when the <tt class="docutils literal"><span class="pre">getContentInfo()</span></tt>
+method is called, or when the virtual <tt class="docutils literal"><span class="pre">$contentInfo</span></tt> property is
+accessed.</p>
+<p>Note that the value object <strong>must not</strong> handle the caching of their
+related instances, i.e. they must not execute the closure only once and
+keep the returned instance. Instead, the corresponding service
+encapsulated in the closure handle the loading of an object only once.</p>
+<div class="section" id="creating-a-deferred-loading">
+<h3>Creating a deferred loading<a class="headerlink" href="#creating-a-deferred-loading" title="Permalink to this headline">¶</a></h3>
+<p>When creating a deferred loading, 2 components are essentially affected:</p>
+<ol class="arabic simple">
+<li><strong>The value object</strong>
+The value object needs to handle the loading of its related objects
+through one (or more) of the available services. To store the
+information for loading the related object, the value object must
+provide the respective properties. For example, a <tt class="docutils literal"><span class="pre">VersionInfo</span></tt>
+object could hold the ID (aka URL) of the related <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> in
+the <tt class="docutils literal"><span class="pre">$contentInfoId</span></tt> property. In order to load the related
+<tt class="docutils literal"><span class="pre">ContentInfo</span></tt> object, it needs only the <tt class="docutils literal"><span class="pre">ContentService</span></tt>, which
+must be provided during construction. The call to
+<tt class="docutils literal"><span class="pre">VersionInfo-&gt;getContentInfo()</span></tt> will then just indirect to
+<tt class="docutils literal"><span class="pre">ContentService-&gt;loadContentInfo()</span></tt> and return its result.</li>
+<li><strong>The parser for the value object</strong>
+The parser must handle the necessary properties set into the value
+object. In addition to that, it must guarantee that all potential
+embedded objects are parsed accordingly.</li>
+</ol>
+<p><strong>Note</strong>: If there is no suitable method on one of the services that
+allow you to load the deferred object, you can realize this by doing
+either of the following:</p>
+<ul class="simple">
+<li><ul class="first">
+<li>create a method on the suitable service that realizes what you
+need and mark it with <tt class="docutils literal"><span class="pre">&#64;access</span> <span class="pre">protected</span></tt></li>
+<li>handle the corresponding operations in the value object (not
+recommended, since hardly testable)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="parsing-embedded-objects">
+<h3>Parsing embedded objects<a class="headerlink" href="#parsing-embedded-objects" title="Permalink to this headline">¶</a></h3>
+<p>The REST API is based on the principle that referred objects might
+optionally be embedded into the response. For example, the list of
+Relations is embedded into the Content response. However, a consuming
+client may not rely on such embedding, since objects might change from
+embedded to not embedded (and vice-versa) in the future. This must also
+be reflected in the SDK implementation.</p>
+<p><strong>Hint</strong>: An object reference can be detected by its <tt class="docutils literal"><span class="pre">href</span></tt> and
+<tt class="docutils literal"><span class="pre">media-type</span></tt> attributes. If both are available, the element is an
+object reference. If the corresponding tag is not empty, the referenced
+object is also embedded.</p>
+<p>To not rely on embedded objects, only a deferred load must be created,
+for every referenced object . In addition to that, the potentially
+embedded object might be parsed and put into the cache. In order to
+allow such caching of embedded objects, the parsing process must still
+be triggered, regardless if the parsing result is used or not.</p>
+<p><strong>For example</strong>, when parsing a <tt class="docutils literal"><span class="pre">VersionInfo</span></tt>, the currently embedded
+<tt class="docutils literal"><span class="pre">ContentInfo</span></tt> must be triggered for parsing, using the
+<tt class="docutils literal"><span class="pre">ParsingDispatcher</span></tt>, although a deferred loading closure is put into
+the <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> instance.</p>
+<p>The <tt class="docutils literal"><span class="pre">ParserTools</span></tt> object has a convenience method that allows you to
+trigger parsing of potentially embedded objects easily.</p>
+</div>
+</div>
+<div class="section" id="object-caching">
+<h2>Object caching<a class="headerlink" href="#object-caching" title="Permalink to this headline">¶</a></h2>
+<p>In order to realize the lazy loading mechanism described above, a simple
+ObjectCache is used by the services and parsers in the SDK. The
+ObjectCache handles the storing of references to all already loaded
+objects, during a single usage cycle of the REST SDK.</p>
+<p><strong>Note</strong>: The ObjectCache is not meant to be replaced by a more
+persistent caching mechanism, later on.&nbsp; Instead, such a mechanism needs
+to work far more integrated, using ETags and friends.</p>
+<p><strong>Warning</strong>: ObjectCaching is not active in the REST Client, yet. It
+still needs to be introduced!</p>
+<p>The object cache is used in 2 different areas of the SDK:</p>
+<ul class="simple">
+<li><strong>The parsers</strong>:
+A parser must store a created object into the cache as soon as it is
+created</li>
+<li><strong>The services</strong>
+A service must, first, attempt to restore a requested object from the
+cache, before loading it from the REST server</li>
+</ul>
+<p>In order to use the cache, the parsers and services will receive it via
+dependency injection at construction time.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : REST Development notes</a></li>
+<li><a class="reference internal" href="#sdk">SDK</a><ul>
+<li><a class="reference internal" href="#related-objects">Related objects</a><ul>
+<li><a class="reference internal" href="#creating-a-deferred-loading">Creating a deferred loading</a></li>
+<li><a class="reference internal" href="#parsing-embedded-objects">Parsing embedded objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#object-caching">Object caching</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/REST-Development-notes_2720426.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

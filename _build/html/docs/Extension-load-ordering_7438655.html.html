@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Extension load ordering &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Extensions_7438523.html">Extensions</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-extension-load-ordering">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Extension load ordering<a class="headerlink" href="#ez-publish-platform-5-next-extension-load-ordering" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep 25,
+2013</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In eZ Publish 4.4 and higher, there is a mechanism that enables
+extensions to define in which order they should be loaded in regards to
+other, related, extensions. The function automates the extension load
+ordering to help avoid situations where extensions does not
+work&nbsp;properly&nbsp;in case of wrong order.</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>For the extension load ordering mechanism to be active, extensions
+should be recent enough to contain the needed metadata stored in the
+&#8220;<tt class="docutils literal"><span class="pre">extension.xml</span></tt>&#8221; file, so make sure you use the extensions
+certified for your eZ Publish version (see: Technical manual /
+&lt;version&gt;&nbsp;/ Installation&nbsp;/&nbsp;Requirements ).</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>To activate the extension load ordering, the following configuration
+setting should be enabled in &#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221; in
+setting/override:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ExtensionSettings</span><span class="p">]</span>
+<span class="n">ExtensionOrdering</span><span class="o">=</span><span class="n">enabled</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extension-ordering">
+<h2>Extension ordering<a class="headerlink" href="#extension-ordering" title="Permalink to this headline">¶</a></h2>
+<p>The order in which active extensions appear in the &#8220;<tt class="docutils literal"><span class="pre">site.ini</span></tt>&#8221;
+under
+<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_folder&gt;/ezpublish_legacy</span></tt>/settings/override/site.ini
+&#8220;<tt class="docutils literal"><span class="pre">[ExtensionSettings]</span></tt> <tt class="docutils literal"><span class="pre">ActiveExtensions=</span></tt>&#8221; is important for the
+selection of templates and, possibly, configuration settings. For this
+reason, users must insure that the correct order is used for extensions
+that have dependencies on other extensions. For example eZ Find must be
+activated before eZ Webin. The same rule applies for the eZ Teamroom
+extension: eZ Teamroom and all its dependent extensions, such as eZ
+Lightbox and eZ Event, need to be activated before eZ Webin.</p>
+<p>Although extensions can be activated using the Administrator Interface,
+as for now the admin interface does not provide a way to re-order the
+extensions, manually or automatically. This implies that the order can
+only be defined in site.ini.</p>
+<p>Defining the correct order can sometimes be tricky when many extensions
+need to be considered. By providing metadata to the extension loading,
+manual extension load ordering is now a thing of the past.</p>
+</div>
+<div class="section" id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<p>By providing metadata for the extension load ordering we enable eZ
+Publish to correctly determine the correct order itself. The metadata
+about extension ordering is optional. These metadata are now declared
+using an XML file, that can also be used to replace what is currently in
+&#8220;<tt class="docutils literal"><span class="pre">ezinfo.php</span></tt>&#8221;. This file is named &#8220;<tt class="docutils literal"><span class="pre">extension.xml</span></tt>&#8221;, located at
+the root of the extension. It has the following content:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+ &lt;software&gt;
+     &lt;metadata&gt;
+         &lt;name&gt;Extension name&lt;/name&gt;
+         &lt;description&gt;Extension description&lt;/description&gt;
+         &lt;version&gt;X.Y.Z&lt;/version&gt;
+         &lt;copyright&gt;Copyright text&lt;/copyright&gt;
+         &lt;license&gt;License type&lt;/license&gt;
+         &lt;info_url&gt;http://url/to/extension/site&lt;/info_url&gt;
+         &lt;author&gt;Extension author&lt;/author&gt;
+
+         &lt;software&gt;
+             &lt;uses&gt;
+                 &lt;name&gt;Used library/software 1&lt;/name&gt;
+                 &lt;license&gt;Used library/software 1  license&lt;/license&gt;
+                 &lt;copyright&gt;Used library/software 1  copyright&lt;/copyright&gt;
+                 &lt;info_url&gt;Used library/software 1  URL&lt;/info_url&gt;s
+                 &lt;version&gt;Used library/software 1  version&lt;/version&gt;
+             &lt;/uses&gt;
+            &lt;uses&gt;
+                &lt;name&gt;Used library/software 2&lt;/name&gt;
+                &lt;license&gt;Used library/software 2  license&lt;/license&gt;
+                &lt;copyright&gt;Used library/software 2  copyright&lt;/copyright&gt;
+                &lt;info_url&gt;Used library/software 2  URL&lt;/info_url&gt;s
+                &lt;version&gt;Used library/software 2  version&lt;/version&gt;
+            &lt;/uses&gt;
+
+         &lt;/software&gt;
+
+     &lt;/metadata&gt;
+
+     &lt;dependencies&gt;
+         &lt;uses&gt;
+             &lt;extension name="usedExtension" /&gt;
+         &lt;/uses&gt;
+        &lt;requires&gt;
+            &lt;extension name="requiredExtension" /&gt;
+        &lt;/requires&gt;
+         &lt;extends&gt;
+             &lt;extension name="extendedExtension" /&gt;
+         &lt;/extends&gt;
+     &lt;/dependencies&gt;
+
+ &lt;/software&gt;</pre>
+</div>
+<p>The first block (software/metadata) replaces &#8220;<tt class="docutils literal"><span class="pre">ezinfo.php</span></tt>&#8221;. The
+fields are equivalent to those found in the info() method of the &#8216;old&#8217;
+ezinfo. The sub-node software/metadata/software replaces the previous
+3rdparty_libraries entry. One software/metadata/software/uses node must
+be used for each library.</p>
+<p>The second block (software/dependencies) contains 3 sub-nodes:</p>
+<ul class="simple">
+<li><strong>uses:</strong> indicates that the referenced extension is used by this
+extension.</li>
+<li><strong>requires:</strong> indicates that the referenced extension is required by
+this extension.</li>
+<li><strong>extends:</strong> indicates that the referenced extension is overloaded by
+this extension.</li>
+</ul>
+<p><strong>Note:</strong> &#8216;uses&#8217; and &#8216;requires&#8217; currently have the same effect, but
+their behavior will change when real dependencies checking is developed
+in the future.</p>
+</div>
+<div class="section" id="know-issue">
+<h2>Know issue<a class="headerlink" href="#know-issue" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Extension load ordering breaks possibility to define your cluster
+(<tt class="docutils literal"><span class="pre">file.ini</span></tt>) settings for siteaccess and extensions as the
+functionality loads cluster before extension and siteaccess settings
+are loaded.</li>
+<li>Extension load ordering has a small impact on performance</li>
+</ol>
+<p>In both cases work around is to disable extension load ordering.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Extension load ordering</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#extension-ordering">Extension ordering</a></li>
+<li><a class="reference internal" href="#metadata">Metadata</a></li>
+<li><a class="reference internal" href="#know-issue">Know issue</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Extension-load-ordering_7438655.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

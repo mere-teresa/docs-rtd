@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Siteaccess Matching &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Siteaccess_2719828.html">Siteaccess</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-siteaccess-matching">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Siteaccess Matching<a class="headerlink" href="#ez-publish-platform-5-next-siteaccess-matching" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Dec
+18, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#SiteaccessMatching-Configuration">Configuration</a></li>
+<li><a class="reference external" href="#SiteaccessMatching-Availablematchers">Available matchers</a></li>
+<li><a class="reference external" href="#SiteaccessMatching-Compoundsiteaccessmatcher">Compound siteaccess
+matcher</a></li>
+<li><a class="reference external" href="#SiteaccessMatching-Matchingbyrequestheader">Matching by request
+header</a></li>
+<li><a class="reference external" href="#SiteaccessMatching-Matchingbyenvironmentvariable">Matching by environment
+variable</a></li>
+<li><a class="reference external" href="#SiteaccessMatching-URILexerandsemanticPathinfo">URILexer and
+semanticPathinfo</a></li>
+</ul>
+<p>Siteaccess matching is done through
+<strong>eZ\Publish\MVC\SiteAccess\Matcher</strong>&nbsp;objects. You can configure
+this matching and even develop custom matchers.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure siteaccess matching in your main
+<strong>ezpublish/config/ezpublish.yml</strong> :</p>
+<p><strong>ezpublish.yml</strong></p>
+<p>You need to set several parameters:</p>
+<ul class="simple">
+<li><strong>ezpublish.siteaccess.default_siteaccess</strong></li>
+<li><strong>ezpublish.siteaccess.list</strong></li>
+<li><em>(optional)</em><strong>ezpublish.siteaccess.groups</strong></li>
+<li><strong>ezpublish.siteaccess.match</strong></li>
+</ul>
+<p><strong>ezpublish.siteaccess.default_siteaccess</strong> is the default siteaccess
+that will be used if matching was not successful. This ensures that a
+siteaccess is always defined.</p>
+<p><strong>ezpublish.siteaccess.list</strong> is the list of all available siteaccesses
+in your website.</p>
+<p><em>(optional)</em> <strong>ezpublish.siteaccess.groups</strong> defines which groups
+siteaccesses are member of. This is useful when you want to mutualize
+settings between several siteaccesses and avoid config duplication.
+Siteaccess groups are considered as regular siteaccesses as far as
+configuration is concerned.</p>
+<p>Icon</p>
+<p>A siteaccess can be part of several groups.</p>
+<p>A siteaccess configuration has always precedence on the group
+configuration.</p>
+<p><strong>ezpublish.siteaccess.match</strong> holds the matching configuration. It
+consists in a hash where the key is the name of the matcher class. If
+the matcher class doesn&#8217;t start with a <strong>\</strong>, it will be considered
+relative to <tt class="docutils literal"><span class="pre">eZ\Publish\MVC\SiteAccess\Matcher</span></tt> (e.g. <tt class="docutils literal"><span class="pre">Map\Host</span></tt>
+will refer to&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\MVC\SiteAccess\Matcher\Map\Host</span></tt>)</p>
+<p>Icon</p>
+<p>Every <strong>custom matcher</strong> can be specified with a <strong>fully qualified class
+name</strong> (e.g. <tt class="docutils literal"><span class="pre">\My\SiteAccess\Matcher</span></tt>) or by a <strong>service identifier
+prefixed by &#64;</strong> (e.g. <tt class="docutils literal"><span class="pre">&#64;my_matcher_service</span></tt>).</p>
+<ul class="simple">
+<li>In the case of a fully qualified class name, the matching
+configuration will be passed in the constructor.</li>
+<li>In the case of a service, it must implement
+<tt class="docutils literal"><span class="pre">eZ\Bundle\EzPublishCoreBundle\SiteAccess\Matcher</span></tt>. The matching
+configuration will be passed to <tt class="docutils literal"><span class="pre">setMatchingConfiguration()</span></tt>.</li>
+</ul>
+<p>Icon</p>
+<p>Make sure to type matcher in correct case, if wrong case like &#8220;Uri&#8221;
+instead of &#8220;URI&#8221; it will happily work on systems like Mac OS X because
+of case in sensitive file system, while it will fail when you deploy it
+to a linux server. This is a known artifact of <a class="reference external" href="http://www.php-fig.org/psr/psr-0/">PSR-0
+autoloading</a> of PHP classes.</p>
+</div>
+<div class="section" id="available-matchers">
+<h2>Available matchers<a class="headerlink" href="#available-matchers" title="Permalink to this headline">¶</a></h2>
+<p>Name</p>
+<p>Description</p>
+<p>Configuration</p>
+<p>Example</p>
+<p><tt class="docutils literal"><span class="pre">URIElement</span></tt></p>
+<div class="line-block">
+<div class="line">Maps a URI element to a siteaccess.</div>
+<div class="line">This is the default matcher used when choosing</div>
+<div class="line">URI matching in setup wizard.</div>
+</div>
+<p>The element number you want to match (starting from 1).</p>
+<div class="line-block">
+<div class="line"><strong>Important:</strong> When using a value &gt; 1,</div>
+<div class="line">it will concatenate the elements with _</div>
+</div>
+<p><strong>URI:</strong> <tt class="docutils literal"><span class="pre">/ezdemo_site/foo/bar</span></tt></p>
+<div class="line-block">
+<div class="line">Element number: 1</div>
+<div class="line">Matched siteaccess: ezdemo_site</div>
+</div>
+<div class="line-block">
+<div class="line">Element number: 2</div>
+<div class="line">Matched siteaccess: ezdemo_site_foo</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">URIText</span></tt></p>
+<div class="line-block">
+<div class="line">Matches URI using <em>pre</em> and/or <em>post</em> sub-strings</div>
+<div class="line">in the first URI segment</div>
+</div>
+<p>The prefix and/or suffix (none are required)</p>
+<p><strong>URI:</strong> <tt class="docutils literal"><span class="pre">/footestbar/my/content</span></tt></p>
+<div class="line-block">
+<div class="line">Prefix: foo</div>
+<div class="line">Suffix: bar</div>
+<div class="line">Matched siteaccess: test</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">HostElement</span></tt></p>
+<p>Maps an element in the host name to a siteaccess.</p>
+<p>The element number you want to match (starting from 1).</p>
+<p><strong>Host name:</strong> <tt class="docutils literal"><span class="pre">www.example.com</span></tt></p>
+<div class="line-block">
+<div class="line">Element number: 2</div>
+<div class="line">Matched siteaccess: example</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">HostText</span></tt></p>
+<div class="line-block">
+<div class="line">Matches a siteaccess in the host name,</div>
+<div class="line">using <em>pre</em> and/or <em>post</em> sub-strings.</div>
+</div>
+<p>The prefix and/or suffix (none are required)</p>
+<p><strong>Host name</strong>: <tt class="docutils literal"><span class="pre">www.foo.com</span></tt></p>
+<div class="line-block">
+<div class="line">Prefix: www.</div>
+<div class="line">Suffix: .com</div>
+<div class="line">Matched siteaccess: foo</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">Map\Host</span></tt></p>
+<p>Maps a host name to a siteaccess.</p>
+<p>A hash map of host/siteaccess</p>
+<p><strong>Map</strong>:</p>
+<ul class="simple">
+<li>www.foo.com =&gt; foo_front</li>
+<li>admin.foo.com =&gt; foo_admin</li>
+</ul>
+<p><strong>Host name</strong>: www.example.com</p>
+<p>Matched siteaccess: foo_front</p>
+<p><tt class="docutils literal"><span class="pre">Map\URI</span></tt></p>
+<p>Maps a URI to a siteaccess</p>
+<p>A hash map of URI/siteaccess</p>
+<p><strong>URI:</strong> <tt class="docutils literal"><span class="pre">/something/my/content</span></tt></p>
+<p>Map:</p>
+<ul class="simple">
+<li>something =&gt; ezdemo_site</li>
+<li>foobar =&gt; ezdemo_site_admin</li>
+</ul>
+<p>Matched siteaccess: ezdemo_site</p>
+<p><tt class="docutils literal"><span class="pre">Map\Port</span></tt></p>
+<p>Maps a port to a siteaccess</p>
+<p>A has map of Port/siteaccess</p>
+<p><strong>URL:</strong> <tt class="docutils literal"><span class="pre">http://ezpublish.dev:8080/my/content</span></tt></p>
+<p>Map:</p>
+<ul class="simple">
+<li>80: foo</li>
+<li>8080: bar</li>
+</ul>
+<p>Matched siteaccess: bar</p>
+<p><tt class="docutils literal"><span class="pre">Regex\Host</span></tt></p>
+<p>Matches against a regexp and extract a portion of it</p>
+<div class="line-block">
+<div class="line">The regexp to match against</div>
+<div class="line">and the captured element to use</div>
+</div>
+<p><strong>Host name:</strong> <tt class="docutils literal"><span class="pre">example_sa</span></tt></p>
+<div class="line-block">
+<div class="line">regex: <tt class="docutils literal"><span class="pre">^(\\w+)_sa$</span></tt></div>
+<div class="line">itemNumber: 1</div>
+</div>
+<p>Matched siteaccess: example</p>
+<p><tt class="docutils literal"><span class="pre">Regex\URI</span></tt></p>
+<p>Matches against a regexp and extract a portion of it</p>
+<div class="line-block">
+<div class="line">The regexp to match against</div>
+<div class="line">and the captured element to use</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>URI:</strong> <tt class="docutils literal"><span class="pre">/footestbar/something</span></tt></p>
+<div class="line-block">
+<div class="line">regex: ^/foo(\\w+)bar</div>
+<div class="line">itemNumber: 1</div>
+</div>
+<p>Matched siteaccess: test</p>
+</div>
+<div class="section" id="compound-siteaccess-matcher">
+<h2>Compound siteaccess matcher<a class="headerlink" href="#compound-siteaccess-matcher" title="Permalink to this headline">¶</a></h2>
+<p>The Compound siteaccess matcher allows to combine several matchers
+together, this can most commonly be used to performed a legacy
+<strong>*host_uri*</strong> match.</p>
+<p>For that, the following matchers can be used in your siteaccess match:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Compound\LogicalAnd</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Compound\LogicalOr</span></tt></li>
+</ul>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+<div class="section" id="matching-by-request-header">
+<h2>Matching by request header<a class="headerlink" href="#matching-by-request-header" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to define which siteaccess to use by setting a
+<strong>X-Siteaccess</strong> header in your request. This can be useful for REST
+requests.</p>
+<p>In such case, <strong>X-Siteaccess</strong> must be the <strong>siteaccess name</strong> (e.g.
+<em>ezdemo_site</em>).</p>
+</div>
+<div class="section" id="matching-by-environment-variable">
+<h2>Matching by environment variable<a class="headerlink" href="#matching-by-environment-variable" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to define which siteaccess to use directly via an
+<strong>EZPUBLISH_SITEACCESS</strong> environment variable.</p>
+<p>This is recommended if you want to get <strong>performance gain</strong> since no
+matching logic is done in this case.</p>
+<p>You can define this environment variable directly from your web server
+configuration:</p>
+<p><strong>Apache VirtualHost example</strong></p>
+<p>Icon</p>
+<p>This can also be done via PHP-FPM configuration file, if you use it.
+See&nbsp;<a class="reference external" href="http://php.net/manual/en/install.fpm.configuration.php#example-60">PHP-FPM
+documentation</a>&nbsp;for
+more information.</p>
+<p>Note about precedence</p>
+<p>Icon</p>
+<p>&nbsp;The precedence order for siteaccess matching is the following (the
+first matched wins):</p>
+<ol class="arabic simple">
+<li>Request header</li>
+<li>Environment variable</li>
+<li>Configured matchers</li>
+</ol>
+</div>
+<div class="section" id="urilexer-and-semanticpathinfo">
+<h2>URILexer and semanticPathinfo<a class="headerlink" href="#urilexer-and-semanticpathinfo" title="Permalink to this headline">¶</a></h2>
+<p>In some cases, after matching a siteaccess, it is neecessary to modify
+the original request URI. This is for example needed with URI-based
+matchers since the siteaccess is contained in the original URI and it is
+not part of the route itself.</p>
+<p>The problem is addressed by <em>analyzing</em> this URI and by modifying it
+when needed through the <strong>URILexer</strong> interface.</p>
+<p><strong>URILexer interface</strong></p>
+<p>Once modified, the URI is stored in the <strong>*semanticPathinfo*</strong> request
+attribute, and the original pathinfo is not modified.</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Nice work&nbsp;! Just a question about host/uri match: how could it work with
+the matcher? it ll be include in ez5 or should we develop it ?</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:philippe&#46;vincent-royol&#37;&#52;&#48;ez&#46;no">philippe<span>&#46;</span>vincent-royol<span>&#64;</span>ez<span>&#46;</span>no</a> at Sep 04, 2012 11:04</p>
+<p>Thanks.</p>
+<p>It&#8217;s a pending task. We will introduce matcher combinators for that. So
+it will be more powerful&nbsp;<img alt="(smile)" src="docs/images/icons/emoticons/smile.png" /></p>
+<p><img alt="image2" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> at Sep 04, 2012 11:35</p>
+<p>The configuration doc. seems outdated.&nbsp;From what I could tell, It is now
+set in (and imported from) <strong>parameters.yml</strong>, using a different
+structure:</p>
+<p><strong>parameters.yml</strong></p>
+<p><img alt="image3" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:joao&#46;inacio&#37;&#52;&#48;ez&#46;no">joao<span>&#46;</span>inacio<span>&#64;</span>ez<span>&#46;</span>no</a> at Sep 18, 2012 22:43</p>
+<p>You&#8217;re right&nbsp;<img alt="(smile)" src="docs/images/icons/emoticons/smile.png" />. I just didn&#8217;t have time to update the
+documentation yet&nbsp;<img alt="(wink)" src="docs/images/icons/emoticons/wink.png" /></p>
+<p><img alt="image5" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> at Sep 20, 2012 17:14</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Siteaccess Matching</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#available-matchers">Available matchers</a></li>
+<li><a class="reference internal" href="#compound-siteaccess-matcher">Compound siteaccess matcher</a></li>
+<li><a class="reference internal" href="#matching-by-request-header">Matching by request header</a></li>
+<li><a class="reference internal" href="#matching-by-environment-variable">Matching by environment variable</a></li>
+<li><a class="reference internal" href="#urilexer-and-semanticpathinfo">URILexer and semanticPathinfo</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Siteaccess-Matching_2719830.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

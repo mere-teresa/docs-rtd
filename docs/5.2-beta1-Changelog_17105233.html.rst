@@ -1,0 +1,184 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+#. `Pre Releases <Pre-Releases_16286284.html>`__
+#. `5.2-BETA1 Release Notes <5.2-BETA1-Release-Notes_16286633.html>`__
+
+eZ Publish Platform 5.<next> : 5.2-beta1 Changelog
+==================================================
+
+Added by andre.romcke@ez.no , edited by andre.romcke@ez.no on Sep 25,
+2013
+
+This page shows changes since
+`alpha1 <5.2-alpha1-Changelog_13468286.html>`__.
+
+`Improvements <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Improvement%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__ (3 issues)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-15040 <https://jira.ez.no/browse/EZP-15040>`__
+
+`Support for more than 30
+languages <https://jira.ez.no/browse/EZP-15040>`__
+
+Language
+
+`EZP-21495 <https://jira.ez.no/browse/EZP-21495>`__
+
+`(Persistence) cache does not support multi repository
+setup <https://jira.ez.no/browse/EZP-21495>`__
+
+Caching, Symfony stack
+
+`EZP-21510 <https://jira.ez.no/browse/EZP-21510>`__
+
+`'Clear View cache from here' action ignores CacheThreshold setting,
+performance issues/db deadlocks <https://jira.ez.no/browse/EZP-21510>`__
+
+Caching, Legacy Storage engine
+
+`3
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Improvement%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__
+
+`Features <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Story%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__ (1 issues)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-18865 <https://jira.ez.no/browse/EZP-18865>`__
+
+`Separate DFS binary & cache tables and make it
+configurable <https://jira.ez.no/browse/EZP-18865>`__
+
+Caching, Clustering
+
+`1
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Story%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__
+
+`Bug fixes <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Bug%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__ (15 issues)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-21274 <https://jira.ez.no/browse/EZP-21274>`__
+
+`Update YUI & jQuery in
+ezsjcore <https://jira.ez.no/browse/EZP-21274>`__
+
+Extensions/eZ JSCore
+
+`EZP-21304 <https://jira.ez.no/browse/EZP-21304>`__
+
+`REST api incorrectly parses requests with uri
+siteaccess <https://jira.ez.no/browse/EZP-21304>`__
+
+REST interface
+
+`EZP-21305 <https://jira.ez.no/browse/EZP-21305>`__
+
+`Object name pattern doesn't support object relation datatype as first
+condition in a fallback <https://jira.ez.no/browse/EZP-21305>`__
+
+Field types
+
+`EZP-21430 <https://jira.ez.no/browse/EZP-21430>`__
+
+`[Admin Interface] Regression on preview (fatal
+error) <https://jira.ez.no/browse/EZP-21430>`__
+
+Administration Interface
+
+`EZP-21465 <https://jira.ez.no/browse/EZP-21465>`__
+
+`Cleanup extra lines in the ezurl\_object\_link
+table <https://jira.ez.no/browse/EZP-21465>`__
+
+`EZP-21467 <https://jira.ez.no/browse/EZP-21467>`__
+
+`PHP Notice in
+ezurlaliasquery.php <https://jira.ez.no/browse/EZP-21467>`__
+
+`EZP-21511 <https://jira.ez.no/browse/EZP-21511>`__
+
+`Don't break prioritized languages when fetching eZURLAliasML->getPath
+in different locale <https://jira.ez.no/browse/EZP-21511>`__
+
+Language
+
+`EZP-21537 <https://jira.ez.no/browse/EZP-21537>`__
+
+`[Demo Interface] My profile email appears with SPAMFILTER
+text <https://jira.ez.no/browse/EZP-21537>`__
+
+DemoBundle
+
+`EZP-21547 <https://jira.ez.no/browse/EZP-21547>`__
+
+`HttpError for "Access denied" (1) is cached, returns "200 OK"
+instead <https://jira.ez.no/browse/EZP-21547>`__
+
+Misc
+
+`EZP-21550 <https://jira.ez.no/browse/EZP-21550>`__
+
+`Changing owner, clearing cache needed for Owner(Self) to
+work <https://jira.ez.no/browse/EZP-21550>`__
+
+Caching, Repository & Services (Public API impl)
+
+`EZP-21561 <https://jira.ez.no/browse/EZP-21561>`__
+
+`eZ Publish 5.2alpha1 LS has a tones of JavaScript errors in admin
+interface <https://jira.ez.no/browse/EZP-21561>`__
+
+Administration Interface
+
+`EZP-21575 <https://jira.ez.no/browse/EZP-21575>`__
+
+`Missing Legacy signal slot cache clearing on UpdateMetaData while
+updating user <https://jira.ez.no/browse/EZP-21575>`__
+
+Public API interfaces
+
+`EZP-21578 <https://jira.ez.no/browse/EZP-21578>`__
+
+`Matching siteaccess on http header does not
+work <https://jira.ez.no/browse/EZP-21578>`__
+
+REST API v2, Symfony stack
+
+`EZP-21581 <https://jira.ez.no/browse/EZP-21581>`__
+
+`content\_view\_provider.configured service uses wrong matcher
+factory <https://jira.ez.no/browse/EZP-21581>`__
+
+Symfony stack
+
+`EZP-21648 <https://jira.ez.no/browse/EZP-21648>`__
+
+`When publishing Content with Location some Location create struct
+properties are not respected <https://jira.ez.no/browse/EZP-21648>`__
+
+Legacy Storage engine, Public API interfaces, Repository & Services
+(Public API impl)
+
+`15
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project=EZP%20AND%20fixVersion%20in%20%28%20%225.2-beta1%22%20%29%20AND%20type=Bug%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__
+
+Document generated by Confluence on Feb 12, 2014 16:43

@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Development Guidelines &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Introduction-for-eZ-Publish-developers_11403947.html">Introduction for eZ Publish
+developers</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-development-guidelines">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Development Guidelines<a class="headerlink" href="#ez-publish-platform-5-next-development-guidelines" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21,
+2013</p>
+<p>These are the development/coding guidelines for eZ Publish 5.x kernel,
+they are the same if you intend to write Bundles, hack on eZ Publish
+itself or create new functionality for or on top of eZ Publish.</p>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>Like most development guidelines these aims to improve security,
+maintainability, performance and readability of our software. They
+follow industry standards but sometimes extend them to cater
+specifically to our needs for eZ Publish ecosystem. The next sections
+will cover all relevant technologies from a high level point of view.</p>
+</div>
+<div class="section" id="http">
+<h2>HTTP<a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish is a web software that is reached via HTTP in most cases, out
+of the box in eZ Publish 5.x kernel this is specifically: web (usually
+HTML) or REST.</p>
+<p>We aim to follow the
+<a class="reference external" href="http://trac.tools.ietf.org/wg/httpbis/trac/wiki#HTTP1.1Deliverables">latest</a>
+stable HTTP specification, and industry best practice:</p>
+<ul class="simple">
+<li><strong>Expose our data in a RESTful way</strong><ul>
+<li>GET, HEAD, OPTIONS &amp; TRACE methods are
+<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-21#section-5.2.1">safe</a>&nbsp;(otherwise
+known as
+<a class="reference external" href="http://en.wiktionary.org/wiki/nullipotent">nullipotent</a>), as
+in: should never cause changes to resources (note: things like
+writing a line in a log file are not considered resource changes)</li>
+<li>PUT &amp; DELETE methods are
+<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-21#section-5.2.2">idempotent</a>,
+as in multiple identical requests should all have the same result
+as a single request</li>
+<li>GET &amp; HEAD methods should be
+<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-21#section-5.2.3">cacheable</a>
+both on client side, server-side and proxies between, as further
+defined in the HTTP
+<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-21">specification</a></li>
+<li>As PUT is for replacing a resource, we should use
+<a class="reference external" href="http://tools.ietf.org/html/rfc5789">PATCH</a> in cases where only
+partial replacement is intended</li>
+</ul>
+</li>
+<li><strong>Authenticated traffic</strong><ul>
+<li>Should use HTTPS</li>
+</ul>
+</li>
+<li><strong>Session based traffic</strong><ul>
+<li>Should follow recommendations for <em>Authenticated traffic</em></li>
+<li>Should use a per user session
+<a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF</a>
+token on all requests using un-safe HTTP methods (POST, PUT,
+DELETE, PATCH, ...)</li>
+<li>Should expire session id, session data and CSRF token on login,
+logout and session time out, except:<ul>
+<li>On login session data from previous session id is moved to new
+session id, keeping for instance shopping basket on login</li>
+</ul>
+</li>
+<li>Should avoid timing attacks by using a random amount of time for
+login operation</li>
+<li>Should never use Session id in URI&#8217;s. And this feature (&#8220;SID&#8221;)
+must always be disabled on production servers</li>
+</ul>
+</li>
+<li><strong>Sessions</strong><ul>
+<li>Should not be used to store large amounts of data; store data in
+database and id&#8217;s in session if needed</li>
+<li>Should not store critical data: if user deletes his cookies or
+closes his browser session data is lost</li>
+<li>Should use an ID generated with enough randomness to prevent
+prediction or brute-force attacks</li>
+</ul>
+</li>
+<li><strong>Cookies (especially session cookies)</strong><ul>
+<li>Should never store sensitive data in cookies (only exception is
+session id in session cookie)</li>
+<li>Should always set <em>Full domain</em> to avoid <a class="reference external" href="http://en.wikipedia.org/wiki/Session_fixation#Attacks_using_cross-subdomain_cooking">cross-subdomain
+cooking</a>&nbsp;when
+on shared domain.</li>
+<li>Should set <em>HttpOnly</em> flag to reduce risk of attacks such as
+<a class="reference external" href="http://en.wikipedia.org/wiki/Session_fixation#Attacks_using_cross-site_cooking">cross-site
+cooking</a>
+and <a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_scripting">cross-site
+scripting</a></li>
+<li>Should set <em>Secure flag</em> if HTTPS is used (as recommended above)</li>
+<li>Must never exceed 4kb</li>
+</ul>
+</li>
+<li><strong>Headers</strong><ul>
+<li>Should never include input data from user input or data from
+database without sanitizing it</li>
+</ul>
+</li>
+<li><strong>Redirects</strong><ul>
+<li>Should never take url from user input (example: POST parameter),
+instead allow identifiers instead that are understood by the
+backend</li>
+</ul>
+</li>
+<li><strong>User input</strong><ul>
+<li>Should always be validated, sanitized, casted and filtered to
+avoid <a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_scripting">XSS</a>
+&amp; <a class="reference external" href="http://en.wikipedia.org/wiki/Clickjacking">clickjacking</a>
+attacks<ul>
+<li>NB: this includes variables in the php supervariable
+<tt class="docutils literal"><span class="pre">$_SERVER</span></tt> as well (e.g. hostname should not be trusted)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>User file uploads</strong><ul>
+<li>Should follow recommendations for &#8220;User input&#8221; to validate file
+name</li>
+<li>Should place uploaded files in a non public folder to avoid access
+to execute uploaded file or in case of assets white list the type</li>
+<li>Should be appropriately limited in size to avoid DOS attacks on
+disk space, cpu usage by antivirus tool etc...</li>
+</ul>
+</li>
+<li><strong>File downloads</strong><ul>
+<li>Should not rely on user provided file path for non public files,
+instead use a synthetic id</li>
+</ul>
+</li>
+<li><strong>Admin operations</strong><ul>
+<li>May be placed on a different (sub)domain then the front end
+website to avoid session stealing across front and backend.</li>
+</ul>
+</li>
+<li><strong>Fully support being placed behind a reverse proxy like
+`Varnish &lt;https://www.varnish-cache.org/&gt;`__</strong></li>
+</ul>
+</div>
+<div class="section" id="rest">
+<h2>REST<a class="headerlink" href="#rest" title="Permalink to this headline">¶</a></h2>
+<p>For now see the living <a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/doc/specifications/rest/REST-API-V2.rst">REST v2
+specification</a>
+in our git repository for further details.</p>
+</div>
+<div class="section" id="ui">
+<h2>UI<a class="headerlink" href="#ui" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish is often used as a web content management software, so we
+always strive to use the HTML/CSS/EcmaScript specifications correctly,
+and keep new releases up to date on new revisions of those. We
+furthermore always try to make sure our software gracefully degrades
+making sure it is useful even on older or less capable web clients
+(browsers), the industry terms for this approach are:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Progressive_enhancement">Progressive
+enhancement</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Unobtrusive_JavaScript">Unobtrusive
+JavaScript</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Responsive_Web_Design">Responsive
+Design</a></li>
+</ul>
+<p>All these terms in general recommends aiming for the minimum standard
+first, and enhance with additional features/styling if the client is
+capable of doing so. In essence this allows eZ Publish to be &#8220;Mobile
+first&#8221; if the design allows for it, which is recommended. But eZ Publish
+should always also be fully capable of having different sets of web
+presentations for different devices using one or several sets of
+&#8220;SiteAccess&#8221; (see eZ Publish terms) matching rules for the domain, port
+or URI, so any kind of device detection can be used together with eZ
+Publish, making it fully possible to write for instance
+<a class="reference external" href="http://en.wikipedia.org/wiki/Wireless_Application_Protocol">WAP</a>
+based websites and interfaces on top of eZ Publish.</p>
+<div class="section" id="web-forms-ajax">
+<h3>WEB Forms/Ajax<a class="headerlink" href="#web-forms-ajax" title="Permalink to this headline">¶</a></h3>
+<p>As stated in the HTTP section, all unsafe requests to the web server
+should have a CSRF token to protect against attacks; this includes web
+forms and ajax requests that don&#8217;t use the GET http method. As also
+stated in the HTTP section and further defined in the PHP section, User
+input should always be validated to avoid XSS issues.</p>
+</div>
+<div class="section" id="html-templates">
+<h3>HTML/Templates<a class="headerlink" href="#html-templates" title="Permalink to this headline">¶</a></h3>
+<p>All data that comes from backend and in return comes from user input
+should always be escaped, in case of Twig templates this done by
+default, but in case of PHP templates, Ajax and other not Twig based
+output this must be handled manually.</p>
+<p>Output escaping must be properly executed according to the desired
+format, eg. javascript vs. html, but also taking into account the
+correct character set (see eg. output escaping fallacy when not
+specifying charset encoding in
+<a class="reference external" href="http://www.php.net/htmlspecialchars">htmlspecialchars</a>)</p>
+</div>
+<div class="section" id="admin">
+<h3>Admin<a class="headerlink" href="#admin" title="Permalink to this headline">¶</a></h3>
+<p>Admin operations that can have a severe impact on the web applications
+should require providing password and require it again after some time
+has gone, normally 10 - 20 minutes, on all session based interfaces.</p>
+<p>&lt;TODO: Add more coding guidelines for HTML (XHTML5), Javascript, CSS and
+templates&gt;</p>
+</div>
+</div>
+<div class="section" id="php">
+<h2>PHP<a class="headerlink" href="#php" title="Permalink to this headline">¶</a></h2>
+<p>For now see our comprehensive coding standard &amp; guidelines <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/wiki/codingstandards">wiki
+page</a>
+on github.</p>
+<div class="section" id="public-api">
+<h3>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h3>
+<p>The PHP Public API provided in eZ Publish 5.0 is in most cases in charge
+of checking permissions to data for you, but some API&#8217;s are not
+documented to throw UnauthorizedException, which means that it is the
+consumer of the API&#8217;s who is responsible for checking permissions. The
+following example shows how this is done in the case of loading users:</p>
+<p><strong>loadUser()</strong></p>
+</div>
+<div class="section" id="command-line">
+<h3>Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
+<p>Output must always be escaped when displaying data from the database.</p>
+<p>&lt;TODO: Expand on how best practice is to handle user input in eZ Publish
+5 to avoid XSS issues&gt;</p>
+</div>
+</div>
+<div class="section" id="data-databases">
+<h2>Data &amp; Databases<a class="headerlink" href="#data-databases" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Values coming from variables should always be appropriately quoted or
+binded in SQL statements</li>
+<li>The sql statements used should never be created by hand with one
+version per supported database, as this increases both the
+maintenance load and the chances for security-related problems</li>
+<li>Usage of temporary tables is discouraged, as their behaviour is very
+different on different databases. Subselects should be prefererred
+(esp. since recent mysql versions have much better support for them)</li>
+<li>Full table locking is discouraged</li>
+</ul>
+<p>&lt;TODO: guidelines for how data should be stored for maximum portability
+(hint: XML &amp; abstraction)&gt;</p>
+<div class="section" id="sessions">
+<h3>Sessions<a class="headerlink" href="#sessions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Business logic should not depend on database connections being either
+persistent or not persistent</li>
+<li>The connection to the database should always be opened as late as
+possible during page execution. Ideally, to improve scalability, a
+web page executing no queries should not connect to the db at all
+(note that closing the db connection as soon as possible is a tricky
+problem, as we expect to support persistent db connections as well
+for absolute best performances)</li>
+<li>The same principle applies to configurations where a master/slave db
+setup is in use: the chance for a failure due to a database
+malfunction should not increase with the number of db servers at
+play, but actually decrease</li>
+<li>It is recommended to avoid as much as possible statements which alter
+the current session, as they slow down the application, are brittle
+and hard to debug. Point in case; if a db session locks a table then
+is abruptly terminated, the table might stay locked for a long time</li>
+</ul>
+</div>
+<div class="section" id="transactions">
+<h3>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Transactions should always be used to wrap sql statements which
+affect data in multiple tables: either all data changes go through or
+none of them</li>
+<li>Transactions are prone to locking issues, so the code executed within
+a transaction should be limited to the minimum necessary amount (ex.
+clearing caches should be done after the transaction is committed)</li>
+<li>When using transactions, always consider side effects on external
+system, such as on-disk storage. F.e. is a transaction relative to
+creating an image variation is rolled back, the corresponding file
+should not be left on disk</li>
+<li>Nested transactions are supported in the following way:<ul>
+<li>a transaction within another one will not commit when requested,
+only the outhermost transaction will commit</li>
+<li>a transaction within another one will roll back all the way to the
+start of the outhermost transaction when requested</li>
+<li>as a result a transaction shall never be rolled back just as a
+means of cancelling its work - the side effect might be of
+cancelling other work which had just been done previously</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="limitations-in-the-sql-dialect-supported">
+<h3>Limitations in the SQL dialect supported<a class="headerlink" href="#limitations-in-the-sql-dialect-supported" title="Permalink to this headline">¶</a></h3>
+<p>Striving to support Mysql 5, PostgreSQL xx and Oracle 10, the following
+limitations apply:</p>
+<ul class="simple">
+<li>Tables, columns and other db objects should not use names longer than
+30 chars</li>
+<li>Varchar columns with a definition of <em>default &#8220;&#8221; not null</em> are
+discouraged</li>
+<li>For SELECTs, offset and limit have to be handled by the php layer,
+not hardcoded in the sql</li>
+<li>Never treat a NULL varchar value as semantically different from an
+empty string value</li>
+<li>The select list of a query cannot contain the same field multiple
+times</li>
+<li>For GROUP BY statements, all fields in the group by clause should be
+in the select list as well</li>
+<li>For SELECTs, usage of the AS token is allowed in the select list, but
+not in the list of tables</li>
+<li>Do not put quotes around numeric values (use proper casting/escaping
+to avoid SQL injection)</li>
+<li>&lt;TODO: finish sql guidelines&gt;</li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Development Guidelines</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#http">HTTP</a></li>
+<li><a class="reference internal" href="#rest">REST</a></li>
+<li><a class="reference internal" href="#ui">UI</a><ul>
+<li><a class="reference internal" href="#web-forms-ajax">WEB Forms/Ajax</a></li>
+<li><a class="reference internal" href="#html-templates">HTML/Templates</a></li>
+<li><a class="reference internal" href="#admin">Admin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#php">PHP</a><ul>
+<li><a class="reference internal" href="#public-api">Public API</a></li>
+<li><a class="reference internal" href="#command-line">Command line</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-databases">Data &amp; Databases</a><ul>
+<li><a class="reference internal" href="#sessions">Sessions</a></li>
+<li><a class="reference internal" href="#transactions">Transactions</a></li>
+<li><a class="reference internal" href="#limitations-in-the-sql-dialect-supported">Limitations in the SQL dialect supported</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Development-Guidelines_6291691.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

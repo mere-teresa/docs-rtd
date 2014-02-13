@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Import settings from a bundle &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-import-settings-from-a-bundle">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Import settings from a bundle<a class="headerlink" href="#ez-publish-platform-5-next-import-settings-from-a-bundle" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Dec 17, 2013</p>
+<p>Icon</p>
+<p>The following recipe is valid for any type of settings supported by
+Symfony framework.</p>
+<p>Use case</p>
+<p>Usually, you develop your website using one or several custom bundles as
+this is a best practice. However, dealing with core bundles semantic
+configuration can be a bit tedious if you maintain it in the main
+<tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish.yml</span></tt> configuration file.</p>
+<p>This recipe will show you how to import configuration from a bundle the
+manual way and the implicit way.</p>
+<div class="section" id="the-manual-way">
+<h2>The manual way<a class="headerlink" href="#the-manual-way" title="Permalink to this headline">¶</a></h2>
+<p>This is the simplest way of doing and it has the advantage to be
+explicit. The idea is to use the <tt class="docutils literal"><span class="pre">imports</span></tt> statement in your main
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt>:</p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+<p><strong>templates_rules.yml, placed under Resources/config folder in
+AcmeTestBundle</strong></p>
+<p>Icon</p>
+<p>During the merge process, if the imported configuration files contain
+entries that are already defined in the main configuration file, <strong>they
+will override them</strong>.</p>
+<p>Tip</p>
+<p>Icon</p>
+<p>If you want to import configuration for development use only, you can do
+so in your <tt class="docutils literal"><span class="pre">ezpublish_dev.yml</span></tt> <img alt="(wink)" src="docs/images/icons/emoticons/wink.png" /></p>
+</div>
+<div class="section" id="the-implicit-way">
+<h2>The implicit way<a class="headerlink" href="#the-implicit-way" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p><strong>Compatible with eZ Publish 5.1+ / Symfony 2.2+</strong> as it uses
+<tt class="docutils literal"><span class="pre">Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface</span></tt>
+which is available as of Symfony 2.2 (<a class="reference external" href="http://symfony.com/doc/current/cookbook/bundles/prepend_extension.html">more info on Symfony
+cookbook</a>).</p>
+<p>The following example will show you <strong>how to implicitly load settings to
+be configure eZ Publish kernel</strong>. Note that this is also valid for any
+bundle&nbsp;!</p>
+<p>We assume here that you&#8217;re aware of <a class="reference external" href="http://symfony.com/doc/current/book/service_container.html#importing-configuration-via-container-extensions">service container
+extensions</a>.</p>
+<p><strong>Acme/TestBundle/DependencyInjection/AcmeTestExtension</strong></p>
+<p><strong>AcmeTestBundle/Resources/config/template_rules.yml</strong></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Regarding performance</p>
+<p>Icon</p>
+<p>Service container&nbsp;extensions are called only when the container is being
+compiled, so there is nothing to worry about regarding performance.</p>
+<p>Icon</p>
+<p>In dev environment, each time you modify files loaded this way, <strong>you&#8217;ll
+need to manually clear</strong> the cache as Symfony doesn&#8217;t check modification
+time on them.</p>
+<p>Icon</p>
+<p>Loading configuration this way lets you override settings in your main
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt> file.</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>If I have 20 siteaccesses, one for each language, do I have to define
+the rules 20 times in the templates_rules.yml?</p>
+<p><img alt="image1" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by xrow at Jul 15, 2013 07:59</p>
+<p>No, you can simply create a group with the 20 siteaccesses and add the
+general definitions to the group</p>
+<p><img alt="image2" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:pedro&#46;resende&#37;&#52;&#48;ez&#46;no">pedro<span>&#46;</span>resende<span>&#64;</span>ez<span>&#46;</span>no</a> at Jul 15, 2013 09:45</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Import settings from a bundle</a><ul>
+<li><a class="reference internal" href="#the-manual-way">The manual way</a></li>
+<li><a class="reference internal" href="#the-implicit-way">The implicit way</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Import-settings-from-a-bundle_12125508.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

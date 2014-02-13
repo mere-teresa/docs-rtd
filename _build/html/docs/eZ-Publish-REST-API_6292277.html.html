@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : eZ Publish REST API &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-ez-publish-rest-api">
+<h1>eZ Publish Platform 5.&lt;next&gt; : eZ Publish REST API<a class="headerlink" href="#ez-publish-platform-5-next-ez-publish-rest-api" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> on Jul
+20, 2013</p>
+<p>The eZ Publish 5 REST API allows you to interact with an eZ Publish
+installation using the HTTP protocol, following a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>
+interaction model.</p>
+<div class="section" id="accessing-the-rest-api">
+<h2>Accessing the REST API<a class="headerlink" href="#accessing-the-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>The REST API is available at the URI <tt class="docutils literal"><span class="pre">/api/ezp/v2</span></tt>. The API from eZ
+Publish 4.x remains available at the same URI, <tt class="docutils literal"><span class="pre">/api/ezp/v1</span></tt>. HTTPS is
+available as long as your server is properly configured. Refer to the
+<a class="reference external" href="Getting-started-with-the-REST-API_6292869.html">Getting started</a>
+page to start using the API.</p>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>REST (<strong>RE</strong>presentationnal <strong>S</strong>tate <strong>T</strong>ransfer) is a web
+services architecture that follows the HTTP Protocol very closely. The
+eZ Publish 5 REST API supports both <a class="reference external" href="http://www.json.org/">JSON</a> and
+<a class="reference external" href="http://www.w3.org/XML/">XML</a>, in terms of request format.</p>
+<div class="section" id="resources">
+<h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
+<p>The API provides a set of URIs, each of them identifying and providing
+access to operations on a certain resource. For instance, the URI
+<tt class="docutils literal"><span class="pre">/content/objects/59</span></tt> will allow you to interact with the Content with
+ID 59, while <tt class="docutils literal"><span class="pre">/content/types/1</span></tt> will allow you to interact with the
+ContentType with ID 1.</p>
+</div>
+<div class="section" id="http-verbs">
+<h3>HTTP verbs<a class="headerlink" href="#http-verbs" title="Permalink to this headline">¶</a></h3>
+<p>It uses HTTP verbs (<strong>``GET``</strong>, <strong>``POST``</strong>, but also <strong>``PUT``</strong>,
+<strong>``DELETE``</strong>, etc...), as well as HTTP headers to specify the type of
+request.&nbsp;Depending on the used HTTP verb, different actions will be
+possible. Example:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/content/objects/2</span></tt> will provide you with data about Content
+#2,</li>
+<li><tt class="docutils literal"><span class="pre">PATCH</span> <span class="pre">/content/objects/2</span></tt> will update the Content #2&#8217;s metadata
+(section, main language, main location...),</li>
+<li><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/content/objects/2</span></tt> will delete Content #2,</li>
+<li><tt class="docutils literal"><span class="pre">COPY</span> <span class="pre">/content/objects/2</span></tt> will create a copy of this Content.</li>
+</ul>
+</div>
+<div class="section" id="media-type-headers">
+<h3>Media type headers<a class="headerlink" href="#media-type-headers" title="Permalink to this headline">¶</a></h3>
+<p>On top of verbs, HTTP request headers will allow you to personalize the
+request&#8217;s behavior. On every resource, you can use the Accept header to
+indicate which format you want to communicate in, JSON or XML. This
+header is also used to specify the response type you want the server to
+send when multiple ones are available.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Accept:</span> <span class="pre">application/vnd.ez.api.Content+xml</span></tt> to get <strong>Content</strong>
+(full data, fields included) as <strong>XML</strong></li>
+<li><tt class="docutils literal"><span class="pre">Accept:</span> <span class="pre">application/vnd.ez.api.ContentInfo+json</span></tt> to get
+<strong>ContentInfo</strong> (metadata only) as <strong>JSON</strong></li>
+</ul>
+<p>More information</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/doc/specifications/rest/REST-API-V2.rst#111%C2%A0%C2%A0%C2%A0media-types">REST specifications chapter &#8220;Media
+Types&#8221;</a></p>
+</div>
+<div class="section" id="other-headers">
+<h3>Other headers<a class="headerlink" href="#other-headers" title="Permalink to this headline">¶</a></h3>
+<p>Other headers will be used in HTTP requests for specifying the
+siteaccess to interact with, and of course <a class="reference external" href="REST-API-Authentication_6292522.html">authentication
+credentials</a>.</p>
+<p>Responses returned by the API will also use custom headers to indicate
+information about the executed operation.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : eZ Publish REST API</a><ul>
+<li><a class="reference internal" href="#accessing-the-rest-api">Accessing the REST API</a></li>
+<li><a class="reference internal" href="#basics">Basics</a><ul>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+<li><a class="reference internal" href="#http-verbs">HTTP verbs</a></li>
+<li><a class="reference internal" href="#media-type-headers">Media type headers</a></li>
+<li><a class="reference internal" href="#other-headers">Other headers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/eZ-Publish-REST-API_6292277.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

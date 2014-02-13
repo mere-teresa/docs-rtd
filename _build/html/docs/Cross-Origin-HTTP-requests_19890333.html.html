@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Cross-Origin HTTP requests &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Extending-eZ-Publish-5_1736733.html">Extending eZ Publish 5</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-cross-origin-http-requests">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Cross-Origin HTTP requests<a class="headerlink" href="#ez-publish-platform-5-next-cross-origin-http-requests" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jan 14, 2014</p>
+<p>eZ Publish ships
+with&nbsp;<a class="reference external" href="https://confluence.ez.no/github.com/nelmio/NelmioCorsBundle">NelmioCorsBundle</a>,
+a Symfony open-source bundle that provides support for <a class="reference external" href="http://www.w3.org/TR/cors/">CORS (Cross
+Origin Resource Sharing)</a>. The REST API
+is pre-configured to respond to such requests, as long as you customize
+the allowed origins as explained below.</p>
+<div class="section" id="what-is-cors">
+<h2>What is CORS<a class="headerlink" href="#what-is-cors" title="Permalink to this headline">¶</a></h2>
+<p>Supported by most modern browsers, this W3C specification defines a set
+of custom headers that, under specific circumstances, allow&nbsp;HTTP
+requests between different hosts. The main use-case is execution of AJAX
+code from one site towards another.</p>
+<p>A couple links about it:</p>
+<ul class="simple">
+<li>&nbsp;<a class="reference external" href="http://www.w3.org/TR/cors/">W3C specification</a></li>
+<li>an&nbsp;excellent <a class="reference external" href="http://www.html5rocks.com/en/tutorials/cors/">tutorial about CORS on
+html5rocks.com</a></li>
+<li><a class="reference external" href="https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS">overview of CORS on
+developer.mozilla.org</a></li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Since CORS support is provided by a 3rd party bundle, we re-use the
+semantical configuration it provides. You can read more about it on the
+<a class="reference external" href="https://github.com/nelmio/NelmioCorsBundle/blob/master/README.md">NelmiCorsBundle&#8217;s
+README</a>&nbsp;file.</p>
+<p>The origin of a request is one of the main criteria for allowing or
+blocking a cross origin request. Such requests will come with an Origin
+HTTP header, automatically added by the browser, that gets
+approved/blocked by the server. By default, all cross origin requests
+will be blocked.</p>
+<div class="section" id="granting-an-origin-default-access">
+<h3>Granting an origin default access<a class="headerlink" href="#granting-an-origin-default-access" title="Permalink to this headline">¶</a></h3>
+<p>To allow a specific host to execute cross-origin requests, you need to
+add this host to the <tt class="docutils literal"><span class="pre">nelmio_cors.default.allow_origin</span></tt> configuration
+array in <tt class="docutils literal"><span class="pre">config.yml</span></tt>. As an example, in order to allow requests
+from&nbsp;<a class="reference external" href="http://example.com,">http://example.com,</a>&nbsp;one would add those
+lines to <tt class="docutils literal"><span class="pre">ezpublish/config/config.yml</span></tt>:</p>
+</div>
+<div class="section" id="granting-cors-access-to-your-own-http-resources">
+<h3>Granting CORS access to your own HTTP resources<a class="headerlink" href="#granting-cors-access-to-your-own-http-resources" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">The Cors bundle is of course perfectly safe to use for any non-eZ HTTP</div>
+</div>
+<p>resource you would like to expose.
+| Follow the instructions in <a class="reference external" href="https://github.com/nelmio/NelmioCorsBundle/blob/master/README.md#configuration">NelmioCorsBundle&#8217;s configuration
+chapter</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Cross-Origin HTTP requests</a><ul>
+<li><a class="reference internal" href="#what-is-cors">What is CORS</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#granting-an-origin-default-access">Granting an origin default access</a></li>
+<li><a class="reference internal" href="#granting-cors-access-to-your-own-http-resources">Granting CORS access to your own HTTP resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Cross-Origin-HTTP-requests_19890333.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Upgrading from 5.1 to 5.2 &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Upgrade_19234967.html">Upgrade</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-upgrading-from-5-1-to-5-2">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Upgrading from 5.1 to 5.2<a class="headerlink" href="#ez-publish-platform-5-next-upgrading-from-5-1-to-5-2" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Dec
+06, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-NoteonPaths">Note on Paths</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Checkforrequirements">Check for
+requirements</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Upgradesteps">Upgrade steps</a><ul>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step1%3AUpgradethedistributionfiles">Step 1: Upgrade the distribution
+files</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step2%3Aupgradecustomextensions">Step 2: upgrade custom
+extensions</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step3%3Aupgradethedatabase">Step 3: upgrade the
+database</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step4%3AApply5.2configurationchanges">Step 4: Apply 5.2 configuration
+changes</a><ul>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-YAMLfiles">YAML files</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-ezpublish%2FEzPublishKernel.php">ezpublish/EzPublishKernel.php</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-composer.json">composer.json</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step5%3AUpdateclusterdata%28ifapplicable%29">Step 5: Update cluster data (if
+applicable)</a><ul>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Option1%3Aunclusterize%2Ccleardata%2Candreclusterize">Option 1: unclusterize, clear data, and
+reclusterize</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Option2%3Aperformabackgroundcleanupofthestoragetable">Option 2: perform a background cleanup of the storage
+table</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step6%3ARegeneratetheautoloadarrayforextensions">Step 6: Regenerate the autoload array for
+extensions</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step7%3ALinkassets">Step 7: Link
+assets</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step8%3AUpdaterewriterules">Step 8: Update rewrite
+rules</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step9%3AClearthecaches">Step 9: Clear the
+caches</a></li>
+<li><a class="reference external" href="#Upgradingfrom5.1to5.2-Step10%3AUpgradeExtensions%28sitepackage%29">Step 10: Upgrade Extensions (site
+package)</a></li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This section describes how to upgrade your existing eZ Publish 5.1
+installation to version 5.2. Make sure that you have a working backup of
+the site before you do the actual upgrade, and make sure that the
+installation you are performing the upgrade on is offline.</p>
+<div class="section" id="note-on-paths">
+<h2>Note on Paths<a class="headerlink" href="#note-on-paths" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>/&lt;ezp5-root&gt;/</em>: The root directory where eZ Publish 5 is installed
+in, examples: &#8220;<em>/home/myuser/www</em>/&#8221; or &#8220;<em>/var/sites/ezpublish/</em>&#8220;</li>
+<li><em>/&lt;ezp5-root&gt;/ezpublish_legacy/</em>: &nbsp;Root&nbsp;directory&nbsp;of&nbsp;&#8220;Legacy&#8221; (aka
+&#8220;Legacy Stack&#8221;, refers to the eZ Publish 4.x&nbsp;installation&nbsp;which is
+bundled with eZ Publish 5) normally inside &#8220;<em>ezpublish_legacy</em>/&#8221;,
+example: &#8220;<em>/home/myuser/www/ezpublish_legacy/</em>&#8220;</li>
+</ul>
+</div>
+<div class="section" id="check-for-requirements">
+<h2>Check for requirements<a class="headerlink" href="#check-for-requirements" title="Permalink to this headline">¶</a></h2>
+<p>php 5.3.3 and higher is needed. Further information regarding system
+requirements can be found on&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/Requirements">Requirements Documentation
+Page</a>.</p>
+</div>
+<div class="section" id="upgrade-steps">
+<h2>Upgrade steps<a class="headerlink" href="#upgrade-steps" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-upgrade-the-distribution-files">
+<h3>Step 1: Upgrade the distribution files<a class="headerlink" href="#step-1-upgrade-the-distribution-files" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to upgrade the distribution files is to unpack eZ
+Publish 5.2 to a separate directory and then copy the directories that
+contain site-specific files from the existing 5.1 installation into
+&#8220;<em>/&lt;ezp5-root&gt;/</em>&#8221;. Make sure you copy the following directories:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/design/&lt;your</span> <span class="pre">designs&gt;</span></tt> (do NOT include built-in
+designs: admin, base, standard or admin2)</li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/var/&lt;your_var_dir&gt;/storage</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/var/storage/packages</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/settings/siteaccess/&lt;your_siteaccesses&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/settings/override/*</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/extension/*</span></tt> (not including the built-in /
+standalone ones: ezflow, ezjscore, ezoe, ezodf, ezie, ezmultiupload,
+ezmbpaex, ez_network, ezprestapiprovider, ezscriptmonitor, ezsi,
+ezfind)</li>
+<li>src/</li>
+<li><tt class="docutils literal"><span class="pre">config.php</span></tt> &amp; <tt class="docutils literal"><span class="pre">config.cluster.php</span></tt>, if applicable</li>
+<li><tt class="docutils literal"><span class="pre">ezpublish/config/*</span></tt></li>
+</ul>
+<p><strong>*NB:</strong>&nbsp;Since writable directories and files have been replaced /
+copied, their permissions might have changed. You may have to
+reconfigure webserver user permissions on specific folders as explained
+in the file&nbsp;<a class="reference external" href="https://confluence.ez.no/pages/viewpage.action?pageId=7438581#InstallingeZPublishonaLinux%2FUNIXbasedsystem-Settingupfolderpermission">permissions chapter of the installation
+process</a>.*</p>
+</div>
+<div class="section" id="step-2-upgrade-custom-extensions">
+<h3>Step 2: upgrade custom extensions<a class="headerlink" href="#step-2-upgrade-custom-extensions" title="Permalink to this headline">¶</a></h3>
+<p>If you are using custom extensions, the sub-directories inside the
+&#8220;extension&#8221; directory will also have to be copied from the existing 5.1
+installation into &#8220;<em>/&lt;ezp5-root&gt;/ezpublish_legacy/extension/</em>&#8221;.
+However, make sure that you do not overwrite any extensions that are
+included in eZ Publish&nbsp;distribution, which currently are (<strong>*Note:</strong>&nbsp;As
+of eZ Publish 5.2, these extensions have the same version number as eZ
+Publish*):</p>
+<p>Note that upgrading the distribution files will overwrite the autoload
+arrays for extensions. You will need to re-generate the autoload arrays
+for active extensions later.</p>
+<p><strong>*Important:&nbsp;</strong>If you plan to upgrade your eZ Website Interface, eZ
+Flow or eZ Demo site package as well, then&nbsp;additional&nbsp;extensions will be
+updated and the step for&nbsp;re-generate the autoload arrays can be skipped
+until that is done (links to documentation for upgrading these site
+packages can be found in the last step of this page).*</p>
+</div>
+<div class="section" id="step-3-upgrade-the-database">
+<h3>Step 3: upgrade the database<a class="headerlink" href="#step-3-upgrade-the-database" title="Permalink to this headline">¶</a></h3>
+<p>Import to your database the changes provided in</p>
+</div>
+<div class="section" id="step-4-apply-5-2-configuration-changes">
+<h3>Step 4: Apply 5.2 configuration changes<a class="headerlink" href="#step-4-apply-5-2-configuration-changes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="yaml-files">
+<h4>YAML files<a class="headerlink" href="#yaml-files" title="Permalink to this headline">¶</a></h4>
+<p>Since default configuration files have been overwritten during step one,
+the few additions to those files that were made in 5.2 need to be
+applied manually to the configuration files. All of those changes
+are&nbsp;<strong>additions</strong>, none of them replaces what you already have. For
+most of them, at least one, if not all hierarchy elements (monolog,
+handler, framework, router...) will already be there. All you have to do
+is add the missing bits in the existing configuration blocks.</p>
+<p>In&nbsp;<strong>ezpublish/config/config_dev.yml</strong>, add the configuration for the
+chromephp log handler:</p>
+<p>In&nbsp;<strong>routing_dev.yml</strong>, add the resource import for the
+SensioDistributionBundle webconfigurator routes:</p>
+<p>If you have added anything to <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>, we suggest that you
+add your custom settings to <tt class="docutils literal"><span class="pre">parameters.yml.dist</span></tt>, so that the
+composer post-update script handles those, and generates their values
+correctly.</p>
+</div>
+<div class="section" id="ezpublish-ezpublishkernel-php">
+<h4>ezpublish/EzPublishKernel.php<a class="headerlink" href="#ezpublish-ezpublishkernel-php" title="Permalink to this headline">¶</a></h4>
+<p>It is not possible to just copy your old <tt class="docutils literal"><span class="pre">EzPublishKernel.php</span></tt> file
+over from the previous installation, since quite a few changes were made
+to this file in this release. We suggest that you simply reflect in the
+new kernel file any changes you made in the previous version.</p>
+</div>
+<div class="section" id="composer-json">
+<h4>composer.json<a class="headerlink" href="#composer-json" title="Permalink to this headline">¶</a></h4>
+<p>If you had modified composer.json to add your own requirements, you must
+re-apply those changes to the new version, and run composer install.</p>
+</div>
+</div>
+<div class="section" id="step-5-update-cluster-data-if-applicable">
+<h3>Step 5: Update cluster data (if applicable)<a class="headerlink" href="#step-5-update-cluster-data-if-applicable" title="Permalink to this headline">¶</a></h3>
+<p>If your installation uses the DFS cluster, you are affected by
+the&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/blob/master/doc/features/5.2/dfs_split_tables.md">split DFS tables
+feature</a>&nbsp;that
+was added in 5.2.&nbsp;You can also check the&nbsp;<a class="reference external" href="https://doc.ez.no/doc_hidden/eZ-Publish/Technical-manual/5.x/Features/Clustering/Setting-it-up-for-an-eZDFSFileHandler">DFS setup
+documentation</a>&nbsp;document
+on steps 3 and 4 for additional details and usage examples about the
+newly introduced configurations.</p>
+<p>To use the feature, you need to update your DFS database structure. It
+won&#8217;t affect existing data, and doesn&#8217;t require particular measures.
+Import the following file into your<em>cluster</em>&nbsp;database (it should be
+different from your eZ Publish database):</p>
+<p>The split table feature stores cache and storage into two different
+tables. For now, your ezdfsfile table contains both cache and storage.
+Starting from now, eZ Publish will use the newly created table,
+ezdfsfile_cache, to store cache. Since the table &nbsp;is empty, it will
+react as if there was no cache, and work without any changes.</p>
+<p>However, we recommend that you remove entries related to cache from your
+ezdfsfile table. There are several options.</p>
+<p>Option 1: unclusterize, clear data, and reclusterize</p>
+<p><em>This method requires that you shutdown the website completely</em>&nbsp;for a
+little while. It mainly applies to small/medium websites (up to a couple
+thousand content objects).</p>
+<p>May require a lot of disk space</p>
+<p>Icon</p>
+<p>Since this method will create a local copy of every storage file (not
+including cache) from your NFS to the local server, this method may
+require a large amount of disk space. You can get an estimate of the
+required space by running the following query on your cluster database:</p>
+<p>It will give you the total size of storage items, in bytes. Remember to
+escape _ in your vardir.</p>
+<p>Use the following commands from
+your&nbsp;<em>/&lt;ezp5-root&gt;/ezpublish_legacy/</em>&nbsp;folder:</p>
+<p>Next, truncate the ezdfsfile table from your database:</p>
+<p>And finally, re-create cluster data based on local data:</p>
+<p>Option 2: perform a background cleanup of the storage table</p>
+<p>An upgrade script is provided that will let you cleanup &nbsp;the ezdfsfile
+table on a live website, even with a large cluster. It will delete a
+configurable (by default 1000) batch of cache rows from ezdfsfile, and
+sleep (by default for 100 ms) between batches. Run the following from
+the legacy root:</p>
+<p>The script can be interrupted and restarted anytime without risks for
+the system. We strongly suggest, if you execute it on a live website,
+that you monitor your database server&#8217;s performances, and increase the
+sleep delay and/or decrease the limit if the SQL server&#8217;s load is too
+high.</p>
+</div>
+<div class="section" id="step-6-regenerate-the-autoload-array-for-extensions">
+<h3>Step 6: Regenerate the autoload array for extensions<a class="headerlink" href="#step-6-regenerate-the-autoload-array-for-extensions" title="Permalink to this headline">¶</a></h3>
+<p>To regenerate the autoload array, execute the following script from the
+root of your eZ Publish Legacy directory:</p>
+</div>
+<div class="section" id="step-7-link-assets">
+<h3>Step 7: Link assets<a class="headerlink" href="#step-7-link-assets" title="Permalink to this headline">¶</a></h3>
+<p>Assets from the various bundles need to be made available for the
+webserver through the web/ document root.</p>
+<p>The following commands will first symlink eZ Publish 5 assets in
+&#8220;Bundles&#8221; and the second will symlink assets (design files like images,
+scripts and css, and files in var folder) &nbsp;from eZ Publish Legacy:</p>
+</div>
+<div class="section" id="step-8-update-rewrite-rules">
+<h3>Step 8: Update rewrite rules<a class="headerlink" href="#step-8-update-rewrite-rules" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways eZ Publish 5 can be installed, either the full
+install with both the new Symfony stack and the legacy stack, or legacy
+only.&nbsp;In latter case you only need to point your &#8216;4.7 like&#8217; rewrite
+rules to&nbsp;<em>/&lt;ezp5-root&gt;/ezpublish_legacy/</em>&nbsp;and that&#8217;s it.
+Otherwise,&nbsp;update your virtual host according to&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/Virtual+host+setup">the eZ Publish 5.2
+rewrite rules on
+confluence</a>&nbsp;and
+point your host configuration to&nbsp;<em>/&lt;ezp5-root&gt;/web/</em>.</p>
+</div>
+<div class="section" id="step-9-clear-the-caches">
+<h3>Step 9: Clear the caches<a class="headerlink" href="#step-9-clear-the-caches" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Whenever an eZ Publish solution is upgraded, all caches must be</div>
+</div>
+<p>cleared in a proper way. This should be done from within a system shell:
+| Navigate into the new eZ Publish directory.Run the script using the
+following shell command:cd /&lt;ezp5-root&gt;/ezpublish_legacy/php
+bin/php/ezcache.php &#8211;clear-all &#8211;purgePurging ensures that the caches
+are physically removed. When the &#8220;&#8211;purge&#8221; parameter is not specified,
+the caches will be expired but not removed.
+| Note: Sometimes the script is unable to clear all cache files because
+of restrictive file/directory permission settings. Make sure that all
+cache files have been cleared by inspecting the contents of the various
+cache sub-directories within the &#8220;var&#8221; directory (typically the
+&#8220;var/cache/&#8221; and &#8220;var/&lt;name_of_siteaccess&gt;/cache/&#8221; directories). If
+there are any cache files left, you need to remove them manually.</p>
+</div>
+<div class="section" id="step-10-upgrade-extensions-site-package">
+<h3>Step 10: Upgrade Extensions (site package)<a class="headerlink" href="#step-10-upgrade-extensions-site-package" title="Permalink to this headline">¶</a></h3>
+<p>Next, depending on if you originally installed eZ Flow, eZ Webin or eZ
+Demo site, follow the steps mentioned in the&nbsp;<a class="reference external" href="https://doc.ez.no/doc_hidden/Extensions/eZ-Publish-extensions/Website-Interface/Website-interface-5.2-upgrade">eZ
+Webin</a>,&nbsp;<a class="reference external" href="https://doc.ez.no/doc_hidden/Extensions/eZ-Publish-extensions/eZ-Flow/Upgrading-eZ-Flow/eZ-Flow-5.2-upgrade">eZ
+Flow</a>&nbsp;or&nbsp;<a class="reference external" href="https://doc.ez.no/doc_hidden/Extensions/eZ-Publish-extensions/eZ-Demo/eZ-Demo-5.2-upgrade">eZ
+Demo</a>&nbsp;upgrade
+documentation.</p>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Option 1 (Step 4) should come with a diskspace warning, to make it clear
+that it&#8217;s not an options for large sites!</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by arnottg at Dec 04, 2013 13:56</p>
+<p>This is a good point,&nbsp;<a class="reference external" href="https://confluence.ez.no/display/~arnottg">Gareth
+Arnott</a>. I&#8217;ll add a
+warning about that.</p>
+<p><img alt="image1" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> at Dec 04, 2013 14:15</p>
+<p>What do you think,&nbsp;<a class="reference external" href="https://confluence.ez.no/display/~arnottg">Gareth
+Arnott</a> ? Sufficient ?</p>
+<p><img alt="image2" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> at Dec 04, 2013 14:37</p>
+<p>Looks good to me!</p>
+<p><img alt="image3" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by arnottg at Dec 04, 2013 14:50</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Upgrading from 5.1 to 5.2</a><ul>
+<li><a class="reference internal" href="#note-on-paths">Note on Paths</a></li>
+<li><a class="reference internal" href="#check-for-requirements">Check for requirements</a></li>
+<li><a class="reference internal" href="#upgrade-steps">Upgrade steps</a><ul>
+<li><a class="reference internal" href="#step-1-upgrade-the-distribution-files">Step 1: Upgrade the distribution files</a></li>
+<li><a class="reference internal" href="#step-2-upgrade-custom-extensions">Step 2: upgrade custom extensions</a></li>
+<li><a class="reference internal" href="#step-3-upgrade-the-database">Step 3: upgrade the database</a></li>
+<li><a class="reference internal" href="#step-4-apply-5-2-configuration-changes">Step 4: Apply 5.2 configuration changes</a><ul>
+<li><a class="reference internal" href="#yaml-files">YAML files</a></li>
+<li><a class="reference internal" href="#ezpublish-ezpublishkernel-php">ezpublish/EzPublishKernel.php</a></li>
+<li><a class="reference internal" href="#composer-json">composer.json</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-5-update-cluster-data-if-applicable">Step 5: Update cluster data (if applicable)</a></li>
+<li><a class="reference internal" href="#step-6-regenerate-the-autoload-array-for-extensions">Step 6: Regenerate the autoload array for extensions</a></li>
+<li><a class="reference internal" href="#step-7-link-assets">Step 7: Link assets</a></li>
+<li><a class="reference internal" href="#step-8-update-rewrite-rules">Step 8: Update rewrite rules</a></li>
+<li><a class="reference internal" href="#step-9-clear-the-caches">Step 9: Clear the caches</a></li>
+<li><a class="reference internal" href="#step-10-upgrade-extensions-site-package">Step 10: Upgrade Extensions (site package)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Upgrading-from-5.1-to-5.2_7439125.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

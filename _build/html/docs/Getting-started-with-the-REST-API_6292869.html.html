@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Getting started with the REST API &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-REST-API_6292277.html">eZ Publish REST API</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-getting-started-with-the-rest-api">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Getting started with the REST API<a class="headerlink" href="#ez-publish-platform-5-next-getting-started-with-the-rest-api" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Sep 24, 2013</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Nothing needs to be done for this to work. As long as your eZ Publish 5
+is correctly configured, the REST API is available on your site using
+the URI <tt class="docutils literal"><span class="pre">/api/ezp/v2/</span></tt>. If you have installed eZ Publish in a
+subfolder, prepend the path with this
+subfolder:&nbsp;<a class="reference external" href="http://example.com/">http://example.com/</a><strong>su</strong><strong>b/folder/ezpublish</strong>/api/ezp/v2/.</p>
+<p>Icon</p>
+<p>Please note that the <tt class="docutils literal"><span class="pre">/api/ezp/v2</span></tt> prefix will be used in all REST
+hrefs, but not in URIs.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h3>
+<p>As explained in more detail in the <a class="reference external" href="REST-API-Authentication_6292522.html">authentication
+chapter</a>, two authentication
+methods are currently supported: session, and basic. By default, basic
+authentication is the active mode. It requires a login / password to be
+sent using <a class="reference external" href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic HTTP
+authentication</a>.
+The alternative, session based authentication, uses a session cookie.</p>
+<p>To enable session based authentication, you need to
+edit&nbsp;<tt class="docutils literal"><span class="pre">ezpublish/config/security.yml</span></tt>, and comment out / remove the
+configuration block about REST</p>
+<p><strong>security.yml</strong></p>
+</div>
+</div>
+<div class="section" id="testing-the-api">
+<h2>Testing the API<a class="headerlink" href="#testing-the-api" title="Permalink to this headline">¶</a></h2>
+<p>A standard web browser is not sufficient to fully test the API. You can
+however try opening the root resource with it, using basic
+authentication:&nbsp;<a class="reference external" href="http://admin:publish&#64;example.com/api/ezp/v2/">http://admin:publish&#64;example.com/api/ezp/v2/</a>.&nbsp;Depending
+on how your browser understands XML, it will either download the XML
+file, or open it in the browser.</p>
+<p>To test further, you can use browser extensions, like <a class="reference external" href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo">Advanced REST
+client for
+Chrome</a>
+or&nbsp;<a class="reference external" href="https://addons.mozilla.org/firefox/addon/restclient/">RESTClient for
+Firefox</a>, or
+dedicated tools. For command line users,
+<a class="reference external" href="https://github.com/jkbr/httpie">HTTPie</a> is a good tool.</p>
+<div class="section" id="javascript-example">
+<h3>Javascript example<a class="headerlink" href="#javascript-example" title="Permalink to this headline">¶</a></h3>
+<p>One of the main reasons for this API is to help implementing Javascript
+/ AJAX interaction. You can see here an example of an AJAX call that
+retrieves ContentInfo (e.g. metadata) for a content.</p>
+<p><strong>REST API with Javascript</strong></p>
+<p>In order to test it, just save this code to some test.html file in the
+web folder of your eZ Publish 5 installation. If you use the rewrite
+rules, don&#8217;t forget to allow this file to be served directly.</p>
+<p>If necessary, change 59 with the content object id of an object from
+your database. You will get the ContentInfo for object 59 in JSON
+encoding.</p>
+<p>Note that by default, basic authentication is used. You can either add a
+valid login/password in the URI, or submit them when asked to by the
+browser. An alternative is to switch to session based authentication, as
+explained earlier in this page. In that case, the session cookie will be
+transparently sent together with the request, and every AJAX call will
+have the same permissions as the currently logged in user.</p>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Tip: since eZP version 5.2, it is possible to use the REST API from the
+siteaccessed used for the Administration Interface (or any siteaccess
+which uses legacy_mode: true) by setting up</p>
+<p>&nbsp;&nbsp;&nbsp; router:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default_router:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; legacy_aware_routes: [a_rest_api_prefix_]</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> at Jan 21, 2014 10:06</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Getting started with the REST API</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-the-api">Testing the API</a><ul>
+<li><a class="reference internal" href="#javascript-example">Javascript example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Getting-started-with-the-REST-API_6292869.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

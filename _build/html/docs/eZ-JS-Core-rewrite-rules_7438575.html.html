@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : eZ JS Core rewrite rules &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Virtual-host-setup_7438507.html">Virtual host setup</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-ez-js-core-rewrite-rules">
+<h1>eZ Publish Platform 5.&lt;next&gt; : eZ JS Core rewrite rules<a class="headerlink" href="#ez-publish-platform-5-next-ez-js-core-rewrite-rules" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21,
+2013</p>
+<p>These rewrite rules are described in the documentation of the eZ JS Core
+extension, but since this extension is bundled with eZ Publish and plays
+an important part of the installation process, the eZ JS Core rewrite
+rules are described here as well.</p>
+<div class="section" id="rewrite-rules-for-lib-folder">
+<h2>Rewrite rules for lib folder<a class="headerlink" href="#rewrite-rules-for-lib-folder" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The eZ JSCore extension requires correct rewrite rules in order to</div>
+</div>
+<p>load the necessary <tt class="docutils literal"><span class="pre">yui</span></tt> (yahoo user interface) files from the file
+system. This is required only when the INI setting
+&#8220;<tt class="docutils literal"><span class="pre">ezjscore.ini[eZJSCore]LoadFromCDN</span></tt>&#8221; is set to <tt class="docutils literal"><span class="pre">disabled</span></tt>.
+| Add the following line to your Virtual-Host setup:</p>
+<div class="highlight-python"><pre>^/extension/[^/]+/design/[^/]+/(stylesheets|flash|images|lib|javascripts?)/.* - [L]</pre>
+</div>
+</div>
+<div class="section" id="rewrite-rules-for-script-css-packing">
+<h2>Rewrite rules for script/css packing<a class="headerlink" href="#rewrite-rules-for-script-css-packing" title="Permalink to this headline">¶</a></h2>
+<p>eZ JsCore packs javascript/css files together to decrease the number of
+server requests and reduce file size for faster download. On eZ Publish
+4.0.x you&#8217;ll need to make the following changes if you haven&#8217;t already
+when installing ezoe (Online Editor 5.0).</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">&nbsp;.htaccess</div>
+</div>
+<p>from:</p>
+<div class="highlight-python"><pre>RewriteRule !\.(gif|jpe?g|png|css|js|html)|var(.+)storage.pdf(.+)\.pdf$ index.php</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">to:</div>
+</div>
+<div class="highlight-python"><pre>RewriteRule !(\.(gif|jpe?g|png|css|js|html?)|var(.+)storage.pdf(.+)\.pdf)$ index.php</pre>
+</div>
+</li>
+<li><p class="first">Virtual Host mode</p>
+<p>add:</p>
+<div class="highlight-python"><pre>RewriteRule ^/var/([^/]+/)?cache/public/.* - [L]</pre>
+</div>
+<p>Icon</p>
+<p>If you do not manage to get these working, you can disable this
+feature by setting <tt class="docutils literal"><span class="pre">ezjscore.ini[eZJSCore]Packer=disabled</span></tt>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : eZ JS Core rewrite rules</a><ul>
+<li><a class="reference internal" href="#rewrite-rules-for-lib-folder">Rewrite rules for lib folder</a></li>
+<li><a class="reference internal" href="#rewrite-rules-for-script-css-packing">Rewrite rules for script/css packing</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/eZ-JS-Core-rewrite-rules_7438575.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

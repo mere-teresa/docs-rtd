@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : How to retrieve root location &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-how-to-retrieve-root-location">
+<h1>eZ Publish Platform 5.&lt;next&gt; : How to retrieve root location<a class="headerlink" href="#ez-publish-platform-5-next-how-to-retrieve-root-location" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Nov 18, 2013</p>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>This recipe is compatible with&nbsp;<strong>eZ Publish 5.2 / 2013.09</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="#Howtoretrieverootlocation-Description">Description</a></li>
+<li><a class="reference external" href="#Howtoretrieverootlocation-RetrievingrootlocationID">Retrieving root location
+ID</a></li>
+<li><a class="reference external" href="#Howtoretrieverootlocation-Retrievingtherootlocation">Retrieving the root
+location</a><ul>
+<li><a class="reference external" href="#Howtoretrieverootlocation-Fromatemplate">From a template</a></li>
+<li><a class="reference external" href="#Howtoretrieverootlocation-Fromacontroller">From a controller</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Knowledge of the root location is important since it can be a starting
+point for API queries, or even links to home page, but as eZ Publish can
+be used <a class="reference external" href="Multisite-using-content_root_12781016.html">for multisite
+development</a>, and as such
+<strong>root location can vary</strong>.</p>
+<p>By default, root location ID is <tt class="docutils literal"><span class="pre">2</span></tt>, but as it can be easily be
+changed by configuration, <strong>the best practice is to retrieve it
+dynamically</strong>.</p>
+</div>
+<div class="section" id="retrieving-root-location-id">
+<h2>Retrieving root location ID<a class="headerlink" href="#retrieving-root-location-id" title="Permalink to this headline">¶</a></h2>
+<p>Root location ID can be retrieved easily from
+<a class="reference external" href="Configuration_2720538.html#Configuration-Configuration-DynamicconfigurationwiththeConfigResolver">ConfigResolver</a>.
+Parameter name is&nbsp;<tt class="docutils literal"><span class="pre">content.tree_root.location_id</span></tt>.</p>
+<p><strong>In a controller</strong></p>
+</div>
+<div class="section" id="retrieving-the-root-location">
+<h2>Retrieving the root location<a class="headerlink" href="#retrieving-the-root-location" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="from-a-template">
+<h3>From a template<a class="headerlink" href="#from-a-template" title="Permalink to this headline">¶</a></h3>
+<p>Root location is exposed in the <a class="reference external" href="Twig-Helper_8323403.html">global Twig
+helper</a>.</p>
+<p><strong>Making a link to homepage</strong></p>
+</div>
+<div class="section" id="from-a-controller">
+<h3>From a controller<a class="headerlink" href="#from-a-controller" title="Permalink to this headline">¶</a></h3>
+<p><strong>eZ Publish 5.2+ / 2013.11+</strong></p>
+<p><strong>Before 5.2 / 2013.11</strong></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : How to retrieve root location</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#retrieving-root-location-id">Retrieving root location ID</a></li>
+<li><a class="reference internal" href="#retrieving-the-root-location">Retrieving the root location</a><ul>
+<li><a class="reference internal" href="#from-a-template">From a template</a></li>
+<li><a class="reference internal" href="#from-a-controller">From a controller</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/How-to-retrieve-root-location_17105783.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

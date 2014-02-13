@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Requirements &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-requirements">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Requirements<a class="headerlink" href="#ez-publish-platform-5-next-requirements" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan 30,
+2014</p>
+<p>eZ Publish software is built to rely on existing technologies and
+standards, mainly:</p>
+<ul class="simple">
+<li>PHP scripting language&nbsp;(5.3/5.4/5.5, minimum 5.3.3)</li>
+<li>SQL database</li>
+<li>XHTML version 1.0 / HTML 5</li>
+<li>XML 1.0</li>
+<li>Java JRE 1.6 or higher (Oracle-Sun/OpenJDK) when eZ Find search
+engine is used</li>
+</ul>
+<p>These are the main components, for more details, please consult
+documentation for in-depth information.</p>
+<p>To answer the question &#8220;Is my platform supported by eZ Publish&#8221;, several
+things must be taken into consideration in order to determining whether
+a platform is supported or not, and how. The following tables gives you
+the details of the platform requirements for the latest eZ Publish
+release.</p>
+<div class="section" id="supported-stacks">
+<h2>Supported stacks<a class="headerlink" href="#supported-stacks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reference-stack">
+<h3>Reference Stack<a class="headerlink" href="#reference-stack" title="Permalink to this headline">¶</a></h3>
+<p>The most&nbsp;&nbsp;safe and&nbsp;&nbsp;optimized stack for eZ Publish Platform. The stack
+is supported and certified for eZ Publish Platform 5. This means that
+our QA certification team has successfully run intensive certification
+tests on the platform, and that we can fully support the platform in the
+scope of an eZ Publish Subscription.</p>
+<p>The reference stack for eZ Publish Platform 5 is based on&nbsp;Red Hat
+Enterprise Linux 6. The detail of the stack can be seen in the table
+below.</p>
+<p><strong>Stack</strong></p>
+<p>Single mode</p>
+<p>Cluster mode</p>
+<p><strong>OS</strong></p>
+<ul class="simple">
+<li>Red Hat RHEL 6.x latests stable (tested on 6.4)</li>
+<li>Red Hat RHEL 6.x latests stable (tested on 6.4)</li>
+</ul>
+<p><strong>Web Server</strong></p>
+<ul class="simple">
+<li>Apache 2.2.15 (pre-fork mode) (rhel6 package)</li>
+<li>Apache 2.2.15 (pre-fork mode) (rhel6 package)</li>
+</ul>
+<p><strong>Symfony Web Framework (* )</strong></p>
+<ul class="simple">
+<li>Latest stable version of Symfony 2.3.x with Twig</li>
+<li>Latest stable version of Symfony 2.3.x with Twig</li>
+</ul>
+<p><strong>DBMS</strong></p>
+<ul class="simple">
+<li>MySQL 5.1 (rhel6 package)</li>
+<li>MySQL 5.1 (rhel6 package)</li>
+</ul>
+<p><strong>PHP (mod_php) + PHP CLI</strong></p>
+<ul class="simple">
+<li>Official PHP 5.3.3 (rhel6 packages)</li>
+<li>Official PHP 5.3.3 (rhel6 packages)</li>
+</ul>
+<p><strong>PHP + PHP CLI extensions</strong></p>
+<ul class="simple">
+<li>APC 3.1.9 (rhel6 packages)</li>
+<li>bz2</li>
+<li>Curl</li>
+<li>dom</li>
+<li>exif</li>
+<li>fileinfo</li>
+<li>ftp</li>
+<li>gd</li>
+<li>Iconv</li>
+<li>json</li>
+<li>mbstring</li>
+<li>Database:<ul>
+<li>MySQL:<ul>
+<li>mysqli (LS)</li>
+<li>pdo-mysql (5.x)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pecl_http<ul>
+<li>Required by ezphttprequest used by ezodoscope &amp; ezrecommender</li>
+</ul>
+</li>
+<li>pcntl</li>
+<li>pcre</li>
+<li>posix</li>
+<li>reflection</li>
+<li>simplexml</li>
+<li>spl</li>
+<li>ssl</li>
+<li>xmlreader</li>
+<li>xsl</li>
+<li>zlib</li>
+<li>php-intl</li>
+<li>APC 3.1.9 (rhel6 packages)</li>
+<li>bz2</li>
+<li>Curl</li>
+<li>dom</li>
+<li>exif</li>
+<li>fileinfo</li>
+<li>ftp</li>
+<li>gd</li>
+<li>Iconv</li>
+<li>json</li>
+<li>mbstring</li>
+<li>memcache</li>
+<li>Database:<ul>
+<li>MySQL:<ul>
+<li>mysqli (LS)</li>
+<li>pdo-mysql (5.x)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pecl_http<ul>
+<li>Required by ezphttprequest used by ezodoscope &amp; ezrecommender</li>
+</ul>
+</li>
+<li>pcntl</li>
+<li>pcre</li>
+<li>posix</li>
+<li>reflection</li>
+<li>simplexml</li>
+<li>spl</li>
+<li>ssl</li>
+<li>xmlreader</li>
+<li>xsl</li>
+<li>zlib</li>
+<li>php-intl</li>
+</ul>
+<p><strong>Graphic Handler</strong></p>
+<ul class="simple">
+<li>ImageMagick 6.5.4 (rhel6 packages)</li>
+<li>ImageMagick 6.5.4 (rhel6 packages)</li>
+</ul>
+<p><strong>Other</strong></p>
+<ul class="simple">
+<li>OpenOffice 3.2.1 (rhel6 packages)</li>
+<li>OpenOffice 3.2.1 (rhel6 packages)</li>
+</ul>
+<p><strong>eZ Publish extensions</strong></p>
+<ul class="simple">
+<li>eZ Online Editor LS 5.2.0</li>
+<li>eZ Website Interface LS 5.2.0</li>
+<li>eZ Flow LS 5.2.0</li>
+<li>eZ Find LS 5.2.0</li>
+<li>eZ Google Maps Location&nbsp;LS 5.2.0</li>
+<li>eZ Star Rating&nbsp;LS 5.2.0</li>
+<li>eZ Website Toolbar&nbsp;LS 5.2.0</li>
+<li>eZ Openoffice.org&nbsp;LS 5.2.0</li>
+<li>eZ MB Password Expiry&nbsp;LS 5.2.0</li>
+<li>eZ Multiupload LS 5.2.0</li>
+<li>eZ Survey LS 5.2.0</li>
+<li>eZ Comments LS 5.2.0</li>
+<li>eZ JSCore LS 5.2.0</li>
+<li>eZ Script Monitor LS 5.2.0</li>
+<li>eZ SI LS 5.2.0</li>
+<li>eZ Style Editor LS 5.2.0</li>
+<li>eZ XML Export LS 5.2.0</li>
+<li>eZ Image Editor LS 5.2.0</li>
+<li>eZ Network LS 5.2.0</li>
+<li>eZ Form Token LS 5.2.0</li>
+<li>eZ Content Staging LS 5.2.0</li>
+<li>eZ Autosave LS 5.2.0</li>
+<li>eZ REST API Provider LS 5.2.0</li>
+<li>eZ Online Editor LS 5.2.0</li>
+<li>eZ Website Interface LS 5.2.0</li>
+<li>eZ Flow LS 5.2.0</li>
+<li>eZ Find LS 5.2.0</li>
+<li>eZ Google Maps Location&nbsp;LS 5.2.0</li>
+<li>eZ Star Rating&nbsp;LS 5.2.0</li>
+<li>eZ Website Toolbar&nbsp;LS 5.2.0</li>
+<li>eZ Openoffice.org&nbsp;LS 5.2.0</li>
+<li>eZ MB Password Expiry&nbsp;LS 5.2.0</li>
+<li>eZ Multiupload LS 5.2.0</li>
+<li>eZ Survey LS 5.2.0</li>
+<li>eZ Comments LS 5.2.0</li>
+<li>eZ JSCore LS 5.2.0</li>
+<li>eZ Script Monitor LS 5.2.0</li>
+<li>eZ SI LS 5.2.0</li>
+<li>eZ Style Editor LS 5.2.0</li>
+<li>eZ XML Export LS 5.2.0</li>
+<li>eZ Image Editor LS 5.2.0</li>
+<li>eZ Network LS 5.2.0</li>
+<li>eZ Form Token LS 5.2.0</li>
+<li>eZ Content Staging LS 5.2.0</li>
+<li>eZ Autosave LS 5.2.0</li>
+<li>eZ REST API Provider LS 5.2.0</li>
+</ul>
+<p><strong>Cluster mode</strong></p>
+<ul class="simple">
+<li>eZDFSFileHandler (mysqli) + Linux NFS</li>
+<li>Persistence cache configured with Memcache</li>
+</ul>
+<p><strong>File system</strong></p>
+<ul class="simple">
+<li>Linux ext4</li>
+<li>Linux ext4</li>
+</ul>
+</div>
+<div class="section" id="approved-stacks">
+<h3>Approved stacks<a class="headerlink" href="#approved-stacks" title="Permalink to this headline">¶</a></h3>
+<p>These stacks are also tested, but not as extensively as our reference
+stacks. These stacks still benefit from the full support and maintenance
+guarantees provided with the eZ Publish Platform Subscription, but more
+issues might occur during normal operations, performance might be lower
+and issues take longer to resolve.</p>
+<p>The supported non-reference stacks for eZ Publish Platform 5 are mainly:</p>
+<ul class="simple">
+<li>Debian 7</li>
+<li>CentOS (with same version and configuration as our reference Red Hat
+stack above)</li>
+</ul>
+<p>The details of the Debian stack can be seen in the table below.</p>
+<p>Single Mode</p>
+<p>Cluster Mode</p>
+<p><strong>Operating system</strong></p>
+<ul class="simple">
+<li>Debian 7</li>
+<li>Debian 7</li>
+</ul>
+<p><strong>Web Server</strong></p>
+<ul class="simple">
+<li>Apache 2.2.x (prefork mode)</li>
+<li>Apache 2.2.x (prefork mode)</li>
+</ul>
+<p><strong>Symfony Web Framework (* )</strong></p>
+<ul class="simple">
+<li>Latest stable version of Symfony 2.3.x with Twig</li>
+<li>Latest stable version of Symfony 2.3.x with Twig</li>
+</ul>
+<p><strong>DBMS</strong></p>
+<ul class="simple">
+<li>MySQL 5.5.x</li>
+<li>PostgreSQL 9.1.x</li>
+<li>MySQL 5.5.x</li>
+</ul>
+<p><strong>PHP (mod_php) + PHP CLI + apache</strong></p>
+<ul class="simple">
+<li>PHP 5.3.3+ (tested on 5.4.4)</li>
+<li>PHP 5.3.3+ (tested on 5.4.4)</li>
+</ul>
+<p><strong>PHP</strong></p>
+<ul class="simple">
+<li>APC 3.1.9+ (tested on 3.1.13 debian package)</li>
+<li>bz2</li>
+<li>Curl</li>
+<li>dom</li>
+<li>exif</li>
+<li>fileinfo</li>
+<li>ftp</li>
+<li>gd</li>
+<li>Iconv</li>
+<li>json</li>
+<li>mbstring</li>
+<li>Database:<ul>
+<li>MySQL:<ul>
+<li>mysqli (LS)</li>
+<li>pdo-mysql (5.x)</li>
+</ul>
+</li>
+<li>Postgres:<ul>
+<li>pgsql (LS)</li>
+<li>pdo-pgsql (5.x)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pecl_http<ul>
+<li>Required by ezphttprequest used by ezodoscope &amp; ezrecommender</li>
+</ul>
+</li>
+<li>pcntl</li>
+<li>pcre</li>
+<li>posix</li>
+<li>reflection</li>
+<li>simplexml</li>
+<li>spl</li>
+<li>ssl</li>
+<li>xmlreader</li>
+<li>xsl</li>
+<li>zlib</li>
+<li>php-intl</li>
+<li>APC 3.1.9+ (tested on 3.1.13 debian package)</li>
+<li>bz2</li>
+<li>Curl</li>
+<li>dom</li>
+<li>exif</li>
+<li>fileinfo</li>
+<li>ftp</li>
+<li>gd</li>
+<li>Iconv</li>
+<li>json</li>
+<li>mbstring</li>
+<li>memcache OR memcached</li>
+<li>Database:<ul>
+<li>MySQL:<ul>
+<li>mysqli (LS)</li>
+<li>pdo-mysql (5.x)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pecl_http<ul>
+<li>Required by ezphttprequest used by ezodoscope &amp; ezrecommender</li>
+</ul>
+</li>
+<li>pcntl</li>
+<li>pcre</li>
+<li>posix</li>
+<li>reflection</li>
+<li>simplexml</li>
+<li>spl</li>
+<li>ssl</li>
+<li>xmlreader</li>
+<li>xsl</li>
+<li>zlib</li>
+<li>php-intl</li>
+</ul>
+<p><strong>Graphic Handler</strong></p>
+<ul class="simple">
+<li>ImageMagick &gt;= 6.4.x</li>
+<li>GD2 ( PHP extension )</li>
+<li>ImageMagick &gt;= 6.4.x</li>
+<li>GD2 ( PHP extension )</li>
+</ul>
+<p><strong>eZ Publish extensions</strong></p>
+<ul class="simple">
+<li>similar as Reference platform (see above)</li>
+</ul>
+<p><strong>Cluster mode</strong></p>
+<ul class="simple">
+<li>eZDFSFileHandler (mysqli) + Linux NFS</li>
+<li>Persistence cache configured with Memcache[d]</li>
+</ul>
+<p><strong>Filesystem</strong></p>
+<ul class="simple">
+<li>Linux ext3 / ext4</li>
+<li>Linux ext3 / ext4</li>
+</ul>
+<div class="line-block">
+<div class="line">*: to ease developer and administrator life, the latest stable</div>
+</div>
+<p>version of the Symfony framework is bundled with the eZ Publish release.
+| eZ support eZ Publish only when used with the latest maintenance
+version of Symfony within the version specified above, new
+maintenance&nbsp;versions are announced&nbsp;by
+<a class="reference external" href="http://symfony.com/blog/category/releases">Symfony</a> and provided via
+composer.&nbsp;Symfony is not supported directly by eZ within&nbsp;eZ Publish
+Enterprise Subscriptions, however&nbsp;contact your eZ Systems representative
+for alternatives.</p>
+</div>
+</div>
+<div class="section" id="compatible-platforms">
+<h2>Compatible platforms<a class="headerlink" href="#compatible-platforms" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish can run and execute on many more platforms than the ones
+listed above, including (but not limited to) the operating systems
+listing below if they pass
+the&nbsp;<a class="reference external" href="http://symfony.com/doc/current/reference/requirements.html">Symfony&nbsp;requirements</a>.</p>
+<p><strong>However, eZ Systems doesn&#8217;t insure and guarantee quality operation of
+an eZ Publish&nbsp;Platform&nbsp;installation if it is running on any platform not
+listed as supported.</strong>&nbsp;eZ Publish Enterprise Subscriptions are still
+available for compatible platforms, but the guarantee and the product
+support will not apply and although you will receive various maintenance
+releases and services, no bug fix guarantee will apply to issues related
+to the platform. Maintenance and monitoring tools will not be available.
+eZ Systems does not advise merely compatible platforms for production
+use.</p>
+<p>Compatible platform:</p>
+<ul class="simple">
+<li>Most Linux operating system (Fedora, CentOS, Ubuntu...)</li>
+<li>Solaris</li>
+<li>OpenSolaris</li>
+<li>Windows Vista/7/2008&nbsp;&nbsp;(some issue might occur related to third party
+composer libraries, contact these for fixes if that is the case)</li>
+<li>Mac OS X server</li>
+</ul>
+</div>
+</div>
+<div class="section" id="supported-browsers">
+<h1>Supported browsers<a class="headerlink" href="#supported-browsers" title="Permalink to this headline">¶</a></h1>
+<p>eZ Publish is developed to work properly and support the following
+browser configurations for administrator users:</p>
+<ul class="simple">
+<li>Mozilla® Firefox®, most recent stable version (tested on Firefox 25).
+eZ&nbsp;makes every effort to test and support the most recent version of
+Firefox.</li>
+<li>Google Chrome™, most recent stable version (tested on chrome
+30).&nbsp;Chrome applies updates automatically;&nbsp;eZ&nbsp;makes every effort to
+test and support the most recent version.</li>
+<li>Microsoft® Internet Explorer® versions 9, and 10. We recommend using
+the latest version.</li>
+<li>Apple® Safari® 6.1 or higher on Mac OS X.&nbsp;Apple Safari on iOS isn’t
+supported for admin backend.</li>
+</ul>
+<p>Please note that the interface will display and behave optimally in any
+browser that supports HTML 5.0, CSS 3.0 and ECMAScript 5. If
+these&nbsp;technologies&nbsp;are not supported the system will gracefully appear
+with simpler design/layout but will still be accessible through
+standard/default HTML elements.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Requirements</a><ul>
+<li><a class="reference internal" href="#supported-stacks">Supported stacks</a><ul>
+<li><a class="reference internal" href="#reference-stack">Reference Stack</a></li>
+<li><a class="reference internal" href="#approved-stacks">Approved stacks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compatible-platforms">Compatible platforms</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#supported-browsers">Supported browsers</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Requirements_7438502.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

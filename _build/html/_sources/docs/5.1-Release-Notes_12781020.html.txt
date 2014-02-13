@@ -1,0 +1,274 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+
+eZ Publish Platform 5.<next> : 5.1 Release Notes
+================================================
+
+Added by andre.romcke@ez.no , edited by andre.romcke@ez.no on Jun 25,
+2013
+
+-  `5.1 Release Notes <#id-5.1ReleaseNotes-5.1ReleaseNotes>`__
+
+   -  `Architecture overview as of
+      5.1 <#id-5.1ReleaseNotes-Architectureoverviewasof5.1>`__
+   -  `Highlighted 5.1 features in 5.x
+      stack <#id-5.1ReleaseNotes-Highlighted5.1featuresin5.xstack>`__
+
+      -  `IO Clustering support for use with legacy
+         DFS <#id-5.1ReleaseNotes-IOClusteringsupportforusewithlegacyDFS>`__
+      -  `Persistence DB cache using
+         Stash <#id-5.1ReleaseNotes-PersistenceDBcacheusingStash>`__
+      -  `eZPage (ezflow) FieldType read-only
+         support <#id-5.1ReleaseNotes-eZPage%28ezflow%29FieldTyperead-onlysupport>`__
+
+   -  `Small but big improvements in 5.x stack implemented in
+      5.1  <#id-5.1ReleaseNotes-Smallbutbigimprovementsin5.xstackimplementedin5.1>`__
+
+-  `5.1 Changelog <#id-5.1ReleaseNotes-5.1Changelog>`__
+
+   -  ` 5.1 Changelog  <#id-5.1ReleaseNotes->`__
+
+-  `5.1 Known issues <#id-5.1ReleaseNotes-5.1Knownissues>`__
+
+   -  `Known issues in 5.1 <#id-5.1ReleaseNotes-Knownissuesin5.1>`__
+
+-  `Whats next? <#id-5.1ReleaseNotes-Whatsnext%3F>`__
+
+| 
+
+5.1 Release Notes
+-----------------
+
+eZ Publish 5.1 is our most Scalable, most Stable and most Feature Rich
+eZ Publish 5.x version & eZ Publish version to date. Either if you
+intend to start using the 5.x API & Symfony stack or if you plan to use
+legacy and pure 4.x functionality, this is our recommend LTS release.
+
+Architecture overview as of 5.1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Just like 5.0, 5.1 consists of a “Dual-kernel”. On the left side you’ll
+see the legacy stack, an enhanced and stabilized version of the 4.x
+kernel. On the right side is the 5.x stack, with the arrows indicating
+some highlighted improvements made since 5.0.
+
+|image0|
+
+| 
+
+Highlighted 5.1 features in 5.x stack\ ****
+****
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+IO Clustering support for use with legacy DFS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This release brings the missing DFS clustering support in 5.x kernel
+allowing REST/Public API to be used in combination with clustered
+installation when dealing with binary files. [
+`PR <https://github.com/ezsystems/ezpublish-kernel/pull/234>`__,
+`Doc <http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Clustering>`__ ]
+
+Persistence DB cache using Stash
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This feature enhances performance and clustering scalability by sitting
+between the API and the database storage engine and in default setup
+cache everything but search queries lowering load of backend
+considerably. [
+`PR <https://github.com/ezsystems/ezpublish-kernel/pull/198>`__,
+`Doc <https://confluence.ez.no/display/EZP/Persistence+cache>`__ ]
+
+eZPage (ezflow) FieldType read-only support
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+One of the steps done in this release that makes it possible to use 5.x
+stack fully for content rendering with standard fieldtypes without
+having to use legacy fallback as was the case in 5.0. [
+`PR <https://github.com/ezsystems/ezpublish-kernel/pull/258>`__,
+`Doc <https://confluence.ez.no/display/EZP/The+Page+FieldType>`__ ]
+
+Small but big improvements in 5.x stack implemented in 5.1\ **** ****
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Varnish support in the HTTP Cache
+   `Purge <https://confluence.ez.no/display/EZP/Purge>`__ system [PR,
+   `Doc <https://confluence.ez.no/display/EZP/Using+Varnish>`__]
+
+-  Twig Helper (ezpublish & ezpublish.legacy global variable) [PR,
+   `Doc <https://confluence.ez.no/display/EZP/Twig+Helper>`__]
+
+-  eZDate & eZTime FieldType support
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/256>`__,
+   `Doc <https://confluence.ez.no/display/EZP/FieldTypes>`__]
+
+-  Symfony Locale integration [PR,
+   `Doc <https://confluence.ez.no/display/EZP/Configuration#Configuration-Customlocaleconfiguration(5.1+)>`__]
+
+-  Integrate Symfony2 CSRF protection with ezformtoken
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/211>`__,
+   `Doc <https://confluence.ez.no/display/EZP/Legacy+configuration+injection#Legacyconfigurationinjection-eZFormToken(CSRF)integration>`__]
+
+-  Legacy cronjobs & scripts should be launchable from Symfony CLI
+   [`PR1 <https://github.com/ezsystems/ezpublish-kernel/pull/229>`__,
+   `PR2 <https://github.com/ezsystems/ezpublish-legacy/pull/558>`__,
+   `Doc <https://confluence.ez.no/display/EZP/Legacy+code+and+features#Legacycodeandfeatures-Runninglegacyscriptsandcronjobs>`__]
+
+-  Multisite with single content repository
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/289>`__,
+   Doc]
+
+-  GraphicsMagick support
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/commit/4bb197421097f0bc400452b96f61533ae756e1ea>`__,
+   Doc]
+
+-  Content type identifier criterion
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/203>`__,
+   `Doc <https://confluence.ez.no/display/EZP/2.+Browsing%2C+finding%2C+viewing#id-2.Browsing,finding,viewing-Usingin()insteadofOR>`__]
+
+-  Siteaccess compound matcher to be able to do host & url matching
+   [`PR1 <https://github.com/ezsystems/ezpublish-kernel/pull/223>`__,
+   `PR2 <https://github.com/ezsystems/ezpublish-kernel/pull/281>`__,
+   `Doc <https://confluence.ez.no/display/EZP/Siteaccess+Matching#SiteaccessMatching-Compoundsiteaccessmatcher>`__]
+
+-  Update to Symfony 2.2
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/210>`__,
+   `Doc <http://symfony.com/doc/2.2/book/index.html>`__, `Blog
+   Post <http://symfony.com/blog/symfony-2-2-0>`__]
+
+-  Default layout for legacy content fallback configurable by SiteAccess
+   [`PR <https://github.com/ezsystems/ezpublish-kernel/pull/277>`__,
+   `Doc <https://confluence.ez.no/display/EZP/Legacy+template+fallback#Legacytemplatefallback-Baselayoutforlegacyfallback>`__]
+
+-  Add option to allow Twig template to override rendering of legacy
+   requests
+   [`PR1 <https://github.com/ezsystems/ezpublish-kernel/pull/264>`__\ ]
+
+-  REST support for session authentication with CSRF token support [PR1,
+   PR2,
+   Specifications, `Doc <https://confluence.ez.no/display/EZP/REST+API+Authentication>`__]
+
+-  Completed support for permissions and limitations
+   [`PR1 <https://github.com/ezsystems/ezpublish-kernel/pull/164>`__,
+   `PR2 <https://github.com/ezsystems/ezpublish-kernel/pull/292>`__]
+
+-  Improved scalability of the legacy database
+   [`PR1 <https://github.com/ezsystems/ezpublish-legacy/pull/539>`__,
+   `PR2 <https://github.com/ezsystems/ezpublish-kernel/pull/195>`__,
+   `PR3 <https://github.com/ezsystems/ezoracle/pull/12>`__]
+
+-  + hundreds small/medium improvements & bug fixes in Public API, REST
+   API, legacy and Demo bundle, *see full change-log below*.
+
+5.1 Changelog
+-------------
+
+ `5.1 Changelog <5.1-Changelog_12780588.html>`__ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+5.1 Known issues
+----------------
+
+`Known issues in 5.1 <Known-issues-in-5.1_12124721.html>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whats next?
+-----------
+
+With 5.1 out the door, our focus will shift more towards new 5.x based
+user interfaces while also improving the 5.x stack further, in no
+particular order:
+
+ 
+
+**Feature**
+
+**Details**
+
+**Planned for**
+
+Performance
+
+HTTP cache for logged in users, detailed performance tracking, use
+Symfony 2.3 Proxy services, further profile & improve kernel
+
+5.2/5.future
+
+Symfony integration
+
+Symfony based login, full Bundle based permission integration for easier
+re-use in custom Bundles, ..
+
+5.2/5.future
+
+Content Scalability
+
+Future improved database handler and File storage to cross the 1 million
+content object soft barrier
+
+5.future
+
+Clustering scalability
+
+New stack configuration, improved database and file storage that can
+scale across servers and datacenters, Async event handling with
+background daemon
+
+5.future
+
+API
+
+Solr support, REST Oauth support (Symfony Bundle), WorkFlow,
+Subscription/Notification, Import/Export
+
+5.2/5.future
+
+UI
+
+Front end editing, UGC, language switcher, AdminBundle, EditorialBundle
+& Setup functionality
+
+5.2/5.3LTS
+
+FieldTypes
+
+Tags, Page (ezflow) write support, Matrix, Identifier, XmlText html5
+(editing and REST), Improved Media/Binary field types for cloud
+storage/CDN needs
+
+5.2/5.future
+
+Extensibility
+
+Criterion, SignalSlots, REST server, Limitations, code generation, ..
+
+5.2/5.future
+
+Modules
+
+Content (Search, ..), Comments (using content model), InfoCollector
+(using Symfony Forms), RSS, Staging, tip a friend, Rating
+
+5.2/5.future
+
+ 
+
+For technical info on feature naming and comparison between 5.x and 4.x,
+see \ `this community maintained Google
+spreadsheet <https://docs.google.com/a/ez.no/spreadsheet/ccc?key=0AgGKn8SQ_akMdFQ3VU0wMlR3cENxTDZ2dkhUcVN2SWc#gid=0>`__.
+
+| 
+
+Attachments:
+------------
+
+| |image1| `ez5-architecture 5x dual kernel
+2.png <attachments/12781020/13107516.png>`__ (image/png)
+
+Document generated by Confluence on Feb 12, 2014 16:43
+
+.. |image0| image:: attachments/12781020/13107516.png
+.. |image1| image:: images/icons/bullet_blue.gif

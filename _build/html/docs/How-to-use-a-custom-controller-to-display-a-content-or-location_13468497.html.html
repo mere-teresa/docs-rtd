@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : How to use a custom controller to display a content or location &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-how-to-use-a-custom-controller-to-display-a-content-or-location">
+<h1>eZ Publish Platform 5.&lt;next&gt; : How to use a custom controller to display a content or location<a class="headerlink" href="#ez-publish-platform-5-next-how-to-use-a-custom-controller-to-display-a-content-or-location" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Jul 05, 2013</p>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>This recipe is compatible with <strong>eZ Publish 5.2 / 2013.07</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-EnhancedviewsforContent%2FLocation">Enhanced views for
+Content/Location</a><ul>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Description">Description</a></li>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Matchingcustomcontrollers">Matching custom
+controllers</a><ul>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-OriginalViewControllersignatures">Original ViewController
+signatures</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Examples">Examples</a><ul>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Usingacustomcontrollertogetfullcontrol">Using a custom controller to get full
+control</a></li>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Enrichingthebuilt-inViewController">Enriching the built-in
+ViewController</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Howtouseacustomcontrollertodisplayacontentorlocation-Overridingthebuilt-inViewController">Overriding the built-in
+ViewController</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="enhanced-views-for-content-location">
+<h1>Enhanced views for Content/Location<a class="headerlink" href="#enhanced-views-for-content-location" title="Permalink to this headline">¶</a></h1>
+<p>In some cases, displaying a content/location via the built-in
+<tt class="docutils literal"><span class="pre">ViewController</span></tt> is not sufficient and will lead you to do many
+sub-requests in order to access different parameters.</p>
+<p>Typical use cases are access to:</p>
+<ul class="simple">
+<li>Settings (either coming from <tt class="docutils literal"><span class="pre">ConfigResolver</span></tt> or
+<tt class="docutils literal"><span class="pre">ServiceContainer</span></tt>)</li>
+<li>Current content&#8217;s <tt class="docutils literal"><span class="pre">ContentType</span></tt> object</li>
+<li>Current location&#8217;s parent</li>
+<li>Current location&#8217;s children count</li>
+<li>Main location and alternative locations for the current content</li>
+<li>etc…</li>
+</ul>
+<p>In those cases, you may want to <strong>use your own controller</strong> to display
+the current content/location instead of using the
+built-in&nbsp;<tt class="docutils literal"><span class="pre">ViewController</span></tt>.</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This feature covers 2 general use cases:</p>
+<ul class="simple">
+<li>Lets you configure a custom controller with the configured matcher
+rules.</li>
+<li>Lets you override the built-in view controller in a clean way.</li>
+</ul>
+</div>
+<div class="section" id="matching-custom-controllers">
+<h2>Matching custom controllers<a class="headerlink" href="#matching-custom-controllers" title="Permalink to this headline">¶</a></h2>
+<p>This is possible with the following piece of configuration:</p>
+<p>Icon</p>
+<p>You can point to any kind of <a class="reference external" href="http://symfony.com/doc/current/book/page_creation.html#step-2-create-the-controller">controller supported by
+Symfony</a>
+(including <a class="reference external" href="http://symfony.com/doc/current/cookbook/controller/service.html">controllers as a
+service</a>).</p>
+<p>The only requirement here is that your action method has a similar
+signature
+than&nbsp;<tt class="docutils literal"><span class="pre">ViewController::viewLocation()``&nbsp;or&nbsp;``ViewController::viewContent()``&nbsp;(depending</span>
+<span class="pre">on</span> <span class="pre">what</span> <span class="pre">you're</span> <span class="pre">matching</span> <span class="pre">of</span> <span class="pre">course).</span> <span class="pre">However,</span> <span class="pre">note</span> <span class="pre">that</span> <span class="pre">all</span> <span class="pre">arguments</span> <span class="pre">are</span>
+<span class="pre">not</span> <span class="pre">mandatory</span> <span class="pre">since</span> <span class="pre">`Symfony</span> <span class="pre">is</span> <span class="pre">clever</span> <span class="pre">enough</span> <span class="pre">to</span> <span class="pre">know</span> <span class="pre">what</span> <span class="pre">to</span> <span class="pre">inject</span> <span class="pre">in</span>
+<span class="pre">your</span> <span class="pre">action</span>
+<span class="pre">method</span> <span class="pre">&lt;http://symfony.com/doc/current/book/routing.html#route-parameters-and-controller-arguments&gt;`__.</span>
+<span class="pre">Hence</span> <span class="pre">**you're</span> <span class="pre">not</span> <span class="pre">forced</span> <span class="pre">to</span> <span class="pre">mimic</span> <span class="pre">the</span> <span class="pre">``ViewController</span></tt>&#8216;s signature
+strictly**. For example, if you omit <tt class="docutils literal"><span class="pre">$layout</span></tt> and <tt class="docutils literal"><span class="pre">$params</span></tt>
+arguments, it will be still valid. Symfony will just avoid to inject
+them in your action method.</p>
+<div class="section" id="original-viewcontroller-signatures">
+<h3>Original ViewController signatures<a class="headerlink" href="#original-viewcontroller-signatures" title="Permalink to this headline">¶</a></h3>
+<p><strong>viewLocation() signature</strong></p>
+<p><strong>viewContent() signature</strong></p>
+<p>Note</p>
+<p>Icon</p>
+<p>Controller selection doesn&#8217;t apply to <tt class="docutils literal"><span class="pre">block_view</span></tt> since you can
+already <a class="reference external" href="The-Page-FieldType_12124915.html#ThePageFieldType-ThePageFieldType-Renderingblocks">use your own controller to display
+blocks</a>.</p>
+<p>Warning on caching</p>
+<p>Icon</p>
+<p>Using your own controller,&nbsp;<strong>it is&nbsp;your responsibility to define cache
+rules</strong>, like for every custom controller !</p>
+<p>So don&#8217;t forget to <strong>set cache rules</strong> and the
+appropriate&nbsp;<strong>``X-Location-Id``&nbsp;header</strong> in the
+returned&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>Response``&nbsp;object.</p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Symfony/Controller/Content/ViewController.php#L76">See built-in
+ViewController</a>&nbsp;for
+more details on this.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-a-custom-controller-to-get-full-control">
+<h3>Using a custom controller to get full control<a class="headerlink" href="#using-a-custom-controller-to-get-full-control" title="Permalink to this headline">¶</a></h3>
+<p>This example shows you how to configure and use your own controller to
+handle a location.</p>
+<p><strong>ezpublish.yml</strong></p>
+<p><strong>Controller</strong></p>
+<p><strong>custom_controller_folder.html.twig</strong></p>
+</div>
+<div class="section" id="enriching-the-built-in-viewcontroller">
+<h3>Enriching the built-in ViewController<a class="headerlink" href="#enriching-the-built-in-viewcontroller" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to use a custom controller to enrich the final
+configured view template. Your controller will here forward the request
+to the built-in <tt class="docutils literal"><span class="pre">ViewController</span></tt> with some additional parameters.</p>
+<p><strong>ezpublish.yml</strong></p>
+<p><strong>Controller</strong></p>
+<p><strong>article_test.html.twig</strong></p>
+</div>
+</div>
+<div class="section" id="overriding-the-built-in-viewcontroller">
+<h2>Overriding the built-in ViewController<a class="headerlink" href="#overriding-the-built-in-viewcontroller" title="Permalink to this headline">¶</a></h2>
+<p>One other way to keep control on what is passed to the view is to use
+your own controller instead of the built-in ViewController.</p>
+<p>Base ViewController being defined as a service, with a service alias,
+this can be easily achieved from your bundle&#8217;s configuration:</p>
+<p>Warning</p>
+<p>Icon</p>
+<p>Doing so will completely override the built-in ViewController! Use this
+at your own risk!</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Do I need to set the configuration in ezpublish/config/ezpublish.yml
+file</p>
+<p>Or there is a way to put it in the Bundle?</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by gof at Jan 23, 2014 23:00</p>
+<p>You can of course put it in a bundle, <a class="reference external" href="https://confluence.ez.no/display/EZP/Import+settings+from+a+bundle">as explained
+here</a>&nbsp;<img alt="(smile)" src="docs/images/icons/emoticons/smile.png" />.</p>
+<p>And there are examples in the DemoBundle.</p>
+<p><img alt="image2" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> at Jan 24, 2014 08:56</p>
+<p>Got it. Thanks!</p>
+<p><img alt="image3" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by gof at Jan 24, 2014 09:06</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : How to use a custom controller to display a content or location</a></li>
+<li><a class="reference internal" href="#enhanced-views-for-content-location">Enhanced views for Content/Location</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#matching-custom-controllers">Matching custom controllers</a><ul>
+<li><a class="reference internal" href="#original-viewcontroller-signatures">Original ViewController signatures</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#using-a-custom-controller-to-get-full-control">Using a custom controller to get full control</a></li>
+<li><a class="reference internal" href="#enriching-the-built-in-viewcontroller">Enriching the built-in ViewController</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overriding-the-built-in-viewcontroller">Overriding the built-in ViewController</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/How-to-use-a-custom-controller-to-display-a-content-or-location_13468497.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Signal-Slot &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Extending-eZ-Publish-5_1736733.html">Extending eZ Publish 5</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-signal-slot">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Signal-Slot<a class="headerlink" href="#ez-publish-platform-5-next-signal-slot" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:toby&#46;schlitt&#37;&#52;&#48;ez&#46;no">toby<span>&#46;</span>schlitt<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> on Jul
+16, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#Signal-Slot-Signal">Signal</a></li>
+<li><a class="reference external" href="#Signal-Slot-Slot">Slot</a></li>
+<li><a class="reference external" href="#Signal-Slot-Example%3AUpdatingURLaliases">Example: Updating URL
+aliases</a></li>
+</ul>
+<p>The Signal-Slot system provides a means for realizing loosely coupled
+dependencies in the sense that a code entity A can react on an event
+occurring in code entity B, without A and B knowing each other directly.
+This works by dispatching event information through a central third
+instance, the so called dispatcher:</p>
+<p><img alt="image0" src="docs/attachments/3506264/5308417.png" /></p>
+<p>In the shown schematics, object B and one other object are interested in
+a certain signal. B is a so-called Slot that can be announced to be
+interested in receiving a Signal (indicated by the circular connector to
+the dispatcher). Object A now sends the corresponding Signal. The
+Dispatcher takes care of realizing the dependency and informs the Slot A
+(and one other Slot) about the occurrence of the Signal.</p>
+<p>Signals roughly equal events, while Slots roughly equal event handlers.
+An arbitrary number (0…n) of Slots can listen for a specific Signal.
+Every object that receives the Dispatcher as a dependency can send
+signals. However, the following conditions apply (that typically do not
+apply to event handling systems):</p>
+<ul class="simple">
+<li>A Slot cannot return anything to the object that issued a signal</li>
+<li>It is not possible for a Slot to stop the propagation of a Signal,
+i.e. all listening Slots will eventually receive the Signal</li>
+</ul>
+<p>Those two conditions allow the asynchronous processing of Slots. That
+means: It is possible to determine, by configuration, that a Slot must
+not receive a Signal in the very same moment it occurs, but to receive
+it on a later point in time, maybe after other Signals from a queue have
+been processed or even on a completely different server.</p>
+</div>
+<div class="section" id="signal">
+<h1>Signal<a class="headerlink" href="#signal" title="Permalink to this headline">¶</a></h1>
+<p>A Signal represents a specific event, e.g. that a content version has
+been published. It consists of information that is significant to the
+event, e.g. the content ID and version number. Therefore, a Signal is
+represented by an object of a class that is specific to the Signal and
+that extends from <tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal</span></tt>. The full
+qualified name of the Signal class is used to uniquely identify the
+Signal. For example, the class
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal\ContentService\PublishVersionSignal</span></tt>
+identifies the example Signal.</p>
+<p>In order to work properly with asynchronous processing, Signals must not
+consist of any logic and must not contain complex data structures (such
+as further objects and resources). Instead, they must be exportable
+using the <tt class="docutils literal"><span class="pre">__set_state()</span></tt> method, so that it is possible to transfer a
+Signal to a different system.</p>
+<p>Note</p>
+<p>Icon</p>
+<p>Signals can theoretically be sent by any object that gets hold of a
+SignalDispatcher (<tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\SignalDispatcher</span></tt>).
+However, at a first stage, <strong>Signals are only sent by special
+implementations of the Public API to indicate core events</strong>. These
+services must and will be used by default and will wrap the original
+service implementations.</p>
+</div>
+<div class="section" id="slot">
+<h1>Slot<a class="headerlink" href="#slot" title="Permalink to this headline">¶</a></h1>
+<p>A Slot extends the system by realizing functionality that is executed
+when a certain Signal occurs. To implement a Slot, you must create a
+class that derives from <tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Slot</span></tt>. The full
+qualified name of the Slot class is also used as the unique identifier
+of the Slot. The Slot base class requires you to implement the single
+method <tt class="docutils literal"><span class="pre">receive()</span></tt>. When your Slot is configured to listen to a
+certain Signal and this Signal occurs, the <tt class="docutils literal"><span class="pre">receive()</span></tt> method of your
+Slot is called.</p>
+<p>Inside the <tt class="docutils literal"><span class="pre">receive()</span></tt> method of your Slot you can basically realize
+any kind of logic. However, it is recommended that you only dispatch the
+action to be triggered to a dedicated object. This allows you to trigger
+the same action from within multiple Slots and to re-use the
+implementation from a completely different context.</p>
+<p>Note that, due to the nature of Signal-Slot, the following requirements
+must be fulfilled by your Slot implementation:</p>
+<ul class="simple">
+<li>A Slot must not return anything to the Signal issuer</li>
+<li>A Slot must be aware that it is potentially executed delayed or even
+on a different server</li>
+</ul>
+<p><strong>Important</strong>: A single Slot should not take care of processing more
+than one Signal. Instead, if you need to trigger same or similar actions
+as different Signals occur. you should encapsulate these actions into a
+dedicated class, of which your Slots receive an instance to trigger this
+action.</p>
+</div>
+<div class="section" id="example-updating-url-aliases">
+<h1>Example: Updating URL aliases<a class="headerlink" href="#example-updating-url-aliases" title="Permalink to this headline">¶</a></h1>
+<p>Updating URL aliases is a typical process that can be realized through a
+Signal-Slot extension for different reasons:</p>
+<ul class="simple">
+<li>The action must be triggered on basis of different events (e.g.
+content update, location move, etc.)</li>
+<li>Direct implementation would involve complex dependencies between
+otherwise unrelated services</li>
+<li>The action is not critical to be executed immediately, but can be
+made asynchronous, if necessary</li>
+</ul>
+<p>As a first step it needs to be determined for which Signals we need to
+listen in order to update URL aliases. Some of them are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal\ContentService\PublishVersionSignal</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal\LocationService\CopySubtreeSignal</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal\LocationService\MoveSubtreeSignal</span></tt></li>
+<li>…</li>
+</ul>
+<p>There are of course additional Signals that trigger an update of URL
+aliases, but these are left out for simplicity here.</p>
+<p>Now that we identified some Signals to react upon, we can start
+implementing Slots for these signals. For the first Signal, which is
+issued as soon as a new version of Content is published, there exists a
+method in <tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\UrlAlias\Handler</span></tt> for
+exactly that purpose: <tt class="docutils literal"><span class="pre">publishUrlAliasForLocation()</span></tt>. The Signal
+contains the ID of the content object and its newly published version
+number. Using this information, the corresponding Slot can fulfill its
+purposes with the following steps:</p>
+<ol class="arabic simple">
+<li>Load the corresponding content and its locations</li>
+<li>Call the URL alias creation method for each location</li>
+</ol>
+<p>To achieve this, the Slot has 2 dependencies:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Handler</span></tt>
+to load the content itself in order to retrieve the names</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Location\Handler</span></tt>
+to load the locations</p>
+</li>
+<li><div class="first line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\UrlAlias\Handler</span></tt></div>
+<div class="line">to create the aliases for each location</div>
+</div>
+</li>
+</ul>
+<p>So, a stub for the implementation could look like this:</p>
+<p>Icon</p>
+<p>In order to make the newly created Slot react on the corresponding
+Signal, the following steps must be performed:</p>
+<ol class="arabic simple">
+<li>Make the Slot available through the Symfony service container as a
+service</li>
+<li>Register the Slot to react to the Signal of type
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal\ContentService\PublishVersionSignal</span></tt></li>
+</ol>
+<p>See <a class="reference external" href="How-to-listen-to-Core-events_14123362.html">How to listen to Core
+events</a> recipe in the
+developer cookbook for more information.</p>
+<div class="section" id="attachments">
+<h2>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/3506264/5308417.png">schematics.png</a></div>
+</div>
+<p>(image/png)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Signal-Slot</a></li>
+<li><a class="reference internal" href="#signal">Signal</a></li>
+<li><a class="reference internal" href="#slot">Slot</a></li>
+<li><a class="reference internal" href="#example-updating-url-aliases">Example: Updating URL aliases</a><ul>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Signal-Slot_3506264.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

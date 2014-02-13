@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Manual configuration of eZ Publish &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Manual-installation_7438512.html">Manual installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-manual-configuration-of-ez-publish">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Manual configuration of eZ Publish<a class="headerlink" href="#ez-publish-platform-5-next-manual-configuration-of-ez-publish" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep 26,
+2013</p>
+<p>This section describes how to manually configure eZ Publish instead of
+using the setup wizard to do all the work. Keep in mind that the manual
+installation method is for expert users only. It should only be used by
+people who know what they are doing. The following steps will work on
+both Linux/UNIX and Windows environments.</p>
+<div class="section" id="database-initialization">
+<h2>Database initialization<a class="headerlink" href="#database-initialization" title="Permalink to this headline">¶</a></h2>
+<p>A clean eZ Publish database is created using two very important SQL
+scripts: &#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">cleandata</span></tt>&#8221; (note that an empty
+database should be created before launching these scripts). The first of
+them initializes the necessary database structure and the second one
+imports the pre-defined data to the database. While the
+&#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; script differs for each database engine, the
+&#8220;<tt class="docutils literal"><span class="pre">cleandata</span></tt>&#8221; script is the same for all solutions.</p>
+<div class="section" id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<p>Use the following command to run the MySQL specific
+&#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; script:</p>
+<div class="highlight-python"><pre>$ mysql -u USERNAME -pPASSWORD DATABASE &lt; PATH/ezpublish_legacy/kernel/sql/mysql/kernel_schema.sql</pre>
+</div>
+<p>In eZ Publish 4.0.1 and later versions, the script will use the InnoDB
+storage engine when creating new tables. This storage engine is
+recommended (and will be required in the future) for running eZ Publish
+on a MySQL database. Contact your database administrator if you are
+unsure about whether InnoDB is available on your server.</p>
+<p>In eZ Publish 4.0.0, the <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> statements in the
+&#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; script do not specify which storage engine to use
+(no <tt class="docutils literal"><span class="pre">ENGINE</span></tt> or <tt class="docutils literal"><span class="pre">TYPE</span></tt> option), and thus the default storage engine
+will be used. Normally, it is <tt class="docutils literal"><span class="pre">MyISAM</span></tt>. Because of this, it is highly
+recommended to set the default storage engine to <tt class="docutils literal"><span class="pre">InnoDB</span></tt> before you
+run the &#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; script (refer to the <a class="reference external" href="http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html">MySQL
+documentation</a>
+for information about how to set the default engine). Alternatively, you
+can run the &#8220;<tt class="docutils literal"><span class="pre">kernel_schema</span></tt>&#8221; script first and then convert the
+newly created tables to <tt class="docutils literal"><span class="pre">InnoDB</span></tt>. You can either use the
+&#8220;<tt class="docutils literal"><span class="pre">bin/php/ezconvertmysqltabletype.php</span></tt>&#8221; script for database
+conversion (recommended) or convert the tables individually by using the
+following SQL query for each table:</p>
+<div class="highlight-python"><pre>ALTER TABLE &lt;name_of_table&gt; TYPE = innodb;</pre>
+</div>
+<p>Use the following command to run the generic &#8220;<tt class="docutils literal"><span class="pre">cleandata</span></tt>&#8221; script:</p>
+<div class="highlight-python"><pre>$ mysql -u USERNAME -pPASSWORD DATABASE &lt; PATH/ezpublish_legacy/kernel/sql/common/cleandata.sql</pre>
+</div>
+<p>USERNAME</p>
+<p>The MySQL user (if no user is set up, use &#8220;root&#8221;).</p>
+<p>PASSWORD</p>
+<p>The password that belongs to the username.</p>
+<p>DATABASE</p>
+<p>The name of the database, for example &#8220;my_database&#8221;.</p>
+<p>PATH</p>
+<p>The full path to the root directory of your eZ Publish installation, for
+example &#8220;/opt/ezp&#8221;.</p>
+</div>
+</div>
+<div class="section" id="file-permissions">
+<h2>File permissions<a class="headerlink" href="#file-permissions" title="Permalink to this headline">¶</a></h2>
+<p>Windows users can skip this part.</p>
+<p>Several cache, log and config folders must be writable both by the web
+server and the command line user, use <em>one</em> of the following
+alternatives to do this:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line"><strong>Using ACL on a system that supports chmod +a</strong></div>
+<div class="line">These shell commands will give proper permission to the web server</div>
+</div>
+<p>and command line users:</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ rm -rf ezpublish/cache/*
+$ rm -rf ezpublish/logs/*
+$ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><p class="first"><a href="#id1"><span class="problematic" id="id2">**</span></a>Using ACL on a system that does not support chmod +a
+<a href="#id3"><span class="problematic" id="id4">**</span></a>Some systems don&#8217;t support chmod +a, but do support another
+utility called setfacl. You may need to enable ACL support on your
+partition and install setfacl before using it (as is the case with
+Ubuntu), like so:</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo setfacl -R -m u:www-data:rwx -m u:www-data:rwx \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Using chown on systems that don&#8217;t support ACL</strong></div>
+<div class="line">Some systems don&#8217;t support ACL at all. You will either need to set</div>
+</div>
+<p>your web server&#8217;s user as the owner of the required directories.</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo chown -R www-data:www-data ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type d | sudo xargs chmod -R 775
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type f | sudo xargs chmod -R 664</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Using chmod</strong></div>
+<div class="line">If you can&#8217;t use ACL and aren&#8217;t allowed to change owner, you can</div>
+</div>
+<p>use chmod, making the files writable by everybody. Note that this
+method really isn&#8217;t recommended as it allows any user to do anything.</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type d | sudo xargs chmod -R 777
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type f | sudo xargs chmod -R 666</pre>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="link-assets">
+<h2>Link assets<a class="headerlink" href="#link-assets" title="Permalink to this headline">¶</a></h2>
+<p>To be able to run eZ Publish 5 correctly, assets need to be exposed in
+the public &#8220;<tt class="docutils literal"><span class="pre">web</span></tt>&#8221; folder.</p>
+<p>The following commands will first symlink eZ Publish 5 assets in
+&#8220;Bundles&#8221; and the second will symlink assets (design files like images,
+scripts and css, and files in var folder) &nbsp;from eZ Publish Legacy</p>
+<div class="highlight-python"><pre>cd /&lt;ezp5-root&gt;
+php ezpublish/console assets:install --symlink web
+php ezpublish/console ezpublish:legacy:assets_install --symlink web
+
+# For 5.1 / 2013.4 and higher, also:
+php ezpublish/console assetic:dump --env=prod web</pre>
+</div>
+<p>Icon</p>
+<p><strong>*Note</strong>: In both cases*&#8221;<tt class="docutils literal"><span class="pre">web</span></tt>&#8220;<em>is the default folder and can be
+skipped from the command. Further information about alternative options
+is&nbsp;available&nbsp;with ``-h`` just like it is with</em>
+&#8220;<tt class="docutils literal"><span class="pre">php</span> <span class="pre">ezpublish/console</span> <span class="pre">-h</span></tt>&#8221;.</p>
+<p>Warning regarding APC</p>
+<p>Icon</p>
+<p>If you are planning to use APC to speed up your site, please be sure to
+check the available notes
+<a class="reference external" href="https://confluence.ez.no/display/EZP/Persistence+cache#Persistencecache-APC">here</a>,
+before entering the setup wizard chapter.</p>
+</div>
+<div class="section" id="configuring-ez-publish">
+<h2>Configuring eZ Publish<a class="headerlink" href="#configuring-ez-publish" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221; configuration file located in the
+&#8220;<tt class="docutils literal"><span class="pre">ezpublish_legacy/settings/override</span></tt>&#8221; directory of your eZ Publish
+installation must be changed, or else eZ Publish will not function
+properly. This file is the global override for the
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/site.ini">site.ini</a>
+configuration file. There are a lot of things that need to be configured
+(database, mail transport system, var directory, etc.). The following
+text shows a generic example of a configuration that can be used:</p>
+<div class="highlight-python"><pre>&lt;?php /* #?ini charset="utf-8"?
+
+[DatabaseSettings]
+DatabaseImplementation=ezmysql
+Server=localhost
+User=root
+Password=
+Database=my_database
+
+[FileSettings]
+VarDir=var/example
+
+[Session]
+SessionNameHandler=custom
+
+[SiteSettings]
+DefaultAccess=example
+SiteList[]
+SiteList[]=example
+
+[SiteAccessSettings]
+CheckValidity=false
+AvailableSiteAccessList[]
+AvailableSiteAccessList[]=example
+AvailableSiteAccessList[]=example_admin
+RelatedSiteAccessList[]
+RelatedSiteAccessList[]=example
+RelatedSiteAccessList[]=example_admin
+MatchOrder=host;uri
+
+# Host matching
+HostMatchMapItems[]=www.example.com;example
+HostMatchMapItems[]=admin.example.com;example_admin
+
+[InformationCollectionSettings]
+EmailReceiver=webmaster@example.com
+
+[MailSettings]
+Transport=sendmail
+AdminEmail=webmaster@example.com
+EmailSender=test@example.com
+
+[RegionalSettings]
+Locale=eng-GB
+ContentObjectLocale=eng-GB
+TextTranslation=disabled
+
+*/ ?&gt;</pre>
+</div>
+<p>In the example above the &#8220;<tt class="docutils literal"><span class="pre">AvailableSiteAccessList[]</span></tt>&#8221; array located
+in the &#8220;<tt class="docutils literal"><span class="pre">[SiteAccessSettings]</span></tt>&#8221; section of this file determines the
+available
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Concepts-and-basics/Configuration/Site-management">siteaccesses</a>
+called &#8220;<tt class="docutils literal"><span class="pre">example</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">example_admin</span></tt>&#8221;. The
+&#8220;<tt class="docutils literal"><span class="pre">CheckValidity</span></tt>&#8221; setting located in the same section should be set
+to false, otherwise the setup wizard will be initiated when trying to
+access the site.</p>
+<p>In addition, two siteaccess configurations must be created, a public
+siteaccess (&#8220;<tt class="docutils literal"><span class="pre">example</span></tt>&#8221;) and an administration siteaccess
+(&#8220;<tt class="docutils literal"><span class="pre">example_admin</span></tt>&#8221;). The following sub-directories have to be
+created in the root of your eZ Publish installation:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/settings/siteaccess/example</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt>settings/siteaccess/example_admin</li>
+</ul>
+<p>Both siteaccesses must have a file called &#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221;.</p>
+<p>The following text shows a generic solution for the &#8220;<tt class="docutils literal"><span class="pre">example</span></tt>&#8221;
+siteaccess:</p>
+<div class="highlight-python"><pre>&lt;?php /* #?ini charset="utf-8"?
+
+[SiteSettings]
+SiteName=Example
+SiteURL=www.example.com
+LoginPage=embedded
+
+[SiteAccessSettings]
+RequireUserLogin=false
+ShowHiddenNodes=false
+
+[DesignSettings]
+SiteDesign=example
+
+[ContentSettings]
+ViewCaching=disabled
+
+[TemplateSettings]
+TemplateCache=disabled
+TemplateCompile=disabled
+#ShowXHTMLCode=enabled
+#Debug=enabled
+
+[DebugSettings]
+DebugOutput=enabled
+Debug=inline
+#DebugRedirection=enabled
+
+[RegionalSettings]
+SiteLanguageList[]
+SiteLanguageList[]=eng-GB
+ShowUntranslatedObjects=disabled
+
+*/ ?&gt;</pre>
+</div>
+<p>The following text shows a generic solution for the
+&#8220;<tt class="docutils literal"><span class="pre">example_admin</span></tt>&#8221; siteaccess:</p>
+<div class="highlight-python"><pre>&lt;?php /* #?ini charset="utf-8"?
+
+[SiteSettings]
+SiteName=Example
+SiteURL=admin.example.com
+LoginPage=custom
+
+[SiteAccessSettings]
+RequireUserLogin=true
+ShowHiddenNodes=true
+
+[DesignSettings]
+SiteDesign=admin
+
+[ContentSettings]
+CachedViewPreferences[full]=admin_navigation_content=0;admin_navigation_details=0;admin_navigation_languages=0;admin_navigation_locations=0;admin_navigation_relations=0;admin_navigation_roles=0;admin_navigation_policies=0admin_navigation_content=0;admin_navigation_translations=0;admin_children_viewmode=list;admin_list_limit=1;admin_edit_show_locations=0;admin_url_list_limit=10;admin_url_view_limit=10;admin_section_list_limit=1;admin_orderlist_sortfield=user_name;admin_orderlist_sortorder=desc;admin_search_stats_limit=1;admin_treemenu=1;admin_bookmarkmenu=1;admin_left_menu_width=13
+
+[DebugSettings]
+DebugOutput=disabled
+Debug=inline
+
+[RegionalSettings]
+SiteLanguageList[]
+SiteLanguageList[]=eng-GB
+ShowUntranslatedObjects=enabled
+
+*/ ?&gt;</pre>
+</div>
+<p>Note that database settings, mail settings, regional and other settings
+defined in
+&#8220;<tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt>settings/override/site.ini.append.php&#8221; will be
+used for each siteaccess regardless of what is specified in the
+siteaccess settings. In the example above, the
+&#8220;<tt class="docutils literal"><span class="pre">Database=my_database</span></tt>&#8221; is specified under the
+&#8220;<tt class="docutils literal"><span class="pre">[DatabaseSettings]</span></tt>&#8221; section of this file so this database will be
+used for both &#8220;<tt class="docutils literal"><span class="pre">example</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">example_admin</span></tt>&#8221; siteaccesses.
+Refer to the &#8220;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Concepts-and-basics/Configuration/Site-management">Site
+management</a>&#8221;
+and
+&#8220;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Concepts-and-basics/Configuration">Configuration</a>&#8221;
+sections of the &#8220;Concepts and basics&#8221; chapter for more information.</p>
+</div>
+<div class="section" id="activate-base-extensions">
+<h2>Activate base extensions<a class="headerlink" href="#activate-base-extensions" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">There are some legacy extensions that need to be active, as eZ Publish</div>
+</div>
+<p>depends on them. This is usually done in
+the&nbsp;<tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt><tt class="docutils literal"><span class="pre">settings/override/site.ini.append.php</span></tt>
+settings file.
+| Here&#8217;s an example of the extensions that you should activate:</p>
+<div class="highlight-python"><pre>[ExtensionSettings]
+ActiveExtensions[]=ezjscore
+ActiveExtensions[]=ezoe
+ActiveExtensions[]=ezformtoken
+ActiveExtensions[]=ezwt
+ActiveExtensions[]=ezie</pre>
+</div>
+</div>
+<div class="section" id="languages">
+<h2>Languages<a class="headerlink" href="#languages" title="Permalink to this headline">¶</a></h2>
+<p>Available languages and their priorities can be controlled per
+siteaccess using the
+&#8220;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/site.ini/RegionalSettings/SiteLanguageList">SiteLanguageList</a>&#8221;
+configuration setting located under the &#8220;<tt class="docutils literal"><span class="pre">[RegionalSettings]</span></tt>&#8221;
+section of the siteaccess &#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221; file. If this
+setting is not specified, the system will use the old
+&#8220;<tt class="docutils literal"><span class="pre">ContentObjectLocale</span></tt>&#8221; setting and thus only the default language
+will be shown. Refer to the &#8220;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Features/Multi-language/Configuring-the-site-languages/">Configuring the site
+languages</a>&#8221;
+section for more information and examples.</p>
+<p>The &#8220;<tt class="docutils literal"><span class="pre">cleandata.sql</span></tt>&#8221; script creates only one language which is the
+British English (eng-GB). All other languages should be added using the
+&#8220;Setup - Languages&#8221; part of the administration interface
+(<tt class="docutils literal"><span class="pre">http://admin.example.com</span></tt> in the example above).</p>
+<p>Icon</p>
+<p>As of eZ Publish 5.2 the maximum number of languages supported for 64
+bit servers&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/5.2-beta1+Release+Notes#id-5.2-beta1ReleaseNotes-Supportformorethan30languages">has been
+improved</a>,
+allowing up to 62 languages simultaneously. For 32 bit servers the
+maximum number of simultaneous languages supported is 30.</p>
+</div>
+<div class="section" id="dynamic-tree-menu">
+<h2>Dynamic tree menu<a class="headerlink" href="#dynamic-tree-menu" title="Permalink to this headline">¶</a></h2>
+<p>If you have a large site with many nodes, it is strongly recommended to
+enable the
+&#8220;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/contentstructuremenu.ini/TreeMenu/Dynamic">Dynamic</a>&#8221;
+switch for your administration siteaccess. This will make the left tree
+menu in the administration interface work much faster and decrease the
+usage of network bandwidth.</p>
+</div>
+<div class="section" id="administrator-s-log-in-and-password">
+<h2>Administrator&#8217;s log-in and password<a class="headerlink" href="#administrator-s-log-in-and-password" title="Permalink to this headline">¶</a></h2>
+<p>The following user name and password are set by the
+&#8220;<tt class="docutils literal"><span class="pre">cleandata.sql</span></tt>&#8221; script and can be used for logging in to the
+administration interface.</p>
+<ul class="simple">
+<li>User name: <tt class="docutils literal"><span class="pre">admin</span></tt></li>
+<li>Password: <tt class="docutils literal"><span class="pre">publish</span></tt></li>
+</ul>
+<p>It is strongly recommended to change this password as soon as possible.
+Note that if you need another user name for site administrator, you can
+create a new administrator user, log in as this user and remove the old
+one.</p>
+</div>
+<div class="section" id="generate-ez-publish-autoloads">
+<h2>Generate eZ Publish autoloads<a class="headerlink" href="#generate-ez-publish-autoloads" title="Permalink to this headline">¶</a></h2>
+<p>The autoloads can be generated by running the
+<tt class="docutils literal"><span class="pre">ezpgenerateautoloads.php</span></tt> as shown in the example below:</p>
+<div class="highlight-python"><pre>cd /&lt;ezpublish-5-root-dir&gt;/ezpublish_legacy/
+php bin/php/ezpgenerateautoloads.php</pre>
+</div>
+</div>
+<div class="section" id="generate-ez-publish-yml-configuration">
+<h2>Generate eZ Publish .yml configuration<a class="headerlink" href="#generate-ez-publish-yml-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To generate yml configuration for the new Symfony stack a console
+command has been provided to cover single site setups.</p>
+<p>Perform the following command where <tt class="docutils literal"><span class="pre">&lt;group&gt;</span></tt> represents the
+siteaccess group name which will be created for your configurations in
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt>, for instance package name like &#8220;<tt class="docutils literal"><span class="pre">ezdemo_site</span></tt>&#8221;,
+&#8220;<tt class="docutils literal"><span class="pre">ezwebin_site</span></tt>&#8221; or &#8220;<tt class="docutils literal"><span class="pre">ezflow_site</span></tt>&#8221;. And <tt class="docutils literal"><span class="pre">&lt;admin_siteaccess&gt;</span></tt>
+represents your admin siteaccess, for instance,
+&#8220;<tt class="docutils literal"><span class="pre">ezdemo_site_admin</span></tt>&#8221;:</p>
+<div class="highlight-python"><pre>cd /&lt;ezpublish-5-root-dir&gt;/
+php ezpublish/console ezpublish:configure --env=prod &lt;group&gt; &lt;admin_siteaccess&gt;</pre>
+</div>
+<p>If you instead would like to manually create your yml config, do the
+following:</p>
+<ul class="simple">
+<li>Copy <tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish.yml.example</span></tt> to
+<tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish_prod.yml</span></tt></li>
+<li>Edit <tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish_prod.yml</span></tt></li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Manual configuration of eZ Publish</a><ul>
+<li><a class="reference internal" href="#database-initialization">Database initialization</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-permissions">File permissions</a></li>
+<li><a class="reference internal" href="#link-assets">Link assets</a></li>
+<li><a class="reference internal" href="#configuring-ez-publish">Configuring eZ Publish</a></li>
+<li><a class="reference internal" href="#activate-base-extensions">Activate base extensions</a></li>
+<li><a class="reference internal" href="#languages">Languages</a></li>
+<li><a class="reference internal" href="#dynamic-tree-menu">Dynamic tree menu</a></li>
+<li><a class="reference internal" href="#administrator-s-log-in-and-password">Administrator&#8217;s log-in and password</a></li>
+<li><a class="reference internal" href="#generate-ez-publish-autoloads">Generate eZ Publish autoloads</a></li>
+<li><a class="reference internal" href="#generate-ez-publish-yml-configuration">Generate eZ Publish .yml configuration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Manual-configuration-of-eZ-Publish_7438607.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

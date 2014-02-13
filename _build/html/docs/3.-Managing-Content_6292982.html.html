@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 3. Managing Content &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public API</a></li>
+<li><a class="reference external" href="Public-API-Cookbook_5046311.html">Public API Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-3-managing-content">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 3. Managing Content<a class="headerlink" href="#ez-publish-platform-5-next-3-managing-content" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jan 29, 2014</p>
+<ul class="simple">
+<li><a class="reference external" href="#id-3.ManagingContent-Identifyingtotherepositorywithaloginandapassword">Identifying to the repository with a login and a
+password</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-Creatingcontent">Creating content</a><ul>
+<li><a class="reference external" href="#id-3.ManagingContent-TheContentCreateStruct">The
+ContentCreateStruct</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-Settingthefieldsvalues">Setting the fields
+values</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-SettingtheLocation">Setting the
+Location</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-Creatingandpublishing">Creating and
+publishing</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-3.ManagingContent-UpdatingContent">Updating Content</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-Handlingtranslations">Handling
+translations</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-CreatingContentcontaininganimage">Creating Content containing an
+image</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-CreateContentwithXMLText">Create Content with XML
+Text</a></li>
+<li><a class="reference external" href="#id-3.ManagingContent-DeletingContent">Deleting Content</a></li>
+</ul>
+<p>In the following recipes, you will see how to create Content, including
+complex fields like XmlText or Image.</p>
+<div class="section" id="identifying-to-the-repository-with-a-login-and-a-password">
+<h2>Identifying to the repository with a login and a password<a class="headerlink" href="#identifying-to-the-repository-with-a-login-and-a-password" title="Permalink to this headline">¶</a></h2>
+<p>As seen earlier, the Repository executes operations with a user&#8217;s
+credentials. In a web context, the currently logged in user is
+automatically identified. In a command line context, you need to
+manually log a user in. We have already seen how to manually load and
+set a user using its ID. If you would like to identify a user using his
+username and password instead, this can be achieved as follows.</p>
+<p><strong>authentication</strong></p>
+</div>
+<div class="section" id="creating-content">
+<h2>Creating content<a class="headerlink" href="#creating-content" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentCommand.php</a></p>
+<p>We will now see how to create Content using the Public API. This example
+will work with the default Folder (ID 1) Content Type from eZ Publish.</p>
+<p>We first need the required services. In this case: <tt class="docutils literal"><span class="pre">ContentService</span></tt>,
+<tt class="docutils literal"><span class="pre">LocationService</span></tt> and <tt class="docutils literal"><span class="pre">ContentTypeService</span></tt>.</p>
+<div class="section" id="the-contentcreatestruct">
+<h3>The ContentCreateStruct<a class="headerlink" href="#the-contentcreatestruct" title="Permalink to this headline">¶</a></h3>
+<p>As explained in the <a class="reference external" href="Public-API-basics_6293122.html">Public API
+Basics</a>, Value Objects are read only.
+Dedicated objects are provided for Update and Create operations:
+structs, like ContentCreateStruct or UpdateCreateStruct. In this case,
+we need to use a ContentCreateStruct.</p>
+<p>We first need to get the
+<tt class="docutils literal"><span class="pre">`ContentType</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/ContentType/ContentType.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/ContentType/ContentType.html</a>&gt;`__
+we want to create a <tt class="docutils literal"><span class="pre">Content</span></tt> with. To do so, we use
+<tt class="docutils literal"><span class="pre">`ContentTypeService::loadContentTypeByIdentifier()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_loadContentTypeByIdentifier">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_loadContentTypeByIdentifier</a>&gt;`__,
+with the wanted <tt class="docutils literal"><span class="pre">ContentType</span></tt> identifier, like &#8216;article&#8217;. We finally
+get a ContentTypeCreateStruct using
+<tt class="docutils literal"><span class="pre">`ContentService::newContentCreateStruct()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_newContentCreateStruct">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_newContentCreateStruct</a>&gt;`__,
+providing the ContentType and a Locale Code (eng-GB).</p>
+</div>
+<div class="section" id="setting-the-fields-values">
+<h3>Setting the fields values<a class="headerlink" href="#setting-the-fields-values" title="Permalink to this headline">¶</a></h3>
+<p>Using our create struct, we can now set the values for our Content&#8217;s
+fields, using the
+<tt class="docutils literal"><span class="pre">`setField()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentCreateStruct.html#method_setField">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentCreateStruct.html#method_setField</a>&gt;`__
+method. For now, we will just set the title. <tt class="docutils literal"><span class="pre">setField()</span></tt> for a
+TextLine Field simply expects a string as input argument. More complex
+FieldTypes, like Author or Image, expect different input values.</p>
+<p>Icon</p>
+<p>The <tt class="docutils literal"><span class="pre">ContentCreateStruct::setField()</span></tt> method can take several type of
+arguments.</p>
+<p>In any case, whatever the FieldType is, a Value of this type can be
+provided. For instance, a TextLine\Value can be provided for a
+TextLine\Type. Depending on the FieldType implementation itself, more
+specifically on the fromHash() method every FieldType implements,
+various arrays can be accepted, as well as primitive types, depending on
+the Type.</p>
+</div>
+<div class="section" id="setting-the-location">
+<h3>Setting the Location<a class="headerlink" href="#setting-the-location" title="Permalink to this headline">¶</a></h3>
+<p>In order to set a Location for our object, we must instantiate a
+<tt class="docutils literal"><span class="pre">`LocationCreateStruct</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/LocationCreateStruct.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/LocationCreateStruct.html</a>&gt;`__.
+This is done with LocationService::newLocationCreateStruct(), with the
+new Location&#8217;s parent ID as an argument.</p>
+</div>
+<div class="section" id="creating-and-publishing">
+<h3>Creating and publishing<a class="headerlink" href="#creating-and-publishing" title="Permalink to this headline">¶</a></h3>
+<p>To actually create our Content in the Repository, we need to use
+ContentService::createContent(). This method expects a
+<tt class="docutils literal"><span class="pre">ContentCreateStruct</span></tt>, as well as a <tt class="docutils literal"><span class="pre">LocationCreateStruct</span></tt>. We have
+created both in the previous steps.</p>
+<p>The LocationCreateStruct is provided as an array, since a Content can
+have multiple locations.</p>
+<p><tt class="docutils literal"><span class="pre">createContent()</span></tt> returns a new Content Value Object, with one version
+that has the DRAFT status. To make this Content visible, we need to
+publish it. This is done using&nbsp;<tt class="docutils literal"><span class="pre">ContentService::publishVersion()</span></tt>.
+This method expects a <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object as its parameter. In our
+case, we simply use the current version from <tt class="docutils literal"><span class="pre">$draft</span></tt>, with the
+<tt class="docutils literal"><span class="pre">versionInfo</span></tt> property.</p>
+</div>
+</div>
+<div class="section" id="updating-content">
+<h2>Updating Content<a class="headerlink" href="#updating-content" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/UpdateContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/UpdateContentCommand.php</a></p>
+<p>We will now see how the previously created Content can be updated.&nbsp;To do
+so, we will create a new draft for our Content, update it using a
+<tt class="docutils literal"><span class="pre">`ContentUpdateStruct</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentUpdateStruct.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentUpdateStruct.html</a>&gt;`__,
+and publish the updated Version.</p>
+<p>To create our draft, we need to load the Content&#8217;s ContentInfo using
+<tt class="docutils literal"><span class="pre">ContentService::loadContentInfo()</span></tt>. We can then use
+<tt class="docutils literal"><span class="pre">ContentService::createContentDraft()</span></tt> to add a new Draft to our
+Content.</p>
+<p>To set the new values for this version, we request a
+<tt class="docutils literal"><span class="pre">ContentUpdateStruct</span></tt> from the <tt class="docutils literal"><span class="pre">ContentService</span></tt> using the
+<tt class="docutils literal"><span class="pre">newContentUpdateStruct()</span></tt> method. Updating the values hasn&#8217;t changed:
+we use the <tt class="docutils literal"><span class="pre">setField()</span></tt> method.</p>
+<p>We can now use <tt class="docutils literal"><span class="pre">ContentService::updateContent()</span></tt> to apply our
+<tt class="docutils literal"><span class="pre">ContentUpdateStruct</span></tt> to our draft&#8217;s <tt class="docutils literal"><span class="pre">VersionInfo</span></tt>.&nbsp;Publishing is
+done exactly the same way as for a new content, using
+<tt class="docutils literal"><span class="pre">ContentService::publishVersion()</span></tt>.</p>
+</div>
+<div class="section" id="handling-translations">
+<h2>Handling translations<a class="headerlink" href="#handling-translations" title="Permalink to this headline">¶</a></h2>
+<p>In the two previous examples, you have seen that we set the
+ContentUpdateStruct&#8217;s initialLanguageCode property. To translate an
+object to a new language, set the locale to a new one.</p>
+<p><strong>translating</strong></p>
+<p>It is possible to create or update content in multiple languages at
+once. There is one restriction: only one language can be set a version&#8217;s
+language. This language is the one that will get a flag in the back
+office. However, you can set values in other languages for your
+attributes, using the setField method&#8217;s third argument.</p>
+<p><strong>update multiple languages</strong></p>
+<p>Since we don&#8217;t specify a locale for the last two fields, they are set
+for the <tt class="docutils literal"><span class="pre">UpdateStruct</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">initialLanguageCode</span></tt>, fre-FR.</p>
+</div>
+<div class="section" id="creating-content-containing-an-image">
+<h2>Creating Content containing an image<a class="headerlink" href="#creating-content-containing-an-image" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateImageCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateImageCommand.php</a></p>
+<p>As explained above, the setField() method can accept various values: an
+instance of the FieldType&#8217;s Value class, a primitive type, or a hash.
+The last two depend on what the <tt class="docutils literal"><span class="pre">Type::acceptValue()</span></tt> method is build
+up to handle. TextLine can, for instance, accept a simple string as an
+input value. In this example, you will see how to set an Image value.</p>
+<p>We assume that we use the default image class. Creating our Content,
+using the ContentType and a ContentCreateStruct, has been covered above,
+and can be found in the full code. Let&#8217;s focus on how the image is
+provided.</p>
+<p>This time, we create our image by directly providing an
+<tt class="docutils literal"><span class="pre">`Image\Value</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/Image/Value.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/Image/Value.html</a>&gt;`__
+object. The values are directly provided to the constructor using a hash
+with predetermined keys that depend on each Type. In this case: the path
+where the image can be found, its size, the file name, and an
+alternative text.</p>
+<p>Images also implement a static
+<tt class="docutils literal"><span class="pre">`fromString()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/Image/Value.html#method_fromString">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/Image/Value.html#method_fromString</a>&gt;`__
+method that will, given a path to an image, return an <tt class="docutils literal"><span class="pre">Image\Value</span></tt>
+object.</p>
+<p>But as said before, whatever you provide <tt class="docutils literal"><span class="pre">setField()</span></tt> with is sent to
+the <tt class="docutils literal"><span class="pre">acceptValue()</span></tt> method. This method really is the entry point to
+the input formats a FieldType accepts. In this case, you could have
+provided setField with either a hash, similar to the one we provided the
+Image\Value constructor with, or the path to your image, as a string.</p>
+</div>
+<div class="section" id="create-content-with-xml-text">
+<h2>Create Content with XML Text<a class="headerlink" href="#create-content-with-xml-text" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateXMLContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateXMLContentCommand.php</a></p>
+<p>Another very commonly used FieldType is the rich text one, <tt class="docutils literal"><span class="pre">XmlText</span></tt>.</p>
+<p><strong>working with xml text</strong></p>
+<p>As for the last example above, we use the multiple formats accepted by
+<tt class="docutils literal"><span class="pre">setField()</span></tt>, and provide our XML string as is. The only accepted
+format as of 5.0 is internal XML, the one stored in the Legacy database.</p>
+<p>Icon</p>
+<p>The XSD for the internal XML representation can be found in the kernel:
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/FieldType/XmlText/Input/Resources/schemas/ezxml.xsd">https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/FieldType/XmlText/Input/Resources/schemas/ezxml.xsd</a>.</p>
+<p>We embed an image in our XML, using the <tt class="docutils literal"><span class="pre">&lt;embed&gt;</span></tt> tag, providing an
+image Content ID as the <tt class="docutils literal"><span class="pre">object_id</span></tt> attribute.</p>
+<p>Using a custom format as input</p>
+<p>Icon</p>
+<p>More input formats will be added later. The API for that is actually
+already available: you simply need to implement the
+<tt class="docutils literal"><span class="pre">`XmlText\Input</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/XmlText/Input.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/XmlText/Input.html</a>&gt;`__
+interface. It contains one method,
+<tt class="docutils literal"><span class="pre">`getInternalRepresentation()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/XmlText/Input.html#method_getInternalRepresentation">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/Core/FieldType/XmlText/Input.html#method_getInternalRepresentation</a>&gt;`__,
+that must return an internal XML string. Create your own bundle, add
+your implementation to it, and use it in your code!</p>
+</div>
+<div class="section" id="deleting-content">
+<h2>Deleting Content<a class="headerlink" href="#deleting-content" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">`ContentService::deleteContent()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_deleteContent">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_deleteContent</a>&gt;`__
+method expects a <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> as an argument. It will delete the
+given Content, all of its Locations, as well as all of the Content&#8217;s
+Locations&#8217; descendants and their associated Content. <strong>Use with
+caution&nbsp;!</strong></p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">$contentService</span></tt><tt class="docutils literal"><span class="pre">-&gt;</span></tt><tt class="docutils literal"><span class="pre">delete</span></tt><tt class="docutils literal"><span class="pre">(&nbsp;</span></tt><tt class="docutils literal"><span class="pre">$contentInfo``&nbsp;</span></tt>); needs to be updated to&nbsp;$contentService``<tt class="docutils literal"><span class="pre">-&gt;</span></tt><tt class="docutils literal"><span class="pre">deleteContent</span></tt><tt class="docutils literal"><span class="pre">(&nbsp;</span></tt><tt class="docutils literal"><span class="pre">$contentInfo``&nbsp;</span></tt>);``</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:pedro&#46;resende&#37;&#52;&#48;ez&#46;no">pedro<span>&#46;</span>resende<span>&#64;</span>ez<span>&#46;</span>no</a> at Jan 29, 2014 10:55</p>
+<p>Fixed, thank you&nbsp;<a class="reference external" href="https://confluence.ez.no/display/~pedro.resende.cleverti">Pedro
+Resende</a>.</p>
+<p><img alt="image1" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> at Jan 29, 2014 12:50</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 3. Managing Content</a><ul>
+<li><a class="reference internal" href="#identifying-to-the-repository-with-a-login-and-a-password">Identifying to the repository with a login and a password</a></li>
+<li><a class="reference internal" href="#creating-content">Creating content</a><ul>
+<li><a class="reference internal" href="#the-contentcreatestruct">The ContentCreateStruct</a></li>
+<li><a class="reference internal" href="#setting-the-fields-values">Setting the fields values</a></li>
+<li><a class="reference internal" href="#setting-the-location">Setting the Location</a></li>
+<li><a class="reference internal" href="#creating-and-publishing">Creating and publishing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#updating-content">Updating Content</a></li>
+<li><a class="reference internal" href="#handling-translations">Handling translations</a></li>
+<li><a class="reference internal" href="#creating-content-containing-an-image">Creating Content containing an image</a></li>
+<li><a class="reference internal" href="#create-content-with-xml-text">Create Content with XML Text</a></li>
+<li><a class="reference internal" href="#deleting-content">Deleting Content</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/3.-Managing-Content_6292982.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

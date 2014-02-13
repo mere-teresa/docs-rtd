@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : HttpCache &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Cache_6291890.html">Cache</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-httpcache">
+<h1>eZ Publish Platform 5.&lt;next&gt; : HttpCache<a class="headerlink" href="#ez-publish-platform-5-next-httpcache" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Nov
+18, 2013</p>
+</div>
+<div class="section" id="content-cache">
+<h1>Content Cache<a class="headerlink" href="#content-cache" title="Permalink to this headline">¶</a></h1>
+<p>eZ Publish uses <a class="reference external" href="http://symfony.com/doc/current/book/http_cache.html">Symfony
+HttpCache</a> to
+manage content &#8220;view&#8221; cache, with both <a class="reference external" href="http://symfony.com/doc/current/book/http_cache.html#http-expiration-and-validation">expiration and validation
+model</a>.&nbsp;Hence
+an <strong>ETag</strong> is computed for every content/version and sent in the Http
+response. It is also possible to use expiration model to get lightning
+fast responses.</p>
+<p>An additional <strong>X-Location-Id</strong> header is added in the response for
+identification (for details see <a class="reference external" href="Purge_6291894.html">cache purge
+document</a>).</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="making-your-controller-content-cache-aware">
+<h2>Making your controller content cache aware<a class="headerlink" href="#making-your-controller-content-cache-aware" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you need that your controller&#8217;s cache expires in the same time
+than a specific content (i.e. <cite>ESI sub-requests with ``render`</cite> twig
+helper &lt;<a class="reference external" href="http://symfony.com/doc/current/book/http_cache.html#using-esi-in-symfony2">http://symfony.com/doc/current/book/http_cache.html#using-esi-in-symfony2</a>&gt;`__,
+for a menu for instance). To be able to do that, you just need to add
+<strong>X-Location-Id</strong> header to the response object:</p>
+</div>
+<div class="section" id="making-your-controller-user-cache-aware">
+<h2>Making your controller user cache aware<a class="headerlink" href="#making-your-controller-user-cache-aware" title="Permalink to this headline">¶</a></h2>
+<p>If the content you&#8217;re rendering depends on the user permissions, then an
+additional header must be set for this as explained in <a class="reference external" href="Context-aware-HTTP-cache_14712846.html">Context aware
+HTTP cache</a></p>
+<ul class="simple">
+<li><a class="reference external" href="Purge_6291894.html">Purge</a></li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : HttpCache</a></li>
+<li><a class="reference internal" href="#content-cache">Content Cache</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#making-your-controller-content-cache-aware">Making your controller content cache aware</a></li>
+<li><a class="reference internal" href="#making-your-controller-user-cache-aware">Making your controller user cache aware</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/HttpCache_6291892.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

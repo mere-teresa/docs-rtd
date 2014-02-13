@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : REST API Authentication &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-REST-API_6292277.html">eZ Publish REST API</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-rest-api-authentication">
+<h1>eZ Publish Platform 5.&lt;next&gt; : REST API Authentication<a class="headerlink" href="#ez-publish-platform-5-next-rest-api-authentication" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> on Jul
+20, 2013</p>
+<p>At the time of the 5.0 release, two authentication methods were
+supported: session, and basic. <strong>Session based authentication</strong> is meant
+to be used for AJAX operations. It will let you re-use the visitor&#8217;s
+session to execute operations with their permissions. <strong>Basic
+authentication</strong> will be useful when writing cross-server procedures,
+when one server executes operations on one/several eZ Publish instances
+(remote publishing, maintenance, etc).</p>
+<p><a class="reference external" href="http://oauth.net/2/">oAuth2</a> is also supported as for eZ Publish 5.1
+release.</p>
+<div class="section" id="session-based">
+<h2>Session based<a class="headerlink" href="#session-based" title="Permalink to this headline">¶</a></h2>
+<p>This authentication method requires a Session cookie to be sent with the
+request.&nbsp;If this authentication method is used through a web browser,
+this session cookie is available as soon as your visitor logs in. Add it
+as a request cookie to your REST requests, and the user will be
+authenticated.</p>
+<div class="section" id="setting-it-up">
+<h3>Setting it up<a class="headerlink" href="#setting-it-up" title="Permalink to this headline">¶</a></h3>
+<p>To enable session based authentication, you need to
+edit&nbsp;<tt class="docutils literal"><span class="pre">ezpublish/config/security.yml</span></tt>, and comment / remove the
+configuration block about REST</p>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+<div class="section" id="logging-in">
+<h3>Logging in<a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible to create a session for the visitor if he isn&#8217;t
+logged in yet. This is done by sending
+a&nbsp;<strong>``POST``</strong>&nbsp;request&nbsp;to&nbsp;<tt class="docutils literal"><span class="pre">/user/sessions</span></tt>. Logging out is done
+using a&nbsp;<strong>``DELETE``</strong>&nbsp;request on the same resource.</p>
+<p>More details about this can be found in the <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/doc/specifications/rest/REST-API-V2.rst">reference
+documentation</a>.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p><strong>Session authentication with siteaccess header</strong></p>
+<p>More information</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/doc/specifications/rest/REST-API-V2.rst#123%C2%A0%C2%A0%C2%A0session-based-authentication">Session based authentication chapter of the REST
+specifications</a></p>
+</div>
+</div>
+<div class="section" id="basic-http-authentication">
+<h2>Basic HTTP authentication<a class="headerlink" href="#basic-http-authentication" title="Permalink to this headline">¶</a></h2>
+<p>Basic authentication requires the password to be sent, based 64 encoded,
+with the request, as explained in&nbsp;<a class="reference external" href="http://tools.ietf.org/html/rfc2617">RFC
+2617</a>.</p>
+<p>Most HTTP client libraries as well as REST libraries, should support
+this method one way or another.</p>
+<p><strong>Raw HTTP request with basic authentication</strong></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : REST API Authentication</a><ul>
+<li><a class="reference internal" href="#session-based">Session based</a><ul>
+<li><a class="reference internal" href="#setting-it-up">Setting it up</a></li>
+<li><a class="reference internal" href="#logging-in">Logging in</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-http-authentication">Basic HTTP authentication</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/REST-API-Authentication_6292522.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on a Linux-UNIX based system &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Normal-installation_7438509.html">Normal installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-installing-ez-publish-on-a-linux-unix-based-system">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on a Linux-UNIX based system<a class="headerlink" href="#ez-publish-platform-5-next-installing-ez-publish-on-a-linux-unix-based-system" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">sarah<span>&#46;</span>haim-lubczanski<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jan 17, 2014</p>
+<p>The requirements for doing a normal installation must be met, read the
+&#8220;<a class="reference external" href="Requirements-for-doing-a-normal-installation_7438584.html">Requirements for doing a normal
+installation</a>&#8221;
+section first!</p>
+<p>This section will guide you through the following steps:</p>
+<ul class="simple">
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Settingupadatabase">Setting up a
+database</a><ul>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-MySQL">MySQL</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-PostgreSQL">PostgreSQL</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-DownloadingeZPublish">Downloading eZ
+Publish</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-UnpackingeZPublish">Unpacking eZ
+Publish</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Settingupfolderpermission">Setting up folder
+permission</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-UpdatingZetacomponentswithComposer">Updating Zetacomponents with
+Composer</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Linkassets">Link
+assets</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Initiatingthesetupwizard">Initiating the setup
+wizard</a><ul>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Documentrootexample">Document root
+example</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Homedirectoryexample">Home directory
+example</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Virtualhostexample">Virtual host
+example</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonaLinux-UNIXbasedsystem-Definingthedesiredenvironment%28optional%29">Defining the desired
+environment&nbsp;(optional)</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="setting-up-a-database">
+<h2>Setting up a database<a class="headerlink" href="#setting-up-a-database" title="Permalink to this headline">¶</a></h2>
+<p>A database must be created before running the setup wizard. The
+following text explains how to set up a database using either MySQL or
+PostgreSQL.</p>
+<div class="section" id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Log in as the root user (or any other MySQL user that has the
+<tt class="docutils literal"><span class="pre">CREATE</span></tt>, <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">USER</span></tt> and <tt class="docutils literal"><span class="pre">GRANT</span> <span class="pre">OPTION</span></tt>
+<a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/en/privileges-provided.html">privileges</a>):</p>
+<div class="highlight-python"><pre>$ mysql --host=&lt;mysql_host&gt; --port=&lt;port&gt; -u &lt;mysql_user&gt; -p&lt;mysql_password&gt;</pre>
+</div>
+<p>Icon</p>
+<p>Note that if MySQL is installed on the same server, the
+&#8220;<tt class="docutils literal"><span class="pre">--host</span></tt>&#8221; parameter can be omitted. If the &#8220;<tt class="docutils literal"><span class="pre">--port</span></tt>&#8221;
+parameter is omitted, the default port for MySQL traffic will be used
+(port 3306).</p>
+<p>The MySQL client should display a &#8220;mysql&gt;&#8221; prompt.</p>
+</li>
+<li><p class="first">Create a new database:</p>
+<div class="highlight-python"><pre>mysql&gt; CREATE DATABASE &lt;database&gt; CHARACTER SET utf8;</pre>
+</div>
+</li>
+<li><p class="first">Grant access permissions:</p>
+<div class="highlight-python"><pre>mysql&gt; GRANT ALL ON &lt;database&gt;.* TO &lt;user&gt;@&lt;ezp_host&gt; IDENTIFIED BY '&lt;password&gt;';</pre>
+</div>
+<p>Icon</p>
+<p>Note that if the specified user account does not exist, it will be
+created.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Reference</p>
+<p>Description</p>
+<p>&lt;mysql_host&gt;</p>
+<p>The hostname of the MySQL database server.</p>
+<p>&lt;port&gt;</p>
+<p>The port number that will be used to connect to the MySQL database
+server.</p>
+<p>&lt;mysql_user&gt;</p>
+<p>The MySQL user (if no user is set up, use &#8220;<tt class="docutils literal"><span class="pre">root</span></tt>&#8221;).</p>
+<p>&lt;mysql_password&gt;</p>
+<p>The password that belongs to the <tt class="docutils literal"><span class="pre">&lt;mysql_user&gt;</span></tt>.</p>
+<p>&lt;database&gt;</p>
+<p>The name of the database, for example &#8220;<tt class="docutils literal"><span class="pre">my_new_database</span></tt>&#8221;.</p>
+<p>&lt;user&gt;</p>
+<p>The username that will be used to access the database.</p>
+<p>&lt;ezp_host&gt;</p>
+<p>The hostname of the server on which eZ Publish will be running. (may
+be &#8220;<tt class="docutils literal"><span class="pre">localhost</span></tt>&#8221; if MySQL is installed on the same server).</p>
+<p>&lt;password&gt;</p>
+<p>The password you wish to set in order to limit access to the
+database.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="postgresql">
+<h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Log in as the postgres user (or any other PostgreSQL user that has
+sufficient
+<a class="reference external" href="http://www.postgresql.org/docs/current/interactive/sql-grant.html">privileges</a>
+to create roles and databases):</p>
+<div class="highlight-python"><pre>$ psql -h &lt;psql_host&gt; -p &lt;port&gt; -U &lt;psql_user&gt; -W</pre>
+</div>
+<p>Icon</p>
+<p>Note that if PostgreSQL is installed on the same server, the
+&#8220;<tt class="docutils literal"><span class="pre">-h</span></tt>&#8221; parameter can be omitted. If the &#8220;<tt class="docutils literal"><span class="pre">-p</span></tt>&#8221; parameter is
+omitted, the default port for PostgreSQL traffic will be used (in
+most cases, port 5432).</p>
+<p>The PostgreSQL client will ask you to specify the password that
+belongs to the <tt class="docutils literal"><span class="pre">&lt;psql_user&gt;</span></tt>. If the password is correct, the
+client should display a &#8220;<tt class="docutils literal"><span class="pre">&lt;psql_user&gt;=#</span></tt>&#8221; prompt.</p>
+</li>
+<li><p class="first">Create a new database:</p>
+<div class="highlight-python"><pre>postgres=# CREATE DATABASE &lt;database&gt; ENCODING='utf8';</pre>
+</div>
+</li>
+<li><p class="first">Create a new user:</p>
+<div class="highlight-python"><pre>postgres=# CREATE USER &lt;user&gt; PASSWORD '&lt;password&gt;';</pre>
+</div>
+</li>
+<li><p class="first">Grant access permissions:</p>
+<div class="highlight-python"><pre>postgres=# GRANT ALL PRIVILEGES ON DATABASE &lt;database&gt; TO &lt;user&gt;;</pre>
+</div>
+<p>Import the
+&#8220;<a class="reference external" href="http://www.postgresql.org/docs/8.3/static/pgcrypto.html">pgcrypto</a>&#8221;
+module into the new database:</p>
+<div class="highlight-python"><pre>postgres=# \c &lt;database&gt;
+&lt;database&gt;=# \i '&lt;path_to_pgcrypto&gt;'</pre>
+</div>
+<p>Reference</p>
+<p>Description</p>
+<p>&lt;psql_host&gt;</p>
+<p>The hostname of the PostgreSQL database server.</p>
+<p>&lt;port&gt;</p>
+<p>The port number that will be used to connect to the PostgreSQL
+database server.</p>
+<p>&lt;psql_user&gt;</p>
+<p>The PostgreSQL user (if no user is set up, use &#8220;<tt class="docutils literal"><span class="pre">postgresql</span></tt>&#8221;).</p>
+<p>&lt;database&gt;</p>
+<p>The name of the database, for example &#8220;<tt class="docutils literal"><span class="pre">my_new_database</span></tt>&#8221;.</p>
+<p>&lt;user&gt;</p>
+<p>The username that will be used to access the database.</p>
+<p>&lt;password&gt;</p>
+<p>The password you wish to set in order to limit access to the
+database.</p>
+<p>&lt;path_to_pgcrypto&gt;</p>
+<p>The path to the &#8220;<tt class="docutils literal"><span class="pre">pgcrypto.sql</span></tt>&#8221; file, for example
+&#8220;<tt class="docutils literal"><span class="pre">/usr/share/pgsql/contrib/pgcrypto.sql</span></tt>&#8221;.</p>
+<p>**
+Note for version 9.1+ of PostgreSQL users:<a href="#id1"><span class="problematic" id="id2">**</span></a>The following changes
+might be necessary for these users:</p>
+<div class="highlight-python"><pre>postgres=# \c &lt;database&gt;
+&lt;database&gt;=# CREATE EXTENSION pgcrypto;</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="downloading-ez-publish">
+<h2>Downloading eZ Publish<a class="headerlink" href="#downloading-ez-publish" title="Permalink to this headline">¶</a></h2>
+<p>The latest community version of eZ Publish can be downloaded from
+<a class="reference external" href="http://share.ez.no/download-develop/downloads">http://share.ez.no/download-develop/downloads</a>,
+while enterprise version is available in your <a class="reference external" href="https://support.ez.no">support
+portal</a> or via partner portal.</p>
+</div>
+<div class="section" id="unpacking-ez-publish">
+<h2>Unpacking eZ Publish<a class="headerlink" href="#unpacking-ez-publish" title="Permalink to this headline">¶</a></h2>
+<p>Use your favorite tool to unpack the downloaded eZ Publish distribution
+to a web-served directory (a directory that is reachable using a web
+browser), or in case of virtual host mode it can be any folder. The
+following example shows how to do this using the tar utility (to unpack
+a tar.gz file, assuming that the &#8220;tar&#8221; and the &#8220;gzip&#8221; utilities are
+installed on the system):</p>
+<div class="highlight-python"><pre>$ tar zxvf ezpublish-&lt;version_number&gt;-gpl.tar.gz -C &lt;web_served_directory&gt;</pre>
+</div>
+<p>Reference</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">&lt;version_number&gt;</span></tt></p>
+<p>The version number of eZ Publish that was downloaded.</p>
+<p><tt class="docutils literal"><span class="pre">&lt;web_served_directory&gt;</span></tt></p>
+<p>Full path to a directory that is served by the web server. This can be
+the path to the document root of the web server, or a personal
+web-directory (usually called &#8220;<tt class="docutils literal"><span class="pre">public_html</span></tt>&#8221; or &#8220;<tt class="docutils literal"><span class="pre">www</span></tt>&#8221;, and
+located inside a user&#8217;s home directory).</p>
+<p>The extraction utility will unpack eZ Publish into a sub-directory
+called &#8220;<tt class="docutils literal"><span class="pre">ezpublish-&lt;version_number&gt;</span></tt>&#8221;. Feel free to rename this
+directory to something more meaningful, for example &#8220;<tt class="docutils literal"><span class="pre">my_site</span></tt>&#8221;.</p>
+</div>
+<div class="section" id="setting-up-folder-permission">
+<h2>Setting up folder permission<a class="headerlink" href="#setting-up-folder-permission" title="Permalink to this headline">¶</a></h2>
+<p>Important</p>
+<p>Icon</p>
+<p>In the 3 first folder permission setup options, always ensure to run
+application scripts and the web server with the appropriate UNIX user
+(must be same as you setup rights for below).</p>
+<p>As for Apache you can control which user to use in your Apache
+configuration. Using
+<a class="reference external" href="http://php.net/manual/en/install.fpm.php">PHP-FPM</a> or <a class="reference external" href="http://httpd.apache.org/docs/2.2/en/suexec.html">SuExec
+module</a>, you can
+even specify a user per virtual host.</p>
+<p>Several cache, log and config folders must be writable both by the web
+server and the command line user, use <em>one</em> of the following
+alternatives to do this:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line"><strong>Using ACL on a system that supports chmod +a</strong></div>
+<div class="line">These shell commands will give proper permission to the web server</div>
+</div>
+<p>and command line users:</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><p class="first"><a href="#id3"><span class="problematic" id="id4">**</span></a>Using ACL on a system that does not support chmod +a
+<a href="#id5"><span class="problematic" id="id6">**</span></a>Some systems don&#8217;t support chmod +a, but do support another
+utility called setfacl. You may need to enable ACL support on your
+partition and install setfacl before using it (as is the case with
+Ubuntu), like so:</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo setfacl -R -m u:www-data:rwx -m u:www-data:rwx \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx \
+  ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Using chown on systems that don&#8217;t support ACL</strong></div>
+<div class="line">Some systems don&#8217;t support ACL at all. You will either need to set</div>
+</div>
+<p>your web server&#8217;s user as the owner of the required directories.</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo chown -R www-data:www-data ezpublish/{cache,logs,config} ezpublish_legacy/{design,extension,settings,var} web
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type d | sudo xargs chmod -R 775
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type f | sudo xargs chmod -R 664</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Using chmod</strong></div>
+<div class="line">If you can&#8217;t use ACL and aren&#8217;t allowed to change owner, you can</div>
+</div>
+<p>use chmod, making the files writable by everybody. Note that this
+method really isn&#8217;t recommended as it allows any user to do anything.</p>
+<div class="highlight-python"><pre>$ cd /&lt;ezp5-root&gt;/
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type d | sudo xargs chmod -R 777
+$ sudo find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type f | sudo xargs chmod -R 666</pre>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="updating-zetacomponents-with-composer">
+<h2>Updating Zetacomponents with Composer<a class="headerlink" href="#updating-zetacomponents-with-composer" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">As of eZ Publish 5.2, if you will use eZ Publish on legacy mode the</div>
+</div>
+<p>Zetacomponents configuration must be updated.
+| For that, you will need to install
+<a class="reference external" href="http://getcomposer.org/">Composer</a> by running one of the following
+command from you eZ Publish root folder :</p>
+<p>If you <strong>have curl</strong> installed:</p>
+<div class="highlight-python"><pre>curl -sS https://getcomposer.org/installer | php</pre>
+</div>
+<p>If you <strong>don&#8217;t have curl</strong> installed:</p>
+<div class="highlight-python"><pre>php -r "eval('?&gt;'.file_get_contents('https://getcomposer.org/installer'));"</pre>
+</div>
+<p>After Composer installation run the following command <strong>from
+the&nbsp;*ezpublish_legacy/*&nbsp;folder :</strong></p>
+<div class="highlight-python"><pre>php ../composer.phar install</pre>
+</div>
+</div>
+<div class="section" id="link-assets">
+<h2>Link assets<a class="headerlink" href="#link-assets" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p>The download file should already have generated these assets for you as
+of 5.2 / 2013.07, but in case of issues on Windows with symlinks within
+the download file, make sure to run these commands.</p>
+<p>To be able to run eZ Publish 5 correctly, assets need to be exposed in
+the public &#8220;<tt class="docutils literal"><span class="pre">web</span></tt>&#8221; folder.</p>
+<p>The following commands will first symlink eZ Publish 5 assets in
+&#8220;Bundles&#8221; and the second will symlink assets (design files like images,
+scripts and css, and files in var folder) &nbsp;from eZ Publish Legacy</p>
+<div class="highlight-python"><pre>cd /&lt;ezp5-root&gt;
+php ezpublish/console assets:install --symlink web
+php ezpublish/console ezpublish:legacy:assets_install --symlink web
+php ezpublish/console assetic:dump --env=prod web</pre>
+</div>
+<p>Icon</p>
+<p><strong>*Note</strong>: In both cases*&#8221;<tt class="docutils literal"><span class="pre">web</span></tt>&#8220;<em>is the default folder and can be
+skipped from the command. Further information about alternative options
+is&nbsp;available&nbsp;with ``-h`` just like it is with</em>
+&#8220;<tt class="docutils literal"><span class="pre">php</span> <span class="pre">ezpublish/console</span> <span class="pre">-h</span></tt>&#8221;.</p>
+<p>Warning regarding APC</p>
+<p>Icon</p>
+<p>If you are planning to use APC to speed up your site, please be sure to
+check the available notes
+<a class="reference external" href="https://confluence.ez.no/display/EZP/Persistence+cache+configuration#Persistencecacheconfiguration-APC">here</a>,
+before entering the setup wizard chapter.</p>
+</div>
+<div class="section" id="initiating-the-setup-wizard">
+<h2>Initiating the setup wizard<a class="headerlink" href="#initiating-the-setup-wizard" title="Permalink to this headline">¶</a></h2>
+<p>The setup wizard can be started using a web browser immediately after
+the previous steps (described in this section) are completed. It will be
+automatically run the first time someone tries to access/browse the
+&#8220;<tt class="docutils literal"><span class="pre">/ezsetup</span></tt>&#8221; url. Let&#8217;s assume that we are using a server with the
+host name &#8220;<tt class="docutils literal"><span class="pre">www.example.com</span></tt>&#8221; and that after unpacking, the eZ
+Publish directory was renamed to &#8220;<tt class="docutils literal"><span class="pre">my_site</span></tt>&#8221;.</p>
+<div class="section" id="document-root-example">
+<h3>Document root example<a class="headerlink" href="#document-root-example" title="Permalink to this headline">¶</a></h3>
+<p>If eZ Publish was unpacked into a directory called &#8220;<tt class="docutils literal"><span class="pre">my_site</span></tt>&#8221; under
+the document root, the setup wizard can be initiated by browsing the
+following URL: <tt class="docutils literal"><span class="pre">http://www.example.com/my_site/web/index.php/ezsetup</span></tt>.</p>
+</div>
+<div class="section" id="home-directory-example">
+<h3>Home directory example<a class="headerlink" href="#home-directory-example" title="Permalink to this headline">¶</a></h3>
+<p>If eZ Publish was unpacked to a web-served directory located inside the
+home directory of a user with the user name &#8220;<tt class="docutils literal"><span class="pre">peter</span></tt>&#8221;, (usually
+called &#8220;<tt class="docutils literal"><span class="pre">public_html</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">www</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">http</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">html</span></tt>&#8221; or
+&#8220;<tt class="docutils literal"><span class="pre">web</span></tt>&#8221;), the setup wizard can be initiated by browsing the
+following URL:
+<tt class="docutils literal"><span class="pre">http://www.example.com/~peter/my_site/web/index.php/ezsetup</span></tt>.</p>
+</div>
+<div class="section" id="virtual-host-example">
+<h3>Virtual host example<a class="headerlink" href="#virtual-host-example" title="Permalink to this headline">¶</a></h3>
+<p>If you have setup the host name&nbsp;www.example.com&nbsp;to point to the web
+folder of eZ Publish using <a class="reference external" href="Virtual-host-setup_7438507.html">rewrite</a>
+rules, then you should access it at: <tt class="docutils literal"><span class="pre">http://www.example.com/ezsetup</span></tt>.</p>
+<p>Refer to the &#8220;<a class="reference external" href="The-setup-wizard_7438516.html">The setup wizard</a>&#8221;
+section for a detailed description of the web based setup wizard.</p>
+</div>
+<div class="section" id="defining-the-desired-environment-optional">
+<h3>Defining the desired environment&nbsp;(optional)<a class="headerlink" href="#defining-the-desired-environment-optional" title="Permalink to this headline">¶</a></h3>
+<p>Icon</p>
+<p>This is a procedure to be done for the case you need to set up several
+multiple environments for development purposes.</p>
+<div class="line-block">
+<div class="line">Environment configuration is a new feature introduced as of eZ Publish</div>
+</div>
+<p>5.2 and eZ Publish Community Project 2013.06.
+| You can configure several environments, from production, development
+or staging, even if for each one of them you need require using
+different configurations sets.</p>
+<p>In the <tt class="docutils literal"><span class="pre">VirtualHost</span></tt> example in the <a class="reference external" href="Virtual-host-setup_7438507.html">Virtual host
+setup</a> chapter the required
+<tt class="docutils literal"><span class="pre">VirtualHost</span></tt> configurations have been already included. You can
+switch to the desired environment by setting the <tt class="docutils literal"><span class="pre">ENVIRONMENT</span></tt>
+environment variable to &#8220;<tt class="docutils literal"><span class="pre">prod</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">dev</span></tt>&#8221; or other custom value,
+as you can see in the following example:</p>
+<div class="highlight-python"><pre># Environment.
+# Possible values: "prod" and "dev" out-of-the-box, other values possible with proper configuration (described below)
+# Defaults to "prod" if omitted
+SetEnv ENVIRONMENT "prod"</pre>
+</div>
+<p>If you want to use a custom environment (something else then
+&#8220;<tt class="docutils literal"><span class="pre">prod</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">dev</span></tt>&#8221;) the next step is to create the dedicated
+configuration files for your environment:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ezpublish/config/config_&lt;env_name&gt;.yml</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish_&lt;env_name&gt;.yml</span></tt></li>
+</ul>
+<p>The name used as <tt class="docutils literal"><span class="pre">&lt;env_name&gt;</span></tt> will be the one that can be used as
+value of the <tt class="docutils literal"><span class="pre">ENVIRONMENT</span></tt> environment variable.</p>
+<p>Those files must import the main configuration file, just like the
+default&nbsp;<tt class="docutils literal"><span class="pre">`config_dev.yml</span></tt> &lt;<a class="reference external" href="https://github.com/ezsystems/ezpublish-community/blob/master/ezpublish/config/config_dev.yml">https://github.com/ezsystems/ezpublish-community/blob/master/ezpublish/config/config_dev.yml</a>&gt;`__
+already does. Here&#8217;s an example:</p>
+<div class="highlight-python"><pre>imports:
+    - { resource: config.yml }</pre>
+</div>
+<p>This allows you to override settings defined in the main configuration
+file, depending on your environment (like the DB settings or any other
+setting you may want to override).</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on a Linux-UNIX based system</a><ul>
+<li><a class="reference internal" href="#setting-up-a-database">Setting up a database</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#postgresql">PostgreSQL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#downloading-ez-publish">Downloading eZ Publish</a></li>
+<li><a class="reference internal" href="#unpacking-ez-publish">Unpacking eZ Publish</a></li>
+<li><a class="reference internal" href="#setting-up-folder-permission">Setting up folder permission</a></li>
+<li><a class="reference internal" href="#updating-zetacomponents-with-composer">Updating Zetacomponents with Composer</a></li>
+<li><a class="reference internal" href="#link-assets">Link assets</a></li>
+<li><a class="reference internal" href="#initiating-the-setup-wizard">Initiating the setup wizard</a><ul>
+<li><a class="reference internal" href="#document-root-example">Document root example</a></li>
+<li><a class="reference internal" href="#home-directory-example">Home directory example</a></li>
+<li><a class="reference internal" href="#virtual-host-example">Virtual host example</a></li>
+<li><a class="reference internal" href="#defining-the-desired-environment-optional">Defining the desired environment&nbsp;(optional)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Installing-eZ-Publish-on-a-Linux-UNIX-based-system_7438581.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

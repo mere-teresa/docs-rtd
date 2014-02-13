@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Signals reference &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Reference_10158191.html">Reference</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-signals-reference">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Signals reference<a class="headerlink" href="#ez-publish-platform-5-next-signals-reference" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jul 23, 2013</p>
+<p>This page references <strong>all available signals</strong>, triggered by Public API,
+you can listen to.</p>
+<p>Icon</p>
+<p>For more information, check <a class="reference external" href="Signal-Slot_3506264.html">SignalSlot
+documentation</a> and the <a class="reference external" href="How-to-listen-to-Core-events_14123362.html">cookbook recipe on
+how to listen to
+signals</a>.</p>
+<p><strong>Signals are ordered by Repository service:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="#Signalsreference-ContentService">ContentService</a></li>
+<li><a class="reference external" href="#Signalsreference-ContentTypeService">ContentTypeService</a></li>
+<li><a class="reference external" href="#Signalsreference-LanguageService">LanguageService</a></li>
+<li><a class="reference external" href="#Signalsreference-LocationService">LocationService</a></li>
+<li><a class="reference external" href="#Signalsreference-ObjectStateService">ObjectStateService</a></li>
+<li><a class="reference external" href="#Signalsreference-RoleService">RoleService</a></li>
+<li><a class="reference external" href="#Signalsreference-SectionService">SectionService</a></li>
+<li><a class="reference external" href="#Signalsreference-TrashService">TrashService</a></li>
+<li><a class="reference external" href="#Signalsreference-URLAliasService">URLAliasService</a></li>
+<li><a class="reference external" href="#Signalsreference-URLWildcardService">URLWildcardService</a></li>
+<li><a class="reference external" href="#Signalsreference-UserService">UserService</a></li>
+</ul>
+<p>Icon</p>
+<p>All signals are relative to <tt class="docutils literal"><span class="pre">eZ\Publish\Core\SignalSlot\Signal</span></tt>
+namespace.</p>
+<div class="section" id="contentservice">
+<h2>ContentService<a class="headerlink" href="#contentservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\AddRelationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">srcContentId</span></tt> (source contentId, aka referrer)</li>
+<li><tt class="docutils literal"><span class="pre">srcVersionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dstContentId</span></tt> (destination contentId, aka target)</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::addRelation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\AddTranslationInfoSignal</span></tt></p>
+<p>N/A</p>
+<p><tt class="docutils literal"><span class="pre">ContentService::addTranslationInfo()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\CopyContentSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">srcContentId</span></tt> (original content ID)</li>
+<li><tt class="docutils literal"><span class="pre">srcVersionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dstContentId</span></tt> (contentId of the copy)</li>
+<li><tt class="docutils literal"><span class="pre">dstVersionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dstParentLocationId</span></tt> (locationId where the content has been
+copied)</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::copyContent()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\CreateContentDraftSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userId</span></tt> (Id of user used to create the draft, or null - current
+user)</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::createContentDraft()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\CreateContentSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::createContent()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\DeleteContentSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::deleteContent()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\DeleteRelationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">srcContentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">srcVersionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dstContentId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::deleteRelation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\DeleteVersionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::deleteVersion()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\PublishVersionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::</span> <span class="pre">publishVersion()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\TranslateVersionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::translationVersion()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\UpdateContentMetadataSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::updateContentMetadata()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentService\UpdateContentSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">versionNo</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentService::updateContent()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="contenttypeservice">
+<h2>ContentTypeService<a class="headerlink" href="#contenttypeservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\AddFieldDefinitionSignal</span></tt></p>
+<ul class="simple">
+<li>contentTypeDraftId</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::addFieldDefinition()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\AssignContentTypeGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">contentTypeGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::assignContentTypeGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\CopyContentTypeSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::copyContentType()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\CreateContentTypeDraftSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::createContentTypeDraft()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\CreateContentTypeGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">groupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::createContentTypeGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\CreateContentTypeSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::createContentType()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\DeleteContentTypeGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::deleteContentTypeGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\DeleteContentTypeSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::deleteContentType()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\PublishContentTypeDraftSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeDraftId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::publishContentTypeDraft()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\RemoveFieldDefinitionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeDraftId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fieldDefinitionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::removeFieldDefinition()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\UnassignContentTypeGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">contentTypeGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::unassignContentTypeGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\UpdateContentTypeDraftSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeDraftId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::updateContentTypeDraft()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\UpdateContentTypeGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::updateContentTypeGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService\UpdateFieldDefinitionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentTypeDraftId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fieldDefinitionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ContentTypeService::updateFieldDefinition()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="languageservice">
+<h2>LanguageService<a class="headerlink" href="#languageservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">LanguageService\CreateLanguageSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">languageId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LanguageService::createLanguage()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LanguageService\DeleteLanguageSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">languageId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LanguageService::deleteLanguage()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LanguageService\DisableLanguageSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">languageId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LanguageService::disableLanguage()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LanguageService\EnableLanguageSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">languageId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LanguageService::enableLanguage()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LanguageService\UpdateLanguageNameSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">languageId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newName</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LanguageService::updateLanguageName()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="locationservice">
+<h2>LocationService<a class="headerlink" href="#locationservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\CopySubtreeSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">subtreeId</span></tt> (top locationId of the subtree to be copied)</li>
+<li><tt class="docutils literal"><span class="pre">targetParentLocationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::copySubtree()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\CreateLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::createLocation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\DeleteLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::deleteLocation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\HideLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::hideLocation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\UnhideLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::unhideLocation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\MoveSubtreeSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">subtreeId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newParentLocationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::moveSubtree()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\SwapLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">content1Id</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">location1Id</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">content2Id</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">location2Id</span></tt><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">``</span></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::swapLocation()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">LocationService\UpdateLocationSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">LocationService::updateLocation()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="objectstateservice">
+<h2>ObjectStateService<a class="headerlink" href="#objectstateservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\CreateObjectStateGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::createObjectStateGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\CreateObjectStateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateGroupId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">objectStateId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::createObjectState()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\DeleteObjectStateGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::deleteObjectStateGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\DeleteObjectStateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::deleteObjectState()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\SetContentStateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">objectStateGroupId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">objectStateId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::setContentState()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\SetPriorityOfObjectStateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">priority</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::setPriorityOfObjectState()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\UpdateObjectStateGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::updateObjectStateGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService\UpdateObjectStateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">objectStateId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">ObjectStateService::updateObjectState()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="roleservice">
+<h2>RoleService<a class="headerlink" href="#roleservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\AddPolicySignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">policyId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::addPolicy()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\AssignRoleToUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">roleLimitation</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::assignRoleToUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\AssignRoleToUserSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">roleLimitation</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::assignRoleToUser()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\CreateRoleSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::createRole()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\DeleteRoleSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::deleteRole()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\RemovePolicySignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">policyId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::removePolicy()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\UnassignRoleFromUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::unassignRoleFromUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\UnassignRoleFromUserSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::unassignRoleFromUser()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\UpdatePolicySignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">policyId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::updatePolicy()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">RoleService\UpdateRoleSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">roleId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">RoleService::updateRole()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="sectionservice">
+<h2>SectionService<a class="headerlink" href="#sectionservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">SectionService\AssignSectionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">contentId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sectionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">SectionService::assignSection()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">SectionService\CreateSectionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sectionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">SectionService::createSection()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">SectionService\DeleteSectionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sectionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">SectionService::deleteSection()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">SectionService\UpdateSectionSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sectionId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">SectionService::updateSection()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="trashservice">
+<h2>TrashService<a class="headerlink" href="#trashservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">TrashService\DeleteTrashItemSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">trashItemId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">TrashService::deleteTrashItem()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">TrashService\EmptyTrashSignal</span></tt></p>
+<p>N/A</p>
+<p><tt class="docutils literal"><span class="pre">TrashService::emptyTrash()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">TrashService\RecoverSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">trashItemId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newParentLocationId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newLocationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">TrashService::recover()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">TrashService\TrashSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">locationId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">TrashService::trash()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="urlaliasservice">
+<h2>URLAliasService<a class="headerlink" href="#urlaliasservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">URLAliasService\CreateGlobalUrlAliasSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">urlAliasId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLAliasService::createGlobalUrlAlias()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">URLAliasService\CreateUrlAliasSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">urlAliasId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLAliasService::createUrlAlias()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">URLAliasService\RemoveAliasesSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">aliasList</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLAliasService::removeAliases()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="urlwildcardservice">
+<h2>URLWildcardService<a class="headerlink" href="#urlwildcardservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService\CreateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">urlWildcardId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService::create()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService\RemoveSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">urlWildcardId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService::remove()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService\TranslateSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">url</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">URLWildcardService::translate()</span></tt></p>
+<p>After</p>
+</div>
+<div class="section" id="userservice">
+<h2>UserService<a class="headerlink" href="#userservice" title="Permalink to this headline">¶</a></h2>
+<p>Signal type</p>
+<p>Properties</p>
+<p>Triggered by</p>
+<p>When</p>
+<p><tt class="docutils literal"><span class="pre">UserService\AssignUserToUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::assignUserToUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\CreateUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::createUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\CreateUserSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::createUser()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\DeleteUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::deleteUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\DeleteUserSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::deleteUser()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\MoveUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newParentId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::moveUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\UnAssignUserFromUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::unAssignUserFromUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\UpdateUserGroupSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userGroupId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::updateUserGroup()</span></tt></p>
+<p>After</p>
+<p><tt class="docutils literal"><span class="pre">UserService\UpdateUserSignal</span></tt></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">userId</span></tt></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">UserService::updateUser()</span></tt></p>
+<p>After</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Signals reference</a><ul>
+<li><a class="reference internal" href="#contentservice">ContentService</a></li>
+<li><a class="reference internal" href="#contenttypeservice">ContentTypeService</a></li>
+<li><a class="reference internal" href="#languageservice">LanguageService</a></li>
+<li><a class="reference internal" href="#locationservice">LocationService</a></li>
+<li><a class="reference internal" href="#objectstateservice">ObjectStateService</a></li>
+<li><a class="reference internal" href="#roleservice">RoleService</a></li>
+<li><a class="reference internal" href="#sectionservice">SectionService</a></li>
+<li><a class="reference internal" href="#trashservice">TrashService</a></li>
+<li><a class="reference internal" href="#urlaliasservice">URLAliasService</a></li>
+<li><a class="reference internal" href="#urlwildcardservice">URLWildcardService</a></li>
+<li><a class="reference internal" href="#userservice">UserService</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Signals-reference_14123454.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

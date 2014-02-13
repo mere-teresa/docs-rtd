@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Persistence cache &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Cache_6291890.html">Cache</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-persistence-cache">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Persistence cache<a class="headerlink" href="#ez-publish-platform-5-next-persistence-cache" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Nov 17,
+2013</p>
+<p>Icon</p>
+<p>Persistence cache was added in 5.1 and enhanced with multi repository
+(database) support in 5.2.</p>
+<ul class="simple">
+<li><a class="reference external" href="#Persistencecache-Introduction">Introduction</a></li>
+<li><a class="reference external" href="#Persistencecache-Persistentcache">Persistent cache</a><ul>
+<li><a class="reference external" href="#Persistencecache-Layers">Layers</a></li>
+<li><a class="reference external" href="#Persistencecache-Transparentcache">Transparent cache</a><ul>
+<li><a class="reference external" href="#Persistencecache-Entitystoredonlyonce">Entity stored only
+once</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Persistencecache-Whatiscached%3F">What is cached?</a></li>
+<li><a class="reference external" href="#Persistencecache-Legacykernelcachepurging">Legacy kernel cache
+purging</a><ul>
+<li><a class="reference external" href="#Persistencecache-PersistenceCachePurger">PersistenceCachePurger</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#Persistencecache-ReusingCacheservice">Reusing Cache service</a><ul>
+<li><a class="reference external" href="#Persistencecache-GetCacheservice">Get Cache service</a><ul>
+<li><a class="reference external" href="#Persistencecache-ViaDependencyinjection">Via Dependency
+injection</a></li>
+<li><a class="reference external" href="#Persistencecache-ViaSymfony2Container">Via Symfony2
+Container</a></li>
+<li><a class="reference external" href="#Persistencecache-InlegacyviaSymfony2Container">In legacy via Symfony2
+Container</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Persistencecache-Usingthecacheservice">Using the cache
+service</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how&nbsp;Persistence cache works, and how to reuse the
+cache service it uses.</p>
+<p><strong>Configuration</strong></p>
+<p>For configuring the cache service, look at the&nbsp;<a class="reference external" href="Persistence-cache-configuration_12781293.html">Persistence&nbsp;cache
+configuration</a>&nbsp;page.</p>
+</div>
+<div class="section" id="persistent-cache">
+<h1>Persistent cache<a class="headerlink" href="#persistent-cache" title="Permalink to this headline">¶</a></h1>
+<p><img alt="image0" src="docs/attachments/10158280/13107679.png" /></p>
+<div class="section" id="layers">
+<h2>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h2>
+<p>Persistence cache can best be described as a implementation of
+<tt class="docutils literal"><span class="pre">SPI\Persistence</span></tt> that wraps around the main implementation
+(currently: &#8220;Legacy Storage Engine&#8221;).</p>
+<p>As shown in the illustration this is done in the exact same way as the
+SignalSlot feature is a custom implementation of API\Repository wraps
+around the main Repository. In the case of Persistence Cache, instead of
+sending events on calls passed on to the wrapped implementation, most of
+the load calls are cached, and calls that perform changes purges the
+affected caches. This is done using a Cache service which is provided by
+StashBundle; this Service wraps around the Stash library to provide
+Symfony logging / debugging functionality, and allows configuration on
+cache handlers (Memcached, Apc, Filesystem, ..) to be configured using
+Symfony configuration. For how to reuse this Cache service in your own
+custom code, see below.</p>
+</div>
+<div class="section" id="transparent-cache">
+<h2>Transparent cache<a class="headerlink" href="#transparent-cache" title="Permalink to this headline">¶</a></h2>
+<p>The persistence cache, just like the HTTP cache, tries to follow
+principles of &#8220;Transparent caching&#8221;, this can shortly be described as a
+cache which is invisible to the end user and to the admin/editors of eZ
+Publish where content is always returned &#8220;fresh&#8221;. In other words there
+should not be a need to manually clear the cache like was frequently the
+case with eZ Publish 4.x (aka &#8220;legacy&#8221;). This is possible thanks to an
+interface that follows CRUD (Create Read Update Delete) operations per
+domain, and number of other operations capable of affecting a certain
+domain is kept to a minimum.</p>
+<div class="section" id="entity-stored-only-once">
+<h3>Entity stored only once<a class="headerlink" href="#entity-stored-only-once" title="Permalink to this headline">¶</a></h3>
+<p>To make the transparent caching principle as effective as possible,
+entities are as much as possible only stored once in cache by their
+primary id. Lookup by alternative identifiers (<tt class="docutils literal"><span class="pre">identifier</span></tt>,
+<tt class="docutils literal"><span class="pre">remoteId</span></tt>, ..) is only cached with the identifier as cache key and
+primary <tt class="docutils literal"><span class="pre">id</span></tt> as it&#8217;s cache value, and compositions (list of objects)
+usually keep only the array of primary id&#8217;s as their cache value.</p>
+<p>This means a couple of things:</p>
+<ul class="simple">
+<li>Memory consumption is kept low</li>
+<li>Cache purging logic is kept simple ( Example:
+<tt class="docutils literal"><span class="pre">$sectionService-&gt;delete(</span> <span class="pre">3</span> <span class="pre">)</span></tt> clears &#8220;section/3&#8221; cache entry )</li>
+<li>Lookup by <tt class="docutils literal"><span class="pre">identifier</span></tt> and list of objects needs several cache
+lookups to be able to assemble the result value</li>
+<li>Cache warmup usually takes several page loads to reach full as
+identifier is first cached, then the object</li>
+</ul>
+</div>
+</div>
+<div class="section" id="what-is-cached">
+<h2>What is cached?<a class="headerlink" href="#what-is-cached" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Persistence cache aimed in its first iteration for caching all</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">SPI\Persistence</span></tt> calls used in a normal page load, including
+everything needed for permission checking and url alias lookups.
+| The following SPI calls are not currently cached:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ObjectStateHandler</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">UrlWildCardHandler</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TrashHandler</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SearchHandler</span></tt></li>
+</ul>
+<p>Search queries are currently not cached as it is more difficult to make
+sure they stay fresh unless all search cache is purged on every
+modification, or a complicated search cache purge system is implemented
+that is able to detect which search result to clear. Also, if the Solr
+implementation is able to perform well, there might not be a need to
+implement a complex search cache in the first place.</p>
+<div class="line-block">
+<div class="line">Another thing to mention is transactions, currently this is handled</div>
+</div>
+<p>very simple by clearing all cache on rollback, this can be improved in
+the future if a need for it arises.
+| For more details on which calls are cached or not, and where to
+contribute additional caches, check out the
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/tree/master/eZ/Publish/Core/Persistence/Cache">source</a>.</p>
+</div>
+<div class="section" id="legacy-kernel-cache-purging">
+<h2>Legacy kernel cache purging<a class="headerlink" href="#legacy-kernel-cache-purging" title="Permalink to this headline">¶</a></h2>
+<p>Currently with the Dual-kernel eZ Publish has in version 5.x, the
+&#8220;Transparent&nbsp;caching principle&#8221;&nbsp;referred&nbsp;to above has one major
+obstacle. eZ Publish 4.x (&#8220;legacy&#8221;) kernel was not made for such a thing
+and has a lot of API&#8217;s that can make changes to the data in the database
+and&nbsp;hence&nbsp;make the&nbsp;persistence&nbsp;cache &#8220;stale&#8221; (aka out of date).</p>
+<p>A couple of things are in place to try to avoid this from happening /
+making it less of a problem:</p>
+<ul class="simple">
+<li>The&nbsp;Persistence&nbsp;cache has a expiry time configurable in
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">LegacyBundle</span></tt> (the bundle that exposes legacy to Symfony and
+integrates Symfony with legacy) has a <tt class="docutils literal"><span class="pre">PersistenceCachePurger</span></tt></li>
+</ul>
+<div class="section" id="persistencecachepurger">
+<h3>PersistenceCachePurger<a class="headerlink" href="#persistencecachepurger" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">PersistenceCachePurger</span></tt> is setup by <tt class="docutils literal"><span class="pre">LegacyBundle</span></tt> to&nbsp;receive&nbsp;all</div>
+</div>
+<p>relevant
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/blob/master/doc/features/5.0/event.txt">cache</a>
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-legacy/blob/master/doc/features/5.1/event.txt">events</a>
+triggered by legacy kernel, and clear relevant Persistence cache based
+on the&nbsp;incoming&nbsp;data.
+| This means a &#8220;Clear all cache&#8221; operation done in legacy will also
+clear all persistence cache, it also means relevant content cache is
+cleared on publishing, so all code using the api&#8217;s covered by these
+events should in effect be cache safe in regards to&nbsp;persistence&nbsp;cache.</p>
+<p>So, in case of stale persistence cache, a clear all cache in legacy
+admin interface is thus still possible, however a manual cache clear is
+also possible but how to do it depends on which cache handler is
+currently used.</p>
+</div>
+</div>
+</div>
+<div class="section" id="reusing-cache-service">
+<h1>Reusing Cache service<a class="headerlink" href="#reusing-cache-service" title="Permalink to this headline">¶</a></h1>
+<p>Using the cache&nbsp;service allows you to use a interface&nbsp;&nbsp;and not have to
+care about if the system has been configured to place the cache in
+Memcached, Apc or on File system. And as eZ Publish requires that
+instances uses a cluster aware cache, you can safely assume your cache
+is shared across all eZ Publish web servers.</p>
+<p>Interface warning</p>
+<p>Icon</p>
+<p>Current implementation uses a caching library
+called&nbsp;<a class="reference external" href="http://stash.tedivm.com/">Stash</a>,
+via&nbsp;<a class="reference external" href="https://github.com/tedivm/TedivmStashBundle">Stash-bundle</a>.&nbsp;If
+this changes, then the Interface of the cache service will most likely
+change as well.</p>
+<p>Cache key warning</p>
+<p>Icon</p>
+<p>When reusing the cache service within your own code, it is very
+important to not conflict with the cache keys used by others, hence why
+example of usage starts with a unique &#8220;myApp&#8221; key for the namespace of
+your own cache, you must do the same! So never clear cache using the
+cache service without your key specified, otherwise you&#8217;ll clear all
+cache.</p>
+<p>Multi repository info</p>
+<p>Icon</p>
+<p>New in 5.2 is support for multi repository setups (several databases on
+same eZ Publish install), see <a class="reference external" href="https://confluence.ez.no/display/EZP/Persistence+cache+configuration#Persistencecacheconfiguration-Multirepositorysetup">how to configure this using several Stash
+cache
+pools</a>
+and site access/group setting &#8220;cache_pool_name&#8221; for selecting the one
+to use.</p>
+<p>In eZ Publish 5.x Symfony2 stack you can simply define that you require
+the &#8220;cache&#8221; service in your configuration like so:</p>
+<p><strong>yml configuration</strong></p>
+<p>The &#8220;cache&#8221; service is an instance of the following
+class:&nbsp;<tt class="docutils literal"><span class="pre">Tedivm\StashBundle\Service\CacheService</span></tt></p>
+<p>Like any other service, it is possible to get the &#8220;cache&#8221; service via
+container as well like so:</p>
+<p><strong>getting the cache service in php</strong></p>
+<p>When eZ Publish legacy runs via eZ Publish 5.x Symfony2 stack, you will
+be able to get the service container in the following way:</p>
+<p><strong>Getting cache service in legacy</strong></p>
+<p>Example usage of the cache service:</p>
+<p><strong>Actuall example from cache use in ezpublish-kernel</strong></p>
+<p>For more info on usage, take a look at <a class="reference external" href="http://stash.tedivm.com/">Stash&#8217;s
+documentation</a>.</p>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/10158280/13107680.png">SPI Cache.png</a></div>
+</div>
+<p>(image/png)
+|  <img alt="image2" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/10158280/13107679.png">SPI Cache.png</a>
+(image/png)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Persistence cache</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#persistent-cache">Persistent cache</a><ul>
+<li><a class="reference internal" href="#layers">Layers</a></li>
+<li><a class="reference internal" href="#transparent-cache">Transparent cache</a><ul>
+<li><a class="reference internal" href="#entity-stored-only-once">Entity stored only once</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-cached">What is cached?</a></li>
+<li><a class="reference internal" href="#legacy-kernel-cache-purging">Legacy kernel cache purging</a><ul>
+<li><a class="reference internal" href="#persistencecachepurger">PersistenceCachePurger</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reusing-cache-service">Reusing Cache service</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Persistence-cache_10158280.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

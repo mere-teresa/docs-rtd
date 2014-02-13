@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Extracting the files &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Extensions_7438523.html">Extensions</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-extracting-the-files">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Extracting the files<a class="headerlink" href="#ez-publish-platform-5-next-extracting-the-files" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep 25,
+2013</p>
+<p>Each extension is distributed as a compressed archive. The name of the
+archive file includes the name of the extension and its release version.
+Furthermore, the compression type is indicated by the file ending,
+either &#8220;tgz&#8221;, &#8220;tar.gz&#8221;, &#8220;bz2&#8221;, or &#8220;zip&#8221;. For example:</p>
+<ul class="simple">
+<li>ezfoo-extension-1.0.tgz</li>
+<li>ezfoo-extension-1.0.tar.gz</li>
+<li>ezfoo-extension-1.0.bz2</li>
+<li>ezfoo-extension-1.0.zip</li>
+</ul>
+<p>Windows users should download the &#8220;zip&#8221; archive. Linux/UNIX users may
+download any archive format as long as the necessary unpacking tools are
+available.</p>
+<div class="section" id="extension-base-directory">
+<h2>Extension base directory<a class="headerlink" href="#extension-base-directory" title="Permalink to this headline">¶</a></h2>
+<p>Copy the downloaded archive into the &#8220;extension&#8221; directory of your eZ
+Publish installation. If this directory does not exist yet, then create
+it. (Do not create the directory with the plural naming &#8220;extensions&#8221; -
+this is a common error.)</p>
+<p>The following shell commands can be used to create the &#8220;extension&#8221;
+directory and copy the archive on a Linux/UNIX system:</p>
+<div class="highlight-python"><pre>mkdir &lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/extension/
+cp /home/myuser/download/ezfoo-extension-1.0.tar.gz &lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/extension/</pre>
+</div>
+<p>Replace &#8220;&lt;eZ_Publish_root_folder&gt;&#8221; with the actual path to your eZ
+Publish installation and
+&#8220;/home/myuser/download/ezfoo-extension-1.0.tar.gz&#8221; with the actual path
+to the downloaded archive.</p>
+</div>
+<div class="section" id="unpack-the-archive">
+<h2>Unpack the archive<a class="headerlink" href="#unpack-the-archive" title="Permalink to this headline">¶</a></h2>
+<p>The archive should be unpacked inside the &#8220;extension&#8221; directory. When
+done correctly, an &#8220;ezfoo&#8221; directory will be created inside the
+&#8220;extension&#8221; directory.</p>
+<p>See the following table for the correct shell command to use on a
+Linux/UNIX system, depending on the compression type:</p>
+<p><strong>Archive type</strong></p>
+<p><strong>Command to extract</strong></p>
+<p>tar.gz or tgz</p>
+<p>or</p>
+<p>bz2</p>
+<p>zip</p>
+<p>On Windows, you can just unzip the &#8220;zip&#8221; file using the built-in zip
+features.</p>
+<p>At this point, the unpacked files should be available under
+&#8220;extension/ezfoo&#8221;.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Extracting the files</a><ul>
+<li><a class="reference internal" href="#extension-base-directory">Extension base directory</a></li>
+<li><a class="reference internal" href="#unpack-the-archive">Unpack the archive</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Extracting-the-files_7438656.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

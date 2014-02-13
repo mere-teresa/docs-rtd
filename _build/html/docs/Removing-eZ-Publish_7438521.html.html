@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Removing eZ Publish &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-removing-ez-publish">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Removing eZ Publish<a class="headerlink" href="#ez-publish-platform-5-next-removing-ez-publish" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21,
+2013</p>
+<p>This section describes how to completely remove an eZ Publish
+installation from a system.</p>
+<p>Removing eZ Publish is done in four steps:</p>
+<ol class="arabic simple">
+<li>Deleting the eZ Publish directory</li>
+<li>Removing the database</li>
+<li>Reconfiguring Apache (optional)</li>
+<li>Removing the cronjobs (optional)</li>
+<li>Removing the NFS shares and cluster database (for clustered
+installations only)</li>
+</ol>
+<p>WARNING! By following these steps, you will remove both eZ Publish and
+all the data/content that you have put into the system. Everything will
+be lost, unless there are backups available somewhere.</p>
+<div class="section" id="deleting-the-ez-publish-directory">
+<h2>Deleting the eZ Publish directory<a class="headerlink" href="#deleting-the-ez-publish-directory" title="Permalink to this headline">¶</a></h2>
+<p>Remove the eZ Publish directory using your favorite tool.</p>
+<div class="section" id="linux-unix">
+<h3>Linux/UNIX<a class="headerlink" href="#linux-unix" title="Permalink to this headline">¶</a></h3>
+<p>On Linux/UNIX systems, the removal would most likely be carried out
+using the &#8220;<tt class="docutils literal"><span class="pre">rm</span></tt>&#8221; command:</p>
+<div class="highlight-python"><pre>$ rm -Rf /path/to/ez_publish</pre>
+</div>
+<p>Please note that some file/directory permissions might be messed up. If
+this is the case, it will prevent a regular user from removing all eZ
+Publish files. You&#8217;ll probably have to gain root access to solve this
+problem.</p>
+</div>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Windows users may simply delete the eZ Publish directory using the
+&#8220;Explorer&#8221;.</p>
+</div>
+</div>
+<div class="section" id="removing-the-database">
+<h2>Removing the database<a class="headerlink" href="#removing-the-database" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Start the MySQL client, log in using your username and password:</p>
+<div class="highlight-python"><pre>$ mysql -u &lt;username&gt; -p</pre>
+</div>
+<p>If the username/password is correct, the client will then present a
+&#8220;mysql&gt;&#8221; prompt.</p>
+</li>
+<li><p class="first">Delete/remove the database using the drop command followed by the
+name of the database used by eZ Publish:</p>
+<div class="highlight-python"><pre>mysql&gt; drop database &lt;database-name&gt;;</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="postgresql">
+<h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Remove the database by executing the PostgreSQL dropdb command from
+shell:</p>
+<div class="highlight-python"><pre>$ dropdb &lt;database-name&gt;</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="reconfiguring-apache-optional">
+<h2>Reconfiguring Apache (optional)<a class="headerlink" href="#reconfiguring-apache-optional" title="Permalink to this headline">¶</a></h2>
+<p>If a virtual host setup was used, it is likely that the Apache
+configuration files contain eZ Publish specific settings. These settings
+will not be needed anymore and thus they can be removed. Open the
+&#8220;<tt class="docutils literal"><span class="pre">httpd.conf</span></tt>&#8221; file using a text editor, scroll down to the bottom
+and remove the eZ Publish specific virtual host settings. Remember to
+restart Apache after altering the configuration file.</p>
+</div>
+<div class="section" id="removing-the-cronjobs-optional">
+<h2>Removing the cronjobs (optional)<a class="headerlink" href="#removing-the-cronjobs-optional" title="Permalink to this headline">¶</a></h2>
+<p>If cron was configured to run eZ Publish specific jobs, then these will
+have to be removed. You may have to edit a global cron file (under
+&#8220;<tt class="docutils literal"><span class="pre">/etc/cron*</span></tt>&#8221;) or use the &#8220;<tt class="docutils literal"><span class="pre">crontab</span></tt>&#8221; command with the <tt class="docutils literal"><span class="pre">-e</span></tt>
+(edit) parameter to edit a user&#8217;s private cron file. Remove the eZ
+Publish specific entries.</p>
+<p>Windows users should remove any eZ Publish specific tasks from the
+specific scheduling system they used, e.g. &#8220;windows scheduled tasks&#8221;
+(note that eZ Publish does not install any scheduled task automatically
+on its own)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Removing eZ Publish</a><ul>
+<li><a class="reference internal" href="#deleting-the-ez-publish-directory">Deleting the eZ Publish directory</a><ul>
+<li><a class="reference internal" href="#linux-unix">Linux/UNIX</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#removing-the-database">Removing the database</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#postgresql">PostgreSQL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reconfiguring-apache-optional">Reconfiguring Apache (optional)</a></li>
+<li><a class="reference internal" href="#removing-the-cronjobs-optional">Removing the cronjobs (optional)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Removing-eZ-Publish_7438521.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

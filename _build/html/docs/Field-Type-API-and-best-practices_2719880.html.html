@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Field Type API and best practices &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Extending-eZ-Publish-5_1736733.html">Extending eZ Publish 5</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-field-type-api-and-best-practices">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Field Type API and best practices<a class="headerlink" href="#ez-publish-platform-5-next-field-type-api-and-best-practices" title="Permalink to this headline">¶</a></h1>
+<p>Added by kore.nordmann , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on Aug 29,
+2013</p>
+<ul class="simple">
+<li>1 <a class="reference external" href="#FieldTypeAPIandbestpractices-FieldTypeAPI%26bestpractices">Field Type API &amp; best
+practices</a><ul>
+<li>1.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-PublicAPIinteraction">Public API
+interaction</a><ul>
+<li>1.1.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-FieldDefinitionhandling">FieldDefinition
+handling</a></li>
+<li>1.1.2 <a class="reference external" href="#FieldTypeAPIandbestpractices-Valuehandling">Value
+handling</a></li>
+<li>1.1.3 <a class="reference external" href="#FieldTypeAPIandbestpractices-Storageconversion">Storage
+conversion</a></li>
+</ul>
+</li>
+<li>1.2 <a class="reference external" href="#FieldTypeAPIandbestpractices-Searching">Searching</a><ul>
+<li>1.2.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-SearchFieldValues">Search Field
+Values</a></li>
+<li>1.2.2 <a class="reference external" href="#FieldTypeAPIandbestpractices-SearchFieldTypes">Search Field
+Types</a></li>
+<li>1.2.3 <a class="reference external" href="#FieldTypeAPIandbestpractices-ConfiguringSolr">Configuring
+Solr</a></li>
+</ul>
+</li>
+<li>1.3 <a class="reference external" href="#FieldTypeAPIandbestpractices-Storingexternaldata">Storing external
+data</a></li>
+<li>1.4 <a class="reference external" href="#FieldTypeAPIandbestpractices-LegacyStorageconversion">Legacy Storage
+conversion</a><ul>
+<li>1.4.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-Registeringaconverter">Registering a
+converter</a></li>
+</ul>
+</li>
+<li>1.5 <a class="reference external" href="#FieldTypeAPIandbestpractices-RESTAPIinteraction">REST API
+interaction</a><ul>
+<li>1.5.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-Extensionpoints">Extension
+points</a></li>
+</ul>
+</li>
+<li>1.6 <a class="reference external" href="#FieldTypeAPIandbestpractices-Bestpractices">Best
+practices</a><ul>
+<li>1.6.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-GatewaybasedStorage">Gateway based
+Storage</a></li>
+<li>1.6.2 <a class="reference external" href="#FieldTypeAPIandbestpractices-Settingsschema">Settings
+schema</a></li>
+<li>1.6.3 <a class="reference external" href="#FieldTypeAPIandbestpractices-Validatorschema">Validator
+schema</a></li>
+</ul>
+</li>
+<li>1.7 <a class="reference external" href="#FieldTypeAPIandbestpractices-RegisteringaFieldType">Registering a
+FieldType</a></li>
+<li>1.8 <a class="reference external" href="#FieldTypeAPIandbestpractices-Templating">Templating</a></li>
+<li>1.9 <a class="reference external" href="#FieldTypeAPIandbestpractices-Testing">Testing</a><ul>
+<li>1.9.1 <a class="reference external" href="#FieldTypeAPIandbestpractices-PersistenceSPI">Persistence
+SPI</a></li>
+<li>1.9.2 <a class="reference external" href="#FieldTypeAPIandbestpractices-PublicAPI">Public API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Related documentation:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="FieldType-template_12779562.html">FieldType template</a></li>
+<li><a class="reference external" href="Register-FieldType_2719973.html">Register FieldType</a></li>
+<li><a class="reference external" href="Settings-schema-and-allowed-validators_2720129.html">Settings schema and allowed
+validators</a></li>
+</ul>
+</div>
+<div class="section" id="field-type-api-best-practices">
+<h1>Field Type API &amp; best practices<a class="headerlink" href="#field-type-api-best-practices" title="Permalink to this headline">¶</a></h1>
+<p>The eZ Publish CMS can support arbitrary data to be stored in the fields
+of a content object. In order to support custom data, besides the
+standard data types, a developer needs to create a custom <strong>FieldType</strong>.</p>
+<p>The implementation of a custom FieldType is done based on the FieldType
+SPI and its interfaces. These can be found under
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\FieldType</span></tt>.</p>
+<p>In order to provide custom functionality for a FieldType, the SPI
+interacts with multiple layers of the eZ Publish architecture, as shown
+in the following diagram:</p>
+<p>&nbsp;<img alt="image0" src="docs/attachments/2719880/3047435.png" /></p>
+<p>On the top layer, the FieldType needs to provide conversion from and to
+a simple PHP hash value to support the REST API. The generated hash
+value may only consist of scalar values and hashes. It must not contain
+objects or arrays with numerical indexes that aren&#8217;t sequential and/or
+don&#8217;t start with zero.</p>
+<p>Below that, the FieldType must support the Public API implementation
+(aka Business Layer), regarding:</p>
+<ul class="simple">
+<li>Settings definition for FieldDefinitions</li>
+<li>Value creation and validation</li>
+<li>Communication with the Persistence SPI</li>
+</ul>
+<p>On the bottom level, a FieldType can additionally hook into the
+Persistence SPI, in order to store data from a FieldValue in an external
+service. Note that all non-standard eZ Publish database tables
+(e.g.&nbsp;<tt class="docutils literal"><span class="pre">ezurl</span></tt>) are also considered &#8220;external storage&#8221; from now on.</p>
+<p>The following sequence diagram visualizes the process of creating a new
+<tt class="docutils literal"><span class="pre">Content</span></tt> across all layers, especially focused on the interaction
+with a <tt class="docutils literal"><span class="pre">FieldType</span></tt>.</p>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/attachments/2719880/3047436.png" /></div>
+<div class="line"><br /></div>
+</div>
+<p>In the next lines/pages, this document explains how to implement a
+custom FieldType based on the SPI and what is expected from it. As a
+code example, please refer to the Url FieldType, which has been
+implemented as a reference.</p>
+<div class="section" id="public-api-interaction">
+<h2>Public API interaction<a class="headerlink" href="#public-api-interaction" title="Permalink to this headline">¶</a></h2>
+<p>The interaction with the Public API is done through the interface
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\FieldType\FieldType</span></tt>. A custom FieldType must provide
+an implementation of this interface. In addition, it is considered best
+practice to provide a value object class for storing the custom field
+value provided by the FieldType.</p>
+<div class="section" id="fielddefinition-handling">
+<h3>FieldDefinition handling<a class="headerlink" href="#fielddefinition-handling" title="Permalink to this headline">¶</a></h3>
+<p>In order to make use of a custom FieldType, the user must apply it in a
+<tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Values\ContentType\FieldDefinition</span></tt> of a
+custom ContentType. The user may in addition provide settings for the
+FieldType and a validator configuration.&nbsp; Since the Public API cannot
+know anything about these, their handling is delegated to the FieldType
+itself through the following methods:</p>
+<p><tt class="docutils literal"><span class="pre">getFieldTypeIdentifier()</span></tt></p>
+<p>Returns a unique identifier for the custom FieldType, which is used to
+assign the type to a FieldDefinition. By convention for the returned
+type identifier string should be prefixed by a unique shortcut for the
+vendor (e.g. <tt class="docutils literal"><span class="pre">ez</span></tt> for eZ Systems).</p>
+<p><tt class="docutils literal"><span class="pre">getSettingsSchema()</span></tt></p>
+<p>Using this method, the Public API retrieves a schema for the field type
+settings. A typical setting would e.g. be a default value. The settings
+structure defined by this schema is stored in the <tt class="docutils literal"><span class="pre">FieldDefinition</span></tt>.
+Since it is not possible to define a generic format for such a schema,
+the FieldType is free to return any serializable data structure from
+this method.</p>
+<p><tt class="docutils literal"><span class="pre">getValidatorConfigurationSchema()</span></tt></p>
+<p>In addition to normal settings, the FieldType should provide a schema
+settings for&nbsp;it&#8217;s validation process. The schema describes, what kind of
+validation can be performed by the FieldType and which settings the user
+can specify to these validation methods. For example, the <tt class="docutils literal"><span class="pre">ezstring</span></tt>
+type can validate minimum and maximum length of the string. It therefore
+provides a schema to indicate to the user that he might specify the
+corresponding restrictions, when creating a <tt class="docutils literal"><span class="pre">FieldDefinition</span></tt> with
+this type. Again, the schema does not underly any regulations, except
+for that it must be serializable.</p>
+<p><tt class="docutils literal"><span class="pre">validateFieldSettings()</span></tt></p>
+<p>Before the Public API stores settings for the <tt class="docutils literal"><span class="pre">FieldType</span></tt> in a
+<tt class="docutils literal"><span class="pre">FieldDefinition</span></tt>, the type is asked to validate the settings (which
+were provided by the user). As a result, the <tt class="docutils literal"><span class="pre">FieldType</span></tt> must return
+if the given settings comply to the schema defined by
+<tt class="docutils literal"><span class="pre">getSettingsSchema()</span></tt>. <tt class="docutils literal"><span class="pre">validateValidatorConfiguration()</span></tt> Analog to
+<tt class="docutils literal"><span class="pre">validateFieldSettings()</span></tt>, this method verifies that the given
+validator configuration complies to the schema provided by
+<tt class="docutils literal"><span class="pre">getValidatorConfigurationSchema()</span></tt>.</p>
+<p>It is important to note that while the schema definitions of the
+<tt class="docutils literal"><span class="pre">FieldType</span></tt> maybe both be of arbitrary, serializable format, it is
+highly recommended to use a simple hash structure. It is highly
+recommended to follow the <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">Best
+practices</a> in order
+to create future proof schemas.</p>
+<p>Icon</p>
+<p><strong>Note:</strong> Since it is not possible to enforce a schema format, the code
+using a specific <tt class="docutils literal"><span class="pre">FieldType</span></tt> must basically know all <tt class="docutils literal"><span class="pre">FieldType</span></tt>s
+it deals with.</p>
+<p>This will also apply to all user interfaces and the REST API, which
+therefore must provide extension points to register handling code for
+custom <tt class="docutils literal"><span class="pre">FieldType</span></tt>. These extensions are not defined, yet.</p>
+</div>
+<div class="section" id="value-handling">
+<h3>Value handling<a class="headerlink" href="#value-handling" title="Permalink to this headline">¶</a></h3>
+<p>A field type needs to deal with the custom value format provided by it.
+In order for the public API to work properly, it delegates working with
+such custom field values to the corresponding FieldType. The
+<tt class="docutils literal"><span class="pre">SPI\FieldType\FieldType</span></tt> interface therefore provides the following
+methods:</p>
+<p><tt class="docutils literal"><span class="pre">acceptValue()</span></tt></p>
+<p>This method is responsible for accepting and converting user input for
+the field. It checks the input structure it accepts and might build and
+return a different structure holding the data. An example would be, that
+the user just provides an HTTP link as a string, which is converted to
+the value object of the Url FieldType. Unlike the <tt class="docutils literal"><span class="pre">FieldType\Value</span></tt>
+constructor, it is perfectly acceptable to make this method aware of
+multiple input types (object or primitive, for instance).</p>
+<p>Note: The method must assert structural consistency of the value, but
+must not validate plausibility of the value.</p>
+<p><tt class="docutils literal"><span class="pre">getEmptyValue()</span></tt></p>
+<p>Through settings, the <tt class="docutils literal"><span class="pre">FieldType</span></tt> can specify, that the user may
+define a default value for the <tt class="docutils literal"><span class="pre">Field</span></tt> of the type. If no such default
+is provided by the user, the <tt class="docutils literal"><span class="pre">FieldType</span></tt> itself is asked for an &#8220;empty
+value&#8221; as the final fallback. The value chain for a specific field is
+therefore like this, when a <tt class="docutils literal"><span class="pre">Field</span></tt> of the <tt class="docutils literal"><span class="pre">FieldType</span></tt> is filled
+out:</p>
+<ol class="arabic simple">
+<li><ol class="first arabic">
+<li>Is a value provided by the filling user?</li>
+<li>Is a default provided by the&nbsp;<tt class="docutils literal"><span class="pre">FieldDefinition</span></tt>?</li>
+<li>Take the empty value provided by the&nbsp;<tt class="docutils literal"><span class="pre">FieldType</span></tt></li>
+</ol>
+</li>
+</ol>
+<p><tt class="docutils literal"><span class="pre">validate()</span></tt></p>
+<p>In contrast to <tt class="docutils literal"><span class="pre">acceptValue()</span></tt> this method validates the plausibility
+of the given value, based on the <tt class="docutils literal"><span class="pre">FieldType</span></tt> settings and validator
+configuration, stored in the corresponding&nbsp;<tt class="docutils literal"><span class="pre">FieldDefinition</span></tt>.</p>
+</div>
+<div class="section" id="storage-conversion">
+<h3>Storage conversion<a class="headerlink" href="#storage-conversion" title="Permalink to this headline">¶</a></h3>
+<p>As said above, the value format of a <tt class="docutils literal"><span class="pre">FieldType</span></tt> is free form.
+However, in order to make eZ Publish store the value in it&#8217;s database,
+it must comply to certain rules at storage time. To not restrict the
+value itself, a <tt class="docutils literal"><span class="pre">FieldValue</span></tt> must be converted to the storage specific
+format used by the Persistence SPI:
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\FieldValue</span></tt>. After restoring a
+Field of <tt class="docutils literal"><span class="pre">FieldType</span></tt>, the conversion must be undone. The following
+methods of the <tt class="docutils literal"><span class="pre">FieldType</span></tt> are responsible for that:</p>
+<p><tt class="docutils literal"><span class="pre">toPersistenceValue()</span></tt></p>
+<p>This method receives the value of a <tt class="docutils literal"><span class="pre">Field</span></tt> of <tt class="docutils literal"><span class="pre">FieldType</span></tt> and must
+return an SPI <tt class="docutils literal"><span class="pre">FieldValue</span></tt>, which can be stored.</p>
+<p><tt class="docutils literal"><span class="pre">fromPersistenceValue()</span></tt></p>
+<p>As the counterpart, this method receives an SPI <tt class="docutils literal"><span class="pre">FieldValue</span></tt> and must
+reconstruct the original value of the <tt class="docutils literal"><span class="pre">Field</span></tt> from it.</p>
+<p>The SPI FieldValue struct has several properties, which might be used by
+the FieldType as follows:</p>
+<p><tt class="docutils literal"><span class="pre">$data</span></tt></p>
+<p>The data to be stored in the eZ Publish database. This may either be a
+scalar value, a hash map or a simple, serializable object.</p>
+<p><tt class="docutils literal"><span class="pre">$externalData</span></tt></p>
+<p>The arbitrary data stored in this field will not be touched by any of
+the eZ Publish components directly, but will be hold available for
+<a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">Storing external
+data</a>.</p>
+<p><tt class="docutils literal"><span class="pre">$sortKey</span></tt></p>
+<p>An value which can be used to sort <tt class="docutils literal"><span class="pre">Content</span></tt> by the field.</p>
+<p><em>Note: TBD: Where will you register the Indexable implementations?</em></p>
+</div>
+</div>
+<div class="section" id="searching">
+<h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
+<p>Fields, or a custom field type, might contain or maintain data which is
+relevant for user searches. To make the search engine aware of the data
+in your field type you need to implement an additional interface and
+register the implementation.</p>
+<p>If your field type does not maintain any data, which should be available
+to search engines, feel free to just ignore this section.</p>
+<p>The`` eZPublishSPIFieldTypeIndexable`` defines two methods, which
+are required to be implemented, if the field type provides data relevant
+to search engines. The interface defines two methods for this:</p>
+<p><tt class="docutils literal"><span class="pre">getIndexData(</span> <span class="pre">Field</span> <span class="pre">$field</span> <span class="pre">)</span></tt></p>
+<p>This method is supposed to return the actual index data for the provided
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Field</span></tt>. The index data consists of
+an array of <tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Search\Field</span></tt>
+instances. They are described below in further detail.</p>
+<p><tt class="docutils literal"><span class="pre">getIndexDefinition()</span></tt></p>
+<p>To be able to query data properly an indexable field type also is
+required to return search specification. You must return a hash map of
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Search\FieldType</span></tt> instances from
+this method, which could look like:</p>
+<p>&nbsp;This example from the&nbsp;<tt class="docutils literal"><span class="pre">Url</span></tt> field type shows that the field type
+will always return two indexable values, both strings. They have the
+names <tt class="docutils literal"><span class="pre">url</span></tt> and <tt class="docutils literal"><span class="pre">text</span></tt> respectively.</p>
+<div class="section" id="search-field-values">
+<h3>Search Field Values<a class="headerlink" href="#search-field-values" title="Permalink to this headline">¶</a></h3>
+<p>The search field values, returned by the <tt class="docutils literal"><span class="pre">getIndexData</span></tt> method are
+simple value objects consisting of the following properties:</p>
+<p><tt class="docutils literal"><span class="pre">$name</span></tt></p>
+<p>The name of the field</p>
+<p><tt class="docutils literal"><span class="pre">$value</span></tt></p>
+<p>The value of the field</p>
+<p><tt class="docutils literal"><span class="pre">$type</span></tt></p>
+<p>An&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence\Content\Search\FieldType</span></tt> instance,
+describing the type information of the field.</p>
+</div>
+<div class="section" id="search-field-types">
+<h3>Search Field Types<a class="headerlink" href="#search-field-types" title="Permalink to this headline">¶</a></h3>
+<p>There are bunch of available search field types, which are automagically
+handled by our Search backend configuration. When using those there is
+no requirement to adapt , for example, the Solr configuration in any
+way. You can always use custom field types, though, but these might
+require re-configuration of the search backend. For Solr this would mean
+adapting the schema.xml.</p>
+<p>The default available search field types are:</p>
+<p><tt class="docutils literal"><span class="pre">StringField.php</span></tt></p>
+<p>Standard string values. Will also be queries by full text searches.</p>
+<p><tt class="docutils literal"><span class="pre">TextField.php</span></tt></p>
+<p>Standard text values. Will be queried by full text searches. Configured
+text normalizations in the search backend apply.</p>
+<p><tt class="docutils literal"><span class="pre">BooleanField.php</span></tt></p>
+<p>Boolean values.</p>
+<p><tt class="docutils literal"><span class="pre">DateField.php</span></tt></p>
+<p>Date field. Can be used for date range queries.</p>
+<p><tt class="docutils literal"><span class="pre">FloatField.php</span></tt></p>
+<p>Field for floating point numbers.</p>
+<p><tt class="docutils literal"><span class="pre">IntegerField.php</span></tt></p>
+<p>Field for integer numbers.</p>
+<p><tt class="docutils literal"><span class="pre">PriceField.php</span></tt></p>
+<p>Field for price values. Currency conversion might be applied by the
+search backends. Might require careful configuration.</p>
+<p><tt class="docutils literal"><span class="pre">IdentifierField.php</span></tt></p>
+<p>Field used for IDs. Basically acts like the string field, but will not
+be queried by fulltext searches</p>
+<p><tt class="docutils literal"><span class="pre">CustomField.php</span></tt></p>
+<p>Custom field, for custom search data types. Will probably require
+additional configuration in the search backend.</p>
+</div>
+<div class="section" id="configuring-solr">
+<h3>Configuring Solr<a class="headerlink" href="#configuring-solr" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned before, if you are using the standard type definitions
+<strong>there is no need to configure the search backend in any way</strong>.
+Everything will work fine. The field definitions are handled using
+<tt class="docutils literal"><span class="pre">dynamicField</span></tt> definitions in Solr, for example.</p>
+<p>If you want to configure the handling of your field, you can always add
+a special field definition the Solr <tt class="docutils literal"><span class="pre">schema.xml</span></tt>. The field type
+names, which are used by the Solr search backend look like this for
+fields:
+<tt class="docutils literal"><span class="pre">&lt;content_type_identifier&gt;/&lt;field_identifier&gt;/&lt;search_field_name&gt;_&lt;type&gt;</span></tt>.
+You can, of course define custom <tt class="docutils literal"><span class="pre">dynamicField</span></tt> definitions to match,
+for example, on your custom <tt class="docutils literal"><span class="pre">_&lt;type&gt;</span></tt> definition.</p>
+<p>You could also define a custom field definition dedicatedly for certain
+fields, like for the name field in an article:</p>
+<p>If you want to learn more about the Solr implementation and detailed
+information about configuring it, check out the <a class="reference external" href="Solr-Search-Service-Implementation-Notes_2719897.html">Solr Search Service
+Implementation
+Notes</a>.</p>
+</div>
+</div>
+<div class="section" id="storing-external-data">
+<h2>Storing external data<a class="headerlink" href="#storing-external-data" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">FieldType</span></tt> may store arbitrary data in external data sources and is
+in fact encouraged to do so. External storages can be e.g. a web
+service, a file in the file system, another database or even the eZ
+Publish database itself (in form of a non-standard table). In order to
+perform this task, the <tt class="docutils literal"><span class="pre">FieldType</span></tt> will interact with the Persistence
+SPI, which can be found in <tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Persistence</span></tt>, through the
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\FieldType\FieldStorage</span></tt> interface.</p>
+<p>Whenever the internal storage of a Content that includes a Field of the
+<tt class="docutils literal"><span class="pre">FieldType</span></tt> is accessed, one of the following methods is called to
+also access the external data:</p>
+<p><tt class="docutils literal"><span class="pre">hasFieldData()</span></tt></p>
+<p>Returns if the <tt class="docutils literal"><span class="pre">FieldType</span></tt> stores extrnal data at all.</p>
+<p><tt class="docutils literal"><span class="pre">storeFieldData()</span></tt></p>
+<p>Called right before a <tt class="docutils literal"><span class="pre">Field</span></tt> of <tt class="docutils literal"><span class="pre">FieldType</span></tt> is stored. The method
+should perform the storing of <tt class="docutils literal"><span class="pre">$externalData</span></tt>. The method must return
+<tt class="docutils literal"><span class="pre">true</span></tt>, if the call manipulated <strong>internal data</strong> of the given
+<tt class="docutils literal"><span class="pre">Field</span></tt>, so that it is updated in the internal database.</p>
+<p><tt class="docutils literal"><span class="pre">getFieldData()</span></tt></p>
+<p>Is called after a <tt class="docutils literal"><span class="pre">Field</span></tt> has been restored from the database in order
+to restore <tt class="docutils literal"><span class="pre">$externalData</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">deleteFieldData()</span></tt></p>
+<p>Must delete external data for the given <tt class="docutils literal"><span class="pre">Field</span></tt>, if exists.</p>
+<p><tt class="docutils literal"><span class="pre">getIndexData()</span></tt></p>
+<p>See search service</p>
+<p>Each of the above methods receive a $context array, which contains
+information on the underlying storage and the environment. This context
+can be used to store data in the eZ Publish data storage, but outside of
+the normal structures (e.g. a custom table in an SQL database). Note
+that the FieldType must take care on it&#8217;s own for being compliant to
+different data sources and that 3rd parties can extend the data source
+support easily. For more information about this, take a look at the
+<a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">Best practices</a>
+section.</p>
+</div>
+<div class="section" id="legacy-storage-conversion">
+<h2>Legacy Storage conversion<a class="headerlink" href="#legacy-storage-conversion" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">FieldType</span></tt> system is designed for future storage back ends of eZ
+Publish. However, the old database schema (<em>Legacy Storage</em>) must still
+be supported. Since this database cannot store arbitrary value
+information as provided by a <tt class="docutils literal"><span class="pre">FieldType</span></tt>, another conversion step must
+take place if the Legacy Storage is used.</p>
+<p>The conversion takes place through the interface
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter</span></tt>,
+which you must provide an implementation of with your <tt class="docutils literal"><span class="pre">FieldType</span></tt>. The
+following methods are contained in the interface:</p>
+<p><tt class="docutils literal"><span class="pre">toStorageValue()</span></tt></p>
+<p>Converts a Persistence <tt class="docutils literal"><span class="pre">Value</span></tt> into a legacy storage specific value.</p>
+<p><tt class="docutils literal"><span class="pre">fromStorageValue()</span></tt></p>
+<p>Converts the other way around.</p>
+<p><tt class="docutils literal"><span class="pre">toStorageFieldDefinition()</span></tt></p>
+<p>Converts a Persistence <tt class="docutils literal"><span class="pre">FieldDefinition</span></tt> to a storage specific one.</p>
+<p><tt class="docutils literal"><span class="pre">fromStorageFieldDefinition</span></tt></p>
+<p>Converts the other way around.</p>
+<p><tt class="docutils literal"><span class="pre">getIndexColumn()</span></tt></p>
+<p>Returns the storage column which is used for indexing.</p>
+<div class="section" id="registering-a-converter">
+<h3>Registering a converter<a class="headerlink" href="#registering-a-converter" title="Permalink to this headline">¶</a></h3>
+<p>The registration of a <tt class="docutils literal"><span class="pre">Converter</span></tt> currently works through the
+<tt class="docutils literal"><span class="pre">$config</span></tt> parameter of <tt class="docutils literal"><span class="pre">eZ\Publish\Core\Persistence\Legacy\Handler</span></tt>.
+See the class documentation for further details.</p>
+<p>Icon</p>
+<p>For global service container integration, see <a class="reference external" href="Register-FieldType_2719973.html">Register
+FieldType</a>.</p>
+</div>
+</div>
+<div class="section" id="rest-api-interaction">
+<h2>REST API interaction<a class="headerlink" href="#rest-api-interaction" title="Permalink to this headline">¶</a></h2>
+<p>When REST API is used, conversion needs to be done for <tt class="docutils literal"><span class="pre">FieldType</span></tt>
+values, settings and validator configurations. These are converted to
+and from a simple hash format that can be encoded in REST payload
+(typically XML or JSON). As conversion needs to be done both when
+transmitting and receiving data through REST, <tt class="docutils literal"><span class="pre">FieldType</span></tt> implements
+following pairs of methods:</p>
+<p><tt class="docutils literal"><span class="pre">toHash()</span></tt></p>
+<p>Converts FieldType Value into a plain hash format.</p>
+<p><tt class="docutils literal"><span class="pre">fromHash()</span></tt></p>
+<p>Converts the other way around.</p>
+<p><tt class="docutils literal"><span class="pre">fieldSettingsToHash()</span></tt></p>
+<p>Converts FieldType settings to a simple hash format.</p>
+<p><tt class="docutils literal"><span class="pre">fieldSettingsFromHash()</span></tt></p>
+<p>Converts the other way around.</p>
+<p><tt class="docutils literal"><span class="pre">validatorConfigurationToHash()</span></tt></p>
+<p>Converts FieldType validator configuration to a simple hash format.</p>
+<p><tt class="docutils literal"><span class="pre">validatorConfigurationFromHash()</span></tt></p>
+<p>Converts the other way around.</p>
+<div class="section" id="extension-points">
+<h3>Extension points<a class="headerlink" href="#extension-points" title="Permalink to this headline">¶</a></h3>
+<p>Some <tt class="docutils literal"><span class="pre">FieldTypes</span></tt> will require additional processing, for example a
+<tt class="docutils literal"><span class="pre">FieldType</span></tt> storing a binary file, or one having more complex settings
+or validator configuration. For this purpose specific implementations of
+an abstract class <tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Common\FieldTypeProcessor</span></tt> are
+used. This class provides following methods:</p>
+<p><tt class="docutils literal"><span class="pre">preProcessValueHash()</span></tt></p>
+<p>Performs manipulations on a received value hash, so that it conforms to
+the format expected by the <tt class="docutils literal"><span class="pre">fromHash()</span></tt> method described above.</p>
+<p><tt class="docutils literal"><span class="pre">postProcessValueHash()</span></tt></p>
+<p>Performs manipulations on a outgoing value hash, previously generated by
+the <tt class="docutils literal"><span class="pre">toHash()</span></tt> method described above.</p>
+<p><tt class="docutils literal"><span class="pre">preProcessFieldSettingsHash()</span></tt></p>
+<p>Performs manipulations on a received settings hash, so that it conforms
+to the format expected by the <tt class="docutils literal"><span class="pre">fieldSettingsFromHash()</span></tt> method
+described above.</p>
+<p><tt class="docutils literal"><span class="pre">postProcessFieldSettingsHash()</span></tt></p>
+<p>Performs manipulations on a outgoing settings hash, previously generated
+by the <tt class="docutils literal"><span class="pre">fieldSettingsToHash()</span></tt> method described above.</p>
+<p><tt class="docutils literal"><span class="pre">preProcessValidatorConfigurationHash()</span></tt></p>
+<p>Performs manipulations on a received validator configuration hash, so
+that it conforms to the format expected by the
+<tt class="docutils literal"><span class="pre">validatorConfigurationFromHash()</span></tt> method described above.</p>
+<p><tt class="docutils literal"><span class="pre">postProcessValidatorConfigurationHash()</span></tt></p>
+<p>Performs manipulations on a outgoing validator configuration hash,
+previously generated by the <tt class="docutils literal"><span class="pre">validatorConfigurationToHash()</span></tt> method
+described above.</p>
+<p>Base implementations of these methods simply return the given hash, so
+you can implement only the methods your <tt class="docutils literal"><span class="pre">FieldType</span></tt> requires. Some
+<tt class="docutils literal"><span class="pre">FieldTypes</span></tt> coming with the eZ Publish installation already implement
+processors and you are encouraged to take a look at them.</p>
+<p>For details on registering a <tt class="docutils literal"><span class="pre">FieldType</span></tt> processor, see Register
+FieldType page.</p>
+</div>
+</div>
+<div class="section" id="best-practices">
+<h2>Best practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, best practices for implementing a custom FieldType are
+collected. We highly encourage following these practices to be future
+proof.</p>
+<div class="section" id="gateway-based-storage">
+<h3>Gateway based Storage<a class="headerlink" href="#gateway-based-storage" title="Permalink to this headline">¶</a></h3>
+<p>In order to allow the usage of a <tt class="docutils literal"><span class="pre">FieldType</span></tt> that uses external data
+with different data storages, it is recommended to implement a gateway
+infrastructure and a registry for the gateways. In order to ease this
+action, the Core implementation of <tt class="docutils literal"><span class="pre">FieldType</span></tt> s provides
+corresponding interfaces and base classes. These can also be used for
+custom field types.</p>
+<p>The interface <tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\StorageGateway</span></tt> is
+implemented by gateways, in order to be handled correctly by the
+registry. It has only a single method:</p>
+<p><tt class="docutils literal"><span class="pre">setConnection()</span></tt></p>
+<p>The registry mechanism uses this method to set the SPI storage
+connection (e.g. the database connection to the Legacy Storage database)
+into the gateway, which might be used to store external data. The
+connection is retrieved from the <tt class="docutils literal"><span class="pre">$context</span></tt> array&nbsp; automatically by
+the registry.</p>
+<p>Note that the Gateway implementation itself must take care about
+validating that it received a usable connection. If it did not, it
+should throw a <tt class="docutils literal"><span class="pre">RuntimeException</span></tt>.</p>
+<p>The registry mechanism is realized as a base class for <tt class="docutils literal"><span class="pre">FieldStorage</span></tt>
+implementations: <tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\GatewayBasedStorage</span></tt>. For
+managing <tt class="docutils literal"><span class="pre">StorageGateway</span></tt> s, the following methods are already
+implemented in the base class:</p>
+<p><tt class="docutils literal"><span class="pre">addGateway()</span></tt></p>
+<p>Allows the registration of additional <tt class="docutils literal"><span class="pre">StorageGateway</span></tt>s from the
+outside. Furthermore, a hash map of <tt class="docutils literal"><span class="pre">StorageGateway</span></tt>s can be given
+to the constructor for basic initialization. This array should orginate
+from the Dependency Injection mechanism.</p>
+<p><tt class="docutils literal"><span class="pre">getGateway()</span></tt></p>
+<p>This protected method is used by the implementation to retrieve the
+correct <tt class="docutils literal"><span class="pre">StorageGateway</span></tt> for the current context.</p>
+<p>As a reference for the usage of these infrastructure, the Keyword, Url
+and User types can be examined.</p>
+</div>
+<div class="section" id="settings-schema">
+<h3>Settings schema<a class="headerlink" href="#settings-schema" title="Permalink to this headline">¶</a></h3>
+<p>It is recommended to use a simple hash map format for the settings
+schema retured by
+eZ\Publish\SPI\FieldType\FieldType::getSettingsSchema(), which
+follows these rules:</p>
+<ul class="simple">
+<li>The key of the hash map identifies a setting (e.g. <tt class="docutils literal"><span class="pre">default</span></tt>)</li>
+<li>Its value is a hash map (2nd level) describing the setting using<ul>
+<li><tt class="docutils literal"><span class="pre">type</span></tt> to identify the setting type (e.g. <tt class="docutils literal"><span class="pre">int</span></tt> or <tt class="docutils literal"><span class="pre">string</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">default</span></tt> containing the default setting value</li>
+</ul>
+</li>
+</ul>
+<p>An example schema could look like this:</p>
+</div>
+<div class="section" id="validator-schema">
+<h3>Validator schema<a class="headerlink" href="#validator-schema" title="Permalink to this headline">¶</a></h3>
+<p>The schema for validator configuration should have a similar format than
+the settings schema has, except it has an additional level, to group
+settings for a certain validation mechanism:</p>
+<ul class="simple">
+<li>The key on the 1st level is a string, identifying a validator</li>
+<li>Assigned to that is a hash map (2nd level) of settings</li>
+<li>This hash map has a string key for each setting of the validator</li>
+<li>It is assigned to a 3rd level hashmap, the setting description</li>
+<li>This hash map should have the same format as for normal settings</li>
+</ul>
+<p>For example, for the <tt class="docutils literal"><span class="pre">ezstring</span></tt> type, the validator schema could be:</p>
+</div>
+</div>
+<div class="section" id="registering-a-fieldtype">
+<h2>Registering a FieldType<a class="headerlink" href="#registering-a-fieldtype" title="Permalink to this headline">¶</a></h2>
+<p>To register a FieldType, see&nbsp;<a class="reference external" href="Register-FieldType_2719973.html">Register
+FieldType</a>.</p>
+<p>To be integrated in unit and integration tests, FieldTypes need to be
+registered through
+the&nbsp;<tt class="docutils literal"><span class="pre">service.ini``&nbsp;in&nbsp;``eZ/Publish/Core/settings</span></tt>.</p>
+</div>
+<div class="section" id="templating">
+<h2>Templating<a class="headerlink" href="#templating" title="Permalink to this headline">¶</a></h2>
+<p>A FieldType always need a piece of template to be correctly displayed.
+See&nbsp;<a class="reference external" href="FieldType-template_12779562.html">FieldType template</a>.</p>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">FieldType</span></tt> s should be integration tested on 1 different levels:</p>
+<ol class="arabic simple">
+<li>Their integration with the Persistence SPI</li>
+<li>Their integration with the Public API</li>
+</ol>
+<p>For both test environments, infrastructure is already in place, so that
+you can easily implement the required tests for your custom
+<tt class="docutils literal"><span class="pre">FieldType</span></tt></p>
+<div class="section" id="persistence-spi">
+<h3>Persistence SPI<a class="headerlink" href="#persistence-spi" title="Permalink to this headline">¶</a></h3>
+<p>This type of integration test ensures, that a FieldType stores its data
+properly on basis of different Persistence SPI implementations.</p>
+<p>Icon</p>
+<p><strong>Note:</strong> By now, only the Legacy Storage implementation exists.</p>
+<p>The integration tests with the Persistence SPI can be found in
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Tests\FieldType</span></tt>. In order to implement a test for
+your custom <tt class="docutils literal"><span class="pre">FieldType</span></tt>, you need to extend the common base class
+<tt class="docutils literal"><span class="pre">eZ\Publish\SPI\Tests\FieldType\BaseIntegrationTest</span></tt> and implement
+it&#8217;s abstract methods. As a reference the <tt class="docutils literal"><span class="pre">KeywordIntegrationTest</span></tt>,
+<tt class="docutils literal"><span class="pre">UrlIntegrationTest</span></tt> and <tt class="docutils literal"><span class="pre">UserIntegrationTest</span></tt> can deal.</p>
+<p>Running the test is fairly simple: Just specify the global
+<tt class="docutils literal"><span class="pre">phpunit.xml</span></tt> for PHPUnit configuration and make it execute a single
+test or a directory of tests, for example:</p>
+<p>in order to run all <tt class="docutils literal"><span class="pre">FieldType</span></tt> tests.</p>
+</div>
+<div class="section" id="public-api">
+<h3>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h3>
+<p>On a second level, the interaction between an implementation of the
+Public API (aka the Business Layer) and the FieldType is tested. Again,
+there is a common base class as the infrastructural basis for such
+tests, which resides in
+<tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Tests\FieldType\BaseIntegrationTest</span></tt>.</p>
+<p>Icon</p>
+<p>Note that the In-Memory stubs for the Public API integration test suite,
+do not perform actual FieldType calls, but mainly emulate the behavior
+of a FieldType for simplicity reasons.</p>
+<p>If your FieldType needs to convert data between <tt class="docutils literal"><span class="pre">storeFieldData()</span></tt> and
+<tt class="docutils literal"><span class="pre">getFieldData()</span></tt>, you need to implement a
+<tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Tests\Stubs\PseudoExternalStorage</span></tt> in
+addition, which performs this task. Running the tests against the
+Business Layer implementation of the Public API is not affected by this.</p>
+</div>
+</div>
+<div class="section" id="attachments">
+<h2>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image2" src="docs/images/icons/bullet_blue.gif" /></div>
+</div>
+<p><a class="reference external" href="attachments/2719880/3047435.png">field_type_overview.png</a>
+(image/png)
+|  <img alt="image3" src="docs/images/icons/bullet_blue.gif" />
+<a class="reference external" href="attachments/2719880/3047478.png">create_content_sequence.png</a>
+(image/png)
+|  <img alt="image4" src="docs/images/icons/bullet_blue.gif" />
+<a class="reference external" href="attachments/2719880/3047477.svg">create_content_sequence.svg</a>
+(image/svg+xml)
+|  <img alt="image5" src="docs/images/icons/bullet_blue.gif" />
+<a class="reference external" href="attachments/2719880/3047476.svg">create_content_sequence.svg</a>
+(image/svg+xml)
+|  <img alt="image6" src="docs/images/icons/bullet_blue.gif" />
+<a class="reference external" href="attachments/2719880/3047436.png">create_content_sequence.png</a>
+(image/png)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Field Type API and best practices</a></li>
+<li><a class="reference internal" href="#field-type-api-best-practices">Field Type API &amp; best practices</a><ul>
+<li><a class="reference internal" href="#public-api-interaction">Public API interaction</a><ul>
+<li><a class="reference internal" href="#fielddefinition-handling">FieldDefinition handling</a></li>
+<li><a class="reference internal" href="#value-handling">Value handling</a></li>
+<li><a class="reference internal" href="#storage-conversion">Storage conversion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#searching">Searching</a><ul>
+<li><a class="reference internal" href="#search-field-values">Search Field Values</a></li>
+<li><a class="reference internal" href="#search-field-types">Search Field Types</a></li>
+<li><a class="reference internal" href="#configuring-solr">Configuring Solr</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#storing-external-data">Storing external data</a></li>
+<li><a class="reference internal" href="#legacy-storage-conversion">Legacy Storage conversion</a><ul>
+<li><a class="reference internal" href="#registering-a-converter">Registering a converter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rest-api-interaction">REST API interaction</a><ul>
+<li><a class="reference internal" href="#extension-points">Extension points</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#best-practices">Best practices</a><ul>
+<li><a class="reference internal" href="#gateway-based-storage">Gateway based Storage</a></li>
+<li><a class="reference internal" href="#settings-schema">Settings schema</a></li>
+<li><a class="reference internal" href="#validator-schema">Validator schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#registering-a-fieldtype">Registering a FieldType</a></li>
+<li><a class="reference internal" href="#templating">Templating</a></li>
+<li><a class="reference internal" href="#testing">Testing</a><ul>
+<li><a class="reference internal" href="#persistence-spi">Persistence SPI</a></li>
+<li><a class="reference internal" href="#public-api">Public API</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Field-Type-API-and-best-practices_2719880.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

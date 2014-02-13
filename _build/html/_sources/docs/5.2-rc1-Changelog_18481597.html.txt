@@ -1,0 +1,327 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+#. `Pre Releases <Pre-Releases_16286284.html>`__
+#. `5.2-RC1 Release Notes <5.2-RC1-Release-Notes_18481313.html>`__
+
+eZ Publish Platform 5.<next> : 5.2-rc1 Changelog
+================================================
+
+Added by andre.romcke@ez.no , edited by andre.romcke@ez.no on Nov 07,
+2013
+
+This page shows changes since
+`beta1 <5.2-beta1-Changelog_17105233.html>`__.
+
+Key
+
+Summary
+
+components
+
+`EZP-20502 <https://jira.ez.no/browse/EZP-20502>`__
+
+`avoid Symfony exception when file is missing for ezimage
+attribute <https://jira.ez.no/browse/EZP-20502>`__
+
+Content (images, XML, PDF, RSS, etc.), Legacy IO, Repository & Services
+(Public API impl)
+
+`EZP-21501 <https://jira.ez.no/browse/EZP-21501>`__
+
+`Support object state group limitation in
+API <https://jira.ez.no/browse/EZP-21501>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21640 <https://jira.ez.no/browse/EZP-21640>`__
+
+`Implement RelationList search
+criterion <https://jira.ez.no/browse/EZP-21640>`__
+
+Public API interfaces, Repository & Services (Public API impl), Search
+
+`EZP-21701 <https://jira.ez.no/browse/EZP-21701>`__
+
+`ez\_render\_field should be able to use current template as
+parameter <https://jira.ez.no/browse/EZP-21701>`__
+
+Symfony stack, Template language
+
+`EZP-21733 <https://jira.ez.no/browse/EZP-21733>`__
+
+`Improve exceptions thrown in
+RoleService <https://jira.ez.no/browse/EZP-21733>`__
+
+Public API interfaces, Repository & Services (Public API impl)
+
+`EZP-21793 <https://jira.ez.no/browse/EZP-21793>`__
+
+`Add $matchAlwaysAvailable parameter to
+LanguageCriterion <https://jira.ez.no/browse/EZP-21793>`__
+
+Public API interfaces, Search
+
+`6
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-rc1%22+%29+AND+type%3DImprovement+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Key
+
+Summary
+
+components
+
+`EZP-21526 <https://jira.ez.no/browse/EZP-21526>`__
+
+`As a DemoBundle user I want to use disqus for
+commenting <https://jira.ez.no/browse/EZP-21526>`__
+
+DemoBundle
+
+`EZP-21531 <https://jira.ez.no/browse/EZP-21531>`__
+
+`As a user I need a way to pick correct Content name
+language <https://jira.ez.no/browse/EZP-21531>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21532 <https://jira.ez.no/browse/EZP-21532>`__
+
+`As a DemoBundle user I want Blog and blog\_post to be displayed using
+symfony stack <https://jira.ez.no/browse/EZP-21532>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21620 <https://jira.ez.no/browse/EZP-21620>`__
+
+`As PM I want ezodoscope & ezrecommender to be built by
+engineering <https://jira.ez.no/browse/EZP-21620>`__
+
+CI System
+
+`EZP-21654 <https://jira.ez.no/browse/EZP-21654>`__
+
+`DemoBundle: refactor top menu
+controller <https://jira.ez.no/browse/EZP-21654>`__
+
+DemoBundle
+
+`EZP-21657 <https://jira.ez.no/browse/EZP-21657>`__
+
+`DemoBundle: refactor latestContent
+action <https://jira.ez.no/browse/EZP-21657>`__
+
+DemoBundle
+
+`EZP-21676 <https://jira.ez.no/browse/EZP-21676>`__
+
+`As a developer, I want to access a field value in the current locale in
+a Twig template <https://jira.ez.no/browse/EZP-21676>`__
+
+Symfony stack, Template language
+
+`EZP-21677 <https://jira.ez.no/browse/EZP-21677>`__
+
+`As a developer, I want to always have access to root
+location <https://jira.ez.no/browse/EZP-21677>`__
+
+Symfony stack, Template language
+
+`EZP-21680 <https://jira.ez.no/browse/EZP-21680>`__
+
+`As a developer, I want to easily check if a Field is
+empty <https://jira.ez.no/browse/EZP-21680>`__
+
+Repository & Services (Public API impl), Symfony stack, Template
+language
+
+`EZP-21723 <https://jira.ez.no/browse/EZP-21723>`__
+
+`As a developer, I want to use PagerFanta to do my
+pagination <https://jira.ez.no/browse/EZP-21723>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21743 <https://jira.ez.no/browse/EZP-21743>`__
+
+`As a DemoBundle user, I want the homepage to be displayed using full
+new stack <https://jira.ez.no/browse/EZP-21743>`__
+
+DemoBundle
+
+`EZP-21816 <https://jira.ez.no/browse/EZP-21816>`__
+
+`As a DemoBundle user, I want articles to be rendered with Twig
+templates <https://jira.ez.no/browse/EZP-21816>`__
+
+DemoBundle
+
+`EZP-21824 <https://jira.ez.no/browse/EZP-21824>`__
+
+`Update the 5.2 release notes <https://jira.ez.no/browse/EZP-21824>`__
+
+Documentation
+
+`EZP-21844 <https://jira.ez.no/browse/EZP-21844>`__
+
+`Write a cache cleanup script for the split DFS
+feature <https://jira.ez.no/browse/EZP-21844>`__
+
+Clustering, Upgrading
+
+`14
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-rc1%22+%29+AND+type%3DStory+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Key
+
+Summary
+
+components
+
+`EZP-19979 <https://jira.ez.no/browse/EZP-19979>`__
+
+`Class on ezxml tags are (almost) not
+handled <https://jira.ez.no/browse/EZP-19979>`__
+
+Field types
+
+`EZP-20558 <https://jira.ez.no/browse/EZP-20558>`__
+
+`Workflow Event/Approve not working
+correctly <https://jira.ez.no/browse/EZP-20558>`__
+
+Administration Interface
+
+`EZP-20769 <https://jira.ez.no/browse/EZP-20769>`__
+
+`REST v2: Reading object containing ezimage datatype returns hardcoded (
+and wrong ) results <https://jira.ez.no/browse/EZP-20769>`__
+
+REST API v2
+
+`EZP-21032 <https://jira.ez.no/browse/EZP-21032>`__
+
+`Rest spec missing info about is\_logged\_in cookie when explaining
+session based auth <https://jira.ez.no/browse/EZP-21032>`__
+
+Documentation, REST API v2
+
+`EZP-21156 <https://jira.ez.no/browse/EZP-21156>`__
+
+`Class modification with a lot of cache to
+expire <https://jira.ez.no/browse/EZP-21156>`__
+
+Caching, Database related
+
+`EZP-21433 <https://jira.ez.no/browse/EZP-21433>`__
+
+`embed-inline tags in xmltext fields are not rendered properly by core
+XSL <https://jira.ez.no/browse/EZP-21433>`__
+
+Design (templates, CSS, etc.), Legacy Storage engine, Symfony stack
+
+`EZP-21438 <https://jira.ez.no/browse/EZP-21438>`__
+
+`Improve relation permission handling to use
+view\_embed <https://jira.ez.no/browse/EZP-21438>`__
+
+Permissions
+
+`EZP-21469 <https://jira.ez.no/browse/EZP-21469>`__
+
+`[API] language mask on ezcontentobject incorreclty
+set <https://jira.ez.no/browse/EZP-21469>`__
+
+Language
+
+`EZP-21498 <https://jira.ez.no/browse/EZP-21498>`__
+
+`Check file consistency warns about ~
+files <https://jira.ez.no/browse/EZP-21498>`__
+
+Administration Interface
+
+`EZP-21522 <https://jira.ez.no/browse/EZP-21522>`__
+
+`Unable to publish an image content with the REST
+API <https://jira.ez.no/browse/EZP-21522>`__
+
+Content (images, XML, PDF, RSS, etc.), Field types, REST API v2
+
+`EZP-21558 <https://jira.ez.no/browse/EZP-21558>`__
+
+`DFS/MySQLi ezie error in copy with split DFS
+tables <https://jira.ez.no/browse/EZP-21558>`__
+
+Extensions/eZ Image Editor
+
+`EZP-21567 <https://jira.ez.no/browse/EZP-21567>`__
+
+`Blank e-mail subject line with multi-byte characters
+(iconv\_mime\_encode: Unknown
+error) <https://jira.ez.no/browse/EZP-21567>`__
+
+Language, Notifications
+
+`EZP-21568 <https://jira.ez.no/browse/EZP-21568>`__
+
+`Typo in
+REST\\Server\\Controller\\Role <https://jira.ez.no/browse/EZP-21568>`__
+
+REST API v2
+
+`EZP-21589 <https://jira.ez.no/browse/EZP-21589>`__
+
+`Boolean values are serialized as string in JSON responses of the REST
+API <https://jira.ez.no/browse/EZP-21589>`__
+
+REST API v2
+
+`EZP-21591 <https://jira.ez.no/browse/EZP-21591>`__
+
+`Querystring lost in
+redirections <https://jira.ez.no/browse/EZP-21591>`__
+
+Misc
+
+`EZP-21599 <https://jira.ez.no/browse/EZP-21599>`__
+
+`Fix regression from EZP-19660 at a higher
+level <https://jira.ez.no/browse/EZP-21599>`__
+
+Workflows
+
+`EZP-21611 <https://jira.ez.no/browse/EZP-21611>`__
+
+`unpublish cronjob uses anonymous
+credentials <https://jira.ez.no/browse/EZP-21611>`__
+
+Cronjobs
+
+`EZP-21612 <https://jira.ez.no/browse/EZP-21612>`__
+
+`handleViewException response not returned in
+ViewController <https://jira.ez.no/browse/EZP-21612>`__
+
+Symfony stack
+
+`EZP-21613 <https://jira.ez.no/browse/EZP-21613>`__
+
+`Compound\\LogicalAnd serialization
+fails <https://jira.ez.no/browse/EZP-21613>`__
+
+Symfony stack
+
+`EZP-21621 <https://jira.ez.no/browse/EZP-21621>`__
+
+`ContentView::setTemplateIdentifier throws InvalidArgumentTypeException
+even with the right type <https://jira.ez.no/browse/EZP-21621>`__
+
+Symfony stack
+
+Showing 20 out of `47
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-rc1%22+%29+AND+type%3DBug+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Document generated by Confluence on Feb 12, 2014 16:43

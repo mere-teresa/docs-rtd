@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 2. Browsing, finding, viewing &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public API</a></li>
+<li><a class="reference external" href="Public-API-Cookbook_5046311.html">Public API Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-2-browsing-finding-viewing">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 2. Browsing, finding, viewing<a class="headerlink" href="#ez-publish-platform-5-next-2-browsing-finding-viewing" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jan 31, 2014</p>
+<p>We will start by going through the various ways to find and retrieve
+content from eZ Publish using the API. While this will be covered in
+further dedicated documentation, it is necessary to explain a few basic
+concepts of the Public API. In the following recipes, you will learn
+about the general principles of the API as they are introduced in
+individual recipes.</p>
+<ul class="simple">
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-DisplayingvaluesfromaContent">Displaying values from a
+Content</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-TraversingaLocationsubtree">Traversing a Location
+subtree</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-ViewingContentMetaData">Viewing Content Meta
+Data</a><ul>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-SettingtheRepositoryUser">Setting the Repository
+User</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-TheContentInfoValueObject">The ContentInfo Value
+Object</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Locations">Locations</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Relations">Relations</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-ContentInfoproperties">ContentInfo
+properties</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Owninguser">Owning user</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Section">Section</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Versions">Versions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Search">Search</a><ul>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Performingasimplefulltextsearch">Performing a simple full text
+search</a><ul>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-QueryandCriterionobjects">Query and Criterion
+objects</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Runningthesearchqueryandusingtheresults">Running the search query and using the
+results</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Performinganadvancedsearch">Performing an advanced
+search</a></li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Performingafetchlikesearch">Performing a fetch like
+search</a><ul>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Usingin%28%29insteadofOR">Using in() instead of
+OR</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id-2.Browsing%2Cfinding%2Cviewing-Performingapuresearchcount">Performing a pure search
+count</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="displaying-values-from-a-content">
+<h2>Displaying values from a Content<a class="headerlink" href="#displaying-values-from-a-content" title="Permalink to this headline">¶</a></h2>
+<p>In this recipe, we will see how to fetch a Content instance from the
+repository, and obtain its Field&#8217;s content.</p>
+<p>Let&#8217;s first see the full code. You can see the Command line version
+at&nbsp;<a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/ViewContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/ViewContentCommand.php</a>.</p>
+<p><strong>Viewing content</strong></p>
+<p>Let&#8217;s analyze this code block by block.</p>
+<p>This is the initialization part. As explained above, everything in the
+Public API goes through the repository via dedicated services. We get
+the repository from the service container, using the
+method&nbsp;<tt class="docutils literal"><span class="pre">get()``&nbsp;of</span> <span class="pre">our</span> <span class="pre">container,</span> <span class="pre">obtained</span>
+<span class="pre">via&nbsp;\</span> <span class="pre">``$this-&gt;getContainer()</span></tt>. Using our $repository variable, we
+fetch the two services we will need
+using&nbsp;<tt class="docutils literal"><span class="pre">getContentService()``&nbsp;and&nbsp;``getFieldTypeService()</span></tt>.</p>
+<p>Everything starting from line 5 is about getting our Content and
+iterating over its Fields. You can see that the whole logic is part of
+a&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>try/catch``&nbsp;block. Since the Public API uses Exceptions for error
+handling, this is strongly encouraged, as it will allow you to
+conditionally catch the various errors that may happen. We will cover
+the exceptions we expect in a next paragraph.</p>
+<p>The first thing we do is use the Content Service to load a Content using
+its ID, 66:&nbsp;<tt class="docutils literal"><span class="pre">$contentService-&gt;loadContent</span></tt><tt class="docutils literal"><span class="pre">(</span> <span class="pre">66</span> <span class="pre">)</span></tt>. As you can
+see on the API doc page, this method expects a Content ID, and returns
+a&nbsp;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Content.html">Content Value
+Object</a>.</p>
+<p>This block is the one that actually displays the value.</p>
+<p>It iterates over the Content&#8217;s (Content Object) fields using the
+ContentType&#8217;s (Content Class) FieldDefinitions (Content Class Attribute)
+(<tt class="docutils literal"><span class="pre">$contentType-&gt;fieldDefinitions</span></tt>).</p>
+<p>For each Field Definition (Content Class Attribute), we start by
+displaying its identifier (<tt class="docutils literal"><span class="pre">$fieldDefinition-&gt;identifier</span></tt>). We then
+get the FieldType (Datatype) instance using the FieldType Service
+(<tt class="docutils literal"><span class="pre">$fieldTypeService-&gt;getFieldType(</span> <span class="pre">$fieldDefinition-&gt;fieldTypeIdentifier</span> <span class="pre">)</span></tt>).
+This method expects the requested FieldType&#8217;s identifier, as a string
+(ezstring, ezxmltext...), and returns
+an&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>eZPublishAPIRepositoryFieldType``&nbsp;object.</p>
+<p>The Field Value object (Content Object Attribute) is obtained using
+the&nbsp;<tt class="docutils literal"><span class="pre">getFieldValue()``&nbsp;method</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">Content</span> <span class="pre">Value</span> <span class="pre">Object</span> <span class="pre">which</span> <span class="pre">we</span>
+<span class="pre">obtained</span> <span class="pre">using&nbsp;\</span> <span class="pre">``ContentService::loadContent()</span></tt>.</p>
+<p>Using the FieldType object, we can convert the Field Value to a hash
+using the&nbsp;<a href="#id5"><span class="problematic" id="id6">``</span></a>toHash()``&nbsp;method, provided by every FieldType. This
+method returns a primitive type (string, hash) out of a Field instance.</p>
+<p>With this example, you should get a first idea on how you interact with
+the API. Everything is done through services, each service being
+responsible for a specific part of the repository (Content, FieldType,
+etc).</p>
+<p>Loading Content in different languages</p>
+<p>Icon</p>
+<p>Since we didn&#8217;t specify any language code, our Field objects is returned
+in the default language, depending on your language settings in
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt>. If you want to use a non-default language, you can
+specify a language code in the <tt class="docutils literal"><span class="pre">getField()</span></tt> call:</p>
+<p><strong>Exceptions handling</strong></p>
+<p>As said earlier, the Public API
+uses&nbsp;<a class="reference external" href="http://php.net/exceptions">Exceptions</a>&nbsp;to handle errors. Each
+method of the API may throw different exceptions, depending on what it
+does. Which exceptions can be thrown is usually documented for each
+method. In our case,&nbsp;<tt class="docutils literal"><span class="pre">loadContent()``&nbsp;may</span> <span class="pre">throw</span> <span class="pre">two</span> <span class="pre">types</span> <span class="pre">of</span>
+<span class="pre">exceptions:&nbsp;\</span> <span class="pre">``NotFoundException</span></tt>, if the requested ID isn&#8217;t found,
+and&nbsp;<a href="#id7"><span class="problematic" id="id8">``</span></a>UnauthorizedException``&nbsp;if the currently logged in user isn&#8217;t
+allowed to view the requested content.</p>
+<p>It is a good practice to cover each exception you expect to happen. In
+this case, since our Command takes the content ID as a parameter, this
+ID may either not exist, or the referenced content may not be visible to
+our user. Both cases are covered with explicit error messages.</p>
+</div>
+<div class="section" id="traversing-a-location-subtree">
+<h2>Traversing a Location subtree<a class="headerlink" href="#traversing-a-location-subtree" title="Permalink to this headline">¶</a></h2>
+<p>This recipe will show how to traverse a Location&#8217;s subtree. The full
+code implements a command that takes a Location ID as an argument, and
+recursively prints this location&#8217;s subtree.</p>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/BrowseLocationsCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/BrowseLocationsCommand.php</a></p>
+<p>In this code, we introduce the
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html">LocationService</a>.
+This service is used to interact with locations (eZ Publish 4 nodes). We
+use two methods from this service:
+<tt class="docutils literal"><span class="pre">`loadLocation()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html#method_loadLocation">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html#method_loadLocation</a>&gt;`__,
+and <tt class="docutils literal"><span class="pre">loadLocationChildren()</span></tt>.</p>
+<p><strong>Loading a location</strong></p>
+<p>As for the ContentService, <tt class="docutils literal"><span class="pre">loadLocation()</span></tt> returns a &nbsp;Value Object,
+here a <tt class="docutils literal"><span class="pre">Location</span></tt>. Errors are handled with exceptions:
+<tt class="docutils literal"><span class="pre">NotFoundException</span></tt> if the Location ID couldn&#8217;t be found,
+and&nbsp;<tt class="docutils literal"><span class="pre">UnauthorizedException</span></tt> if the current repository user isn&#8217;t
+allowed to view this location.</p>
+<p><strong>Iterating over a Location&#8217;s children</strong></p>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a>LocationService::loadLocationChildren()``&nbsp;returns
+a&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/API/Repository/Values/Content/LocationList.php">LocationList</a>&nbsp;Value
+Objects that we can iterate over.</p>
+<p>Note that unlike loadLocation(), we don&#8217;t need to care for permissions
+here: the currently logged in user&#8217;s permissions will be respected when
+loading children, and locations that can&#8217;t be viewed won&#8217;t be returned
+at all.</p>
+<p>Full code</p>
+<p>Icon</p>
+<p>Should you need more advanced children fetching methods,
+the&nbsp;<a href="#id11"><span class="problematic" id="id12">``</span></a>SearchService``&nbsp;is what you are looking for.</p>
+</div>
+<div class="section" id="viewing-content-meta-data">
+<h2>Viewing Content Meta Data<a class="headerlink" href="#viewing-content-meta-data" title="Permalink to this headline">¶</a></h2>
+<p>Content is a central piece in the Public API. You will often need to
+start from a Content, and dig in from its metadata. Basic content
+metadata is made available through <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> objects.&nbsp;This Value
+Object mostly provides primitive fields: <tt class="docutils literal"><span class="pre">contentTypeId</span></tt>,
+<tt class="docutils literal"><span class="pre">publishedDate</span></tt> or <tt class="docutils literal"><span class="pre">mainLocationId</span></tt>. But it is also used to request
+further Content related Value Objects from various services.</p>
+<p>The full example implements an
+<tt class="docutils literal"><span class="pre">ezpublish:cookbook:view_content_metadata</span></tt> command that prints out all
+the available metadata, given a content ID.</p>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/ViewContentMetaDataCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/ViewContentMetaDataCommand.php</a></p>
+<p>We introduce here several new services:
+<tt class="docutils literal"><span class="pre">`URLAliasService</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/URLAliasService.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/URLAliasService.html</a>&gt;`__,
+<tt class="docutils literal"><span class="pre">`UserService</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/UserService.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/UserService.html</a>&gt;`__
+and
+<tt class="docutils literal"><span class="pre">`SectionService</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SectionService.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SectionService.html</a>&gt;`__.
+The concept should be familiar to you now.</p>
+<p><strong>Services initialization</strong></p>
+<div class="section" id="setting-the-repository-user">
+<h3>Setting the Repository User<a class="headerlink" href="#setting-the-repository-user" title="Permalink to this headline">¶</a></h3>
+<p>Icon</p>
+<p>In a command line script, the repository runs as if executed by the
+anonymous user. In order to identify it as a different user, you need to
+use the <tt class="docutils literal"><span class="pre">UserService</span></tt> as follows:</p>
+<p>This may be crucial when writing maintenance or synchronization scripts.</p>
+<p>This is of course not required in template functions or controller code,
+as the HTTP layer will take care of identifying the user, and
+automatically set it in the repository.</p>
+</div>
+<div class="section" id="the-contentinfo-value-object">
+<h3>The ContentInfo Value Object<a class="headerlink" href="#the-contentinfo-value-object" title="Permalink to this headline">¶</a></h3>
+<p>We will now load a <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> object using the provided ID and use
+it to get our Content&#8217;s meta data</p>
+</div>
+<div class="section" id="locations">
+<h3>Locations<a class="headerlink" href="#locations" title="Permalink to this headline">¶</a></h3>
+<p><strong>Getting Content Locations</strong></p>
+<p>We first use&nbsp;<tt class="docutils literal"><span class="pre">LocationService::loadLocations()</span></tt> to <strong>get</strong> the
+<strong>Locations</strong> for our <tt class="docutils literal"><span class="pre">ContentInfo</span></tt>. This method returns an array of
+<tt class="docutils literal"><span class="pre">`Location</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html</a>&gt;`__
+Value Objects. In this example, we print out the Location&#8217;s path string
+(/path/to/content). We also use
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/URLAliasService.html#method_reverseLookup">URLAliasService::reverseLookup()</a>
+to get the location&#8217;s main
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/URLAlias.html">URLAlias</a>.</p>
+</div>
+<div class="section" id="relations">
+<h3>Relations<a class="headerlink" href="#relations" title="Permalink to this headline">¶</a></h3>
+<p>We now want to list relations from and to our Content. Since relations
+are versioned, we need to feed the
+<tt class="docutils literal"><span class="pre">`ContentService::loadRelations()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadRelations">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadRelations</a>&gt;`__
+with a <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object. We can get the current
+version&#8217;s&nbsp;<tt class="docutils literal"><span class="pre">VersionInfo``&nbsp;using&nbsp;```ContentService::loadVersionInfo()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadVersionInfo">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadVersionInfo</a>&gt;`__.
+If we had been looking for an archived version, we could have specified
+the version number as the second argument to this method.</p>
+<p><strong>Browsing a Content&#8217;s relations</strong></p>
+<p>We can iterate over the
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Relation.html">Relation</a>
+objects array we got from loadRelations(), and use these Value Objects
+to get data about our relations. It has two main properties:
+destinationContentInfo, and sourceContentInfo. They also hold the
+relation type (embed, common...), and the optional Field this relations
+is made with.</p>
+</div>
+<div class="section" id="contentinfo-properties">
+<h3>ContentInfo properties<a class="headerlink" href="#contentinfo-properties" title="Permalink to this headline">¶</a></h3>
+<p>We can of course get our Content&#8217;s metadata by using the Value Object&#8217;s
+properties.</p>
+<p><strong>Primitive object metadata</strong></p>
+</div>
+<div class="section" id="owning-user">
+<h3>Owning user<a class="headerlink" href="#owning-user" title="Permalink to this headline">¶</a></h3>
+<p>We can use
+<tt class="docutils literal"><span class="pre">`UserService::loadUser()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/UserService.html#method_loadUser">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/UserService.html#method_loadUser</a>&gt;`__
+with content <tt class="docutils literal"><span class="pre">ownerId</span></tt> property of our <tt class="docutils literal"><span class="pre">ContentInfo</span></tt> to load the
+<tt class="docutils literal"><span class="pre">Content</span></tt>&#8216;s owner as a <tt class="docutils literal"><span class="pre">User</span></tt> Value Object.</p>
+<p>Icon</p>
+<p>To get the current version&#8217;s creator, and not the content&#8217;s owner, you
+need to use the <tt class="docutils literal"><span class="pre">creatorId</span></tt> property from the current version&#8217;s
+<tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object.</p>
+</div>
+<div class="section" id="section">
+<h3>Section<a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
+<p>The section&#8217;s ID can be found in the <tt class="docutils literal"><span class="pre">sectionId</span></tt> property of the
+<tt class="docutils literal"><span class="pre">ContentInfo</span></tt> object. To get the matching Section Value Object, you
+need to use the SectionService::loadSection() method.</p>
+</div>
+<div class="section" id="versions">
+<h3>Versions<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h3>
+<p>To conclude we can also iterate over the Content&#8217;s version, as
+<tt class="docutils literal"><span class="pre">VersionInfo</span></tt> Value Objects.</p>
+<p>We use the <tt class="docutils literal"><span class="pre">ContentService::loadVersions()</span></tt> method, and get an array
+of <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> objects.</p>
+</div>
+</div>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will cover how
+the&nbsp;<tt class="docutils literal"><span class="pre">`SearchService</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html</a>&gt;`__&nbsp;can
+be used to search for Contentent, by using a
+<tt class="docutils literal"><span class="pre">`Query</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query.html</a>&gt;`__&nbsp;and
+a combinations of
+<tt class="docutils literal"><span class="pre">`Criteria</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion.html</a>&gt;`__
+you will get
+a&nbsp;<tt class="docutils literal"><span class="pre">`SearchResult</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Search/SearchResult.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Search/SearchResult.html</a>&gt;`__&nbsp;object
+back containing list of Content and count of total hits. In the future
+this object will also include facets, spell checking and &#8220;more like
+this&#8221; when running on a backend that supports it (for instance Solr).</p>
+<div class="section" id="performing-a-simple-full-text-search">
+<h3>Performing a simple full text search<a class="headerlink" href="#performing-a-simple-full-text-search" title="Permalink to this headline">¶</a></h3>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContentCommand.php</a></p>
+<p>In this recipe, we will run a simple full text search over every
+compatible attribute.</p>
+<div class="section" id="query-and-criterion-objects">
+<h4>Query and Criterion objects<a class="headerlink" href="#query-and-criterion-objects" title="Permalink to this headline">¶</a></h4>
+<p>We introduce here a new object:&nbsp;<tt class="docutils literal"><span class="pre">Query</span></tt>. It is used to build up a
+Content query based on a set of <tt class="docutils literal"><span class="pre">Criterion</span></tt> objects.</p>
+<p>Multiple criteria can be grouped together using &#8220;logical criteria&#8221;, such
+as
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/LogicalAnd.html">LogicalAnd</a>
+or
+<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/LogicalOr.html">LogicalOr</a>.
+Since in this case we only want to run a text search, we simply use a
+<tt class="docutils literal"><span class="pre">`FullText</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/FullText.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/FullText.html</a>&gt;`__
+criterion object.</p>
+<p>Icon</p>
+<p>The full list of criteria can be found on your installation in the
+following
+directory&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/tree/master/eZ/Publish/API/Repository/Values/Content/Query/Criterion">vendor/ezsystems/ezpublish-kernel/eZ/Publish/API/Repository/Values/Content/Query/Criterion</a>.
+Additionally you may look at integration tests like
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/API/Repository/Tests/SearchServiceTest.php">vendor/ezsystems/ezpublish-kernel/eZ/Publish/API/Repository/Tests/SearchServiceTest.php</a>
+for more details on how these are used.</p>
+<p>NB: Be aware that the links point to code in the upcoming version
+(master) and might not represent the criteria in your eZ Publish
+version.</p>
+</div>
+<div class="section" id="running-the-search-query-and-using-the-results">
+<h4>Running the search query and using the results<a class="headerlink" href="#running-the-search-query-and-using-the-results" title="Permalink to this headline">¶</a></h4>
+<p>The <tt class="docutils literal"><span class="pre">Query</span></tt> object is given as an argument to
+<tt class="docutils literal"><span class="pre">`SearchService::findContent()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html#method_findContent">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html#method_findContent</a>&gt;`__.
+This method returns a <tt class="docutils literal"><span class="pre">SearchResult</span></tt> object. This object provides you
+with various information about the search operation (number of results,
+time taken, spelling suggestions, or facets, as well as of course, the
+results themselves.</p>
+<p>The <tt class="docutils literal"><span class="pre">searchHits</span></tt> properties of the <tt class="docutils literal"><span class="pre">SearchResult</span></tt> object is an array
+of SearchHit objects. In <tt class="docutils literal"><span class="pre">valueObject</span></tt> property of <tt class="docutils literal"><span class="pre">SearchHit</span></tt>, you
+will find the&nbsp;<tt class="docutils literal"><span class="pre">Content``&nbsp;object</span> <span class="pre">that</span> <span class="pre">match</span> <span class="pre">the</span> <span class="pre">given</span> <span class="pre">``Query</span></tt>.</p>
+<p><em>Tip</em>: If you you are searching using a unique identifier, for instance
+using the content id or&nbsp;content&nbsp;remote id criterion, then you can
+use&nbsp;<tt class="docutils literal"><span class="pre">`SearchService::findSingle()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html#method_findSingle">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/SearchService.html#method_findSingle</a>&gt;`__,
+this takes a Criterion and returns a single Content, or throws NotFound
+exception if none is found.</p>
+</div>
+</div>
+<div class="section" id="performing-an-advanced-search">
+<h3>Performing an advanced search<a class="headerlink" href="#performing-an-advanced-search" title="Permalink to this headline">¶</a></h3>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContent2Command.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContent2Command.php</a></p>
+<p>As explained in the previous chapter, Criterion objects are grouped
+together using Logical criteria. We will now see how multiple criteria
+objects can be combined into a fine grained search <tt class="docutils literal"><span class="pre">Query</span></tt>.</p>
+<p>A
+<tt class="docutils literal"><span class="pre">`Subtree</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/Subtree.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/Subtree.html</a>&gt;`__
+criterion limits the search to the subtree with pathString, which looks
+like:&nbsp;<tt class="docutils literal"><span class="pre">/1/2/</span></tt>. A
+<tt class="docutils literal"><span class="pre">`ContentTypeId</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/ContentTypeId.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/ContentTypeId.html</a>&gt;`__
+Criterion to limit the search to Content of ContentType 1. Those two
+criteria are grouped with a <tt class="docutils literal"><span class="pre">LogicalAnd</span></tt> operator. The query is
+executed as before, with <tt class="docutils literal"><span class="pre">SearchService::findContent()</span></tt>.</p>
+</div>
+<div class="section" id="performing-a-fetch-like-search">
+<h3>Performing a fetch like search<a class="headerlink" href="#performing-a-fetch-like-search" title="Permalink to this headline">¶</a></h3>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContent3Command.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/FindContent3Command.php</a></p>
+<p>A search isn&#8217;t only meant for searching, it also provides the future
+interface for what you in eZ Publish 4.x would know as a content
+&#8220;fetch&#8221;. And as this is totally&nbsp;backend agnostic, in future eZ Publish
+5.x versions this will be powered by either Solr or ElasticSearch
+meaning it also replaces&nbsp;&#8220;ezfind&#8221; fetch functions.</p>
+<p>Following the examples above we now change it a bit to combine several
+criteria with both a AND and a OR condition.</p>
+<p>A&nbsp;<tt class="docutils literal"><span class="pre">ParentLocationId``&nbsp;criterion</span> <span class="pre">limits</span> <span class="pre">the</span> <span class="pre">search</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">children</span> <span class="pre">of</span>
+<span class="pre">location</span> <span class="pre">2.</span> <span class="pre">An</span> <span class="pre">array</span> <span class="pre">of</span> <span class="pre">&quot;``ContentTypeId&quot;``&nbsp;Criteria</span> <span class="pre">to</span> <span class="pre">limit</span> <span class="pre">the</span> <span class="pre">search</span>
+<span class="pre">to</span> <span class="pre">Content</span> <span class="pre">of</span> <span class="pre">ContentType's</span> <span class="pre">with</span> <span class="pre">id</span> <span class="pre">1</span> <span class="pre">or</span> <span class="pre">2</span> <span class="pre">grouped</span> <span class="pre">in</span>
+<span class="pre">a&nbsp;\</span> <span class="pre">``LogicalOr``&nbsp;operator.</span> <span class="pre">Those</span> <span class="pre">two</span> <span class="pre">criteria</span> <span class="pre">are</span> <span class="pre">grouped</span> <span class="pre">with</span>
+<span class="pre">a&nbsp;\</span> <span class="pre">``LogicalAnd``&nbsp;operator.</span> <span class="pre">As</span> <span class="pre">always</span> <span class="pre">the</span> <span class="pre">query</span> <span class="pre">is</span> <span class="pre">executed</span> <span class="pre">as</span> <span class="pre">before,</span>
+<span class="pre">with&nbsp;\</span> <span class="pre">``SearchService::findContent()</span></tt>.</p>
+<p><em>Tip</em>: Want to do a subtree filter ( in 4.x: fetch( &#8216;content&#8217;, &#8216;tree&#8217; )
+)?&nbsp;Change the location filter to use the Subtree criterion filter as
+shown in the advanced search example above.</p>
+<div class="section" id="using-in-instead-of-or">
+<h4>Using in() instead of OR<a class="headerlink" href="#using-in-instead-of-or" title="Permalink to this headline">¶</a></h4>
+<p>The above example is fine, but it can be optimized a bit by taking
+advantage of the fact that all filter criteria support being given an
+array of values (IN operator) instead of as single value (EQ operator).</p>
+<p>If your on eZ Publish 5.1+ you can use the
+new&nbsp;<tt class="docutils literal"><span class="pre">`ContentTypeIdentifier</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/ContentTypeIdentifier.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Query/Criterion/ContentTypeIdentifier.html</a>&gt;`__&nbsp;Criterion:</p>
+<p><strong>eZ Publish 5.1+ (2013.01+)</strong></p>
+<p><em>Tip</em>: All filter criteria are capable of doing an &#8220;IN&#8221; selection,
+the&nbsp;ParentLocationId&nbsp;above could f.e. have been provided &#8220;array( 2, 43
+)&#8221; to include second level children in both your content tree (2) and
+your media tree (43).</p>
+</div>
+</div>
+<div class="section" id="performing-a-pure-search-count">
+<h3>Performing a pure search count<a class="headerlink" href="#performing-a-pure-search-count" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">In many cases you might need the number of contents matching a search,</div>
+</div>
+<p>but with no need to do anything else with the results.
+| Thanks to the fact that the &#8220;searchHits&#8221; property of the
+<tt class="docutils literal"><span class="pre">`SearchResult</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Search/SearchResult.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Search/SearchResult.html</a>&gt;`__&nbsp;object
+always refers to the total&nbsp;amount, it is enough to run a standard search
+and set $limit to 0. This way no results will be retrieved, and the
+search will not be slowed down, even when the number of matching results
+is huge.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;<tt class="docutils literal"><span class="pre">$content</span></tt><tt class="docutils literal"><span class="pre">-&gt;contentType-&gt;fieldDefinitions&quot;</span> <span class="pre">no</span> <span class="pre">longer</span> <span class="pre">works.</span></tt></p>
+<p>instead one needs to do something like the following:</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by lsmith at Jul 08, 2013 10:38</p>
+<p>Thanks Lukas, fixed now.</p>
+<p><img alt="image1" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> at Jul 08, 2013 10:58</p>
+<p>Hi,</p>
+<p>Maybe you add this to documentation: when you&#8217;re working on multisite
+with one repository, you have to use the router service to generate
+urlalias and not the service:</p>
+<p><img alt="image2" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:philippe&#46;vincent-royol&#37;&#52;&#48;ez&#46;no">philippe<span>&#46;</span>vincent-royol<span>&#64;</span>ez<span>&#46;</span>no</a> at Aug 20, 2013 08:29</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 2. Browsing, finding, viewing</a><ul>
+<li><a class="reference internal" href="#displaying-values-from-a-content">Displaying values from a Content</a></li>
+<li><a class="reference internal" href="#traversing-a-location-subtree">Traversing a Location subtree</a></li>
+<li><a class="reference internal" href="#viewing-content-meta-data">Viewing Content Meta Data</a><ul>
+<li><a class="reference internal" href="#setting-the-repository-user">Setting the Repository User</a></li>
+<li><a class="reference internal" href="#the-contentinfo-value-object">The ContentInfo Value Object</a></li>
+<li><a class="reference internal" href="#locations">Locations</a></li>
+<li><a class="reference internal" href="#relations">Relations</a></li>
+<li><a class="reference internal" href="#contentinfo-properties">ContentInfo properties</a></li>
+<li><a class="reference internal" href="#owning-user">Owning user</a></li>
+<li><a class="reference internal" href="#section">Section</a></li>
+<li><a class="reference internal" href="#versions">Versions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#search">Search</a><ul>
+<li><a class="reference internal" href="#performing-a-simple-full-text-search">Performing a simple full text search</a><ul>
+<li><a class="reference internal" href="#query-and-criterion-objects">Query and Criterion objects</a></li>
+<li><a class="reference internal" href="#running-the-search-query-and-using-the-results">Running the search query and using the results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performing-an-advanced-search">Performing an advanced search</a></li>
+<li><a class="reference internal" href="#performing-a-fetch-like-search">Performing a fetch like search</a><ul>
+<li><a class="reference internal" href="#using-in-instead-of-or">Using in() instead of OR</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performing-a-pure-search-count">Performing a pure search count</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/6292980.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

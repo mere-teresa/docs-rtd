@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 4. Working with Locations &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public API</a></li>
+<li><a class="reference external" href="Public-API-Cookbook_5046311.html">Public API Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-4-working-with-locations">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 4. Working with Locations<a class="headerlink" href="#ez-publish-platform-5-next-4-working-with-locations" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Aug 02, 2013</p>
+<p>[ <a class="reference external" href="#id-4.WorkingwithLocations-AddinganewLocationtoaContent">Adding a new Location to a
+Content</a> ] [
+<a class="reference external" href="#id-4.WorkingwithLocations-Hide%2FUnhideLocation">Hide/Unhide
+Location</a> ] [
+<a class="reference external" href="#id-4.WorkingwithLocations-Deletingalocation">Deleting a location</a> ]</p>
+<div class="section" id="adding-a-new-location-to-a-content">
+<h2>Adding a new Location to a Content<a class="headerlink" href="#adding-a-new-location-to-a-content" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/AddLocationToContentCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/AddLocationToContentCommand.php</a></p>
+<p>We have seen earlier how you can create a Location for a newly created
+<tt class="docutils literal"><span class="pre">Content</span></tt>. It is of course also possible to add a new
+<tt class="docutils literal"><span class="pre">`Location</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html</a>&gt;`__
+to an existing <tt class="docutils literal"><span class="pre">Content</span></tt>.</p>
+<p>This is the required code. As you can see, both the ContentService and
+the LocationService are involved. Errors are handled the usual way, by
+intercepting the Exceptions the used methods may throw.</p>
+<p>Like we do when creating a new Content, we need to get a new
+<tt class="docutils literal"><span class="pre">LocationCreateStruct</span></tt>. We will use it to set our new
+<tt class="docutils literal"><span class="pre">`Location</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html</a>&gt;`__&#8217;s
+properties. The new Location&#8217;s parent ID is provided as a parameter to
+<tt class="docutils literal"><span class="pre">LocationService::newLocationCreateStruct</span></tt>.</p>
+<p>In this example, we use the default values for the various
+LocationCreateStruct properties. We could of course have set custom
+values, like setting the Location as hidden ($location-&gt;hidden = true),
+or changed the remoteId ($location-&gt;remoteId = $myRemoteId).</p>
+<p>To add a Location to a Content, we need to specify the Content, using a
+<tt class="docutils literal"><span class="pre">`ContentInfo</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentInfo.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentInfo.html</a>&gt;`__
+object. We load one using <tt class="docutils literal"><span class="pre">ContentService::loadContentInfo()</span></tt>, using
+the Content ID as the argument.</p>
+<p>We finally use LocationService::createLocation(), providing the
+ContentInfo obtained above, together with our LocationCreateStruct. The
+method returns the newly created Location Value Object.</p>
+</div>
+<div class="section" id="hide-unhide-location">
+<h2>Hide/Unhide Location<a class="headerlink" href="#hide-unhide-location" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/HideLocationCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/HideLocationCommand.php</a></p>
+<p>We mentioned earlier that a Location&#8217;s visibility could be set while
+creating the Location, using the hidden property of the
+LocationCreateStruct. Changing a Location&#8217;s visibility may have a large
+impact in the Repository: doing so will affect the Location&#8217;s subtree
+visibility. For this reason, a LocationUpdateStruct doesn&#8217;t let you
+toggle this property. You need to use the LocationService to do so.</p>
+<p>There are two methods for this: LocationService::hideLocation, and
+LocationService::unhideLocation(). Both expect the LocationInfo as their
+argument, and return the modified Location Value Object.</p>
+<p>Icon</p>
+<p>The explanation above is valid for most Repository objects. Modification
+of properties that affect other parts of the system will require that
+you use a custom service method.</p>
+</div>
+<div class="section" id="deleting-a-location">
+<h2>Deleting a location<a class="headerlink" href="#deleting-a-location" title="Permalink to this headline">¶</a></h2>
+<p>Deleting Locations can be done in two ways: delete, or trash.</p>
+<p><tt class="docutils literal"><span class="pre">`LocationService::deleteLocation()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html#method_deleteLocation">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html#method_deleteLocation</a>&gt;`__
+will permanently delete the Location, as well as all its&nbsp;descendants.
+Content that have only one Location will be permanently deleted as well.
+Those with more than one won&#8217;t be, as they are still referenced by at
+least one Location.</p>
+<p><tt class="docutils literal"><span class="pre">TrashService::trash()</span></tt> will send the Location as well as all its
+descendants to the Trash, where they can be found and restored until the
+Trash is emptied. Content isn&#8217;t affected at all, since it is still
+referenced by the trash items.</p>
+<p>Icon</p>
+<p>The <tt class="docutils literal"><span class="pre">TrashService</span></tt> can be used to list, restore and delete Locations
+that were previously sent to trash using
+<tt class="docutils literal"><span class="pre">`TrashService::trash()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/TrashService.html#method_trash">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/TrashService.html#method_trash</a>&gt;`__.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 4. Working with Locations</a><ul>
+<li><a class="reference internal" href="#adding-a-new-location-to-a-content">Adding a new Location to a Content</a></li>
+<li><a class="reference internal" href="#hide-unhide-location">Hide/Unhide Location</a></li>
+<li><a class="reference internal" href="#deleting-a-location">Deleting a location</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/4.-Working-with-Locations_6292984.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

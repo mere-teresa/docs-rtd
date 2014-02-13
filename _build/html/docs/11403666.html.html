@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : eZ Publish 5 Architecture - Introduction &amp; Overview &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-ez-publish-5-architecture-introduction-overview">
+<h1>eZ Publish Platform 5.&lt;next&gt; : eZ Publish 5 Architecture - Introduction &amp; Overview<a class="headerlink" href="#ez-publish-platform-5-next-ez-publish-5-architecture-introduction-overview" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May
+02, 2013</p>
+</div>
+<div class="section" id="ez-publish-technical-architecture">
+<h1>eZ Publish Technical Architecture<a class="headerlink" href="#ez-publish-technical-architecture" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">With the 5.0 release eZ Publish is making an important leap forwards</div>
+</div>
+<p>in terms of technology.
+| This document will explain why we are renewing our technology
+platform, and to some degree explain what this evolution in architecture
+means to eZ Publish developers and users, and last but not least how eZ
+Systems is affected by these changes.</p>
+<div class="section" id="why-this-change-in-technology">
+<h2>Why this change in technology<a class="headerlink" href="#why-this-change-in-technology" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>The background for the changes is to meet the challenges ahead:</p>
+<ul class="simple">
+<li>Customer and User Experience Management requirements: Beyond simple
+web content management, enable the building of any digital user
+experience</li>
+<li>Performance and scalability: Deliver on the ever increasing need for
+performance and scalability</li>
+<li>The big data situation: &nbsp;Embrace big data situation as an opportunity
+to build new digital services and not view it as a hurdle</li>
+<li>Fulfill the multichannel vision: Enable content to live in any
+screen, any app, any device</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>The overall goal is to reach Digital Service Excellence, ie, we would
+like our partners to be able to offer the customers exactly what they
+want, within acceptable timeframes and price tags on the eZ Publish
+platform.</p>
+</div>
+<div class="section" id="what-are-the-changes">
+<h2>What are the changes?<a class="headerlink" href="#what-are-the-changes" title="Permalink to this headline">¶</a></h2>
+<p>eZ Systems is now introducing the following:</p>
+<ul class="simple">
+<li>An extended and sustainable Public API. This will speed up
+developments on the platform and improve their quality and
+maintainability both for eZ core developers and extension developers,
+which in turn will lead to more efficient implementation projects</li>
+<li>An improved REST API with read and write functionality and support
+all the core content management functionality. &nbsp;This way, eZ Publish
+will better integrate with any programming framework, for instance
+into mobile applications or any other web application. Better meaning
+faster and simpler. in order to fulfill the multichannel vision and
+execute on the User Experience demands and needs of customers and
+users of the eZ Publish platform</li>
+<li>&nbsp;Introducing Symfony as the PHP framework under the platform to make
+developers lives easier and to make developments on eZ Publish
+accessible for more developers to further support innovation in eZ
+Publish</li>
+<li>Introducing TWIG as the template engine to simplify working with
+templates in eZ Publish. And as a standard template engine this will
+also make eZ Publish templating accessible to more developers</li>
+<li>Introducing a new storage system for scalability, performance and
+maintainability reasons</li>
+</ul>
+<p>And as a result of all these changes, a major last item is</p>
+<ul class="simple">
+<li>&nbsp;Introducing a backward compatibility between the new architecture
+resulting from the above and the legacy architecture as known in eZ
+Publish 4.x</li>
+</ul>
+</div>
+<div class="section" id="what-will-be-gained">
+<h2>What will be gained?<a class="headerlink" href="#what-will-be-gained" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="symfony2">
+<h3>Symfony2<a class="headerlink" href="#symfony2" title="Permalink to this headline">¶</a></h3>
+<p>With Symfony as the web framework eZ Publish will be more accessible.
+Thanks to the framework, it will be used for instance to extend eZ
+Publish applications with new features, potentially not based at all on
+the content repository (for example, business specific application
+logic) using a standard PHP framework and a very clean application
+design with minimum interlocking with eZ Publish itself.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>Any developer knowing Symfony will then be able to easily develop
+extensions for eZ Publish.</p>
+<p>This will cater for:</p>
+<ul class="simple">
+<li>&nbsp;a better quality of the code</li>
+<li>&nbsp;a lower entry point to do developments in eZ Publish</li>
+<li>&nbsp;more innovation faster since more developers will use a standard PHP
+framework</li>
+<li>&nbsp;Symfony has an open-source community that will help developers</li>
+<li>&nbsp;Symfony is commercially backed up, so they are in it for the long
+run and Sensio Lab (maker of Symfony) will naturally extend the eZ
+offering to the framework level if need be.</li>
+</ul>
+</div>
+<div class="section" id="twig">
+<h3>TWIG<a class="headerlink" href="#twig" title="Permalink to this headline">¶</a></h3>
+<p>Initially, eZ Systems has developed its own templating engine. eZ has
+also worked and redeveloped a second one at some point as part of the eZ
+Component project. When designing eZ Publish 5, we knew the old template
+engine was not good enough anymore and needed to be replaced. We knew
+the eZ Components template engine we contributed and originated was an
+option, but we decided to go for another one: TWIG. Reasons are
+multiple: quality of course (even if the eZ components one was also very
+high quality), integration and cohesion to use it with the Symfony stack
+and finally again the strength and size of the community using it today.
+Symfony has developed TWIG as a standard template engine, and eZ Systems
+is using it to further the following:</p>
+<ul class="simple">
+<li>to update the legacy template engine</li>
+<li>to simplify template coding in eZ Publish</li>
+<li>to have faster page rendering</li>
+<li>to benefit of more features which were not in the original engine</li>
+<li>to make extension developments easier to speed up innovation in eZ
+Publish</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>This is a move that will influence every stakeholder in the eZ Publish
+development. As developers will implement faster, this also mean project
+will significantly improve in total cost of ownership as well as in time
+to market.</p>
+</div>
+<div class="section" id="new-storage-systems">
+<h3>New storage systems<a class="headerlink" href="#new-storage-systems" title="Permalink to this headline">¶</a></h3>
+<p>In order to meet performance and scalability requirements, eZ introduces
+new storage systems with the version 5 serie. In 5.0, this storage
+system lives beside the legacy storage system and data model, but will
+use the new API to access the data. Also in 5.0 version, this new
+storage engine only support Mysql relational database, nevertheless it
+is designed to allow the development of drivers for other storage
+engines through the Persistence SPI (service provider interface) and in
+the future will include drivers for NoSQL and Document based storage
+engine. The ultimate goal is to open for custom storage developments.</p>
+</div>
+<div class="section" id="rest-api">
+<h3>Rest API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h3>
+<p>In order to meet all multi-channel requirements we are developing a Rest
+API that cover all core feature of content management so we can
+integrate with any application on any channel in any programming
+language. The gain for users will be for anyone integrating eZ Publish
+with other applications, not only the development will be significantly
+improved but more importantly, the value of an API also lies in the
+maintainability and sustainability it offers. the new rest api is
+designed to stay and will remain identical in all future 5.x version.
+this means that development done on top of the api will seamlessly
+support eZ Publish version upgrades.</p>
+</div>
+<div class="section" id="php-api">
+<h3>Php API<a class="headerlink" href="#php-api" title="Permalink to this headline">¶</a></h3>
+<p>The PHP API, also called Public API, is the development glue and will a
+create shield between internal and external developments on eZ Publish.
+This will cater for an easier maintainability of code and speed up the
+performance of eZ Publish. PHP developers will experience a better
+extensibility which in turn &nbsp;will enable them to create extensions to eZ
+Publish faster and easier.</p>
+<p>The Public API is key to development speed, shorter projects and better
+quality. Important to be noted: the php api is the foundation for the
+rest api and the second is naturally relying on the 1st.</p>
+</div>
+<div class="section" id="compatibility-with-the-legacy-architecture">
+<h3>Compatibility with the legacy architecture<a class="headerlink" href="#compatibility-with-the-legacy-architecture" title="Permalink to this headline">¶</a></h3>
+<p>When we introduce changes of this magnitude, eZ Systems as an
+international software house must also consider the reality of the
+installed customer base. Every installation must be able to take care of
+the old and create on the new architecture. The reason for change is of
+course to be able to meet new requirements and the need to enable
+progressive changes.</p>
+</div>
+</div>
+<div class="section" id="understanding-the-architecture-in-more-detail">
+<h2>Understanding the architecture in more detail<a class="headerlink" href="#understanding-the-architecture-in-more-detail" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-target-architecture">
+<h3>The target architecture<a class="headerlink" href="#the-target-architecture" title="Permalink to this headline">¶</a></h3>
+<p>The first important thing to understand about the new architecture is to
+explain it standalone, without considering the old legacy architecture.
+The following diagram shows a simplistic view of this new architecture.</p>
+<p>&nbsp;<img alt="image0" src="https://lh5.googleusercontent.com/HxSTBlMNSYkYyQxVCgj_zhHlEcl_YbKv14x8B65gZ1D8ROJilIQqk5zfblgJr4-EQOD5RCB5T_tMF1V7aNCQ0wOlTgugHLl8e1gSVEURJMvhqGecjvzx" /></p>
+<p>The new architecture is layered and uses clearly defined API’s between
+the layers.</p>
+<ul class="simple">
+<li>The business logic is defined in a new kernel. This business logic is
+exposed to applications via an API (the Public API). Developers rely
+on this to develop websites and web applications using Symfony to
+organize the way they develop the user interface layer.</li>
+<li>User interfaces are developed using the TWIG template engine but
+directly querying the public API.</li>
+<li>Integration of eZ Publish in other applications are done using the
+REST API, which itself relies also on the Public API.</li>
+<li>finally development of extensions of eZ Publish is done using the
+Symfony framework when it comes to the structure of the code, and
+once again relying on the Public API when it comes to accessing
+content management functions</li>
+</ul>
+<p>To a lower level, the new architecture also totally redefined the way
+the system store data. while this is not finalized in version 5.0 (where
+the new storage system is only shipped with mysql support), the
+architecture, when finalized will rely on a storage api that will be
+used to develop drivers to any kind of storage subsystem.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>A motto for this new architecture is to heavily use api’s that will be
+maintained on the long term to ease upgrades and provide lossless
+couplings between each part of the architecture, improving the migration
+capabilities of the system at the same time.</p>
+</div>
+<div class="section" id="the-real-version-5-architecture">
+<h3>The &#8220;real&#8221; version 5 architecture<a class="headerlink" href="#the-real-version-5-architecture" title="Permalink to this headline">¶</a></h3>
+<p>The chapter above is only explaining the new architecture but, as
+mentioned below, version 5 also offers a way to run the legacy eZ
+Publish stack, in order to simplify upgrade and switch to version 5.
+This result in the end in a more sophisticated architecture that is
+illustrated in the diagram below.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">&nbsp;<img alt="image1" src="https://lh4.googleusercontent.com/-HnGbujQWt5MWUdOYkKK_6nBj3sc-vaFEuSzRPaEto-Hi_LRqKQZcf014eJ2e0be8P4yVwfAq8D4y0A4p2PahKy9f6Kd3gDMv0A0X1lwNhV8HDu-0IJ2" /></div>
+<div class="line"><br /></div>
+</div>
+<p>The main difference is, the cohabitation between the new architecture
+explained in the previous chapter (on the right) and the previous
+architecture (on the left).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>If we look at the old architecture, we can see that it is more
+monolithic: no defined public php api, a business logic implemented in
+the kernel but very dependent of the storage system and the underlying
+data model, an existing rest api but limited to read access to the
+content repository.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>This whole legacy architecture is in its whole included with version 5,
+and can be used as is.</p>
+<p>this means that, for people having developed 4.x websites and that are
+reluctant to invest time in migrating or even learning the new
+architecture components, they can use version 5 exactly as they were
+using version 4. Even the controller (access to the application through
+the web server) can totally bypass the new architecture (in that case
+the Symfony framework controller) and directly call the legacy eZ
+Publish controller and the legacy template engine.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>On its side, the new architecture has been implemented, and eZ will
+implement new features and applications on top of it subsequently. So,
+as part of 5.0, the new architecture is in place, but does not provide
+yet the full application scope.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>What is more interesting to understand is how these two integrate:</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>First on the presentation side, the new eZ Publish 5 controller makes it
+possible to serve pages and functions that are either resulting from the
+new template engine or the legacy template engine. This is a first level
+of dual compatibility that will help developers in a smooth transition
+from one architecture to the other, starting with legacy templates and
+progressively replacing them with templates for the new system, TWIG.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>Second, on the api side, the Public API has been designed to work
+against the business logic and to be used either on top of the legacy
+storage or on top of the new storage system. This means that, by
+implementing the new architecture and embracing the php public api,
+developers enable an easy transition from the old data model to the new
+one. &nbsp;An extension developed on top of the Public API will equally work
+on an old content repository or on a brand new one based on the new
+architecture.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>These two ways to implement a compatibility between the past
+architecture and the new one offers a wide range of possibilities and a
+smooth transition path.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="summary-on-the-ways-to-use-ez-publish-5-0">
+<h2>Summary on the ways to use eZ Publish 5.0<a class="headerlink" href="#summary-on-the-ways-to-use-ez-publish-5-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-ez-publish-5-0-in-full-legacy-mode">
+<h3>Using eZ Publish 5.0 in full legacy mode<a class="headerlink" href="#using-ez-publish-5-0-in-full-legacy-mode" title="Permalink to this headline">¶</a></h3>
+<p>This way is the less disruptive. In this way, eZ Publish 5.0 totally
+behave as if it was an eZ Publish 4.7, or we should say 4.8. This is
+ideal for users who have large existing applications with large amount
+of data and who are not willing to invest in learning and migrating them
+immediately.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>In this way, even the siteaccess and vhost configuration bypass the
+legacy stack, and developers will see almost no differences.</p>
+<p>&nbsp;<img alt="image2" src="https://lh6.googleusercontent.com/Ad_iBlE0hJCQMJT8WGO5-6Hvx1OxMt5xJCMNZVgJ5kL_4_Gp-TCi5_Zd5DMz0LZXv8AY3hrPvmtQtY2Qh_lheRF9Oa76iwSMRs6dMyWhotL4hvIPCB5R" /></p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="using-ez-publish-5-0-through-the-legacy-stack-but-relying-on-the-new-controller-and-new-template-system-as-well-as-the-new-kernel">
+<h3>Using ez publish 5.0 through the legacy stack but relying on the new controller and new template system as well as the new kernel.<a class="headerlink" href="#using-ez-publish-5-0-through-the-legacy-stack-but-relying-on-the-new-controller-and-new-template-system-as-well-as-the-new-kernel" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>This way offers a transition and allows to combine old template and new
+templates in the same application. In this case, the users will rely on
+the administration interface of eZ Publish as well as on the ez tool bar
+for front-end editing, through the legacy templates, but the front end
+will be either based on legacy or new twig based templates.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>In this model, the two kernels can be used and the system can this way
+benefit from the Public API and the new REST API built on top.</p>
+<p>&nbsp;<img alt="image3" src="https://lh5.googleusercontent.com/Lk9x17V7USgSzT537l_PBhrPFWQzQXev9LkK5PwBDXSGHD2H5CGAAobyk5kCTJ_QOgZj0LptwkiNA31kykr9QcY9fFFFakkHBXbNM1NgRsMduk-XrpJA" /></p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="using-the-brand-new-architecture-only">
+<h3>Using the brand new architecture only<a class="headerlink" href="#using-the-brand-new-architecture-only" title="Permalink to this headline">¶</a></h3>
+<p>This case is the one that will deliver very strong improvements in
+scalability and performance, in this case the whole new architecture is
+used and there is no way to reuse components from the legacy
+architecture.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>This means that:</p>
+<ul class="simple">
+<li>the administration interface is not available in 5.0</li>
+<li>existing templates and site won’t run without having been migrated</li>
+<li>the old storage system is not used any more</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>While this might sound restricting for the time being, it is clearly the
+foundation of the future of eZ Publish. In the context of eZ Publish 5,
+it can be useful for new projects relying only on the concept of
+&#8220;content as a service&#8221; the platform is a high performance and
+scalability content repository with very advanced services but provide
+no editorial user interface. for traditional content management.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">&nbsp;<img alt="image4" src="https://lh4.googleusercontent.com/f-3X7xtnw6j-powG51msjXYT1HrJy4fah-bEK0lsmgxGrMiBixIoX9sQw78tjyNKD7xNqwauoDJJj4BJjl1XJoCcAvNKEp-TceIw5yKyJv7WlBmUi03g" /></div>
+</div>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : eZ Publish 5 Architecture - Introduction &amp; Overview</a></li>
+<li><a class="reference internal" href="#ez-publish-technical-architecture">eZ Publish Technical Architecture</a><ul>
+<li><a class="reference internal" href="#why-this-change-in-technology">Why this change in technology</a></li>
+<li><a class="reference internal" href="#what-are-the-changes">What are the changes?</a></li>
+<li><a class="reference internal" href="#what-will-be-gained">What will be gained?</a><ul>
+<li><a class="reference internal" href="#symfony2">Symfony2</a></li>
+<li><a class="reference internal" href="#twig">TWIG</a></li>
+<li><a class="reference internal" href="#new-storage-systems">New storage systems</a></li>
+<li><a class="reference internal" href="#rest-api">Rest API</a></li>
+<li><a class="reference internal" href="#php-api">Php API</a></li>
+<li><a class="reference internal" href="#compatibility-with-the-legacy-architecture">Compatibility with the legacy architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#understanding-the-architecture-in-more-detail">Understanding the architecture in more detail</a><ul>
+<li><a class="reference internal" href="#the-target-architecture">The target architecture</a></li>
+<li><a class="reference internal" href="#the-real-version-5-architecture">The &#8220;real&#8221; version 5 architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary-on-the-ways-to-use-ez-publish-5-0">Summary on the ways to use eZ Publish 5.0</a><ul>
+<li><a class="reference internal" href="#using-ez-publish-5-0-in-full-legacy-mode">Using eZ Publish 5.0 in full legacy mode</a></li>
+<li><a class="reference internal" href="#using-ez-publish-5-0-through-the-legacy-stack-but-relying-on-the-new-controller-and-new-template-system-as-well-as-the-new-kernel">Using ez publish 5.0 through the legacy stack but relying on the new controller and new template system as well as the new kernel.</a></li>
+<li><a class="reference internal" href="#using-the-brand-new-architecture-only">Using the brand new architecture only</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/11403666.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

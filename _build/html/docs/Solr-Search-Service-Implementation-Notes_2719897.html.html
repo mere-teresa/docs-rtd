@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Solr Search Service Implementation Notes &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Using-eZ-Publish-as-a-Service-Platform_2720526.html">Using eZ Publish as a Service
+Platform</a></li>
+<li><a class="reference external" href="SPI_1736729.html">SPI</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-solr-search-service-implementation-notes">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Solr Search Service Implementation Notes<a class="headerlink" href="#ez-publish-platform-5-next-solr-search-service-implementation-notes" title="Permalink to this headline">¶</a></h1>
+<p>Added by kore.nordmann , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21, 2013</p>
+</div>
+<div class="section" id="defining-a-solr-schema">
+<h1>Defining A Solr Schema<a class="headerlink" href="#defining-a-solr-schema" title="Permalink to this headline">¶</a></h1>
+<p>The default Solr schema that is provided at
+<tt class="docutils literal"><span class="pre">eZ/Publish/Core/Persistence/Solr/Content/Search/schema.xml</span></tt>
+works.Therefore, neither custom field types or custom content types will
+require changes in the <tt class="docutils literal"><span class="pre">schema.xml</span></tt>.</p>
+<p>This is implemented by using the <em>dynamic field types</em>, which are
+provided by Solr. A dynamic field type allows all fields that match a
+certain pattern to be mapped to a type:</p>
+<p>The given line tells Solr that every field which name ends with <tt class="docutils literal"><span class="pre">_s</span></tt>
+should be considered a string type, <em>if no dedicated type definition
+exists</em>. Thus you can always overwrite the default type definition with
+custom, optimized type definitions in your <tt class="docutils literal"><span class="pre">schema.xml</span></tt>.</p>
+<p>We mostly use predefined <tt class="docutils literal"><span class="pre">dynamicField</span></tt> definitions that come by
+default with Solr, with just one additional <tt class="docutils literal"><span class="pre">dynamicField</span></tt>:</p>
+<p>This field is required to differentiate identifiers&nbsp; from common
+strings. Common strings are also used to build full text indexes, while
+we do not want identifiers to end up there. Since the API stack does not
+limit identifiers to integer numbers, this is the only sane way to go
+here.</p>
+<div class="section" id="indexed-data">
+<h2>Indexed Data<a class="headerlink" href="#indexed-data" title="Permalink to this headline">¶</a></h2>
+<p>In general per content object a bunch of data will be indexed:</p>
+<ul class="simple">
+<li>Content object base data<ul>
+<li>IDs</li>
+<li>Types</li>
+<li>Meta information</li>
+</ul>
+</li>
+<li>Field dependent data<ul>
+<li>Might include multiple values per field</li>
+</ul>
+</li>
+</ul>
+<p>The content object base data includes all the data for the most common
+filtering and search operations. It is also used by most of the facets.
+On the other hand, it is irrelevant for full text searches or field
+dependent queries. It consists mostly of ID values plus some date
+values.</p>
+<p>The field dependent data is used by the full text search and field
+specific queries and facets.</p>
+</div>
+<div class="section" id="full-text-index">
+<h2>Full Text Index<a class="headerlink" href="#full-text-index" title="Permalink to this headline">¶</a></h2>
+<p>To build up a full text index all string and text fields are used. This
+is accomplished using the following schema definition:</p>
+<p>This defines that every field that matches the common textual patterns
+(text, html and string types) is copied into the full text index field.
+Since one single document may have multiple &#8220;text&#8221; fields (for example
+the article text and the title) this needs to be multivalued.</p>
+</div>
+<div class="section" id="schema-extensibility">
+<h2>Schema Extensibility<a class="headerlink" href="#schema-extensibility" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned before, you can always write a custom <tt class="docutils literal"><span class="pre">field</span></tt> definition,
+if you do not want the field to be handled by the <tt class="docutils literal"><span class="pre">dynamicField</span></tt>
+definitions. Just check the name of the field in the Solr documents and
+define the field.</p>
+<p>You may also use types other then the defined set of types, which are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">*_i</span></tt>: int</li>
+<li><tt class="docutils literal"><span class="pre">*_id</span></tt>: identifier</li>
+<li><tt class="docutils literal"><span class="pre">*_s</span></tt>: string</li>
+<li><tt class="docutils literal"><span class="pre">*_l</span></tt>: long</li>
+<li><tt class="docutils literal"><span class="pre">*_t</span></tt>: text</li>
+<li><tt class="docutils literal"><span class="pre">*_h</span></tt>: html</li>
+<li><tt class="docutils literal"><span class="pre">*_b</span></tt>: boolean</li>
+<li><tt class="docutils literal"><span class="pre">*_f</span></tt>: float</li>
+<li><tt class="docutils literal"><span class="pre">*_d</span></tt>: double</li>
+<li><tt class="docutils literal"><span class="pre">*_dt</span></tt>: date</li>
+<li><tt class="docutils literal"><span class="pre">*_p</span></tt>: location</li>
+<li><tt class="docutils literal"><span class="pre">*_c</span></tt>: currency</li>
+</ul>
+<p>In this case the type name will not be mapped, and the field will be
+called something like <tt class="docutils literal"><span class="pre">my_field_my_type</span></tt>, that can then be handled by
+custom type definitions. The above mentioned default types should be
+sufficient for most cases, though.</p>
+</div>
+</div>
+<div class="section" id="field-type-integration">
+<h1>Field Type Integration<a class="headerlink" href="#field-type-integration" title="Permalink to this headline">¶</a></h1>
+<p>To integrate field types with the Solr Search (or any other future
+search back end), the field types must implement an additional
+interface: <tt class="docutils literal"><span class="pre">eZ\Publish\SPI\FieldType\Indexable</span></tt> and the implementation
+must be registered with the field type registry of the currently used
+search back end. This interface enforces the field type to return the
+field data and structural index information in a processable manner.
+Each field type may return any amount of index data.</p>
+<div class="section" id="misc">
+<h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
+<p>The search is supposed to return content objects. Most of the required
+data is probably available in the search back end, but given the
+involved value and data conversions, currently only IDs are fetched from
+the search back end. The <tt class="docutils literal"><span class="pre">ContentHandler</span></tt> is then used to fetch the
+actual content objects.</p>
+</div>
+</div>
+<div class="section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Download Solr:
+<a class="reference external" href="http://apache.mirror.digionline.de/lucene/solr/3.6.0/apache-solr-3.6.0.tgz">http://apache.mirror.digionline.de/lucene/solr/3.6.0/apache-solr-3.6.0.tgz</a><ul>
+<li>Extract</li>
+<li>We only need the example/directory &#8211; you can remove the rest.</li>
+</ul>
+</li>
+<li>Link custom schema<ul>
+<li>In the <tt class="docutils literal"><span class="pre">solr/conf/</span></tt> sub-directory, remove the original schema
+and link or copy our custom schema instead</li>
+<li>It can be found at:
+<tt class="docutils literal"><span class="pre">eZ/Publish/Core/Persistence/Solr/Content/Search/schema.xml</span></tt></li>
+</ul>
+</li>
+<li>Start Solr: <tt class="docutils literal"><span class="pre">java</span> <span class="pre">-jar</span> <span class="pre">start.jar</span></tt></li>
+<li>You can try this out by running the Solr Search tests:<ul>
+<li>Go to: <tt class="docutils literal"><span class="pre">eZ/Publish/API/Repository/Tests/</span></tt></li>
+<li>Run <tt class="docutils literal"><span class="pre">phpunit</span> <span class="pre">-c</span> <span class="pre">phpunit-legacy-solr.xml</span> <span class="pre">--group</span> <span class="pre">search</span> <span class="pre">./</span></tt></li>
+</ul>
+</li>
+</ol>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Solr Search Service Implementation Notes</a></li>
+<li><a class="reference internal" href="#defining-a-solr-schema">Defining A Solr Schema</a><ul>
+<li><a class="reference internal" href="#indexed-data">Indexed Data</a></li>
+<li><a class="reference internal" href="#full-text-index">Full Text Index</a></li>
+<li><a class="reference internal" href="#schema-extensibility">Schema Extensibility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field-type-integration">Field Type Integration</a><ul>
+<li><a class="reference internal" href="#misc">Misc</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Solr-Search-Service-Implementation-Notes_2719897.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

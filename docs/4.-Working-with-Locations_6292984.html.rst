@@ -1,0 +1,151 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `Development & Administration Guides <6291674.html>`__
+#. `eZ Publish Public API <eZ-Publish-Public-API_1736723.html>`__
+#. `Public API Cookbook <Public-API-Cookbook_5046311.html>`__
+
+eZ Publish Platform 5.<next> : 4. Working with Locations
+========================================================
+
+Added by bertrand.dunogier@ez.no , edited by ricardo.correia@ez.no on
+Aug 02, 2013
+
+[ `Adding a new Location to a
+Content <#id-4.WorkingwithLocations-AddinganewLocationtoaContent>`__ ] [
+`Hide/Unhide
+Location <#id-4.WorkingwithLocations-Hide%2FUnhideLocation>`__ ] [
+`Deleting a location <#id-4.WorkingwithLocations-Deletingalocation>`__ ]
+
+Adding a new Location to a Content
+----------------------------------
+
+Full code
+
+Icon
+
+`https://github.com/ezsystems/CookbookBundle/blob/master/Command/AddLocationToContentCommand.php <https://github.com/ezsystems/CookbookBundle/blob/master/Command/AddLocationToContentCommand.php>`__
+
+We have seen earlier how you can create a Location for a newly created
+``Content``. It is of course also possible to add a new
+```Location`` <http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html>`__
+to an existing ``Content``.
+
+.. code:: theme:
+
+    try
+    {
+        $locationCreateStruct = $locationService->newLocationCreateStruct( $parentLocationId );
+        $contentInfo = $contentService->loadContentInfo( $contentId );
+        $newLocation = $locationService->createLocation( $contentInfo, $locationCreateStruct );
+        print_r( $newLocation );
+    }
+    // Content or location not found
+    catch ( \eZ\Publish\API\Repository\Exceptions\NotFoundException $e )
+    {
+        $output->writeln( $e->getMessage() );
+    }
+    // Permission denied
+    catch ( \eZ\Publish\API\Repository\Exceptions\UnauthorizedException $e )
+    {
+        $output->writeln( $e->getMessage() );
+    }
+
+This is the required code. As you can see, both the ContentService and
+the LocationService are involved. Errors are handled the usual way, by
+intercepting the Exceptions the used methods may throw.
+
+.. code:: theme:
+
+    $locationCreateStruct = $locationService->newLocationCreateStruct( $parentLocationId );
+
+Like we do when creating a new Content, we need to get a new
+``LocationCreateStruct``. We will use it to set our new
+```Location`` <http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/Location.html>`__'s
+properties. The new Location's parent ID is provided as a parameter to
+``LocationService::newLocationCreateStruct``.
+
+In this example, we use the default values for the various
+LocationCreateStruct properties. We could of course have set custom
+values, like setting the Location as hidden ($location->hidden = true),
+or changed the remoteId ($location->remoteId = $myRemoteId).
+
+.. code:: theme:
+
+    $contentInfo = $contentService->loadContentInfo( $contentId );
+
+To add a Location to a Content, we need to specify the Content, using a
+```ContentInfo`` <http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/ContentInfo.html>`__
+object. We load one using ``ContentService::loadContentInfo()``, using
+the Content ID as the argument.
+
+.. code:: theme:
+
+    $newLocation = $locationService->createLocation( $contentInfo, $locationCreateStruct );
+
+We finally use LocationService::createLocation(), providing the
+ContentInfo obtained above, together with our LocationCreateStruct. The
+method returns the newly created Location Value Object.
+
+Hide/Unhide Location
+--------------------
+
+Full code
+
+Icon
+
+`https://github.com/ezsystems/CookbookBundle/blob/master/Command/HideLocationCommand.php <https://github.com/ezsystems/CookbookBundle/blob/master/Command/HideLocationCommand.php>`__
+
+We mentioned earlier that a Location's visibility could be set while
+creating the Location, using the hidden property of the
+LocationCreateStruct. Changing a Location's visibility may have a large
+impact in the Repository: doing so will affect the Location's subtree
+visibility. For this reason, a LocationUpdateStruct doesn't let you
+toggle this property. You need to use the LocationService to do so.
+
+.. code:: theme:
+
+    $hiddenLocation = $locationService->hideLocation( $location );
+    $unhiddenLocation = $locationService->unhideLocation( $hiddenLocation );
+
+There are two methods for this: LocationService::hideLocation, and
+LocationService::unhideLocation(). Both expect the LocationInfo as their
+argument, and return the modified Location Value Object.
+
+Icon
+
+The explanation above is valid for most Repository objects. Modification
+of properties that affect other parts of the system will require that
+you use a custom service method.
+
+Deleting a location
+-------------------
+
+Deleting Locations can be done in two ways: delete, or trash. 
+
+.. code:: theme:
+
+    $locationService->deleteLocation( $locationInfo );
+
+```LocationService::deleteLocation()`` <http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/LocationService.html#method_deleteLocation>`__
+will permanently delete the Location, as well as all its descendants.
+Content that have only one Location will be permanently deleted as well.
+Those with more than one won't be, as they are still referenced by at
+least one Location.
+
+.. code:: theme:
+
+    $trashService->trash( $locationInfo );
+
+``TrashService::trash()`` will send the Location as well as all its
+descendants to the Trash, where they can be found and restored until the
+Trash is emptied. Content isn't affected at all, since it is still
+referenced by the trash items.
+
+Icon
+
+The ``TrashService`` can be used to list, restore and delete Locations
+that were previously sent to trash using
+```TrashService::trash()`` <http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/TrashService.html#method_trash>`__.
+
+Document generated by Confluence on Feb 12, 2014 16:43

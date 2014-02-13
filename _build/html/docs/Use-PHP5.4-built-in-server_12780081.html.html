@@ -1,0 +1,146 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Use PHP5.4 built-in server &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-use-php5-4-built-in-server">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Use PHP5.4 built-in server<a class="headerlink" href="#ez-publish-platform-5-next-use-php5-4-built-in-server" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:patrick&#46;allaert&#37;&#52;&#48;ez&#46;no">patrick<span>&#46;</span>allaert<span>&#64;</span>ez<span>&#46;</span>no</a> on
+May 13, 2013</p>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>This recipe is compatible with <strong>eZ Publish 5.2 / 2013.05</strong></p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>PHP 5.4 comes with a <a class="reference external" href="http://php.net/manual/en/features.commandline.webserver.php">built-in webserver for development
+purpose</a>.
+This very handy as it makes you <strong>kickstart development quickly</strong>,
+getting rid of Apache / Nginx configuration hassle.&nbsp;All you need here is
+PHP 5.4+ with command line binary.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Symfony comes with a wrapper script for booting the built-in
+webserver:&nbsp;<tt class="docutils literal"><span class="pre">server:run</span></tt>. It&#8217;s a nice shortcut as it will correctly
+set the web root depending on your configuration. However, you can&#8217;t use
+it out of the box with eZ Publish for several reasons (i.e. we don&#8217;t
+share the same front controllers and we need specific rewrite rules).</p>
+<p>Icon</p>
+<div class="line-block">
+<div class="line">Use this command for <strong>development purpose only</strong> !</div>
+<div class="line"><strong>DO NOT use it in production !</strong></div>
+</div>
+<p>To be able to run this command for eZ Publish development purpose, we
+need to use the provided router script which handles all the rewrite
+rules for you.</p>
+<p>The following example will start the webserver on <tt class="docutils literal"><span class="pre">localhost:8000</span></tt>, so
+you&#8217;ll be able to run your eZ application by going
+to&nbsp;<a class="reference external" href="http://localhost:8000">http://localhost:8000</a>&nbsp;from your browser.</p>
+<p>Icon</p>
+<p><tt class="docutils literal"><span class="pre">../bin/ezrouter.php``&nbsp;is</span> <span class="pre">needed</span> <span class="pre">because</span> <span class="pre">with&nbsp;\</span> <span class="pre">``server:run``&nbsp;command,</span>
+<span class="pre">working</span> <span class="pre">directory</span> <span class="pre">is&nbsp;\</span> <span class="pre">``web/</span></tt>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Use PHP5.4 built-in server</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Use-PHP5.4-built-in-server_12780081.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

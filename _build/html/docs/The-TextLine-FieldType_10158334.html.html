@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : The TextLine FieldType &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Reference_10158191.html">Reference</a></li>
+<li><a class="reference external" href="FieldTypes_10158198.html">FieldTypes</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-the-textline-fieldtype">
+<h1>eZ Publish Platform 5.&lt;next&gt; : The TextLine FieldType<a class="headerlink" href="#ez-publish-platform-5-next-the-textline-fieldtype" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jul 16, 2013</p>
+<div class="section" id="textline">
+<h2>TextLine<a class="headerlink" href="#textline" title="Permalink to this headline">¶</a></h2>
+<p>This field type represents a simple string.</p>
+<p>Name</p>
+<p>Internal name</p>
+<p>Expected input type</p>
+<p><tt class="docutils literal"><span class="pre">TextLine</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">ezstring</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">string</span></tt></p>
+<div class="section" id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>This FieldType makes it possible to store and retrieve a single line of
+unformatted text. It is capable of handling up to 255 number of
+characters.</p>
+</div>
+<div class="section" id="validation">
+<h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">The input passed into this filed type is subject of validation by the</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">StringLengthValidator</span></tt> validator. The length of the string provided
+must be between the minimum length defined in <tt class="docutils literal"><span class="pre">minStringLength</span></tt> and
+the maximum defined in <tt class="docutils literal"><span class="pre">maxStringLength</span></tt>. The default value for both
+properties is 0, which means that the validation is disabled by default.
+| To set the validation properties the
+<tt class="docutils literal"><span class="pre">validateValidatorConfiguration()</span></tt> method needs to be inspected, which
+will receive an array with <tt class="docutils literal"><span class="pre">minStringLength</span></tt> and <tt class="docutils literal"><span class="pre">maxStringLength</span></tt>
+like in the following representation:</p>
+<div class="highlight-python"><pre>Array
+(
+    [minStringLength] =&gt; 1
+    [maxStringLength] =&gt; 60
+)</pre>
+</div>
+</div>
+<div class="section" id="value-object">
+<h3>Value object<a class="headerlink" href="#value-object" title="Permalink to this headline">¶</a></h3>
+<p>Properties</p>
+<p>The Value class of this field type contains the following properties:</p>
+<p>Property</p>
+<p>Type</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">$text</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">string</span></tt></p>
+<p>This property will be used for the text content.</p>
+<p>String representation</p>
+<p>A TextLine&#8217;s string representation is the the $text property&#8217;s value, as
+a string.</p>
+<p>Constructor</p>
+<p>The constructor for this value object will&nbsp;initialize a new Value object
+with the value provided. It accepts a string as argument and will import
+it to the <tt class="docutils literal"><span class="pre">text</span></tt> attribute.</p>
+<p>For more details on the Value object for this field type please refer to
+the <a class="reference external" href="http://ezsystems.github.com/ezpublish-kernel/phpDocumentor/Publish.Core.FieldType.TextLine.Value.html#Value">auto-generated
+documentation</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : The TextLine FieldType</a><ul>
+<li><a class="reference internal" href="#textline">TextLine</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#value-object">Value object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/The-TextLine-FieldType_10158334.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

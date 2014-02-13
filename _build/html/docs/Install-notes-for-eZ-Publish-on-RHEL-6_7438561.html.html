@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Install notes for eZ Publish on RHEL 6 &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Requirements_7438502.html">Requirements</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-install-notes-for-ez-publish-on-rhel-6">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Install notes for eZ Publish on RHEL 6<a class="headerlink" href="#ez-publish-platform-5-next-install-notes-for-ez-publish-on-rhel-6" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on May 21,
+2013</p>
+<div class="section" id="required-rpms">
+<h2>Required RPMs<a class="headerlink" href="#required-rpms" title="Permalink to this headline">¶</a></h2>
+<p>php-pear-Net-Curl</p>
+<p>Required by ezfind</p>
+<p>php-pear-Date</p>
+<p>Red Hat&#8217;s rpm for datetime</p>
+<p>php-mbstring</p>
+<p>Required by ezini</p>
+<p>php-pecl-apc</p>
+<p>The supported rpm equivalent to the pear install</p>
+<p>php-process</p>
+<p>Required for eZ scripts and cron jobs</p>
+<p>php-mcrypt</p>
+<p>php-xml</p>
+<p>php-pgsql</p>
+<p>PostgreSQL support</p>
+<p>php-mysql</p>
+<p>MySQL support</p>
+<p>php-mbstring</p>
+<p><strong>Note:</strong> Available from the optional rpm channel</p>
+</div>
+<div class="section" id="rhel-6-and-centos-6-epel">
+<h2>RHEL 6 and CentOS 6: EPEL<a class="headerlink" href="#rhel-6-and-centos-6-epel" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Some of the listed rpms are only available through EPEL. Extra</div>
+</div>
+<p>Packages for Enterprise Linux (EPEL) is a Fedora Special Interest Group
+that creates, maintains, and manages a high quality set of additional
+packages for Enterprise Linux, including, but not limited to, Red Hat
+Enterprise Linux (RHEL), CentOS and Scientific Linux (SL).
+| <a class="reference external" href="http://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F">http://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F</a></p>
+<div class="highlight-python"><pre>$ rpm -Uvh http://fedora.uib.no/epel/6/x86_64/epel-release-6-5.noarch.rpm</pre>
+</div>
+<p>Best practice will be to disable EPEL by default and only enable it for
+specific rpm installs with the yum option &#8220;<tt class="docutils literal"><span class="pre">--enablerepo=epel</span></tt>&#8221;. To
+disable it, set &#8220;<tt class="docutils literal"><span class="pre">enabled=0</span></tt>&#8221; in &#8220;<tt class="docutils literal"><span class="pre">/etc/yum.repos.d/epel.repo</span></tt>&#8221;.</p>
+</div>
+<div class="section" id="red-hat-network">
+<h2>Red Hat Network<a class="headerlink" href="#red-hat-network" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rhel-6-1-the-certificate-based-rhn">
+<h3>RHEL 6.1: The Certificate-based RHN<a class="headerlink" href="#rhel-6-1-the-certificate-based-rhn" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">If upgrading from RHEL 6 to RHEL 6.1, you would like to use the new</div>
+</div>
+<p>subscription system:
+| For a first-time certificate-based RHN registration:</p>
+<ol class="arabic">
+<li><p class="first">Run the command</p>
+<div class="highlight-python"><pre>subscription-manager register</pre>
+</div>
+</li>
+<li><p class="first">Log into
+<a class="reference external" href="https://access.redhat.com/management/consumers/">https://access.redhat.com/management/consumers/</a></p>
+<ol class="arabic simple">
+<li>Click on the registered system in the consumer list</li>
+<li>Find the list of available subscriptions</li>
+<li>Subscribe to the relevant subscriptions</li>
+</ol>
+</li>
+<li><p class="first">Run the command</p>
+<div class="highlight-python"><pre>subscription-manager subscribe --auto</pre>
+</div>
+</li>
+<li><p class="first">Run the command</p>
+<div class="highlight-python"><pre>yum update</pre>
+</div>
+<p>and all subscribed repos will be configured</p>
+</li>
+</ol>
+<p>With the certificate-based RHN, additional channels are not added
+through manual configuration. Additional rpm repositories are listed in
+<tt class="docutils literal"><span class="pre">/etc/yum.repos.d/redhat.repo</span></tt>, but are disabled by default. Yum
+install using the <tt class="docutils literal"><span class="pre">--enablerepo</span></tt> option and notice that the
+repositories may look different based on the installed product.</p>
+<div class="highlight-python"><pre>$ yum --enablerepo=rhel-6-server-optional-rpms install php-process</pre>
+</div>
+</div>
+<div class="section" id="rhel-6-0-the-classic-rhn">
+<h3>RHEL 6.0: The classic RHN<a class="headerlink" href="#rhel-6-0-the-classic-rhn" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Log into Red Hat Network</li>
+<li>Click on &#8220;Channels&#8221; in the menu bar.</li>
+<li>Click &#8220;Red Hat Optional Server 6&#8221;, &#8220;target systems&#8221; and enable this
+channel for your server</li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Install notes for eZ Publish on RHEL 6</a><ul>
+<li><a class="reference internal" href="#required-rpms">Required RPMs</a></li>
+<li><a class="reference internal" href="#rhel-6-and-centos-6-epel">RHEL 6 and CentOS 6: EPEL</a></li>
+<li><a class="reference internal" href="#red-hat-network">Red Hat Network</a><ul>
+<li><a class="reference internal" href="#rhel-6-1-the-certificate-based-rhn">RHEL 6.1: The Certificate-based RHN</a></li>
+<li><a class="reference internal" href="#rhel-6-0-the-classic-rhn">RHEL 6.0: The classic RHN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Install-notes-for-eZ-Publish-on-RHEL-6_7438561.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

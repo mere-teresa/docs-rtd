@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Extending the REST API &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-REST-API_6292277.html">eZ Publish REST API</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-extending-the-rest-api">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Extending the REST API<a class="headerlink" href="#ez-publish-platform-5-next-extending-the-rest-api" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jul 22, 2013</p>
+<p>The eZ Publish 5 REST API comes with a framework that makes it quite
+easy to extend the API for your own needs.</p>
+<p>Icon</p>
+<p>While most of what can be found here will still apply in the future, the
+structure of the REST API and its components will evolve before the
+actual release.</p>
+<ul class="simple">
+<li><a class="reference external" href="#ExtendingtheRESTAPI-Requirements">Requirements</a><ul>
+<li><a class="reference external" href="#ExtendingtheRESTAPI-Controller">Controller</a></li>
+<li><a class="reference external" href="#ExtendingtheRESTAPI-Route">Route</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#ExtendingtheRESTAPI-Controlleraction">Controller action</a></li>
+<li><a class="reference external" href="#ExtendingtheRESTAPI-ValueObjectVisitor">ValueObjectVisitor</a></li>
+<li><a class="reference external" href="#ExtendingtheRESTAPI-Inputparser">Input parser</a></li>
+</ul>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>As of version 2013.7, REST routes are required to use the eZ Publish 5
+REST API prefix, <tt class="docutils literal"><span class="pre">/api/ezp/v2</span></tt>. You can create new resources below
+this prefix.</p>
+<p>To do so, you will/may need to create</p>
+<ul class="simple">
+<li>a Controller that will handle your route actions</li>
+<li>a Route, in your bundle&#8217;s routing file</li>
+<li>a Controller action</li>
+<li>Optionally, a <tt class="docutils literal"><span class="pre">ValueObjectVisitor</span></tt> (if your Controller returns an
+object that doesn&#8217;t already have a converter)</li>
+<li>Optionally, an <tt class="docutils literal"><span class="pre">InputParser</span></tt></li>
+</ul>
+<div class="section" id="controller">
+<h3>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h3>
+<p>To create a REST controller, you need to extend the
+<tt class="docutils literal"><span class="pre">ezpublish_rest.controller.base</span></tt> service, as well as the
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Server\Controller</span></tt> class.</p>
+<p>Let&#8217;s create a very simple controller, that has a <tt class="docutils literal"><span class="pre">sayHello()</span></tt> method,
+that takes a name as an argument.</p>
+<p><strong>My/Bundle/RestBundle/Controller/DefaultController.php</strong></p>
+</div>
+<div class="section" id="route">
+<h3>Route<a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h3>
+<p>As said earlier, your REST routes are required to use the REST URI
+prefix. To do so, the easiest way is to import your routing file using
+this prefix.</p>
+<p><strong>ezpublish/config/routing.yml</strong></p>
+<p>Using a distinct file for REST routes allows you to use the prefix for
+all this file&#8217;s routes without affecting other routes from your bundle.</p>
+<p>Next, you need to create the REST route. We need to define the route&#8217;s
+<a class="reference external" href="http://symfony.com/doc/current/cookbook/controller/service.html">controller as a
+service</a>
+since our controller was defined as such.</p>
+<p><strong>My/Bundle/RestBundle/Resources/config/routing_rest.yml</strong></p>
+</div>
+</div>
+<div class="section" id="controller-action">
+<h2>Controller action<a class="headerlink" href="#controller-action" title="Permalink to this headline">¶</a></h2>
+<p>Unlike standard Symfony 2 controllers, the REST ones don&#8217;t return an
+<tt class="docutils literal"><span class="pre">HttpFoundation\Response</span></tt> object, but a <tt class="docutils literal"><span class="pre">ValueObject</span></tt>. This object
+will during the kernel run be converted, using a ValueObjectVisitor, to
+a proper Symfony 2 response. One benefit is that when multiple
+controllers return the same object, such as a Content or a Location, the
+visitor will be re-used.</p>
+<p>Let&#8217;s say that our Controller will return a
+<tt class="docutils literal"><span class="pre">My\Bundle\RestBundle\Rest\Values\Hello</span></tt></p>
+<p><strong>My/Bundle/RestBundle/Rest/Values/Hello.php</strong></p>
+<p>We will return an instance of this class from our <tt class="docutils literal"><span class="pre">sayHello()</span></tt>
+controller method.</p>
+<p><strong>My/Bundle/RestBundle/Rest/Controller/DefaultController.php</strong></p>
+<p>And that&#8217;s it. Outputting this object in the Response requires that we
+create a ValueObjectVisitor.</p>
+</div>
+<div class="section" id="valueobjectvisitor">
+<h2>ValueObjectVisitor<a class="headerlink" href="#valueobjectvisitor" title="Permalink to this headline">¶</a></h2>
+<p>A ValueObjectVisitor will take a Value returned by a REST controller,
+whatever the class, and will transform it into data that can be
+converted, either to json or XML.&nbsp;Those visitors are registered as
+services, and tagged with
+<tt class="docutils literal"><span class="pre">ezpublish_rest.output.value_object_visitor</span></tt>. The tag attribute says
+which class this Visitor applies to.</p>
+<p>Let&#8217;s create the service for our ValueObjectVisitor first.</p>
+<p><strong>My/Bundle/RestBundle/Resources/config/services.yml</strong></p>
+<div class="line-block">
+<div class="line">Let&#8217;s create our visitor next. It must extend</div>
+</div>
+<p>the&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor</span></tt> abstract
+class, and implement the <tt class="docutils literal"><span class="pre">visit()</span></tt> method.
+| It will receive as arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">$visitor</span></tt>: The output visitor. Can be used to set custom response
+headers (&nbsp;<tt class="docutils literal"><span class="pre">setHeader(</span> <span class="pre">$name,</span> <span class="pre">$value</span> <span class="pre">)</span></tt>), HTTP status code (
+<tt class="docutils literal"><span class="pre">setStatus(</span> <span class="pre">$statusCode</span> <span class="pre">)</span></tt> )...</li>
+<li><tt class="docutils literal"><span class="pre">$generator</span></tt>: The actual Response generator. It provides you with a
+DOM like API.</li>
+<li><tt class="docutils literal"><span class="pre">$data</span></tt>: the visited data, the exact object you returned from the
+controller</li>
+</ul>
+<p><strong>My/Bundle/RestBundle/Rest/Controller/Default.php</strong></p>
+<p>Do not hesitate to look into the built-in ValueObjectVisitors,
+in&nbsp;<tt class="docutils literal"><span class="pre">eZ/Publish/Core/REST/Server/Output/ValueObjectVisitor</span></tt>, for more
+examples.</p>
+</div>
+<div class="section" id="input-parser">
+<h2>Input parser<a class="headerlink" href="#input-parser" title="Permalink to this headline">¶</a></h2>
+<p>What we have seen above covers requests that don&#8217;t require an input
+payload, such as GET or DELETE.&nbsp;If you need to provide your controller
+with parameters, either in JSON or XML, the parameter struct requires an
+Input Parser so that the payload can be converted to an actual
+ValueObject.</p>
+<p>Each payload is dispatched to its Input Parser based on the request&#8217;s
+Content-Type header. For example, a request with a Content-Type of
+<tt class="docutils literal"><span class="pre">application/vnd.ez.api.ContentCreate</span></tt> will be parsed by
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Server\Input\Parser\ContentCreate</span></tt>. This parser
+will build and return a <tt class="docutils literal"><span class="pre">ContentCreateStruct</span></tt> that can then be used to
+create content with the Public API.</p>
+<p>Those input parsers are provided with a pre-parsed version of the input
+payload, as an associative array, and don&#8217;t have to care about the
+actual format (XML or JSON).</p>
+<p>Let&#8217;s see what it would look like with a Content-Type of
+application/vnd.my.Greetings, that would send this as XML:</p>
+<p><strong>application/vnd.my.Greetings+xml</strong></p>
+<p>First, we need to create a service with the appropriate tag in
+services.yml.</p>
+<p><strong>My/Bundle/RestBundle/Resources/config/services.yml</strong></p>
+<p>The mediaType attribute of the ezpublish_rest.input.parser tag maps our
+Content Type to the input parser.</p>
+<p>Let&#8217;s implement our parser. It must
+extend&nbsp;eZ\Publish\Core\REST\Server\Input\Parser, and implement the
+<tt class="docutils literal"><span class="pre">parse()</span></tt> method. It accepts as an argument the input payload,
+<tt class="docutils literal"><span class="pre">$data</span></tt>, as an array, and an instance of&nbsp;<tt class="docutils literal"><span class="pre">ParsingDispatcher</span></tt> that
+can be used to forward parsing of embedded content.</p>
+<p>For convenience, we will consider that our input parser returns an
+instance of our <tt class="docutils literal"><span class="pre">Value\Hello</span></tt> class.</p>
+<p><strong>My/Bundle/RestBundle/Rest/InputParser/Greetings.php</strong></p>
+<p><strong>My/Bundle/RestBundle/Resources/config/services.yml</strong></p>
+<p>Do not hesitate to look into the built-in InputParsers, in
+<tt class="docutils literal"><span class="pre">eZ/Publish/Core/REST/Server/Input/Parser</span></tt>, for more examples.</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>On the &#8220;ValueObjectVisitor&#8221; topic (second code example):</p>
+<p><strong>My/Bundle/RestBundle/Rest/Controller/Default.php</strong></p>
+<p><tt class="docutils literal"><span class="pre">namespace</span></tt> <tt class="docutils literal"><span class="pre">My\Bundle\RestBundle\Rest\ValueObjectVisitor;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">use</span></tt> <tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">use</span></tt> <tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Common\Output\Generator;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">use</span></tt> <tt class="docutils literal"><span class="pre">eZ\Publish\Core\REST\Common\Output\Visitor;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">class</span></tt> <tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">``\</span> <span class="pre">``extends</span></tt> <tt class="docutils literal"><span class="pre">ValueObjectVisitor</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">{</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&nbsp;&nbsp;&nbsp;&nbsp;</span></tt><tt class="docutils literal"><span class="pre">public</span></tt> <tt class="docutils literal"><span class="pre">function</span></tt>
+<tt class="docutils literal"><span class="pre">visit(</span> <span class="pre">Visitor</span> <span class="pre">``\</span> <span class="pre">``$visitor</span></tt><tt class="docutils literal"><span class="pre">,</span> <span class="pre">Generator</span> <span class="pre">``\</span> <span class="pre">``$generator</span></tt><tt class="docutils literal"><span class="pre">,</span> <span class="pre">``\</span> <span class="pre">``$data</span></tt>
+<tt class="docutils literal"><span class="pre">)</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&nbsp;&nbsp;&nbsp;&nbsp;</span></tt><tt class="docutils literal"><span class="pre">{</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></tt><tt class="docutils literal"><span class="pre">$this</span></tt><tt class="docutils literal"><span class="pre">-&gt;generator-&gt;startValueElement(</span> <span class="pre">``\</span> <span class="pre">``'Hello'</span></tt><tt class="docutils literal"><span class="pre">,</span> <span class="pre">``\</span> <span class="pre">``$data</span></tt><tt class="docutils literal"><span class="pre">-&gt;name</span> <span class="pre">);</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></tt><tt class="docutils literal"><span class="pre">$this</span></tt><tt class="docutils literal"><span class="pre">-&gt;generator-&gt;endValueElement(</span> <span class="pre">``\</span> <span class="pre">``'Hello'</span></tt>
+<tt class="docutils literal"><span class="pre">);</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">&nbsp;&nbsp;&nbsp;&nbsp;</span></tt><tt class="docutils literal"><span class="pre">}</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">}</span></tt></p>
+<p>Is the file path correct?</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:marcos&#46;loureiro&#37;&#52;&#48;ez&#46;no">marcos<span>&#46;</span>loureiro<span>&#64;</span>ez<span>&#46;</span>no</a> at Jul 11, 2013 15:34</p>
+<p>Moreover $this-&gt;generator is wrong.. you have to use directly
+$generator-&gt;. But got an error:</p>
+<p>So i replace code via</p>
+<p>and it works..</p>
+<p>Maybe to complete this tutorial, if you would like to generate your
+result with json, you just have to pass to header
+Accept:&nbsp;application/vnd.ez.api.Test+json</p>
+<p>Got an other issue; your controller is wrong&nbsp;<a href="#id1"><span class="problematic" id="id2">|</span></a>(smile)|&nbsp;If you create
+on service</p>
+<p>you have to create your DefaultController.php which contains</p>
+<p>Promise, i&#8217;m done for now&nbsp;<img alt="(wink)" src="docs/images/icons/emoticons/wink.png" /></p>
+<p><img alt="image3" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:philippe&#46;vincent-royol&#37;&#52;&#48;ez&#46;no">philippe<span>&#46;</span>vincent-royol<span>&#64;</span>ez<span>&#46;</span>no</a> at Oct 07, 2013 19:49</p>
+<p>One more thing: when adding your rest routes, in
+ezpublish/config/routing.yml, it is important to put them ABOVE the
+routes form the EzPublishRestBundle, as those ones contain a last
+&#8220;catchall&#8221; route which will prevent the new ones to be triggered</p>
+<p><img alt="image4" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> at Jan 17, 2014 17:52</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Extending the REST API</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#controller">Controller</a></li>
+<li><a class="reference internal" href="#route">Route</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#controller-action">Controller action</a></li>
+<li><a class="reference internal" href="#valueobjectvisitor">ValueObjectVisitor</a></li>
+<li><a class="reference internal" href="#input-parser">Input parser</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Extending-the-REST-API_13468575.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

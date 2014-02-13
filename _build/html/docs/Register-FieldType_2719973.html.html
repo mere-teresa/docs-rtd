@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Register FieldType &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Extending-eZ-Publish-5_1736733.html">Extending eZ Publish 5</a></li>
+<li><a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">Field Type API and best
+practices</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-register-fieldtype">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Register FieldType<a class="headerlink" href="#ez-publish-platform-5-next-register-fieldtype" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+May 21, 2013</p>
+<ul class="simple">
+<li>1 <a class="reference external" href="#RegisterFieldType-Introduction">Introduction</a></li>
+<li>2 <a class="reference external" href="#RegisterFieldType-Servicecontainerconfiguration">Service container
+configuration</a><ul>
+<li>2.1 <a class="reference external" href="#RegisterFieldType-Basicconfiguration">Basic
+configuration</a></li>
+<li>2.2 <a class="reference external" href="#RegisterFieldType-LegacyStorageEngine">Legacy Storage
+Engine</a><ul>
+<li>2.2.1 <a class="reference external" href="#RegisterFieldType-Converter">Converter</a></li>
+<li>2.2.2 <a class="reference external" href="#RegisterFieldType-Externalstorage">External storage</a></li>
+<li>2.2.3 <a class="reference external" href="#RegisterFieldType-Gatewaybasedstorage">Gateway based
+storage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This document explains how to register a custom FieldType in eZ Publish
+5. It will not contain the development part as it is already covered <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">in
+the API section</a>.</p>
+<p>Please be sure you first have read the <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">basic documentation on how to
+develop a custom
+FieldType</a>.</p>
+</div>
+<div class="section" id="service-container-configuration">
+<h1>Service container configuration<a class="headerlink" href="#service-container-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Icon</p>
+<p>To be able to declare a FieldType, you need to have <a class="reference external" href="http://symfony.com/doc/master/book/page_creation.html#the-bundle-system">registered a bundle
+in your application
+kernel</a>.</p>
+<p>This bundle needs to expose some configuration for the service container
+somehow (read <a class="reference external" href="http://symfony.com/doc/master/book/service_container.html#importing-other-container-configuration-resources">related Symfony
+documentation</a>)</p>
+<div class="section" id="basic-configuration">
+<h2>Basic configuration<a class="headerlink" href="#basic-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p>This part relates to the <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html#FieldTypeAPIandbestpractices-PublicAPIinteraction">base FieldType class that interacts with the
+Publish
+API</a>.</p>
+<p>Let&#8217;s take a basic example from <tt class="docutils literal"><span class="pre">ezstring</span></tt> configuration.</p>
+<p>So far, this is a regular service configuration but 2 parts worth
+particular attention.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">parent</span></tt></li>
+</ul>
+<p>As described in the <a class="reference external" href="http://symfony.com/doc/master/components/dependency_injection/parentservices.html">Symfony Dependency Injection Component
+documentation</a>,
+the <tt class="docutils literal"><span class="pre">parent</span></tt> config key indicates that you want your service to
+inherit from the parent&#8217;s dependencies, including constructor arguments
+and method calls. This is actually a helper avoiding repetition in your
+field type configuration and keeping consistency between all field
+types.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">tags</span></tt></li>
+</ul>
+<p>Tagging your field type service with <strong>``ezpublish.fieldType``</strong> is
+mandatory to be recognized by the API loader as a regular field type,
+the <tt class="docutils literal"><span class="pre">alias</span></tt> key being simply the <em>fieldTypeIdentifier</em> (formerly
+called <em>datatype string</em>)</p>
+<p>Icon</p>
+<p>Basic field types configuration is located
+in&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/fieldtypes.yml">EzPublishCoreBundle/Resources/config/fieldtypes.yml</a>.</p>
+</div>
+<div class="section" id="legacy-storage-engine">
+<h2>Legacy Storage Engine<a class="headerlink" href="#legacy-storage-engine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="converter">
+<h3>Converter<a class="headerlink" href="#converter" title="Permalink to this headline">¶</a></h3>
+<p>As stated in&nbsp;<a class="reference external" href="Field-Type-API-and-best-practices_2719880.html#FieldTypeAPIandbestpractices-LegacyStorageconversion">Field Type API &amp; best
+practices</a>,
+a conversion of Field Type values is needed in order to properly store
+the data into the <em>old</em> database schema (aka <em>Legacy Storage</em>).</p>
+<p>Those converters also need to be correctly exposed as services.</p>
+<p><strong>Field Type converter for ezstring</strong></p>
+<p>Here again we need to tag our converter service,
+with&nbsp;<strong>``ezpublish.storageEngine.legacy.converter``</strong> tag this time.</p>
+<p>As for the tag attributes:</p>
+<p>Attribute name</p>
+<p>Usage</p>
+<p><tt class="docutils literal"><span class="pre">alias</span></tt></p>
+<p>Represents the <em>fieldTypeIdentifier</em> (just like for the FieldType
+service)</p>
+<p><tt class="docutils literal"><span class="pre">lazy</span></tt></p>
+<p>Boolean indicating if the converter should be lazy loaded or not.</p>
+<p>Performance wise, it is recommended to set it to <strong>true</strong> unless you
+have very specific reasons.</p>
+<p><tt class="docutils literal"><span class="pre">callback</span></tt></p>
+<p>If <tt class="docutils literal"><span class="pre">lazy</span></tt> is set to true, it represents the callback that will be
+called to build the converter. <a class="reference external" href="http://php.net/manual/en/language.types.callable.php">Any valid
+callback</a> can
+be used.</p>
+<div class="line-block">
+<div class="line">Note that if the callback is defined in the converter class, the class</div>
+</div>
+<p>name can be omitted.
+| This way, in the example above, the full callback will be resolved to
+<tt class="docutils literal"><span class="pre">eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\TextLine::create</span></tt></p>
+<p>Icon</p>
+<p>The converter configuration for basic field types are located in
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/storage_engines.yml">EzPublishCoreBundle/Resources/config/storage_engines.yml</a>.</p>
+</div>
+<div class="section" id="external-storage">
+<h3>External storage<a class="headerlink" href="#external-storage" title="Permalink to this headline">¶</a></h3>
+<p>A FieldType has the <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html#FieldTypeAPIandbestpractices-Storingexternaldata">ability to store its value (or part of it) in
+external data
+sources</a>.
+This is made possible through the
+<a href="#id1"><span class="problematic" id="id2">``</span></a>eZPublishSPIFieldTypeFieldStorage``&nbsp;interface.&nbsp;Thus, if one wants
+to use this&nbsp;functionality, he needs to define a service implementing
+this interface and tagged
+as&nbsp;<strong>``ezpublish.fieldType.externalStorageHandler``</strong>&nbsp;to be recognized
+by the Repository.</p>
+<p>Here is an example for <strong>ezurl</strong> field type:</p>
+<p><strong>External storage handler for ezurl</strong></p>
+<p>The configuration is straight forward. Nothing specific except the
+<strong>``ezpublish.fieldType.externalStorageHandler&nbsp;``</strong>tag, the <tt class="docutils literal"><span class="pre">alias</span></tt>
+attribute still begin the <em>fieldTypeIdentifier</em>.</p>
+<p>Icon</p>
+<p>External storage configuration for basic field types is located
+in&nbsp;<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/fieldtypes.yml">EzPublishCoreBundle/Resources/config/fieldtypes.yml</a>.</p>
+</div>
+<div class="section" id="gateway-based-storage">
+<h3>Gateway based storage<a class="headerlink" href="#gateway-based-storage" title="Permalink to this headline">¶</a></h3>
+<p>As stated in the <a class="reference external" href="Field-Type-API-and-best-practices_2719880.html#FieldTypeAPIandbestpractices-GatewaybasedStorage">FieldType best
+practices</a>,
+in order to be storage agnostic and external storage handler should use
+a <em>storage gateway</em>. This can be done by implementing another service
+implementing&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\StorageGateway</span></tt> and being
+tagged as&nbsp;<tt class="docutils literal"><span class="pre">ezpublish.fieldType.externalStorageHandler.gateway</span></tt>.</p>
+<p><strong>Storage gateway for ezurl</strong></p>
+<p>Attribute name</p>
+<p>Usage</p>
+<p><tt class="docutils literal"><span class="pre">alias</span></tt></p>
+<p>Represents the <em>fieldTypeIdentifier</em> (just like for the FieldType
+service)</p>
+<p><tt class="docutils literal"><span class="pre">identifier</span></tt></p>
+<div class="line-block">
+<div class="line">Identifier for the gateway.</div>
+<div class="line">Must be unique per storage engine. <em>LegacyStorage</em> is the convention</div>
+</div>
+<p>name for Legacy Storage Engine.</p>
+<p>Icon</p>
+<p>For this to work properly, your storage handler must inherit
+from&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\GatewayBasedStorage</span></tt>.</p>
+<p>Also note that there can be several gateways per field type (one per
+storage engine basically).</p>
+<p>The gateway configuration for basic field types are located in
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/storage_engines.yml">EzPublishCoreBundle/Resources/config/storage_engines.yml</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Register FieldType</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#service-container-configuration">Service container configuration</a><ul>
+<li><a class="reference internal" href="#basic-configuration">Basic configuration</a></li>
+<li><a class="reference internal" href="#legacy-storage-engine">Legacy Storage Engine</a><ul>
+<li><a class="reference internal" href="#converter">Converter</a></li>
+<li><a class="reference internal" href="#external-storage">External storage</a></li>
+<li><a class="reference internal" href="#gateway-based-storage">Gateway based storage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Register-FieldType_2719973.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

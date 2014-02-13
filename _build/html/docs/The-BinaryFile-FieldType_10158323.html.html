@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : The BinaryFile FieldType &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Reference_10158191.html">Reference</a></li>
+<li><a class="reference external" href="FieldTypes_10158198.html">FieldTypes</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-the-binaryfile-fieldtype">
+<h1>eZ Publish Platform 5.&lt;next&gt; : The BinaryFile FieldType<a class="headerlink" href="#ez-publish-platform-5-next-the-binaryfile-fieldtype" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Nov
+08, 2013</p>
+<p>This&nbsp;FieldType represents and handles a binary file. It also counts the
+number of times the file has been downloaded from the
+<tt class="docutils literal"><span class="pre">content/download</span></tt> module.</p>
+<p>Name</p>
+<p>Internal name</p>
+<p>Expected input</p>
+<p>Output</p>
+<p><tt class="docutils literal"><span class="pre">BinaryFile</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">ezbinaryfile</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">Mixed</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">Mixed</span></tt></p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This <tt class="docutils literal"><span class="pre">FieldType</span></tt> allows the storage and retrieval of a single file. It
+is capable of handling virtually any file type and is typically used for
+storing legacy document types such as PDF files, Word documents,
+spreadsheets, etc. The maximum allowed file size is determined by the
+&#8220;Max file size&#8221; class attribute edit parameter and the
+&#8220;<tt class="docutils literal"><span class="pre">upload_max_filesize</span></tt>&#8221; directive in the main PHP configuration file
+(&#8220;php.ini&#8221;).</p>
+</div>
+<div class="section" id="binaryfile-value-object-api">
+<h2>BinaryFile Value Object API<a class="headerlink" href="#binaryfile-value-object-api" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">eZ\Publish\Core\FieldType\BinaryFile\Value</span></tt> offers the following
+properties.</p>
+<p>Icon</p>
+<p>Note that both <tt class="docutils literal"><span class="pre">BinaryFile</span></tt> and Media Value and Type inherit from the
+<tt class="docutils literal"><span class="pre">BinaryBase</span></tt> abstract field type, and share common properties.</p>
+<p>Attribute</p>
+<p>Type</p>
+<p>Description</p>
+<p>Example</p>
+<p><tt class="docutils literal"><span class="pre">id</span></tt></p>
+<p>string</p>
+<p>Binary file identifier. This ID depends on the&nbsp;<a class="reference external" href="Binary-files-clustering_12781005.html">IO
+Handler</a>&nbsp;that is being used.
+With the native, default handlers (FileSystem and Legacy), the ID is the
+file path, relative to the binary file storage root dir
+(<tt class="docutils literal"><span class="pre">var/&lt;vardir&gt;/storage/original</span></tt> by default). <strong>This attribute has
+been introduced in eZ Publish 5.2.</strong></p>
+<p>application/63cd472dd7819da7b75e8e2fee507c68.pdf</p>
+<p><tt class="docutils literal"><span class="pre">fileName</span></tt></p>
+<p>string</p>
+<p>The human readable file name, as exposed to the outside. Used when
+sending the file for download in order to name the file.</p>
+<p>20130116_whitepaper_ezpublish5 light.pdf</p>
+<p><tt class="docutils literal"><span class="pre">fileSize</span></tt></p>
+<p>int</p>
+<p>File size, in bytes</p>
+<p>1077923</p>
+<p><tt class="docutils literal"><span class="pre">mimeType</span></tt></p>
+<p>string</p>
+<p>The file&#8217;s mime type.</p>
+<p>application/pdf</p>
+<p><tt class="docutils literal"><span class="pre">uri</span></tt></p>
+<p>string</p>
+<p>The binary file&#8217;s HTTP uri. If the URI doesn&#8217;t include a host or
+protocol, it applies to the request domain. <strong>This attribute has been
+introduced in eZ Publish 5.2.</strong></p>
+<p>/var/ezdemo_site/storage/original/application/63cd472dd7819da7b75e8e2fee507c68.pdf</p>
+<p><tt class="docutils literal"><span class="pre">downloadCount</span></tt></p>
+<p>integer</p>
+<p>Number of times the file was downloaded</p>
+<p>0</p>
+<p><tt class="docutils literal"><span class="pre">path</span></tt></p>
+<p>string</p>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>*deprecated*
+<a href="#id3"><span class="problematic" id="id4">**</span></a>&nbsp;Renamed to <tt class="docutils literal"><span class="pre">id</span></tt> starting from eZ Publish 5.2. Can still be used,
+but it is recommended not to use it anymore as it will be removed.</p>
+</div>
+<div class="section" id="binaryfile-hash-format">
+<h2>BinaryFile hash format<a class="headerlink" href="#binaryfile-hash-format" title="Permalink to this headline">¶</a></h2>
+<p>The hash format mostly matches the value object. It has the following
+keys:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">id</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">path</span></tt> (for backwards compatibility)</li>
+<li><tt class="docutils literal"><span class="pre">fileName</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fileSize</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mimeType</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">uri</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">downloadCount</span></tt></li>
+</ul>
+</div>
+<div class="section" id="rest-api-specifics">
+<h2>REST API specifics<a class="headerlink" href="#rest-api-specifics" title="Permalink to this headline">¶</a></h2>
+<p>Used in the REST API, a BinaryFile field will mostly serialize the hash
+described above. However there are a couple specifics worth mentioning.</p>
+<p>Reading content: url property</p>
+<p>When reading the contents of a field of this type, an extra key is
+added: url. This key gives you the absolute file URL, protocol and host
+included.</p>
+<p>Example:&nbsp;<a class="reference external" href="http://example.com/var/ezdemo_site/storage/original/application/63cd472dd7819da7b75e8e2fee507c68.pdf">http://example.com/var/ezdemo_site/storage/original/application/63cd472dd7819da7b75e8e2fee507c68.pdf</a></p>
+<p>Creating content: data property</p>
+<p>When creating BinaryFile content with the REST API, it is possible to
+provide data as a base64 encoded string, using the &#8220;<tt class="docutils literal"><span class="pre">data</span></tt>&#8221;
+fieldValue key:</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : The BinaryFile FieldType</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#binaryfile-value-object-api">BinaryFile Value Object API</a></li>
+<li><a class="reference internal" href="#binaryfile-hash-format">BinaryFile hash format</a></li>
+<li><a class="reference internal" href="#rest-api-specifics">REST API specifics</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/The-BinaryFile-FieldType_10158323.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

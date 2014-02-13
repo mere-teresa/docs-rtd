@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Intro for eZ Publish 4.x/3.x developers &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Introduction-for-eZ-Publish-developers_11403947.html">Introduction for eZ Publish
+developers</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-intro-for-ez-publish-4-x-3-x-developers">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Intro for eZ Publish 4.x/3.x developers<a class="headerlink" href="#ez-publish-platform-5-next-intro-for-ez-publish-4-x-3-x-developers" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep
+18, 2013</p>
+<p>This document is not meant to be a comprehensive guide to either Symfony
+2 or eZ Publish 5, but to give an overview of how common concepts and
+tasks used in older versions translate into the new one.</p>
+</div>
+<div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="new-names-of-existing-concepts">
+<h2>New names of existing concepts:<a class="headerlink" href="#new-names-of-existing-concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="x">
+<h3>4.x<a class="headerlink" href="#x" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id1">
+<h3>5.x<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>(Content) Class</p>
+<p>ContentType</p>
+<p>(Content) Class Group</p>
+<p>ContentTypeGroup</p>
+<p>(Content) Class Attribute</p>
+<p>FieldDefinition</p>
+<p>(Content) Object</p>
+<p>Content (meta info in: ContentInfo)</p>
+<p>(Content Object) Version</p>
+<p>VersionInfo</p>
+<p>(Content Object) Attribute</p>
+<p>Field</p>
+<p>(Content Object) Attribute content</p>
+<p>FieldValue</p>
+<p>Datatype</p>
+<p>FieldType</p>
+<p>Node</p>
+<p>Location</p>
+<p>The reason for&nbsp;renaming&nbsp;some of the concepts in eZ Publish 5.x was to
+use terms which might be more familiar to users coming from other CMS
+and avoid confusion with terms used in OOP programming.</p>
+</div>
+</div>
+<div class="section" id="new-concepts">
+<h2>New concepts:<a class="headerlink" href="#new-concepts" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p>You can also refer to <a class="reference external" href="http://symfony.com/doc/current/glossary.html">Symfony glossary
+page</a> as many of the
+following concepts are the same or taken from Symfony.</p>
+<div class="section" id="id2">
+<h3>5.x<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p><strong>Controller</strong></p>
+<div class="line-block">
+<div class="line">An OOP version of what was called &#8220;<strong>module</strong>&#8221; in 4.x, <a href="#id3"><span class="problematic" id="id4">**</span></a>should</div>
+</div>
+<p>extend**&nbsp;<tt class="docutils literal"><span class="pre">eZ\Bundle\EzPublishCoreBundle\Controller</span></tt>.
+| A good start is to read <a class="reference external" href="http://symfony.com/doc/current/book/controller.html">Symfony documentation on this
+topic</a>.</p>
+<p><strong>Action</strong></p>
+<p>The method on the Controller, similarly to what was referred to as
+&#8220;<strong>view</strong>&#8221; in 4.x, contains business logic bootstrap (business logic
+should be done in services).</p>
+<p><strong>View</strong></p>
+<div class="line-block">
+<div class="line">The <strong>template</strong> that displays the result of the &#8220;action&#8221;, can be</div>
+</div>
+<p>either .twig (default) or .php.
+| Note that <strong>Twig is highly recommended</strong> as it has eZ Publish specific
+helpers.</p>
+<p><strong>Service</strong></p>
+<p>A Service is a generic term for any PHP object that performs a specific
+task and thus contains business logic. Services are instantiated and
+maintained a the <em>service container</em>.</p>
+<p><strong>Service Container</strong></p>
+<div class="line-block">
+<div class="line">A Service Container, also known as a <em>Dependency Injection Container</em>,</div>
+</div>
+<p>is a special object that manages the instantiation of services inside an
+application. Instead of creating services directly, the developer trains
+the service container (via configuration) on how to create the services.
+| <a class="reference external" href="http://symfony.com/doc/current/book/service_container.html">See Symfony documentation on the service
+container</a>.</p>
+<p><strong>Render</strong></p>
+<p>A function that allows you to <em>Embed</em> other controller calls, as in
+<em>Hierarchically</em> render other controllers and embed it in your result.
+This effectively removes the need for having business logic in template
+using <strong>fetch</strong> functions, session management and so on.</p>
+<p><strong>Bundle</strong></p>
+<p>An &#8220;<strong>extension</strong>&#8221; in Symfony Framework and hence the extensions of eZ
+Publish 5.x kernel.</p>
+<p><strong>Console</strong></p>
+<p><tt class="docutils literal"><span class="pre">ezpublish/console</span></tt> is the starting point of all console commands in
+Symfony2 (referred to as <tt class="docutils literal"><span class="pre">app/console</span></tt> in Symfony2 documentation) and
+eZ Publish 5.x kernel, use <tt class="docutils literal"><span class="pre">php</span> <span class="pre">ezpublish/console</span> <span class="pre">-h</span></tt> from the root of
+your install using command line to get started.</p>
+<p><strong>web/</strong></p>
+<div class="line-block">
+<div class="line">The public folder of your site, two console commands exists to</div>
+</div>
+<p>symlink/hard-copy <em>Bundles</em> and <em>Legacy</em> assets respectively.
+| Front controllers (index.php/index_dev.php) can be modified to fit
+your needs.<em>&nbsp;</em></p>
+<p><strong>ezpublish/</strong></p>
+<div class="line-block">
+<div class="line">The application folder (aka <tt class="docutils literal"><span class="pre">app/</span></tt> <a href="#id5"><span class="problematic" id="id6">`</span></a>in the Symfony</div>
+</div>
+<p>documentation &lt;<a class="reference external" href="http://symfony.com/doc/current/book/page_creation.html#the-application-app-directory">http://symfony.com/doc/current/book/page_creation.html#the-application-app-directory</a>&gt;`__).
+| It contains the main Kernel class where you can declare the bundles
+you want to use. You will also find <tt class="docutils literal"><span class="pre">cache/</span></tt>, <tt class="docutils literal"><span class="pre">logs/</span></tt> and main
+<tt class="docutils literal"><span class="pre">config/</span></tt> folders. It can also contain application-level resource
+files, such as global templates (<tt class="docutils literal"><span class="pre">ezpublish/Resources/</span></tt>).</p>
+<p><strong>src/</strong></p>
+<p>This is where your <a class="reference external" href="http://symfony.com/doc/current/book/page_creation.html#the-source-src-directory">application
+code</a>
+stands (from your own bundles)</p>
+<p><strong>vendor/</strong></p>
+<p>In this directory stand all your dependencies (3rd party bundles/libs,
+eZ Publish codebase, Symfony codebase...)</p>
+</div>
+</div>
+</div>
+<div class="section" id="existing-concepts-faq">
+<h1>Existing concepts FAQ<a class="headerlink" href="#existing-concepts-faq" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first">See
+<a class="reference external" href="http://confluence.ez.no/display/EZP/Configuration">http://confluence.ez.no/display/EZP/Configuration</a></p>
+</li>
+<li><p class="first"><strong>New-style settings:</strong></p>
+<ul>
+<li><div class="first line-block">
+<div class="line">In a single yml file: <strong>ezpublish.yml</strong> for eZ Publish,</div>
+</div>
+<p><strong>config.yml</strong> for other bundles (it is possible to <a class="reference external" href="http://symfony.com/doc/current/book/page_creation.html#application-configuration">import other
+files from
+here</a>
+as well).
+| Note that it&#8217;s possible to specialize settings for specific
+environments (e.g. <tt class="docutils literal"><span class="pre">ezpublish_dev.yml</span></tt>, <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt>)</p>
+</li>
+<li><p class="first">3 scopes (<strong>global</strong> == <strong>override</strong>; extension scope is gone)</p>
+</li>
+<li><p class="first">Order of precedence between extensions (bundles) is set by bundle
+loading order.</p>
+</li>
+<li><p class="first">Runtime siteaccess configuration is resolved through the
+<a class="reference external" href="Configuration_2720538.html">ConfigResolver service</a>.</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><strong>Some notes about generic (non-eZ) settings for Symfony</strong></p>
+<ul class="simple">
+<li>Symfony supports 3 formats for config files: <strong>yml</strong>, <strong>xml</strong>,
+<strong>php&nbsp;</strong>(eZ recommends <strong>yml</strong>)</li>
+<li>A single configuration file exists: <strong>config.yml</strong> (at least, in
+the final, compiled version, many files exist on disk)</li>
+<li>A configuration file can include another one via the imports
+statement (e.g. <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt> would import <tt class="docutils literal"><span class="pre">config.yml</span></tt>)</li>
+<li>When creating a bundle, it is not sufficient to add a config file
+to it, the developer needs to specify that it is to be loaded
+(either via an import statement from app/config/config.yml or via
+a ServiceContainer extension in php).
+Note that if you use the <a class="reference external" href="http://symfony.com/doc/current/bundles/SensioGeneratorBundle/commands/generate_bundle.html">generator bundle
+command</a>,
+all needed code will be automatically generated for you.</li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li>See
+<a class="reference external" href="http://confluence.ez.no/display/EZP/Siteaccess+Matching">http://confluence.ez.no/display/EZP/Siteaccess+Matching</a></li>
+<li>Mostly unchanged</li>
+<li>Better way of not duplicating settings: &#8220;groups&#8221; of siteaccesses</li>
+<li>Siteaccess settings <em>specializes</em> siteaccess group settings.</li>
+<li>New way to define siteaccess: via environment variable (super-fast)</li>
+</ul>
+<p><strong>Q:</strong> Apart from host url and port, are any other matchers available
+(host+url, …)</p>
+<p><strong>A:</strong> working on an improved fleximatcher witch will be part of 5.1,
+this includes host+uri combined matching</p>
+<ul class="simple">
+<li>Possible now to define custom siteaccess matchers.</li>
+</ul>
+<ul class="simple">
+<li>More flexible routing system.</li>
+<li>View parameters are still present.</li>
+<li>Configuration done in yml file.</li>
+<li>Making params optional is done by giving them a default value in the
+config file</li>
+</ul>
+<p><strong>Q:</strong> How is the siteaccess part of urls managed (standard Sf code has
+no concept for this)?</p>
+<p><strong>A:</strong> The eZP stack uses an enhanced router. This is transparent to
+developers.</p>
+<p><strong>Q:</strong>&nbsp;Support for linking across siteaccess?</p>
+<p><strong>A:</strong>&nbsp;Not yet possibly in 5.0.</p>
+<p><strong>Q:</strong>&nbsp;How is the concept of designs + fallback supported ?</p>
+<p><strong>A:</strong>&nbsp;Planned for 5.future. Might reuse an Sf bundle from <a class="reference external" href="https://github.com/liip/LiipThemeBundle">Liip which
+allows *themes*</a> (theme ==
+design).</p>
+<ul class="simple">
+<li><strong>Side question:</strong> Can a tpl in one bundle override a tpl from
+another one?</li>
+<li><strong>A:</strong> Yes, but via bundle inheritance a bundle can have only 1 child
+– clearly not powerful enough compared to eZP4, but there seems to be
+progress in Symfony about improving this.</li>
+</ul>
+<ul class="simple">
+<li>See <a class="reference external" href="http://twig.sensiolabs.org/documentation">Twig documentation</a>
+and <a class="reference external" href="http://symfony.com/doc/current/book/templating.html">templating basics in
+Symfony</a>.</li>
+<li>For extending Twig, refer to&nbsp;<a class="reference external" href="http://twig.sensiolabs.org/doc/advanced.html">Twig developer
+documentation</a> and
+<a class="reference external" href="http://symfony.com/doc/current/cookbook/templating/twig_extension.html">Symfony
+cookbook</a>.</li>
+</ul>
+<p>Refer to the <a class="reference external" href="http://symfony.com/doc/current/book/translation.html">translation section in Symfony
+documentation</a>.</p>
+<p>Best practice is to <a class="reference external" href="http://symfony.com/doc/current/cookbook/assetic/index.html">use
+**Assetic**</a>.</p>
+<p>Content cache is fully <a class="reference external" href="http://symfony.com/doc/current/book/http_cache.html">Http
+cache</a>.</p>
+<p><strong>Q:</strong> How to clear caches for eZ Publish 5? Is there a single action to
+clear caches for both stacks?</p>
+<p><strong>A:</strong> Content (Http) cache is purged at publish time or from admin
+interface. You can use the <tt class="docutils literal"><span class="pre">cache:clear</span></tt> command to clear all Symfony
+cache. No unified command yet.</p>
+<p><strong>Q:</strong> Will it always be possible to run the Legacy Stack as a
+standalone app?</p>
+<p><strong>A:</strong> Yes.</p>
+<p><strong>Q:</strong> Is there any rewrite rule needed to access var/storage/images of
+old stack from within the vhost of the new stack?</p>
+<p><strong>A:</strong> No, this is achieved by <em>symlinking</em>&nbsp;to <tt class="docutils literal"><span class="pre">web/</span></tt> the <tt class="docutils literal"><span class="pre">design/</span></tt>,
+<tt class="docutils literal"><span class="pre">extension/</span></tt>, <tt class="docutils literal"><span class="pre">share/</span></tt> and <tt class="docutils literal"><span class="pre">var/</span></tt> directories of the eZ Publish
+legacy stack (done via <tt class="docutils literal"><span class="pre">ezpublish:legacy:assets_install</span></tt> script).</p>
+<div class="line-block">
+<div class="line">The official name for the eZ Publish 4.x stack included within eZ</div>
+</div>
+<p>Publish 5.x is not eZ Publish 4.x but eZ Publish Legacy (+&#8221;Stack&#8221; in
+case of eZ Publish+extensions).</p>
+<p><strong>Q:</strong> Implemented as bundles?</p>
+<p><strong>A:</strong> Yes.</p>
+<p><strong>Q:</strong> Declared as services with a special tag or naming convention?
+(see e.g. How twig registers stuff).</p>
+<p><strong>A:</strong>&nbsp;Reuse as much as possible from Sf, do not enforce standards
+unless needed.</p>
+<p><strong>Q:</strong> Will need naming convention?</p>
+<p><strong>Q:</strong> Installed via composer?</p>
+<p><strong>A:</strong> Yes.</p>
+<p><strong>Q:</strong> What part of a website to put in <tt class="docutils literal"><span class="pre">ezpublish/</span></tt>, what part to put
+in <tt class="docutils literal"><span class="pre">src/</span></tt>? (equivalent of eZ “all in extension” dev philosophy)</p>
+<p><strong>A:</strong> <tt class="docutils literal"><span class="pre">ezpublish/</span></tt> is for global configuration/templates, <tt class="docutils literal"><span class="pre">src/</span></tt> is
+for site-specific developments.</p>
+<ul class="simple">
+<li><ul class="first">
+<li><tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt> is at root level because it is considered as
+an application in itself.</li>
+<li>All current extensions will be renamed with LS suffix (for Legacy
+Stack) to distinguish them from new implementations.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Q:</strong> Best practices for naming php classes (filenames and
+directories)?</p>
+<div class="line-block">
+<div class="line"><strong>A:</strong> Follow</div>
+</div>
+<p><a class="reference external" href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>,
+with namespaces.
+|
+See&nbsp;<a class="reference external" href="http://symfony.com/doc/2.0/cookbook/bundles/best_practices.html">http://symfony.com/doc/2.0/cookbook/bundles/best_practices.html</a></p>
+<ul class="simple">
+<li>Debug toolbar + profiler === DebugOutput</li>
+<li>More info:
+<a class="reference external" href="http://symfony.com/doc/current/book/internals.html">http://symfony.com/doc/current/book/internals.html</a></li>
+<li>Sending log messages:</li>
+</ul>
+<div class="highlight-python"><pre>$logger = $this-&gt;get('logger');</pre>
+</div>
+<p>Refer to <a class="reference external" href="http://symfony.com/doc/current/book/testing.html">Symfony documentation on
+testing</a> and
+<a class="reference external" href="http://www.phpunit.de/manual/3.7/en/writing-tests-for-phpunit.html">PHPUnit</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Intro for eZ Publish 4.x/3.x developers</a></li>
+<li><a class="reference internal" href="#glossary">Glossary</a><ul>
+<li><a class="reference internal" href="#new-names-of-existing-concepts">New names of existing concepts:</a><ul>
+<li><a class="reference internal" href="#x">4.x</a></li>
+<li><a class="reference internal" href="#id1">5.x</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#new-concepts">New concepts:</a><ul>
+<li><a class="reference internal" href="#id2">5.x</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#existing-concepts-faq">Existing concepts FAQ</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/2720567.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

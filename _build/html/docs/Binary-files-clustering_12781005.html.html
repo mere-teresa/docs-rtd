@@ -1,0 +1,155 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Binary files clustering &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Features_12781009.html">Features</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-binary-files-clustering">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Binary files clustering<a class="headerlink" href="#ez-publish-platform-5-next-binary-files-clustering" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> on
+May 22, 2013</p>
+<p>The eZ Publish 5 API supports multiple binary file handling mechanisms
+by means of an&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>IOHandler``&nbsp;interface.</p>
+<div class="section" id="the-legacy-io-handler">
+<h2>The Legacy IO Handler<a class="headerlink" href="#the-legacy-io-handler" title="Permalink to this headline">¶</a></h2>
+<p>The system comes with three handlers: Legacy, InMemory and Filesystem.
+Only Legacy is supported in eZ Publish 5.1. It uses the Legacy Kernel,
+that supports the DFS file handler, in order to provide clustering
+features for scalability and safety. This handler provides multi-server
+storage by means of a database + a network share.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>No eZ Publish 5 level steps are required at the time of 5.1. See the
+legacy documentation page that explains&nbsp;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Clustering/Setting-it-up-for-an-eZDFSFileHandler">how to setup a DFS
+cluster</a>.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="yaml">
+<h3>YAML<a class="headerlink" href="#yaml" title="Permalink to this headline">¶</a></h3>
+<p>No configuration is required on the new stack. The handler will reuse
+whatever configuration is defined in your eZ Publish Legacy instance. By
+default, Legacy will be configured to use the FS cluster handler,
+meaning files will be stored on the filesystem. No further configuration
+will be required.</p>
+<p>The Legacy documentation explains how to enable
+clustering:&nbsp;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Clustering">http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Clustering</a>.</p>
+<p>Icon</p>
+<p>Note that the only two supported options are now FS and DFS. The DB
+cluster is deprecated, and doesn&#8217;t exist in eZ Publish 5.1.</p>
+</div>
+<div class="section" id="web-server">
+<h3>Web server<a class="headerlink" href="#web-server" title="Permalink to this headline">¶</a></h3>
+<p>As for legacy, rewrite rules are required in order to serve files stored
+in a DFS cluster. The&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP51/Virtual+host+example">virtualhost setup
+documentation</a>&nbsp;provides
+the required rules.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Binary files clustering</a><ul>
+<li><a class="reference internal" href="#the-legacy-io-handler">The Legacy IO Handler</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#yaml">YAML</a></li>
+<li><a class="reference internal" href="#web-server">Web server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Binary-files-clustering_12781005.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

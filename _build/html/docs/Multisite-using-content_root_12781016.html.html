@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Multisite using content_root &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Features_12781009.html">Features</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-multisite-using-content-root">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Multisite using content_root<a class="headerlink" href="#ez-publish-platform-5-next-multisite-using-content-root" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jun 05, 2013</p>
+<p>Since eZ Publish 5.1, it is possible to serve multiple, completely
+different sites using one eZ Publish instance and database.</p>
+<p>Each site will have its own content root, at a lower level than the
+default one (location number 2). One backoffice can be used for each
+site, but it is also possible to use a global one.</p>
+<p>Icon</p>
+<p>This feature is a reimplementation of the
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/site.ini/SiteAccessSettings/PathPrefix">PathPrefix</a>
+one that existed in eZ Publish Legacy.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The feature is configured in <tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt>, either at siteaccess or
+siteaccess group level:</p>
+<div class="section" id="content-tree-root-location-id">
+<h3><tt class="docutils literal"><span class="pre">content.tree_root.location_id</span></tt><a class="headerlink" href="#content-tree-root-location-id" title="Permalink to this headline">¶</a></h3>
+<p>This parameter sets the location id of the content root. The API is
+jailed within this root, and nothing above this level will be accessible
+by default. This parameter can be filtered using the
+<tt class="docutils literal"><span class="pre">excluded_uri_prefixes</span></tt> parameter described below</p>
+</div>
+<div class="section" id="content-tree-root-excluded-uri-prefixes">
+<h3><tt class="docutils literal"><span class="pre">content.tree_root.excluded_uri_prefixes</span></tt><a class="headerlink" href="#content-tree-root-excluded-uri-prefixes" title="Permalink to this headline">¶</a></h3>
+<p>Use this parameter to exclude a list of URI from the root jail defined
+using <tt class="docutils literal"><span class="pre">location_id</span></tt> described above. Add as many locations&nbsp;pathString
+as you like. In the example above, the Media and Images folders will be
+accessible using their own URI even though they&#8217;re not below
+<tt class="docutils literal"><span class="pre">tree_root.location_id</span></tt>.</p>
+<p>Icon</p>
+<p>Note: Leading slashes (<tt class="docutils literal"><span class="pre">/</span></tt>) are automatically trimmed internally by eZ
+Publish, so they can be ignored.</p>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Same comment as&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/2.+Browsing%2C+finding%2C+viewing?focusedCommentId=16285925#comment-16285925">Re: 2. Browsing, finding,
+viewing</a></p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:philippe&#46;vincent-royol&#37;&#52;&#48;ez&#46;no">philippe<span>&#46;</span>vincent-royol<span>&#64;</span>ez<span>&#46;</span>no</a> at Aug 20, 2013 08:30</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Multisite using content_root</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#content-tree-root-location-id"><tt class="docutils literal"><span class="pre">content.tree_root.location_id</span></tt></a></li>
+<li><a class="reference internal" href="#content-tree-root-excluded-uri-prefixes"><tt class="docutils literal"><span class="pre">content.tree_root.excluded_uri_prefixes</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Multisite-using-content_root_12781016.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

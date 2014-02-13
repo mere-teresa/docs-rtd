@@ -1,0 +1,154 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+#. `Pre Releases <Pre-Releases_16286284.html>`__
+
+eZ Publish Platform 5.<next> : 5.2-BETA1 Release Notes
+======================================================
+
+Added by andre.romcke@ez.no , edited by andre.romcke@ez.no on Oct 31,
+2013
+
+-  `5.2 Release Notes <#id-5.2-BETA1ReleaseNotes-5.2ReleaseNotes>`__
+
+   -  `Meet the updated eZ Publish
+      5.2 <#id-5.2-BETA1ReleaseNotes-MeettheupdatedeZPublish5.2>`__
+   -  `Complete HTTP cache with
+      "UserHash" <#id-5.2-BETA1ReleaseNotes-CompleteHTTPcachewith%22UserHash%22>`__
+   -  `Symfony 2.3 <#id-5.2-BETA1ReleaseNotes-Symfony2.3>`__
+   -  `Content controller
+      overrides <#id-5.2-BETA1ReleaseNotes-Contentcontrolleroverrides>`__
+   -  `Signal slot
+      events <#id-5.2-BETA1ReleaseNotes-Signalslotevents>`__
+   -  `Multi repository
+      cache support <#id-5.2-BETA1ReleaseNotes-Multirepositorycachesupport>`__
+   -  `Support for more than 30
+      languages <#id-5.2-BETA1ReleaseNotes-Supportformorethan30languages>`__
+
+-  `5.2 Contributors <#id-5.2-BETA1ReleaseNotes-5.2Contributors>`__
+-  `5.2 Full Changelog <#id-5.2-BETA1ReleaseNotes-5.2FullChangelog>`__
+-  `5.2 Known issues <#id-5.2-BETA1ReleaseNotes-5.2Knownissues>`__
+
+5.2 Release Notes
+-----------------
+
+eZ Publish 5.2 is a point release towards 5.3 LTS which enhances several
+aspects of the 5.x kernel for usability and extensibility, it serves as
+the foundation for 5.3.
+
+| 
+
+Meet the updated eZ Publish 5.2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+|image0|
+
+<update picture when new demo content has been made>
+
+ 
+
+Complete HTTP cache with "UserHash"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With eZ Publish 5.2, new stacks HTTP cache is final on par and beyond
+what was possible in eZ Publish legacy. With user hash, by default all
+embed controller calls using esi will be cached based on user access
+rules. Purging is furthermore done in a stale cache like way, making
+sure stale cache gets served while the cache is re generated. 5.2 has in
+internal testing shown some noticeable performance improvements thanks
+to the introduction of userHash.
+
+Symfony 2.3
+~~~~~~~~~~~
+
+Updated our web framework foundation to Symfony 2.3 LTS, more info on
+this release can be found
+`here <http://symfony.com/blog/symfony-2-3-0-the-first-lts-is-now-available>`__.
+
+Content controller overrides
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| Have you been missing a way to extend the provided content controller?
+Had needs to do custom cache logic and been missing the good old
+cache\_ttl = 0 hack?
+| 5.2 brings with it a powerful way to use the existing override system
+to instead of overriding just a template, override the whole controller,
+this allows you to extend the built in controller and for instance get
+full access to tune the cache headers for a specific content type that
+has different use than normal content.
+
+Signal slot events
+~~~~~~~~~~~~~~~~~~
+
+Signal slot events are now also dispatched over Symfony's event system
+so you can listen to them there synchronously, while custom slots (
+listeners for signals ) can in the future be dispatched asynchronously. 
+
+Multi repository cache support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This release resolves a limitation with persistence caching introduced
+in 5.1, a new caching service "ezpublish.cache\_pool" takes a siteaccess
+group setting "cache\_pool" into consideration for selecting cache
+service, and hence can be configured with multi repository setups in
+mind. In addition you can now safely reuse this cache pool as the
+persistence cache is prefixed within "spi" cache key and will not clear
+your data if you reuse it.
+
+Support for more than 30 languages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With 64 bit servers now being common, this release takes advantage of
+that if present and provides support for 62 languages on 64-bit
+environments and 30 languages on 32-bit platforms. This feature is
+support across "new stack" and "legacy stack" and is accomplished by
+increasing the size of the int used for language bit masks, improved
+storage engines still has the possibility to provide even more languages
+on pure "new stack" in the future.
+
+5.2 Contributors
+----------------
+
+For 5.2 we want to reach out a special thank you to those that have
+contributed to this release, especially the brave few who have helped
+out on the
+"`new <https://github.com/ezsystems/ezpublish-kernel/graphs/contributors?from=2013-05-01&to=2013-09-30&type=c>`__
+`stack <https://github.com/ezsystems/ezpublish-community/graphs/contributors?from=2013-05-01&to=2013-09-30&type=c>`__":
+
+-  `masev <https://github.com/masev>`__
+-  `pborreli <https://github.com/pborreli>`__
+-  `paradoxe <https://github.com/paradoxe>`__
+-  `tharkun <https://github.com/tharkun>`__
+-  `crevillo <https://github.com/crevillo>`__
+-  `jeromegamez <https://github.com/jeromegamez>`__
+-  `Plopix <https://github.com/Plopix>`__
+-  `itagent <https://github.com/itagent>`__
+
+In addition ezpublish-legacy is still receiving a lot of pull requests,
+contributions to this part of the release can be found
+`here <https://github.com/ezsystems/ezpublish-legacy/graphs/contributors?from=2013-05-01&to=2013-09-30&type=c>`__.
+
+5.2 Full Changelog
+------------------
+
+For the full 5.2 changelog please refer to the \ `5.2-BETA1
+Changelog <5.2-alpha1-Changelog_13468286.html>`__ dedicated page.
+
+5.2 Known issues
+----------------
+
+The complete list of know issues is available in the \ `5.2-BETA1 Known
+issues <5.2-beta1-Known-issues_17105237.html>`__ page.
+
+Attachments:
+------------
+
+| |image1| `eZ Publish 5.2 demo
+frontend.png <attachments/16286633/16679138.png>`__ (image/png)
+
+Document generated by Confluence on Feb 12, 2014 16:43
+
+.. |image0| image:: attachments/16286633/16679138.png?effects=border-simple,shadow-kn
+.. |image1| image:: images/icons/bullet_blue.gif

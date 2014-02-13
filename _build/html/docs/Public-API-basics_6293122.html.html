@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Public API basics &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public API</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-public-api-basics">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Public API basics<a class="headerlink" href="#ez-publish-platform-5-next-public-api-basics" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Aug 02, 2013</p>
+<div class="section" id="ez-publish-api-repository">
+<h2>eZ Publish API Repository<a class="headerlink" href="#ez-publish-api-repository" title="Permalink to this headline">¶</a></h2>
+<p>This entity is the entry point to everything you will do with the Public
+API.</p>
+<p>It will allow you to create, retrieve, update and delete all the eZ
+Publish objects, as well as content types, sections, content states. It
+is always obtained through the service container.</p>
+<p><strong>Obtaining the eZ Publish Repository via the service container</strong></p>
+<p>&nbsp;By itself, the repository doesn&#8217;t do much. It allows three type of
+operations: user authentication (getting / changing the current user),
+issuing transactions, and obtaining services.</p>
+<p>Inline objects documentation</p>
+<p>Icon</p>
+<p>Pay attention to the inline phpdoc block in this code stub. It tells
+your IDE that&nbsp;<tt class="docutils literal"><span class="pre">$repository``&nbsp;is</span> <span class="pre">an</span> <span class="pre">instance</span>
+<span class="pre">of&nbsp;\</span> <span class="pre">``\eZ\Publish\API\Repository\Repository</span></tt>. If your IDE supports
+this feature, you will get code completion on
+the&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>$repository``&nbsp;object. This helper is a huge time saver when it
+comes to learning about the eZ Publish API.</p>
+</div>
+<div class="section" id="the-service-container">
+<h2>The service container<a class="headerlink" href="#the-service-container" title="Permalink to this headline">¶</a></h2>
+<p>The above code snippet implies that the <a class="reference external" href="http://symfony.com/doc/2.0/book/service_container.html">service
+container</a> is
+available in the context you are writing your code in.</p>
+<p>In controllers, this generally is done by extending the
+Symfony&nbsp;<tt class="docutils literal"><span class="pre">Controller``&nbsp;class.</span> <span class="pre">It</span> <span class="pre">comes</span> <span class="pre">with</span> <span class="pre">a&nbsp;\</span> <span class="pre">``get()``&nbsp;method</span> <span class="pre">that</span>
+<span class="pre">calls</span> <span class="pre">the</span> <span class="pre">service</span> <span class="pre">container.</span> <span class="pre">In</span> <span class="pre">command</span> <span class="pre">line</span> <span class="pre">scripts,</span> <span class="pre">it</span> <span class="pre">requires</span> <span class="pre">that</span>
+<span class="pre">you</span> <span class="pre">extend</span>
+<span class="pre">the&nbsp;\</span> <span class="pre">```ContainerAwareCommand</span></tt> &lt;<a class="reference external" href="http://api.symfony.com/2.1/Symfony/Bundle/FrameworkBundle/Command/ContainerAwareCommand.html">http://api.symfony.com/2.1/Symfony/Bundle/FrameworkBundle/Command/ContainerAwareCommand.html</a>&gt;`__&nbsp;base
+class instead of&nbsp;<tt class="docutils literal"><span class="pre">Controller</span></tt>. This class provides you with
+a&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>getContainer()``&nbsp;method that returns the service container.</p>
+<p>Getting the repository from eZ Publish 5 controllers</p>
+<p>Icon</p>
+<p>In order to make it even easier to obtain the repository from
+controllers code, eZ Publish 5 controllers extend a
+custom&nbsp;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Bundle/EzPublishCoreBundle/Controller.html">Controller</a>
+class that provides a
+<tt class="docutils literal"><span class="pre">`getRepository()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Bundle/EzPublishCoreBundle/Controller.html#method_getRepository">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Bundle/EzPublishCoreBundle/Controller.html#method_getRepository</a>&gt;`__
+method which directly returns the repository from the service container.</p>
+<p>You can and should of course do the same in your custom controllers.</p>
+</div>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>One of the responsibilities of the Repository is user authentication.
+Every action will be executed&nbsp;<em>as</em>&nbsp;a user. In the context of a normal
+eZ Publish execution, the logged in user will of course be the current
+one, identified via one of the available authentication methods. This
+user&#8217;s permissions will affect the behavior of the Repository. The user
+may f.e. not be allowed to create Content, or view a particular section.</p>
+<p>Logging in to the Repository is covered in the recipes of the Cookbook.</p>
+</div>
+<div class="section" id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h2>
+<p>The main entry point to the repository&#8217;s features are services. The
+Public API breaks down access to Content, User, Content Types, etc
+features into various services. Those services are obtained via
+the&nbsp;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Repository.html">Repository</a>,
+using getServiceName() like
+methods:&nbsp;<tt class="docutils literal"><span class="pre">getContentService()</span></tt>,&nbsp;<tt class="docutils literal"><span class="pre">getUserService()</span></tt>...</p>
+<p>Throughout the Cookbook, you will be guided through the various
+capabilities those services have, and how you can use them to implement
+your projects.</p>
+</div>
+<div class="section" id="value-objects">
+<h2>Value objects<a class="headerlink" href="#value-objects" title="Permalink to this headline">¶</a></h2>
+<p>While Services provide interaction with the repository, the elements
+(Content, Users) they provide interaction with are provided as read
+only&nbsp;<a class="reference external" href="http://apidoc.ez.no/doxygen/trunk/NS/html/namespaceeZ_1_1Publish_1_1Core_1_1Repository_1_1Values.html">Value
+Objects</a>,
+in the&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\Core\Repository\Values``&nbsp;namespace.</span> <span class="pre">Those</span> <span class="pre">objects</span>
+<span class="pre">are</span> <span class="pre">broken</span> <span class="pre">down</span> <span class="pre">into</span>
+<span class="pre">sub-namespaces:&nbsp;\</span> <span class="pre">``Content</span></tt>,&nbsp;<tt class="docutils literal"><span class="pre">ContentType</span></tt>,&nbsp;<tt class="docutils literal"><span class="pre">User``&nbsp;and&nbsp;``ObjectState</span></tt>,
+each sub-namespace containing a set of value objects, such
+as&nbsp;<tt class="docutils literal"><span class="pre">`Content\Content</span></tt> &lt;<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php">https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php</a>&gt;`__&nbsp;or&nbsp;<tt class="docutils literal"><span class="pre">`User\Role</span></tt> &lt;<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/User/Role.php">https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/User/Role.php</a>&gt;`__.</p>
+<p>These objects are read-only by design. They are only meant to be used in
+order to fetch data from the repository. They come with their own
+properties, such as <tt class="docutils literal"><span class="pre">$content-&gt;id</span></tt>, <tt class="docutils literal"><span class="pre">$location-&gt;hidden</span></tt>, but also
+with methods that provide access to more, related information, such as
+<tt class="docutils literal"><span class="pre">Relation::getSourceContentInfo()</span></tt> or <tt class="docutils literal"><span class="pre">Role::getPolicies()</span></tt>. By
+design, a value object will only give you access to data that is very
+closely related to it. More complex retrieval operations will require
+you to use the appropriate Service, using information from your Value
+Object.</p>
+<div class="section" id="value-info-objects">
+<h3>Value info objects<a class="headerlink" href="#value-info-objects" title="Permalink to this headline">¶</a></h3>
+<p>Some complex Value Objects have an Info counterpart,
+like&nbsp;<tt class="docutils literal"><span class="pre">ContentInfo</span></tt>, the counterpart for&nbsp;<tt class="docutils literal"><span class="pre">Content</span></tt>. These objects
+are specific, and provide you with lower level information. For
+instance,&nbsp;<a href="#id5"><span class="problematic" id="id6">``</span></a>ContentInfo``&nbsp;will provide you with currentVersionNo or
+remoteId, while Content will let you retrieve Fields, the ContentType,
+or previous Versions.</p>
+<p>They are provided by the API, but are&nbsp;<strong>read only</strong>, can&#8217;t be modified
+and sent back. Creation and modification of Repository values are done
+using Create structs and Update structs.</p>
+</div>
+</div>
+<div class="section" id="create-and-update-structs">
+<h2>Create and update structs<a class="headerlink" href="#create-and-update-structs" title="Permalink to this headline">¶</a></h2>
+<p>In order to update or create elements in the Repository, you will use
+structs. They are usually provided by the Service that manages the Value
+Objects you want to alter or create. For instance, the Content service
+has a&nbsp;<a href="#id7"><span class="problematic" id="id8">``</span></a>getContentCreateStruct()``&nbsp;method that returns a
+new&nbsp;<a href="#id9"><span class="problematic" id="id10">``</span></a>ContentCreateStruct``&nbsp;object. Equivalent methods exist for
+UpdateStruct objects as well, and for most Value Objects.</p>
+<p>Using them is also covered in the Cookbook.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Public API basics</a><ul>
+<li><a class="reference internal" href="#ez-publish-api-repository">eZ Publish API Repository</a></li>
+<li><a class="reference internal" href="#the-service-container">The service container</a></li>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#services">Services</a></li>
+<li><a class="reference internal" href="#value-objects">Value objects</a><ul>
+<li><a class="reference internal" href="#value-info-objects">Value info objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-and-update-structs">Create and update structs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Public-API-basics_6293122.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Legacy code and features &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-legacy-code-and-features">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Legacy code and features<a class="headerlink" href="#ez-publish-platform-5-next-legacy-code-and-features" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan
+10, 2014</p>
+<p>eZ Publish 5 has a strong focus on backwards compatibility and thus lets
+you reuse code you might have written for 4.x, including templates and
+modules.</p>
+<p>Hint</p>
+<p>Icon</p>
+<p>Read&nbsp;<a class="reference external" href="2720567.html">Intro for eZ Publish 4.x/3.x developers</a> to
+have an overview of common concepts and terminology changes, it also
+have a sub page comparing 4.x with 5.x.</p>
+<ul class="simple">
+<li><a class="reference external" href="#Legacycodeandfeatures-LegacyMode">Legacy Mode</a><ul>
+<li><a class="reference external" href="#Legacycodeandfeatures-Whatitdoes">What it does</a></li>
+<li><a class="reference external" href="#Legacycodeandfeatures-Whatitdoesn%27tdo">What it doesn&#8217;t do</a></li>
+<li><a class="reference external" href="#Legacycodeandfeatures-AllowingSymfonyroutestowork">Allowing Symfony routes to
+work</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Legacycodeandfeatures-LegacyTemplateinclusion">Legacy Template
+inclusion</a><ul>
+<li><a class="reference external" href="#Legacycodeandfeatures-Templateparameters">Template
+parameters</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Legacycodeandfeatures-Runninglegacycode">Running legacy code</a></li>
+<li><a class="reference external" href="#Legacycodeandfeatures-Legacymodules">Legacy modules</a><ul>
+<li><a class="reference external" href="#Legacycodeandfeatures-Routingfallback%26sub-requests">Routing fallback &amp;
+sub-requests</a></li>
+<li><a class="reference external" href="#Legacycodeandfeatures-UsingeZPublish5andSymfonyfeaturesinLegacy">Using eZ Publish 5 and Symfony features in
+Legacy</a></li>
+<li><a class="reference external" href="#Legacycodeandfeatures-Runninglegacyscriptsandcronjobs">Running legacy scripts and
+cronjobs</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="legacy-mode">
+<h2>Legacy Mode<a class="headerlink" href="#legacy-mode" title="Permalink to this headline">¶</a></h2>
+<p>Legacy mode is a specific configuration mode where eZ Publish&#8217;s behavior
+is the closest to v4.x. It might be used in some very specific use
+cases, such as <strong>running the admin interface</strong>.</p>
+<div class="section" id="what-it-does">
+<h3>What it does<a class="headerlink" href="#what-it-does" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Still runs through the whole Symfony kernel</strong>. As such, Symfony
+services can still be accessed from legacy stack.</li>
+<li><strong>Disables the default router</strong> (standard Symfony routes won&#8217;t work
+in this mode)</li>
+<li><strong>Disables the UrlAliasRouter</strong>. As such, the <strong>ViewController will
+be bypassed</strong>.</li>
+</ul>
+</div>
+<div class="section" id="what-it-doesn-t-do">
+<h3>What it doesn&#8217;t do<a class="headerlink" href="#what-it-doesn-t-do" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Increase performance</strong>. Legacy mode is actually <strong>painful for
+performances</strong> since it won&#8217;t use the HttpCache mechanism.</li>
+</ul>
+<p>Icon</p>
+<div class="line-block">
+<div class="line">In a migration context, <strong>using Legacy Mode is never a good option</strong></div>
+</div>
+<p>as it prevents all the performance goodness (e.g. Http Cache) to work.
+| Always keep in mind that, <strong>not running in legacy mode, if a content
+still doesn&#8217;t&nbsp;have a corresponding Twig template/controller, `eZ Publish
+will always fallback to the legacy kernel, looking for a legacy
+template &lt;Legacy-template-fallback_8323369.html&gt;`__</strong>.</p>
+</div>
+<div class="section" id="allowing-symfony-routes-to-work">
+<h3>Allowing Symfony routes to work<a class="headerlink" href="#allowing-symfony-routes-to-work" title="Permalink to this headline">¶</a></h3>
+<p>As of eZ Publish 5.2, <strong>Symfony routes are also disabled in legacy
+mode</strong>, which implies admin interface as well.</p>
+<p>If for some reason you need a Symfony route to work, you add it to a
+whitelist :</p>
+<p>By default,&nbsp;<tt class="docutils literal"><span class="pre">_ezpublishLegacyTreeMenu</span></tt> and all REST v2
+(<tt class="docutils literal"><span class="pre">ezpublish_rest_</span></tt> prefix)&nbsp;routes are allowed.</p>
+</div>
+</div>
+<div class="section" id="legacy-template-inclusion">
+<h2>Legacy Template inclusion<a class="headerlink" href="#legacy-template-inclusion" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to include old templates (<strong>.tpl</strong>) into new ones.</p>
+<p><strong>Include a legacy template using the old template override mechanism</strong></p>
+<p>Or if you want to <strong>include a legacy template by its path</strong>, relative to
+<tt class="docutils literal"><span class="pre">ezpublish_legacy</span></tt> folder:</p>
+<p><strong>eZ Publish 5.1+</strong></p>
+<div class="section" id="template-parameters">
+<h3>Template parameters<a class="headerlink" href="#template-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Scalar and array parameters are passed to a legacy template <em>as-is</em>.</p>
+<p>Objects, however, are being converted in order to comply the legacy <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Legacy/Templating/LegacyCompatible.php">eZ
+Template
+API</a>.
+By default <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Legacy/Templating/LegacyAdapter.php">a generic
+adapter</a>
+is used, exposing all public properties and getters. You can define your
+own converter by implementing <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Legacy/Templating/Converter/ObjectConverter.php">the appropriate
+interface</a>
+and declare it as a service with
+the&nbsp;<tt class="docutils literal"><span class="pre">ezpublish_legacy.templating.converter</span></tt> tag.</p>
+<p>Icon</p>
+<p><tt class="docutils literal"><span class="pre">Content</span> <span class="pre">``/</span> <span class="pre">``Location</span></tt> objects from the Public API <cite>are converted
+into ``eZContentObject`</cite>/<tt class="docutils literal"><span class="pre">eZContentObjectTreeNode</span></tt>
+objects &lt;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Legacy/Templating/Converter/ApiContentConverter.php">https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/MVC/Legacy/Templating/Converter/ApiContentConverter.php</a>&gt;`__
+(re-fetched).</p>
+</div>
+</div>
+<div class="section" id="running-legacy-code">
+<h2>Running legacy code<a class="headerlink" href="#running-legacy-code" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish 5 still relies on the legacy kernel (from 4.x) and runs it
+when needed <strong>inside an isolated PHP closure</strong>, making it
+<strong>sandboxed</strong>.&nbsp;This is available for your use as well making it possible
+to run some PHP code inside that sandbox through
+the&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>runCallback()``&nbsp;method.</p>
+<p><strong>Simple legacy code example</strong></p>
+<p>The example above is very simple and naive - in fact for accessing
+configuration settings from the Legacy Stack using the
+<a class="reference external" href="Legacy-configuration_2720546.html">ConfigResolver</a> is recommended.</p>
+<p>Using the legacy closure, you&#8217;ll be able to even run complex legacy
+features, like an <strong>eZ Find search</strong>:</p>
+<p><strong>Using eZ Find</strong></p>
+</div>
+<div class="section" id="legacy-modules">
+<h2>Legacy modules<a class="headerlink" href="#legacy-modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="routing-fallback-sub-requests">
+<h3>Routing fallback &amp; sub-requests<a class="headerlink" href="#routing-fallback-sub-requests" title="Permalink to this headline">¶</a></h3>
+<p>Any route that is not declared in eZ Publish 5 in an
+included&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>routing.yml``&nbsp;and that is not a valid&nbsp;<em>UrlAlias</em>&nbsp;<strong>will
+automatically fallback to eZ Publish legacy</strong> (including admin
+interface).</p>
+<p><strong>This allows all your old modules to work as before</strong>,&nbsp;out-of-the-box
+(including kernel modules), and also allows you to reuse this code from
+your templates using sub requests:</p>
+<p><strong>Template legacy module sub-request</strong></p>
+</div>
+<div class="section" id="using-ez-publish-5-and-symfony-features-in-legacy">
+<h3>Using eZ Publish 5 and Symfony features in Legacy<a class="headerlink" href="#using-ez-publish-5-and-symfony-features-in-legacy" title="Permalink to this headline">¶</a></h3>
+<p>If for some reason you need to develop a legacy module and access to eZ
+Publish 5 / Symfony features (i.e. when developing an extension for
+admin interface), you&#8217;ll be happy to know that you actually have access
+to all services registered in the whole framework, including bundles,
+through the service container.</p>
+<p>The example below shows how to retrieve the content repository and the
+logger.</p>
+<p><strong>Retrieve services from the container</strong></p>
+<p>Tip</p>
+<p>Icon</p>
+<p>The example above works in legacy modules and CLI scripts</p>
+</div>
+<div class="section" id="running-legacy-scripts-and-cronjobs">
+<h3>Running legacy scripts and cronjobs<a class="headerlink" href="#running-legacy-scripts-and-cronjobs" title="Permalink to this headline">¶</a></h3>
+<p>Icon</p>
+<p>Note: This feature has been introduced in eZ Publish 5.1.</p>
+<p>Important</p>
+<p>Icon</p>
+<div class="line-block">
+<div class="line"><a href="#id5"><span class="problematic" id="id6">**</span></a>Running legacy scripts and cronjobs through the Symfony stack is</div>
+</div>
+<p>highly recommended !**
+| Otherwise, features from the Symfony stack cannot be used (i.e. HTTP
+cache purge) and cache clearing. NB: Some script we know won&#8217;t affect
+cache, are still documented to be executed the direct way.</p>
+<p>Legacy scripts can be executed form the Symfony CLI, by using the
+<tt class="docutils literal"><span class="pre">ezpublish:legacy:script</span></tt> command, specifying the path to the script
+as argument.</p>
+<div class="line-block">
+<div class="line">The command will need to be executed from eZ Publish&#8217;s 5 root, and the</div>
+</div>
+<p>path to the desired script must exist in the <tt class="docutils literal"><span class="pre">ezpublish_legacy</span></tt>
+folder.
+| Here&#8217;s a usage example:</p>
+<div class="highlight-python"><pre>php ezpublish/console --env=prod ezpublish:legacy:script bin/php/ezpgenerateautoloads.php</pre>
+</div>
+<p>Here we made sure to specify&nbsp;&#8211;env=prod, this is needed for all legacy
+scripts that clear cache, otherwise they will will clear dev environment
+cache instead of prod for Symfony stack.</p>
+<p>If you want to access the script&#8217;s help please be aware that you will
+need to use the newly introduced <tt class="docutils literal"><span class="pre">--legacy-help</span></tt> option, since &#8211;help
+is already reserved for the CLI help.</p>
+<p>Icon</p>
+<p>The <tt class="docutils literal"><span class="pre">--legacy-help</span></tt> option should be added before the path to the
+script for this to work.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">Here&#8217;s an example:</div>
+</div>
+<div class="highlight-python"><pre>php ezpublish/console --env=prod ezpublish:legacy:script --legacy-help bin/php/ezpgenerateautoloads.php</pre>
+</div>
+<div class="line-block">
+<div class="line">The same logic will apply for cronjob execution.</div>
+<div class="line">Legacy cronjobs are triggered by the&nbsp;<tt class="docutils literal"><span class="pre">runcronjobs.php</span></tt> legacy</div>
+</div>
+<p>script, which expects the name of the cronjob to run as a parameter.
+| This is how you can run cronjobs from the Symfony CLI:</p>
+<div class="highlight-python"><pre>php ezpublish/console --env=prod ezpublish:legacy:script runcronjobs.php frequent</pre>
+</div>
+<div class="line-block">
+<div class="line">Also, if you require using additional script options, please be sure</div>
+</div>
+<p>to use the long name, such as <tt class="docutils literal"><span class="pre">--siteaccess</span></tt> or <tt class="docutils literal"><span class="pre">--debug</span></tt> to avoid
+conflicts between script and CLI options.
+| For more details regarding legacy cronjobs execution please refer to
+the&nbsp;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Cronjobs/Running-cronjobs">Running
+cronjobs</a>
+chapter existing in doc.ez.no.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Legacy code and features</a><ul>
+<li><a class="reference internal" href="#legacy-mode">Legacy Mode</a><ul>
+<li><a class="reference internal" href="#what-it-does">What it does</a></li>
+<li><a class="reference internal" href="#what-it-doesn-t-do">What it doesn&#8217;t do</a></li>
+<li><a class="reference internal" href="#allowing-symfony-routes-to-work">Allowing Symfony routes to work</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#legacy-template-inclusion">Legacy Template inclusion</a><ul>
+<li><a class="reference internal" href="#template-parameters">Template parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-legacy-code">Running legacy code</a></li>
+<li><a class="reference internal" href="#legacy-modules">Legacy modules</a><ul>
+<li><a class="reference internal" href="#routing-fallback-sub-requests">Routing fallback &amp; sub-requests</a></li>
+<li><a class="reference internal" href="#using-ez-publish-5-and-symfony-features-in-legacy">Using eZ Publish 5 and Symfony features in Legacy</a></li>
+<li><a class="reference internal" href="#running-legacy-scripts-and-cronjobs">Running legacy scripts and cronjobs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Legacy-code-and-features_8323433.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

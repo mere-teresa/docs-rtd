@@ -1,0 +1,466 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+#. `5.1 Release Notes <5.1-Release-Notes_12781020.html>`__
+
+eZ Publish Platform 5.<next> : 5.1 Changelog
+============================================
+
+Added by bertrand.dunogier@ez.no , edited by bertrand.dunogier@ez.no on
+May 22, 2013
+
+ 
+
+`Improvements <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%20resolution%20=%20Fixed%20AND%20type%20in%20%28Improvement%29%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__ (28 issues)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-19161 <https://jira.ez.no/browse/EZP-19161>`__
+
+`Remove redundant indexes/keys <https://jira.ez.no/browse/EZP-19161>`__
+
+Database related
+
+`EZP-19166 <https://jira.ez.no/browse/EZP-19166>`__
+
+`REST API: allow usage of eZ session cookie for
+authentication <https://jira.ez.no/browse/EZP-19166>`__
+
+REST interface
+
+`EZP-19946 <https://jira.ez.no/browse/EZP-19946>`__
+
+`Implement not implemented unit
+tests <https://jira.ez.no/browse/EZP-19946>`__
+
+Repository & Services (Public API impl)
+
+`EZP-20033 <https://jira.ez.no/browse/EZP-20033>`__
+
+`Implement XmlText relation
+handling <https://jira.ez.no/browse/EZP-20033>`__
+
+Field types, Public API interfaces
+
+`EZP-20097 <https://jira.ez.no/browse/EZP-20097>`__
+
+`Specify a api to field types for dealing with relation
+handling <https://jira.ez.no/browse/EZP-20097>`__
+
+Field types, Repository & Services (Public API impl)
+
+`EZP-20106 <https://jira.ez.no/browse/EZP-20106>`__
+
+`Repository is aware of legacy storage specific
+ezcontentobject\_tree.path\_identification\_string <https://jira.ez.no/browse/EZP-20106>`__
+
+Legacy Storage engine, Repository & Services (Public API impl)
+
+`EZP-20151 <https://jira.ez.no/browse/EZP-20151>`__
+
+`Documentation: Please create documentation for
+eztc.php <https://jira.ez.no/browse/EZP-20151>`__
+
+Clustering, Documentation
+
+`EZP-20163 <https://jira.ez.no/browse/EZP-20163>`__
+
+`Remove loadRolesByGroupId from SPI and Implementation and
+Tests <https://jira.ez.no/browse/EZP-20163>`__
+
+Legacy Storage engine, SPI interfaces
+
+`EZP-20258 <https://jira.ez.no/browse/EZP-20258>`__
+
+`eZ Recommendation - compatibility with eZDemo
+design <https://jira.ez.no/browse/EZP-20258>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20259 <https://jira.ez.no/browse/EZP-20259>`__
+
+`eZ Recommendation - compatibility with ezwebin
+design <https://jira.ez.no/browse/EZP-20259>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20260 <https://jira.ez.no/browse/EZP-20260>`__
+
+`eZ Recommendation - optimized scenario
+template <https://jira.ez.no/browse/EZP-20260>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20295 <https://jira.ez.no/browse/EZP-20295>`__
+
+`No proxy support for outbound
+requests <https://jira.ez.no/browse/EZP-20295>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20317 <https://jira.ez.no/browse/EZP-20317>`__
+
+`Add ContentTypeIdentifier
+Criterion <https://jira.ez.no/browse/EZP-20317>`__
+
+Repository & Services (Public API impl)
+
+`EZP-20395 <https://jira.ez.no/browse/EZP-20395>`__
+
+`Create doc on how to use Search via Public
+API <https://jira.ez.no/browse/EZP-20395>`__
+
+Documentation, Public API interfaces, Search
+
+`EZP-20400 <https://jira.ez.no/browse/EZP-20400>`__
+
+`Remove deprecated parts of API:
+ContentInfo->contentType <https://jira.ez.no/browse/EZP-20400>`__
+
+Public API interfaces, Repository & Services (Public API impl)
+
+`EZP-20406 <https://jira.ez.no/browse/EZP-20406>`__
+
+`ezrecommendation cookie expiry time too
+short <https://jira.ez.no/browse/EZP-20406>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20419 <https://jira.ez.no/browse/EZP-20419>`__
+
+`Fix unit- & integration-test failures on PHP
+5.3.3 <https://jira.ez.no/browse/EZP-20419>`__
+
+CI System, Test framework
+
+`EZP-20439 <https://jira.ez.no/browse/EZP-20439>`__
+
+`eZ Odoscope Multi-server Setup <https://jira.ez.no/browse/EZP-20439>`__
+
+Documentation, Extensions, Misc
+
+`EZP-20493 <https://jira.ez.no/browse/EZP-20493>`__
+
+`Documentation improvement: local-only caches on clustered
+systems <https://jira.ez.no/browse/EZP-20493>`__
+
+`EZP-20516 <https://jira.ez.no/browse/EZP-20516>`__
+
+`ImageMagick filters parameter format changed in
+ezpublish.yml <https://jira.ez.no/browse/EZP-20516>`__
+
+Documentation, Symfony stack
+
+Showing 20 out of `28
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%20resolution%20=%20Fixed%20AND%20type%20in%20%28Improvement%29%20ORDER%20BY%20issuetype%20DESC,%20key%20ASC&tempMax=1000>`__
+
+`Features <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%0D%0A%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%0D%0Aresolution%20=%20Fixed%20AND%0D%0Atype%20in%20%28%20Epic,%20Feature,%20Story%20%29%0D%0AORDER%20BY%20key%20ASC&tempMax=1000>`__ (20 issues)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-19790 <https://jira.ez.no/browse/EZP-19790>`__
+
+`As a user I would like technical doc for
+ez\_render\_field() <https://jira.ez.no/browse/EZP-19790>`__
+
+Documentation
+
+`EZP-19794 <https://jira.ez.no/browse/EZP-19794>`__
+
+`Document the writing of content/location view
+templates <https://jira.ez.no/browse/EZP-19794>`__
+
+Documentation
+
+`EZP-19822 <https://jira.ez.no/browse/EZP-19822>`__
+
+`Building the Focused Overlay <https://jira.ez.no/browse/EZP-19822>`__
+
+`EZP-19884 <https://jira.ez.no/browse/EZP-19884>`__
+
+`Refactoring content object storage and
+update <https://jira.ez.no/browse/EZP-19884>`__
+
+Legacy Storage engine, Public API interfaces
+
+`EZP-19948 <https://jira.ez.no/browse/EZP-19948>`__
+
+`Global variable available in
+twig <https://jira.ez.no/browse/EZP-19948>`__
+
+Template language
+
+`EZP-20051 <https://jira.ez.no/browse/EZP-20051>`__
+
+`Setting an empty value to a required field won't trigger a
+ContentValidationException <https://jira.ez.no/browse/EZP-20051>`__
+
+Field types
+
+`EZP-20053 <https://jira.ez.no/browse/EZP-20053>`__
+
+`Write best practice high-level coding
+guidlines <https://jira.ez.no/browse/EZP-20053>`__
+
+Design (templates, CSS, etc.)
+
+`EZP-20113 <https://jira.ez.no/browse/EZP-20113>`__
+
+`eZDate and eZTime FieldTypes are not supported by Public
+API <https://jira.ez.no/browse/EZP-20113>`__
+
+Field types
+
+`EZP-20194 <https://jira.ez.no/browse/EZP-20194>`__
+
+`Merge performance optimization branch from
+Qafoo <https://jira.ez.no/browse/EZP-20194>`__
+
+Legacy Storage engine
+
+`EZP-20238 <https://jira.ez.no/browse/EZP-20238>`__
+
+`Upgrade to Symfony 2.2 <https://jira.ez.no/browse/EZP-20238>`__
+
+Symfony stack
+
+`EZP-20268 <https://jira.ez.no/browse/EZP-20268>`__
+
+`Move the eZ Publish 5.0 install doc to
+confluence <https://jira.ez.no/browse/EZP-20268>`__
+
+Documentation
+
+`EZP-20286 <https://jira.ez.no/browse/EZP-20286>`__
+
+`Add multisite support for single content repository
+installation <https://jira.ez.no/browse/EZP-20286>`__
+
+Symfony stack
+
+`EZP-20288 <https://jira.ez.no/browse/EZP-20288>`__
+
+`As a support engineer I would like eZDB & eZFS2 Cluster removed in
+favor of eZDFS <https://jira.ez.no/browse/EZP-20288>`__
+
+Clustering, Database related, Legacy IO
+
+`EZP-20322 <https://jira.ez.no/browse/EZP-20322>`__
+
+`Specify csrf use in REST for use with session based
+auth <https://jira.ez.no/browse/EZP-20322>`__
+
+REST API v2
+
+`EZP-20324 <https://jira.ez.no/browse/EZP-20324>`__
+
+`As a user I would like that SPI calls are
+cached <https://jira.ez.no/browse/EZP-20324>`__
+
+Caching
+
+`EZP-20399 <https://jira.ez.no/browse/EZP-20399>`__
+
+`Implement host+uri using compound siteaccess
+matcher <https://jira.ez.no/browse/EZP-20399>`__
+
+Documentation, Symfony stack
+
+`EZP-20426 <https://jira.ez.no/browse/EZP-20426>`__
+
+`Legacy cronjobs and scripts should be launchable from Symfony
+CLI <https://jira.ez.no/browse/EZP-20426>`__
+
+Cronjobs, Symfony stack
+
+`EZP-20467 <https://jira.ez.no/browse/EZP-20467>`__
+
+`Implement REST server csrf protection for session based
+authentication <https://jira.ez.no/browse/EZP-20467>`__
+
+REST API v2
+
+`EZP-20621 <https://jira.ez.no/browse/EZP-20621>`__
+
+`Explain how to setup Memcached with Stash for SPI cache in multi-server
+mode <https://jira.ez.no/browse/EZP-20621>`__
+
+Clustering
+
+`EZP-20757 <https://jira.ez.no/browse/EZP-20757>`__
+
+`%secret% key should be generated at
+install/update <https://jira.ez.no/browse/EZP-20757>`__
+
+Symfony stack
+
+`20
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%0D%0A%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%0D%0Aresolution%20=%20Fixed%20AND%0D%0Atype%20in%20%28%20Epic,%20Feature,%20Story%20%29%0D%0AORDER%20BY%20key%20ASC&tempMax=1000>`__
+
+`Bug fixes <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%0D%0A%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%0D%0Aresolution%20=%20Fixed%20AND%0D%0A%28type%20=%20Bug%20or%20type%20=%20%22Silver%20Bullet%22%29%0D%0AORDER%20BY%20key%20ASC&tempMax=1000>`__ (242 issues)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Key
+
+Summary
+
+component
+
+`EZP-14361 <https://jira.ez.no/browse/EZP-14361>`__
+
+`Image / File is lost if draft saving
+fails <https://jira.ez.no/browse/EZP-14361>`__
+
+Misc
+
+`EZP-14921 <https://jira.ez.no/browse/EZP-14921>`__
+
+`'small' size hardcoded in ezoe
+code <https://jira.ez.no/browse/EZP-14921>`__
+
+Extensions/eZ Online Editor, Extensions/eZ Online Editor/Documentation,
+Extensions/eZ Online Editor/Online Editor
+
+`EZP-17761 <https://jira.ez.no/browse/EZP-17761>`__
+
+`ezcache.php --purge does not purge template-blocks
+(patch) <https://jira.ez.no/browse/EZP-17761>`__
+
+Caching
+
+`EZP-17804 <https://jira.ez.no/browse/EZP-17804>`__
+
+`Tag cloud stacktrace on
+PostgreSQL <https://jira.ez.no/browse/EZP-17804>`__
+
+Extensions/eZ Flow, Extensions/eZ Website Interface
+
+`EZP-17847 <https://jira.ez.no/browse/EZP-17847>`__
+
+`tc-497 - Changing a gallery content order in admin interface, requires
+the cache to be clear before changes appear on correspondent
+slideshow <https://jira.ez.no/browse/EZP-17847>`__
+
+Misc
+
+`EZP-18195 <https://jira.ez.no/browse/EZP-18195>`__
+
+`$result.object is not correctly
+created <https://jira.ez.no/browse/EZP-18195>`__
+
+Extensions/eZ Find, Extensions/eZ Find/Searching
+
+`EZP-18398 <https://jira.ez.no/browse/EZP-18398>`__
+
+`empty set-block screws up compiled
+template <https://jira.ez.no/browse/EZP-18398>`__
+
+Template language
+
+`EZP-18662 <https://jira.ez.no/browse/EZP-18662>`__
+
+`switchlanguage doesn't respect RemoveSiteAccessIfDefaultAccess (patch
+proposed) <https://jira.ez.no/browse/EZP-18662>`__
+
+Language
+
+`EZP-19158 <https://jira.ez.no/browse/EZP-19158>`__
+
+`limitation on Group in createPermissionCheckingSQL is very slow in
+sites with populated groups <https://jira.ez.no/browse/EZP-19158>`__
+
+Database related
+
+`EZP-19243 <https://jira.ez.no/browse/EZP-19243>`__
+
+`Sso login mechanism should break inmediately after found a valid
+ssouser <https://jira.ez.no/browse/EZP-19243>`__
+
+Users and Access control
+
+`EZP-19512 <https://jira.ez.no/browse/EZP-19512>`__
+
+`Regression: 'Language' parameter not considered any more in
+eZContentObjectTreeNode::subTreeByNodeID() <https://jira.ez.no/browse/EZP-19512>`__
+
+Database related, Language
+
+`EZP-19576 <https://jira.ez.no/browse/EZP-19576>`__
+
+`SSLSubtrees stop working after
+changes <https://jira.ez.no/browse/EZP-19576>`__
+
+Caching, Documentation
+
+`EZP-19602 <https://jira.ez.no/browse/EZP-19602>`__
+
+`Node attributes are not being
+translated <https://jira.ez.no/browse/EZP-19602>`__
+
+Documentation, Template language
+
+`EZP-19608 <https://jira.ez.no/browse/EZP-19608>`__
+
+`Wrong documentation while running the installation of eZ
+Publish <https://jira.ez.no/browse/EZP-19608>`__
+
+Documentation, Install
+
+`EZP-19629 <https://jira.ez.no/browse/EZP-19629>`__
+
+`ezcache.php -> purge: file not removed from table ezimagefile, when not
+available on file system <https://jira.ez.no/browse/EZP-19629>`__
+
+Content (images, XML, PDF, RSS, etc.)
+
+`EZP-19649 <https://jira.ez.no/browse/EZP-19649>`__
+
+`eZ DFS sql error storing image files when path contains apostrophe
+(urlalias\_iri) <https://jira.ez.no/browse/EZP-19649>`__
+
+Clustering, Database related
+
+`EZP-19660 <https://jira.ez.no/browse/EZP-19660>`__
+
+`viewcache is cleared/refreshed before content publish operation is
+finished <https://jira.ez.no/browse/EZP-19660>`__
+
+Caching
+
+`EZP-19668 <https://jira.ez.no/browse/EZP-19668>`__
+
+`eZ Flow layout zone changes are not visible in admin interface for
+already existing layouts. <https://jira.ez.no/browse/EZP-19668>`__
+
+Extensions/eZ Flow
+
+`EZP-19671 <https://jira.ez.no/browse/EZP-19671>`__
+
+`DFS cluster: expiryXYZtmp.php with 0 byte
+size <https://jira.ez.no/browse/EZP-19671>`__
+
+Caching, Clustering
+
+`EZP-19684 <https://jira.ez.no/browse/EZP-19684>`__
+
+`Search engine doesn't handle curly quotes
+correctly <https://jira.ez.no/browse/EZP-19684>`__
+
+Search
+
+Showing 20 out of `242
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%20=%20EZP%20AND%20%0D%0A%28fixVersion%20=%20%225.1%22%20OR%20fixVersion%20=%20%225.1%20Certification%22%20OR%20fixVersion%20=%20%225.1.0rc1%22%29%20AND%0D%0Aresolution%20=%20Fixed%20AND%0D%0A%28type%20=%20Bug%20or%20type%20=%20%22Silver%20Bullet%22%29%0D%0AORDER%20BY%20key%20ASC&tempMax=1000>`__
+
+Document generated by Confluence on Feb 12, 2014 16:43

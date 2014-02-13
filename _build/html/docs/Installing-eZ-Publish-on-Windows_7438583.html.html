@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on Windows &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Normal-installation_7438509.html">Normal installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-installing-ez-publish-on-windows">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on Windows<a class="headerlink" href="#ez-publish-platform-5-next-installing-ez-publish-on-windows" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Nov 14,
+2013</p>
+<p>The requirements for doing a normal installation must be met. Read the
+&#8220;<a class="reference external" href="Requirements-for-doing-a-normal-installation_7438584.html">Requirements for doing a normal
+installation</a>&#8221;
+section first!</p>
+<p>Proceed only if you have access to a Windows based system with IIS, PHP,
+MySQL or PostgreSQL already installed and running (do not use Apache 2.x
+for Windows, at least for production servers).</p>
+<p>This section will guide you through the following steps:</p>
+<ul class="simple">
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Settingupadatabase">Setting up a
+database</a><ul>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-MySQL">MySQL</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-PostgreSQL">PostgreSQL</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-DownloadingeZPublish">Downloading eZ
+Publish</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-UnpackingeZPublish">Unpacking eZ
+Publish</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Linkassets">Link assets</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Virtualhost">Virtual host</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Initiatingthesetupwizard">Initiating the setup
+wizard</a><ul>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Documentrootexample">Document root
+example</a></li>
+<li><a class="reference external" href="#InstallingeZPublishonWindows-Definingthedesiredenvironment%28optional%29">Defining the desired
+environment&nbsp;(optional)</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="setting-up-a-database">
+<h2>Setting up a database<a class="headerlink" href="#setting-up-a-database" title="Permalink to this headline">¶</a></h2>
+<p><strong>Known issue with running PHP5.3 on MySQL:</strong> Some Windows users with
+both IPv4 and IPv6 installed experience problems connecting to the
+database server using host names like &#8220;localhost&#8221;... If you experience
+problems, try using IPv4 address like &#8220;<tt class="docutils literal"><span class="pre">127.0.0.1</span></tt>&#8221;. This is due to
+a connectivity problem when running PHP5.3 on MySQL. So, please replace
+the database server name &#8220;<tt class="docutils literal"><span class="pre">localhost</span></tt>&#8221; with the IP address of the
+machine, or &#8220;<tt class="docutils literal"><span class="pre">127.0.0.1</span></tt>&#8221;, which is reserved for the local host.</p>
+<p>A database must be created before running the setup wizard. The
+following text explains how to set up a database using either MySQL or
+PostgreSQL.</p>
+<div class="section" id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Log in as the root user (or any other MySQL user that has the CREATE,
+CREATE USER and GRANT OPTION
+<a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/en/privileges-provided.html">privileges</a>):</p>
+<div class="highlight-python"><pre>mysql --host=&lt;mysql_host&gt; --port=&lt;port&gt; -u &lt;mysql_user&gt; -p&lt;mysql_password&gt;</pre>
+</div>
+<p>Icon</p>
+<p>Note that if MySQL is installed on the same server, the
+&#8220;<tt class="docutils literal"><span class="pre">--host</span></tt>&#8221; parameter can be omitted. If the &#8220;<tt class="docutils literal"><span class="pre">--port</span></tt>&#8221;
+parameter is omitted, the default port for MySQL traffic will be used
+(port 3306).</p>
+<p>The MySQL client should display a &#8220;mysql&gt;&#8221; prompt.</p>
+</li>
+<li><p class="first">Create a new database:</p>
+<div class="highlight-python"><pre>mysql&gt; CREATE DATABASE &lt;database&gt; CHARACTER SET utf8;</pre>
+</div>
+</li>
+<li><p class="first">Grant access permissions:</p>
+<div class="highlight-python"><pre>mysql&gt; GRANT ALL ON &lt;database&gt;.* TO &lt;user&gt;@&lt;ezp_host&gt; IDENTIFIED BY '&lt;password&gt;';</pre>
+</div>
+<p>Icon</p>
+<p>Note that if the specified user account does not exist, it will be
+created.</p>
+<p>Reference</p>
+<p>Description</p>
+<p>&lt;mysql_host&gt;</p>
+<p>The hostname of the MySQL database server.</p>
+<p>&lt;port&gt;</p>
+<p>The port number that will be used to connect to the MySQL database
+server.</p>
+<p>&lt;mysql_user&gt;</p>
+<p>The MySQL user (if no user is set up, use &#8220;root&#8221;).</p>
+<p>&lt;mysql_password&gt;</p>
+<p>The password that belongs to the &lt;mysql_user&gt;.</p>
+<p>&lt;database&gt;</p>
+<p>The name of the database, for example &#8220;my_new_database&#8221;.</p>
+<p>&lt;user&gt;</p>
+<p>The username that will be used to access the database.</p>
+<p>&lt;ezp_host&gt;</p>
+<p>The hostname of the server on which eZ Publish will be running. (may
+be &#8216;localhost&#8217; if MySQL is installed on the same server).</p>
+<p>&lt;password&gt;</p>
+<p>The password you wish to set in order to limit access to the
+database.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="postgresql">
+<h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Log in as the postgres user (or any other PostgreSQL user that has
+sufficient
+<a class="reference external" href="http://www.postgresql.org/docs/current/interactive/sql-grant.html">privileges</a>
+to create roles and databases):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="o">&lt;</span><span class="n">psql_host</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">port</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">U</span> <span class="o">&lt;</span><span class="n">psql_user</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">W</span>
+</pre></div>
+</div>
+<p>Icon</p>
+<p>Note that if PostgreSQL is installed on the same server, the
+&#8220;<tt class="docutils literal"><span class="pre">-h</span></tt>&#8221; parameter can be omitted. If the &#8220;<tt class="docutils literal"><span class="pre">-p</span></tt>&#8221; parameter is
+omitted, the default port for PostgreSQL traffic will be used (in
+most cases, port 5432).</p>
+<p>The PostgreSQL client will ask you to specify the password that
+belongs to the <tt class="docutils literal"><span class="pre">&lt;psql_user&gt;</span></tt>. If the password is correct, the
+client should display a &#8220;<tt class="docutils literal"><span class="pre">&lt;psql_user&gt;=#</span></tt>&#8221; prompt.</p>
+</li>
+<li><p class="first">Create a new database:</p>
+<div class="highlight-python"><pre>postgres=# CREATE DATABASE &lt;database&gt; ENCODING='utf8';</pre>
+</div>
+</li>
+<li><p class="first">Create a new user:</p>
+<div class="highlight-python"><pre>postgres=# CREATE USER &lt;user&gt; PASSWORD '&lt;password&gt;';</pre>
+</div>
+</li>
+<li><p class="first">Grant access permissions:</p>
+<div class="highlight-python"><pre>postgres=# GRANT ALL PRIVILEGES ON DATABASE &lt;database&gt; TO &lt;user&gt;;</pre>
+</div>
+</li>
+<li><p class="first">Import the
+&#8220;<a class="reference external" href="http://www.postgresql.org/docs/8.3/static/pgcrypto.html">pgcrypto</a>&#8221;
+module into the new database:</p>
+<div class="highlight-python"><pre>postgres=# \c &lt;database&gt;
+&lt;database&gt;=# \i '&lt;path_to_pgcrypto&gt;'</pre>
+</div>
+<p>Reference</p>
+<p>Description</p>
+<p>&lt;psql_host&gt;</p>
+<p>The hostname of the PostgreSQL database server.</p>
+<p>&lt;port&gt;</p>
+<p>The port number that will be used to connect to the PostgreSQL
+database server.</p>
+<p>&lt;psql_user&gt;</p>
+<p>The PostgreSQL user (if no user is set up, use &#8220;<tt class="docutils literal"><span class="pre">postgresql</span></tt>&#8221;).</p>
+<p>&lt;database&gt;</p>
+<p>The name of the database, for example &#8220;<tt class="docutils literal"><span class="pre">my_new_database</span></tt>&#8221;.</p>
+<p>&lt;user&gt;</p>
+<p>The username that will be used to access the database.</p>
+<p>&lt;password&gt;</p>
+<p>The password you wish to set in order to limit access to the
+database.</p>
+<p>&lt;path_to_pgcrypto&gt;</p>
+<p>The path to the &#8220;<tt class="docutils literal"><span class="pre">pgcrypto.sql</span></tt>&#8221; file, for example
+&#8220;<tt class="docutils literal"><span class="pre">C:\\Program</span> <span class="pre">Files\\PostgreSQL\\8.2\\share\\contrib\\pgcrypto.sql</span></tt>&#8221;.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="downloading-ez-publish">
+<h2>Downloading eZ Publish<a class="headerlink" href="#downloading-ez-publish" title="Permalink to this headline">¶</a></h2>
+<p>The latest community version of eZ Publish can be downloaded from
+<a class="reference external" href="http://share.ez.no/downloads">http://share.ez.no/downloads</a>.</p>
+</div>
+<div class="section" id="unpacking-ez-publish">
+<h2>Unpacking eZ Publish<a class="headerlink" href="#unpacking-ez-publish" title="Permalink to this headline">¶</a></h2>
+<p>Use your favorite utility to unpack the downloaded eZ Publish archive to
+a web-served directory (a directory that is reachable using a web
+browser). The extraction utility will unpack eZ Publish into a
+subdirectory called &#8220;ezpublish-5.x.y&#8221;. Feel free to rename this
+directory to something more meaningful, for example &#8220;my_site&#8221;.</p>
+</div>
+<div class="section" id="link-assets">
+<h2>Link assets<a class="headerlink" href="#link-assets" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p>The download file should already have generated these assets for you as
+of 5.2 / 2013.07, but in case of issues on Windows with symlinks within
+the download file, make sure to run these commands.</p>
+<p>To be able to run eZ Publish 5 correctly, assets need to be exposed in
+the public &#8216;web&#8217; folder.</p>
+<p>The following commands will first symlink eZ Publish 5 assets in
+&#8220;Bundles&#8221; and the second will symlink assets (design files like images,
+scripts and css, and files in var folder) &nbsp;from eZ Publish Legacy</p>
+<div class="highlight-python"><pre>cd /&lt;ezp5-root&gt;
+php ezpublish/console assets:install --symlink web
+php ezpublish/console ezpublish:legacy:assets_install --symlink web
+php ezpublish/console assetic:dump --env=prod web</pre>
+</div>
+<p><strong>Note</strong>: In both cases &#8220;web&#8221; is the default folder and can be skipped
+from the command. Further information about alternative options
+is&nbsp;available&nbsp;with -h just like it is with
+&#8220;<tt class="docutils literal"><span class="pre">php</span> <span class="pre">ezpublish/console</span> <span class="pre">-h</span></tt>&#8221;.</p>
+<p><strong>Note</strong>: On windows, you will need an <em>elevated prompt</em>, which means
+you will need Administrator privileges for the symlink command to work.</p>
+</div>
+<div class="section" id="virtual-host">
+<h2>Virtual host<a class="headerlink" href="#virtual-host" title="Permalink to this headline">¶</a></h2>
+<p>For help on how to set up a virtual host and rewrite rules on IIS, you
+will find some information on the community website (e.g. in
+<a class="reference external" href="http://share.ez.no/forums/install-configuration/windows-server-2008-r2-iis7-its-rewrite-module-ez-publish-rewrite-rule">this</a>
+forum thread).</p>
+<p>Warning regarding APC</p>
+<p>Icon</p>
+<p>If you are planning to use APC to speed up your site, please be sure to
+check the available notes
+<a class="reference external" href="https://confluence.ez.no/display/EZP/Persistence+cache+configuration#Persistencecacheconfiguration-APC">here</a>,
+before entering the setup wizard chapter.</p>
+</div>
+<div class="section" id="initiating-the-setup-wizard">
+<h2>Initiating the setup wizard<a class="headerlink" href="#initiating-the-setup-wizard" title="Permalink to this headline">¶</a></h2>
+<p>The setup wizard can be started using a web browser immediately after
+the previous steps (described in this section) are completed. It will be
+automatically run the first time someone tries to access/browse the
+index.php file located in the eZ Publish directory. Let&#8217;s assume that we
+are using a server with the hostname &#8220;<tt class="docutils literal"><span class="pre">www.example.com</span></tt>&#8221; and that
+after unpacking, the eZ Publish directory was renamed to
+&#8220;<tt class="docutils literal"><span class="pre">my_site</span></tt>&#8221;.</p>
+<p>You can choose between a&nbsp;<a class="reference external" href="Virtual-host-setup_7438507.html">Virtual
+Host</a>&nbsp;based configuration, or a non
+Virtual Host configuration by using
+an&nbsp;<a class="reference external" href="htaccess-example_7438571.html">.htaccess</a> file.</p>
+<div class="section" id="document-root-example">
+<h3>Document root example<a class="headerlink" href="#document-root-example" title="Permalink to this headline">¶</a></h3>
+<p>If eZ Publish was unpacked into a directory called &#8220;<tt class="docutils literal"><span class="pre">my_site</span></tt>&#8221; under
+the document root, the setup wizard can be initiated by browsing the
+following URL: <tt class="docutils literal"><span class="pre">http://www.example.com/my_site/index.php</span></tt>.</p>
+<p>Refer to &#8220;<a class="reference external" href="The-setup-wizard_7438516.html">The setup wizard</a>&#8221;
+section for a detailed description of the web based setup wizard.</p>
+</div>
+<div class="section" id="defining-the-desired-environment-optional">
+<h3>Defining the desired environment&nbsp;(optional)<a class="headerlink" href="#defining-the-desired-environment-optional" title="Permalink to this headline">¶</a></h3>
+<p>Icon</p>
+<p>This is a procedure to be done for the case you need to set up several
+multiple environments for development purposes.</p>
+<div class="line-block">
+<div class="line">Environment configuration is a new feature introduced as of eZ Publish</div>
+</div>
+<p>5.2 and eZ Publish Community Project 2013.06.
+| You can configure several environments, from production, development
+or staging, even if for each one of them you need require using
+different configurations sets.</p>
+<p>In the&nbsp;<tt class="docutils literal"><span class="pre">VirtualHost``&nbsp;example</span> <span class="pre">in</span> <span class="pre">the&nbsp;\</span> <span class="pre">`Virtual</span> <span class="pre">host</span>
+<span class="pre">setup</span> <span class="pre">&lt;Virtual-host-setup_7438507.html&gt;`__&nbsp;chapter</span> <span class="pre">the</span>
+<span class="pre">required&nbsp;\</span> <span class="pre">``VirtualHost``&nbsp;configurations</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">already</span> <span class="pre">included.</span>
+<span class="pre">You</span> <span class="pre">can</span> <span class="pre">switch</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">desired</span> <span class="pre">environment</span> <span class="pre">by</span> <span class="pre">setting</span>
+<span class="pre">the&nbsp;\</span> <span class="pre">``ENVIRONMENT``&nbsp;environment</span> <span class="pre">variable</span> <span class="pre">to</span> <span class="pre">&quot;``prod</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">dev</span></tt>&#8221;
+or other custom value, as you can see in the following example:</p>
+<div class="highlight-python"><pre># Environment.
+# Possible values: "prod" and "dev" out-of-the-box, other values possible with proper configuration (described below)
+# Defaults to "prod" if omitted
+SetEnv ENVIRONMENT "prod"</pre>
+</div>
+<p>If you want to use a custom environment (something else then
+&#8220;<tt class="docutils literal"><span class="pre">prod</span></tt>&#8221; and &#8220;<tt class="docutils literal"><span class="pre">dev</span></tt>&#8221;) the next step is to create the dedicated
+configuration files for your environment:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ezpublish/config/config_&lt;env_name&gt;.yml</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish_&lt;env_name&gt;.yml</span></tt></li>
+</ul>
+<p>The name used as&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>&lt;env_name&gt;``&nbsp;will be the one that can be used as
+value of the&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>ENVIRONMENT``&nbsp;environment variable.</p>
+<p>Those files must import the main configuration file, just like the
+default&nbsp;<tt class="docutils literal"><span class="pre">`config_dev.yml</span></tt> &lt;<a class="reference external" href="https://github.com/ezsystems/ezpublish-community/blob/master/ezpublish/config/config_dev.yml">https://github.com/ezsystems/ezpublish-community/blob/master/ezpublish/config/config_dev.yml</a>&gt;`__&nbsp;already
+does. Here&#8217;s an example:</p>
+<div class="highlight-python"><pre>imports:
+    - { resource: config.yml }</pre>
+</div>
+<p>This allows you to override settings defined in the main configuration
+file, depending on your environment (like the DB settings or any other
+setting you may want to override).</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Installing eZ Publish on Windows</a><ul>
+<li><a class="reference internal" href="#setting-up-a-database">Setting up a database</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#postgresql">PostgreSQL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#downloading-ez-publish">Downloading eZ Publish</a></li>
+<li><a class="reference internal" href="#unpacking-ez-publish">Unpacking eZ Publish</a></li>
+<li><a class="reference internal" href="#link-assets">Link assets</a></li>
+<li><a class="reference internal" href="#virtual-host">Virtual host</a></li>
+<li><a class="reference internal" href="#initiating-the-setup-wizard">Initiating the setup wizard</a><ul>
+<li><a class="reference internal" href="#document-root-example">Document root example</a></li>
+<li><a class="reference internal" href="#defining-the-desired-environment-optional">Defining the desired environment&nbsp;(optional)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Installing-eZ-Publish-on-Windows_7438583.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

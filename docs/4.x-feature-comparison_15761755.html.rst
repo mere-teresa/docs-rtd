@@ -1,0 +1,502 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `Development & Administration Guides <6291674.html>`__
+#. `Developing with eZ Publish
+   5 <Developing-with-eZ-Publish-5_2720528.html>`__
+#. `Introduction for eZ Publish
+   developers <Introduction-for-eZ-Publish-developers_11403947.html>`__
+#. `Intro for eZ Publish 4.x/3.x developers <2720567.html>`__
+
+eZ Publish Platform 5.<next> : 4.x feature comparison
+=====================================================
+
+Added by andre.romcke@ez.no , edited by andre.romcke@ez.no on Jan 28,
+2014
+
+CONTENT OF THIS PAGE IS UNDER REVIEW
+
+This page represents a comparison between *Legacy Stack *\ (aka "4.x"
+stack) vs *New Stack* (aka "5.x"- or "6.x"-stack); it will be udated as
+new stack matures. Note: Features mentioned on the black list are still
+available in 5.x, but via legacy kernel so you will need to use "pure
+legacy" or a mixed setup using "legacy fallbacks". 
+
+For a list of Symfony features supported out of the box, see
+`here <Symfony-feature-status_15761752.html>`__.
+
+For additional related topics see \ `Legacy code and
+features <Legacy-code-and-features_8323433.html>`__ and \ `Intro for eZ
+Publish 4.x/3.x developers <2720567.html>`__.
+
+Known existing integration (**white **\ list):
+----------------------------------------------
+
+5.x Feature
+
+4.x Feature
+
+Note/Limitation
+
+**Content Model**
+
+**
+**
+
+5.x aimed at not adding \ **any** features in the content/data model
+that would lead to backwards compatibility breaks, new features will
+instead be introduced when we reach 6.x and beyond.
+
+Content\*
+
+(Content) Object
+
+ 
+
+(Content) Relation
+
+(Object) Relation
+
+ 
+
+Field
+
+(Object) Attribute
+
+Missing FieldTypes will cause eZ Publish to return exception, this can
+be avoided by implementing\ :sup:`*<TODO:Add link when article on
+this>*` the FieldType or configuring it as
+"`NullType <The-Null-FieldType_12781027.html>`__\ "
+
+FieldType
+
+DataType
+
+See `FieldTypes <FieldTypes_10158198.html>`__ for list of supported
+types, known unsupported FieldTypes are mentioned in `Known
+issues <eZ-Publish-Platform-Releases_12781017.html>`__
+
+Locations
+
+Node
+
+ 
+
+Section
+
+ 
+
+ 
+
+ContentType
+
+(Content) Class
+
+ 
+
+FieldDefinition
+
+(Content) Class Attribute
+
+ 
+
+FieldGroups
+
+(Content) Class Attribute Grouping
+
+ 
+
+ObjectState
+
+ObjectState
+
+ 
+
+UrlAlias
+
+ 
+
+ 
+
+UrlWildcard
+
+ 
+
+ 
+
+Language
+
+ 
+
+ 
+
+User
+
+ 
+
+ 
+
+UserGroup
+
+ 
+
+Can by design (and intention) only have one location in 5.x when using
+Public API UserService
+
+Policy
+
+ 
+
+ 
+
+PolicyLimitation
+
+ 
+
+ 
+
+Role
+
+ 
+
+ 
+
+RoleLimitation
+
+ 
+
+ 
+
+RoleAssignment
+
+ 
+
+Currently not possible to delete specific assignment by id, can be
+deleted by Role and User.
+
+ 
+
+ 
+
+ 
+
+**Core**
+
+ 
+
+ 
+
+Public API
+
+n/a
+
+Legacy/4.x does not have a official public API, almost all internal
+functions are exposes publicly
+
+REST
+
+ 
+
+5.1 and higher includes a working read/write REST v2 API, 4.x had a
+readonly REST v1 API as of 4.5
+
+Development environment
+
+Development mode
+
+In 5.x this is provided by Symfony, and web debugger is extended by eZ
+Publish, additional debugging planned and in progress as "pull request".
+
+ 
+
+ 
+
+ 
+
+**Web stack**
+
+ 
+
+5.x web stack **is** Symfony with several eZ features on top
+
+Controllers
+
+Modules
+
+ 
+
+Bundles
+
+Extensions
+
+ 
+
+(Twig) Template system
+
+(eZ) Template system
+
+ 
+
+ViewProvider
+
+Override system
+
+Restricted to *viewLocation* in 5.0, *viewContent added* in 5.1, for
+changing presentation logic.
+
+Controller override
+
+n/a
+
+5.2 added feature for being able to also use override system of View
+Provider to also be able to override content controller under your own
+conditions to be able to modify behavior.
+
+Theme system
+
+Design system
+
+Planned to use
+`LiipThemeBundle <https://github.com/liip/LiipThemeBundle>`__,
+potentially in version 5.3.
+
+HTTP Cache
+
+View- / Static- Cache
+
+For anonymous users with `content aware
+caching <HttpCache_6291892.html>`__ since 5.0, also for logged in users
+with `context aware caching <Context-aware-HTTP-cache_14712846.html>`__
+since 5.2
+
+SiteAccess
+
+Site access
+
+Custom Url, host, port and combination matching to a specific set of
+settings
+
+SiteAccessGroup
+
+n/a
+
+New in 5.x, grouping of related SiteAccesses and common settings for
+them, typically used to denote a "Site"
+
+CSRF
+
+eZ FormToken
+
+Provided by Symfony
+
+ 
+
+ 
+
+ 
+
+**Data**
+
+ 
+
+ 
+
+Persistence cache
+
+Cluster- / Class- / ClassAttribute- / var- / "Global"- cache
+
+Introduced in 5.1, multi repository (aka multi-db) setups support added
+in 5.2.
+
+IO
+
+Cluster (-ing of files)
+
+Currently uses 4.x cluster system, new and simpler file clustering is
+planned for 6.x however this is abstracted away by the API and will only
+affect how cluster setups are configured.
+
+Multi repository
+
+Multi-db
+
+Supported, however see note on "Persistence cache".
+
+ 
+
+ 
+
+ 
+
+\\\* When referring a specific instance of any of the content model
+entries, either "object" or "item" is normal to append depending on
+context. In our BDD specifications the domain names have "object"
+appended to them forming "Content object(s)", "Location object(s)" and
+so on. 
+
+Known missing in Symfony stack (**black/grey** list):
+-----------------------------------------------------
+
+Note: Missing integration doesn't mean the system can not use the
+feature in a new installation relying on the new stack, but if it needs,
+it shall rely on a fallback to the legacy stack. For instance: a website
+with a shop system could be done in twig and rely on legacy only for the
+fallback for shop parts.
+
+Feature
+
+Note/Limitation
+
+**Core**
+
+ 
+
+Rating
+
+User Rating not currently supported by API (the service to deal with
+ratings, rating field type already exists), planned to be implemented
+later when some convention for FieldType provided API's are established.
+
+Shop
+
+No shop or field(/data) types related to shop currently supported by
+API, see `Known issues <eZ-Publish-Platform-Releases_12781017.html>`__.
+This is planned for "6.x" or a release shortly thereafter.
+
+eZComment
+
+`ezcomments <https://github.com/ezsystems/ezcomments/>`__ is not
+supported by API, and is not planned to be supported either. Instead of
+having it part of the API, it was replaced in 5.2 with a
+`CommentsBundle <https://github.com/ezsystems/CommentsBundle>`__ that
+will provide an agnostic system to integrate 3rd party comment services.
+Out of the box supporting Disqus and Facebook integration but can via
+custom integration can also work with other 3rd party systems (example:
+service, content model based comments or even ezcomments)
+
+Content Editing
+
+Content editing module is not implemented yet, but custom needs can for
+instance be solved with `Public
+API <eZ-Publish-Public-API_1736723.html>`__\ +Symfony controllers or use
+of `javascript REST
+client <https://github.com/ezsystems/ez-js-rest-client>`__ + `REST
+API <eZ-Publish-REST-API_6292277.html>`__.
+
+Module Permissions
+
+Controller / Bundle Permissions is not integrated with eZ Publish
+permission system yet, currently standard Symfony firewall rules need to
+be used. Public API however has full support for permissions and
+`limitations <Limitations_15204365.html>`__, and is as of 5.2 known to
+support legacy most edge cases.
+
+UrlAlias Routing
+
+UrlAlias has the same model as before and hence does not support routing
+directly to a bundle:controller:action
+
+Workflow
+
+Planned for future version, see Shop. Simple workflows already possible
+by using Symfony evens and Public API "Signals".
+
+Information Collector
+
+Planned as a Form builder UI basically using Symfony Forms + swiftmailer
+for mail transport, might reuse content types similarly to how
+Information Collector did it.
+
+Package system
+
+Planned to return as a import/export system which uses either API or SPI
+directly to replicate some or full amount of content from one repository
+to another, preferred format: XML using XML reader/writer.
+
+Menu management
+
+Not currently planned, might come back in the form of page layout
+designer (using similar concepts as Page FieldType).
+
+PDF Export
+
+Not currently planned, could be re-implemented outside of Core
+
+RSS feeds
+
+Currently no API for managing RSS feeds, REST view can be used as basis
+of feeds.
+
+Frontend Editing
+
+See "Content Editing".
+
+Be aware that eZ Flow timeline feature is not available in the legacy
+admin (only in front end editing), hence not usable on the new stack.
+
+Preview
+
+Planned for 5.3, versions before that uses legacy for preview.
+
+Search
+
+Search API exists, but front end is currently using legacy fallback
+(ezfind & ezsearch) and 5.x Search SPI Solr implementation is currently
+work in progress but rapidly maturing as of 5.2.
+
+User module
+
+User login, login handlers, change-password, forgot-password, register,
+profile and editing currently uses legacy fallback, planned for 5.3
+
+oAuth 2.0
+
+oAuth 1.0 supported in REST v1 in legacy, planned for new stack and REST
+v2 for future 5.x version.
+
+ 
+
+ 
+
+**Extensions**
+
+(aka Bundles)
+
+eZ Tags
+
+Planned for future 5.x version, still community supported in legacy
+stack on 5.x.
+
+eZ SI
+
+eZ SI is purely legacy, not required in Symfony as it support ESI
+natively. ez SI is still supported in legacy stack on 5.x.
+
+eZ Content staging
+
+No equivalent yet on the new stack, still supported in legacy stack on
+5.x.
+
+eZ Style editor
+
+No equivalent on the new stack, still supported in legacy stack on 5.x
+up until 5.1.
+
+eZ Survey
+
+No equivalent yet on the new stack, still supported in legacy stack on
+5.x.
+
+\*
+
+For other extensions still supported on legacy, see
+`http://doc.ez.no/List-of-eZ-Publish-extensions-and-their-support-options <http://doc.ez.no/List-of-eZ-Publish-extensions-and-their-support-options>`__
+
+ 
+
+For additional comparison between 4.x/legacy stack vs 5.x stack, see the
+following community provided spreadsheet provided "as is" with no
+guarantee on accuracy of
+content: \ `https://docs.google.com/spreadsheet/ccc?key=0AgGKn8SQ\_akMdFQ3VU0wMlR3cENxTDZ2dkhUcVN2SWc#gid=0 <https://docs.google.com/spreadsheet/ccc?key=0AgGKn8SQ_akMdFQ3VU0wMlR3cENxTDZ2dkhUcVN2SWc#gid=0>`__
+
+Document generated by Confluence on Feb 12, 2014 16:43

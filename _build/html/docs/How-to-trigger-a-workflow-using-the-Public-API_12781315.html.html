@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : How-to trigger a workflow using the Public API &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Developer-Cookbook_11403951.html">Developer Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-how-to-trigger-a-workflow-using-the-public-api">
+<h1>eZ Publish Platform 5.&lt;next&gt; : How-to trigger a workflow using the Public API<a class="headerlink" href="#ez-publish-platform-5-next-how-to-trigger-a-workflow-using-the-public-api" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jul 24, 2013</p>
+<p>The ContentService implemented in eZ Publish 5.x has no knowledge of the
+Legacy workflow engine. This means that all features in the 4.x series
+that used workflows need a workaround. One of the most common use-cases
+is pre-publishing approval, for instance of user generated content.</p>
+<div class="section" id="legacy-kernel-callbacks">
+<h2>Legacy kernel callbacks<a class="headerlink" href="#legacy-kernel-callbacks" title="Permalink to this headline">¶</a></h2>
+<p>Fortunately, there is a quite simple way to trigger workflows from eZ
+Publish 5 code: by using a Legacy Kernel Callback. The overall process
+is described in the&nbsp;<a class="reference external" href="Legacy-code-and-features_8323433.html">Legacy code and
+features</a>&nbsp;documentation
+chapter.</p>
+</div>
+</div>
+<div class="section" id="create-with-the-public-api-publish-with-the-legacy-kernel">
+<h1>Create with the Public API, publish with the Legacy Kernel<a class="headerlink" href="#create-with-the-public-api-publish-with-the-legacy-kernel" title="Permalink to this headline">¶</a></h1>
+<p>Thanks to this, it is possible to create a draft using native eZ Publish
+5 code, and get this draft pre-approved using the legacy workflow &amp;
+collaboration systems, including email notifications.</p>
+<p>Let&#8217;s take an approval workflow as an example. It needs to be configured
+the old way, using the backoffice. Create a workflow, add an&nbsp;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Workflow-events/Approve">Approve
+event</a>
+to it, and connect it to the content/publish/before trigger.</p>
+<p>This is done the usual way, as extensively covered in the&nbsp;<a class="reference external" href="3.-Managing-Content_6292982.html">Public API
+Cookbook</a>. The main different is
+that we will NOT call&nbsp;<tt class="docutils literal"><span class="pre">ContentService::publishVersion()</span></tt>.</p>
+<p><strong>Create content using the Public API</strong></p>
+<div class="section" id="publish-a-public-api-draft-using-the-legacy-kernel">
+<h2>Publish a Public API draft using the Legacy Kernel<a class="headerlink" href="#publish-a-public-api-draft-using-the-legacy-kernel" title="Permalink to this headline">¶</a></h2>
+<p>You need to use the object to run a Legacy Kernel Callback (e.g. code
+fragment). This legacy code will execute the publish operation with the
+given content id and version number. It will then check the operation
+result, and return true or false, depending if the operation went all
+the way through, or if it was interrupted (approval workflow event, for
+instance). This handling could and should&nbsp;<em>of course</em> be enhanced,
+with error handling to begin with, but it doesn&#8217;t change the core
+principle.</p>
+<p>This example will work in any controller that
+extends&nbsp;<tt class="docutils literal"><span class="pre">eZ\Publish\EzPublishCoreBundle\Controller</span></tt>:</p>
+<p>eZ Script context</p>
+<p>Icon</p>
+<p>If you are running the callback in a command line script, you need to
+add these calls before executing any legacy code:</p>
+<p>Any Legacy code can be executed this way. While it is a&nbsp;<em>backward
+compatibility</em> feature, it is considered good practice to work around
+missing features. It is however not recommended to rely heavily on
+Legacy features for performances reasons.</p>
+<p>Pay attention to the user</p>
+<p>Icon</p>
+<p>Public API code is always executed as a user, by default anonymous.
+Since workflows are often user dependent (Approval is), it is important
+that this code is executed as an editor, or as a user who will trigger
+the workflow.</p>
+<p><strong>Logging in a user on the Public API repository</strong></p>
+<p>Of course, this isn&#8217;t required when using Public API code in
+controllers, since those will use the currently-logged in user.</p>
+<p><strong>Legacy code</strong><strong>also requires a user</strong></p>
+<p>By default, code in <tt class="docutils literal"><span class="pre">LegacyKernel::runCallback()</span></tt> calls is executed as
+anonymous. You&#8217;ll have to log the executing user manually <em>on legacy as
+well</em>.</p>
+<p><strong>Logging in a user with the Legacy Kernel</strong></p>
+</div>
+</div>
+<div class="section" id="data-compatibility-and-workflow-collaboration">
+<h1>Data compatibility and workflow collaboration<a class="headerlink" href="#data-compatibility-and-workflow-collaboration" title="Permalink to this headline">¶</a></h1>
+<p>Content created using the Public API does appear as expected in the
+dashboard, and the draft can be checked from here. Collaboration options
+from the backoffice are available, and the object&#8217;s lifecycle can be
+managed the way it used to with eZ Publish 4.x.</p>
+</div>
+<div class="section" id="test-script">
+<h1>Test script<a class="headerlink" href="#test-script" title="Permalink to this headline">¶</a></h1>
+<p>The code below is a working Command script example that demonstrates the
+workaround. Just drop it in a bundle and update the
+namespace:&nbsp;<a class="reference external" href="https://gist.github.com/bdunogier/e05ed564770fa6a51e51">https://gist.github.com/bdunogier/e05ed564770fa6a51e51</a></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : How-to trigger a workflow using the Public API</a><ul>
+<li><a class="reference internal" href="#legacy-kernel-callbacks">Legacy kernel callbacks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-with-the-public-api-publish-with-the-legacy-kernel">Create with the Public API, publish with the Legacy Kernel</a><ul>
+<li><a class="reference internal" href="#publish-a-public-api-draft-using-the-legacy-kernel">Publish a Public API draft using the Legacy Kernel</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-compatibility-and-workflow-collaboration">Data compatibility and workflow collaboration</a></li>
+<li><a class="reference internal" href="#test-script">Test script</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/How-to-trigger-a-workflow-using-the-Public-API_12781315.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

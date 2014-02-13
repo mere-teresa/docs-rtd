@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Purge &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Cache_6291890.html">Cache</a></li>
+<li><a class="reference external" href="HttpCache_6291892.html">HttpCache</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-purge">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Purge<a class="headerlink" href="#ez-publish-platform-5-next-purge" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Oct 28, 2013</p>
+<div class="line-block">
+<div class="line">This explains the content cache purge&nbsp;mechanism, while publishing a</div>
+</div>
+<p>content from the admin interface or from a container aware script (will
+not work with pure&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>eZScript``&nbsp;atm, but will with new CLI scripts).
+| Note that the approach is fully compatible with native reverse proxies
+like&nbsp;<strong>Varnish</strong>&nbsp;(but in this case you won&#8217;t use
+all&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>HttpCache``&nbsp;related code).</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>On publish, one or several Http PURGE requests are sent to the backend.
+This request will have a specific header&nbsp;<a href="#id5"><span class="problematic" id="id6">``</span></a>X-Location-Id``&nbsp;(in the
+case of 1 request per location to purge)
+or&nbsp;<a href="#id7"><span class="problematic" id="id8">``</span></a>X-Group-Location-Id``&nbsp;(in the case of 1 request for all location
+to purge).</p>
+</div>
+<div class="section" id="http-purge-requests">
+<h2>Http PURGE requests<a class="headerlink" href="#http-purge-requests" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="emulated-purge-requests">
+<h3>Emulated purge requests<a class="headerlink" href="#emulated-purge-requests" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">By default, PURGE requests will be emulated and sent to the cache</div>
+</div>
+<p>Store. Cache purge will thus be synchronous.
+| This is the default behavior.&nbsp;<strong>No Http requests will be sent to the
+backend when publishing</strong>.</p>
+<p><strong>Configuration:</strong></p>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+<div class="section" id="one-purge-request-for-all-locations-aka-singlehttp">
+<h3>One purge request for all locations, aka &#8220;SingleHttp&#8221;<a class="headerlink" href="#one-purge-request-for-all-locations-aka-singlehttp" title="Permalink to this headline">¶</a></h3>
+<p>Only one Http PURGE request is sent for purging every needed locations.</p>
+<p>A request for purging locations&nbsp;<a href="#id9"><span class="problematic" id="id10">``</span></a>123``&nbsp;and&nbsp;<a href="#id11"><span class="problematic" id="id12">``</span></a>456``&nbsp;would be:</p>
+<div class="highlight-python"><pre>PURGE / HTTP 1.1 Host: localhost X-Group-Location-Id: 123; 456</pre>
+</div>
+<p><strong>Configuration</strong></p>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+<div class="section" id="one-request-per-location-aka-multiplehttp">
+<h3>One request per location, aka &#8220;MultipleHttp&#8221;<a class="headerlink" href="#one-request-per-location-aka-multiplehttp" title="Permalink to this headline">¶</a></h3>
+<p>One Http PURGE request will be sent&nbsp;<em>per location to purge</em></p>
+<p>A request for purging locations&nbsp;<a href="#id13"><span class="problematic" id="id14">``</span></a>123``&nbsp;and&nbsp;<a href="#id15"><span class="problematic" id="id16">``</span></a>456``&nbsp;would result to:</p>
+<div class="highlight-python"><pre>PURGE / HTTP 1.1 Host: localhost X-Location-Id: 123</pre>
+</div>
+<p>AND</p>
+<div class="highlight-python"><pre>PURGE / HTTP 1.1 Host: localhost X-Location-Id: 456</pre>
+</div>
+<p><strong>Configuration:</strong></p>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+</div>
+<div class="section" id="purge-all-content">
+<h2>Purge all content<a class="headerlink" href="#purge-all-content" title="Permalink to this headline">¶</a></h2>
+<p>When purging all cached content, a single Http PURGE request is sent
+(except for&nbsp;<em>local</em>&nbsp;purge type), with<tt class="docutils literal"><span class="pre">X-Location-Id``&nbsp;set</span>
+<span class="pre">to&nbsp;\</span> <span class="pre">``*</span></tt>:</p>
+<div class="highlight-python"><pre>PURGE / HTTP 1.1 Host: localhost X-Location-Id: *</pre>
+</div>
+</div>
+<div class="section" id="multiple-servers">
+<h2>Multiple servers<a class="headerlink" href="#multiple-servers" title="Permalink to this headline">¶</a></h2>
+<p>If you need to purge several servers at once (e.g. multiple Varnish
+infrastructure), you can set this up in the siteaccess configuration:</p>
+<p><strong>ezpublish.yml</strong></p>
+</div>
+<div class="section" id="manual-purging">
+<h2>Manual purging<a class="headerlink" href="#manual-purging" title="Permalink to this headline">¶</a></h2>
+<p>Manual purging is also possible:</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Purge</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#http-purge-requests">Http PURGE requests</a><ul>
+<li><a class="reference internal" href="#emulated-purge-requests">Emulated purge requests</a></li>
+<li><a class="reference internal" href="#one-purge-request-for-all-locations-aka-singlehttp">One purge request for all locations, aka &#8220;SingleHttp&#8221;</a></li>
+<li><a class="reference internal" href="#one-request-per-location-aka-multiplehttp">One request per location, aka &#8220;MultipleHttp&#8221;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#purge-all-content">Purge all content</a></li>
+<li><a class="reference internal" href="#multiple-servers">Multiple servers</a></li>
+<li><a class="reference internal" href="#manual-purging">Manual purging</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Purge_6291894.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

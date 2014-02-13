@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Activating the extension &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Extensions_7438523.html">Extensions</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-activating-the-extension">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Activating the extension<a class="headerlink" href="#ez-publish-platform-5-next-activating-the-extension" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Sep 25,
+2013</p>
+<p>Each extension needs to be activated, which means that it is being
+registered for eZ Publish to be available from within the eZ Publish
+framework. Every extension can either be activated in the eZ Publish
+administration interface or in a configuration file. Furthermore, the
+activation can be done either for the whole eZ Publish installation or
+for only certain site accesses.</p>
+<p><strong>Note:</strong> As of the 4.4 release of eZ Publish we have implemented a
+feature for automatic loading of extensions in the required sequence.
+Please go to <a class="reference external" href="Extension-load-ordering_7438655.html">Extension load
+ordering</a> for more information
+on how to do this. If you are running on releases prior to 4.4, please
+continue reading below.</p>
+<div class="section" id="administration-interface">
+<h2>Administration interface<a class="headerlink" href="#administration-interface" title="Permalink to this headline">¶</a></h2>
+<p>Log in to your eZ Publish administration interface, click on the &#8220;Setup&#8221;
+tab, and then click &#8220;Extensions&#8221; on the left. You will see the list of
+available extensions with check-boxes. Simply select the ones you need
+as shown in the screenshot below and click the &#8220;Apply changes&#8221; button.</p>
+<p><img alt="image0" src="docs/attachments/7438657/7798820.jpg" /></p>
+<p>Extension Activation</p>
+<p>This will activate the extension for all siteaccesses of your eZ Publish
+installation.</p>
+</div>
+<div class="section" id="configuration-file">
+<h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, an extension can be enabled manually in the
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/site.ini">site.ini</a>
+configuration file.</p>
+<div class="section" id="activating-for-the-whole-installation">
+<h3>Activating for the whole installation<a class="headerlink" href="#activating-for-the-whole-installation" title="Permalink to this headline">¶</a></h3>
+<p>To enable the sample extension for all of your site accesses, edit the
+&#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221; file located in the
+&#8220;<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/</span></tt><tt class="docutils literal"><span class="pre">settings/override</span></tt>&#8221;
+directory of your eZ Publish installation. Add the following line under
+the &#8220;<tt class="docutils literal"><span class="pre">[ExtensionSettings]</span></tt>&#8221; <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Concepts-and-basics/Configuration">configuration
+block</a>:</p>
+<div class="highlight-python"><pre>ActiveExtensions[]=ezfoo</pre>
+</div>
+<p>Multiple extensions can be present within the
+&#8220;<tt class="docutils literal"><span class="pre">[ExtensionSettings]</span></tt>&#8221; block. You&#8217;ll have to manually create the
+file and/or the section if they do not exist.</p>
+</div>
+<div class="section" id="activating-for-certain-siteaccesses">
+<h3>Activating for certain siteaccesses<a class="headerlink" href="#activating-for-certain-siteaccesses" title="Permalink to this headline">¶</a></h3>
+<p>To enable the sample extension for only a single site access called
+&#8220;example&#8221;, edit the &#8220;<tt class="docutils literal"><span class="pre">site.ini.append.php</span></tt>&#8221; file located in the
+&#8220;<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/</span></tt>settings/siteaccess/example&#8221;
+directory of your eZ Publish installation. Add the following line under
+the &#8220;<tt class="docutils literal"><span class="pre">[ExtensionSettings]</span></tt>&#8221; configuration block:</p>
+<div class="highlight-python"><pre>ActiveAccessExtensions[]=ezfoo</pre>
+</div>
+<p>Note that the line registering the extension is not called
+&#8220;<tt class="docutils literal"><span class="pre">ActiveExtensions</span></tt>&#8221;, but &#8220;<tt class="docutils literal"><span class="pre">ActiveAccessExtensions</span></tt>&#8221;. You&#8217;ll
+have to manually create the file and/or the section if they do not
+exist.</p>
+</div>
+<div class="section" id="updating-the-autoload-arrays">
+<h3>Updating the autoload arrays<a class="headerlink" href="#updating-the-autoload-arrays" title="Permalink to this headline">¶</a></h3>
+<p>After updating the configuration file(s), you need to run the
+&#8220;<tt class="docutils literal"><span class="pre">ezpgenerateautoloads.php</span></tt>&#8221; script, in order to add the information
+about all PHP class definitions of this extension to the
+&#8220;<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/</span></tt><tt class="docutils literal"><span class="pre">autoload/ezp_extension.php</span></tt>&#8221;
+file, otherwise eZ Publish might not be able to execute the PHP code of
+the newly added extension. The following example shows how to run the
+script.</p>
+<ol class="arabic">
+<li><p class="first">Navigate into the <tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt> directory.</p>
+</li>
+<li><p class="first">Run the script using the following shell command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">bin</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">ezpgenerateautoloads</span><span class="o">.</span><span class="n">php</span> <span class="o">--</span><span class="n">extension</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The script will look for class definitions in the &#8220;extensions&#8221; directory
+and update the
+&#8220;<tt class="docutils literal"><span class="pre">&lt;eZ_Publish_root_folder&gt;/ezpublish_legacy/</span></tt>autoload/ezp_extension.php&#8221;
+file accordingly.</p>
+</div>
+</div>
+<div class="section" id="attachments">
+<h2>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/images/icons/bullet_blue.gif" /> <a href="#id1"><span class="problematic" id="id2">`</span></a>Available</div>
+</div>
+<p>Extensions.jpg &lt;attachments/7438657/7798820.jpg&gt;`__ (image/jpeg)</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Activating the extension</a><ul>
+<li><a class="reference internal" href="#administration-interface">Administration interface</a></li>
+<li><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li><a class="reference internal" href="#activating-for-the-whole-installation">Activating for the whole installation</a></li>
+<li><a class="reference internal" href="#activating-for-certain-siteaccesses">Activating for certain siteaccesses</a></li>
+<li><a class="reference internal" href="#updating-the-autoload-arrays">Updating the autoload arrays</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Activating-the-extension_7438657.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

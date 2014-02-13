@@ -1,0 +1,1883 @@
+#. `eZ Publish Platform 5.<next> <index.html>`__
+#. `eZ Publish Platform
+   Documentation <eZ-Publish-Platform-Documentation_1114149.html>`__
+#. `eZ Publish Platform
+   Releases <eZ-Publish-Platform-Releases_12781017.html>`__
+#. `5.2 Release Notes <5.2-Release-Notes_19234953.html>`__
+
+eZ Publish Platform 5.<next> : 5.2 Changelog
+============================================
+
+Added by andre.romcke@ez.no , edited by bertrand.dunogier@ez.no on Nov
+19, 2013
+
+This page shows changes since `5.1 <5.1-Release-Notes_12781020.html>`__.
+
+Stories:
+''''''''
+
+Key
+
+Summary
+
+components
+
+`EZP-18865 <https://jira.ez.no/browse/EZP-18865>`__
+
+`Separate DFS binary & cache tables and make it
+configurable <https://jira.ez.no/browse/EZP-18865>`__
+
+Caching, Clustering
+
+`EZP-20039 <https://jira.ez.no/browse/EZP-20039>`__
+
+`Automate install steps in composer post
+install/update <https://jira.ez.no/browse/EZP-20039>`__
+
+CI System, Install
+
+`EZP-20071 <https://jira.ez.no/browse/EZP-20071>`__
+
+`HttpCache should Vary on the user
+hash <https://jira.ez.no/browse/EZP-20071>`__
+
+Symfony stack, Users and Access control
+
+`EZP-20461 <https://jira.ez.no/browse/EZP-20461>`__
+
+`Finishing the implementation using Signal/Slot by enabling all Service
+integration tests <https://jira.ez.no/browse/EZP-20461>`__
+
+Search
+
+`EZP-20576 <https://jira.ez.no/browse/EZP-20576>`__
+
+`As a developer, I want to avoid writing my pagelayout twice by using my
+Twig template pagelayout for legacy
+actions <https://jira.ez.no/browse/EZP-20576>`__
+
+Template language
+
+`EZP-20831 <https://jira.ez.no/browse/EZP-20831>`__
+
+`Properly handle path to images variants in REST
+responses <https://jira.ez.no/browse/EZP-20831>`__
+
+Content (images, XML, PDF, RSS, etc.), REST API v2
+
+`EZP-20912 <https://jira.ez.no/browse/EZP-20912>`__
+
+`Provide a workaround to allow approval workflow with the Public
+API <https://jira.ez.no/browse/EZP-20912>`__
+
+Documentation, Repository & Services (Public API impl)
+
+`EZP-21019 <https://jira.ez.no/browse/EZP-21019>`__
+
+`Upgrade to Symfony 2.3 <https://jira.ez.no/browse/EZP-21019>`__
+
+Symfony stack
+
+`EZP-21132 <https://jira.ez.no/browse/EZP-21132>`__
+
+`Add unit tests for js REST
+Client <https://jira.ez.no/browse/EZP-21132>`__
+
+REST API v2
+
+`EZP-21133 <https://jira.ez.no/browse/EZP-21133>`__
+
+`POST /content/views has a wrong
+media-type <https://jira.ez.no/browse/EZP-21133>`__
+
+REST API v2
+
+`EZP-21168 <https://jira.ez.no/browse/EZP-21168>`__
+
+`Remove API InMemory (Stub) implementation and test
+suite <https://jira.ez.no/browse/EZP-21168>`__
+
+Test framework
+
+`EZP-21169 <https://jira.ez.no/browse/EZP-21169>`__
+
+`As a Tester I want BDD running on
+Travis <https://jira.ez.no/browse/EZP-21169>`__
+
+Test framework
+
+`EZP-21176 <https://jira.ez.no/browse/EZP-21176>`__
+
+`Prevent REST hrefs without prefix in
+payloads <https://jira.ez.no/browse/EZP-21176>`__
+
+Documentation, REST API v2
+
+`EZP-21178 <https://jira.ez.no/browse/EZP-21178>`__
+
+`Create documentation on how to listen to API
+signals <https://jira.ez.no/browse/EZP-21178>`__
+
+Repository & Services (Public API impl), Symfony stack
+
+`EZP-21180 <https://jira.ez.no/browse/EZP-21180>`__
+
+`Write documentation on context aware HTTP
+caching <https://jira.ez.no/browse/EZP-21180>`__
+
+Caching, Symfony stack
+
+`EZP-21192 <https://jira.ez.no/browse/EZP-21192>`__
+
+`Symfony 2.3 : Implement interactive management of the parameters.yml
+file <https://jira.ez.no/browse/EZP-21192>`__
+
+Symfony stack
+
+`EZP-21245 <https://jira.ez.no/browse/EZP-21245>`__
+
+`Make it easier to register eZXML custom tags in main XSL
+stylesheet <https://jira.ez.no/browse/EZP-21245>`__
+
+Field types
+
+`EZP-21323 <https://jira.ez.no/browse/EZP-21323>`__
+
+`Add link to older packages in setup
+wizard <https://jira.ez.no/browse/EZP-21323>`__
+
+Install
+
+`EZP-21461 <https://jira.ez.no/browse/EZP-21461>`__
+
+`As a user I want all country names to be translated in all
+languages <https://jira.ez.no/browse/EZP-21461>`__
+
+Content (images, XML, PDF, RSS, etc.)
+
+`EZP-21526 <https://jira.ez.no/browse/EZP-21526>`__
+
+`As a DemoBundle user I want to use disqus for
+commenting <https://jira.ez.no/browse/EZP-21526>`__
+
+DemoBundle
+
+`EZP-21531 <https://jira.ez.no/browse/EZP-21531>`__
+
+`As a user I need a way to pick correct Content name
+language <https://jira.ez.no/browse/EZP-21531>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21532 <https://jira.ez.no/browse/EZP-21532>`__
+
+`As a DemoBundle user I want Blog and blog\_post to be displayed using
+symfony stack <https://jira.ez.no/browse/EZP-21532>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21573 <https://jira.ez.no/browse/EZP-21573>`__
+
+`As PS I need 20 certification questions on eZ Publish
+5.2 <https://jira.ez.no/browse/EZP-21573>`__
+
+`EZP-21620 <https://jira.ez.no/browse/EZP-21620>`__
+
+`As PM I want ezodoscope & ezrecommender to be built by
+engineering <https://jira.ez.no/browse/EZP-21620>`__
+
+CI System
+
+`EZP-21654 <https://jira.ez.no/browse/EZP-21654>`__
+
+`DemoBundle: refactor top menu
+controller <https://jira.ez.no/browse/EZP-21654>`__
+
+DemoBundle
+
+`EZP-21657 <https://jira.ez.no/browse/EZP-21657>`__
+
+`DemoBundle: refactor latestContent
+action <https://jira.ez.no/browse/EZP-21657>`__
+
+DemoBundle
+
+`EZP-21676 <https://jira.ez.no/browse/EZP-21676>`__
+
+`As a developer, I want to access a field value in the current locale in
+a Twig template <https://jira.ez.no/browse/EZP-21676>`__
+
+Symfony stack, Template language
+
+`EZP-21677 <https://jira.ez.no/browse/EZP-21677>`__
+
+`As a developer, I want to always have access to root
+location <https://jira.ez.no/browse/EZP-21677>`__
+
+Symfony stack, Template language
+
+`EZP-21680 <https://jira.ez.no/browse/EZP-21680>`__
+
+`As a developer, I want to easily check if a Field is
+empty <https://jira.ez.no/browse/EZP-21680>`__
+
+Repository & Services (Public API impl), Symfony stack, Template
+language
+
+`EZP-21723 <https://jira.ez.no/browse/EZP-21723>`__
+
+`As a developer, I want to use PagerFanta to do my
+pagination <https://jira.ez.no/browse/EZP-21723>`__
+
+DemoBundle, Symfony stack
+
+`EZP-21743 <https://jira.ez.no/browse/EZP-21743>`__
+
+`As a DemoBundle user, I want the homepage to be displayed using full
+new stack <https://jira.ez.no/browse/EZP-21743>`__
+
+DemoBundle
+
+`EZP-21816 <https://jira.ez.no/browse/EZP-21816>`__
+
+`As a DemoBundle user, I want articles to be rendered with Twig
+templates <https://jira.ez.no/browse/EZP-21816>`__
+
+DemoBundle
+
+`EZP-21824 <https://jira.ez.no/browse/EZP-21824>`__
+
+`Update the 5.2 release notes <https://jira.ez.no/browse/EZP-21824>`__
+
+Documentation
+
+`EZP-21844 <https://jira.ez.no/browse/EZP-21844>`__
+
+`Write a cache cleanup script for the split DFS
+feature <https://jira.ez.no/browse/EZP-21844>`__
+
+Clustering, Upgrading
+
+`EZP-21868 <https://jira.ez.no/browse/EZP-21868>`__
+
+`As a DemoBundle user, I want all frontpages to be implemented using
+Twig <https://jira.ez.no/browse/EZP-21868>`__
+
+DemoBundle
+
+`35
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-alpha1%22%2C%225.2-beta1%22%2C%225.2-rc1%22%2C%225.2%22+%29+AND+type%3DStory+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Improvements:
+'''''''''''''
+
+Key
+
+Summary
+
+components
+
+`EZP-15040 <https://jira.ez.no/browse/EZP-15040>`__
+
+`Support for more than 30
+languages <https://jira.ez.no/browse/EZP-15040>`__
+
+Language
+
+`EZP-19120 <https://jira.ez.no/browse/EZP-19120>`__
+
+`5.x expose isEmptyValue() in API for template
+needs <https://jira.ez.no/browse/EZP-19120>`__
+
+Database related, Misc
+
+`EZP-20018 <https://jira.ez.no/browse/EZP-20018>`__
+
+`Missing Language, Visibility & ObjectState
+Criteria <https://jira.ez.no/browse/EZP-20018>`__
+
+Legacy Storage engine, Public API interfaces, Repository & Services
+(Public API impl)
+
+`EZP-20069 <https://jira.ez.no/browse/EZP-20069>`__
+
+`Expose SignalSlot repository
+properly <https://jira.ez.no/browse/EZP-20069>`__
+
+Repository & Services (Public API impl), Symfony stack
+
+`EZP-20223 <https://jira.ez.no/browse/EZP-20223>`__
+
+`Implement missing integration tests for
+Repository <https://jira.ez.no/browse/EZP-20223>`__
+
+Repository & Services (Public API impl)
+
+`EZP-20261 <https://jira.ez.no/browse/EZP-20261>`__
+
+`eZ Recommendation - on-the-fly scenario
+loading <https://jira.ez.no/browse/EZP-20261>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20438 <https://jira.ez.no/browse/EZP-20438>`__
+
+`Make it possible to use a custom controller to handle a
+content/location <https://jira.ez.no/browse/EZP-20438>`__
+
+Caching, Symfony stack, Template language
+
+`EZP-20502 <https://jira.ez.no/browse/EZP-20502>`__
+
+`avoid Symfony exception when file is missing for ezimage
+attribute <https://jira.ez.no/browse/EZP-20502>`__
+
+Content (images, XML, PDF, RSS, etc.), Legacy IO, Repository & Services
+(Public API impl)
+
+`EZP-20638 <https://jira.ez.no/browse/EZP-20638>`__
+
+`ContentStaging does not synchronize related
+objects <https://jira.ez.no/browse/EZP-20638>`__
+
+Extensions, Extensions/eZ Content Staging
+
+`EZP-20821 <https://jira.ez.no/browse/EZP-20821>`__
+
+`Make it possible to configure the front controller without editing
+it <https://jira.ez.no/browse/EZP-20821>`__
+
+`EZP-20829 <https://jira.ez.no/browse/EZP-20829>`__
+
+`Make the REST APILoader\\Factory
+dynamic <https://jira.ez.no/browse/EZP-20829>`__
+
+REST API v2
+
+`EZP-20837 <https://jira.ez.no/browse/EZP-20837>`__
+
+`Improve unit test execution time by changing Repo test to use
+API/SetupFactory approach <https://jira.ez.no/browse/EZP-20837>`__
+
+CI System, Test framework
+
+`EZP-20849 <https://jira.ez.no/browse/EZP-20849>`__
+
+`Move eZ Comments menu from top menu to left content
+menu <https://jira.ez.no/browse/EZP-20849>`__
+
+Administration Interface, Extensions/eZ Comments
+
+`EZP-20922 <https://jira.ez.no/browse/EZP-20922>`__
+
+`Add event listener to
+kernel/content/download.php <https://jira.ez.no/browse/EZP-20922>`__
+
+Content (images, XML, PDF, RSS, etc.)
+
+`EZP-20936 <https://jira.ez.no/browse/EZP-20936>`__
+
+`FieldType integration tests need to be updated with tests for updating
+Content on changing ContentType <https://jira.ez.no/browse/EZP-20936>`__
+
+Field types, Test framework
+
+`EZP-20959 <https://jira.ez.no/browse/EZP-20959>`__
+
+`Add admin.ini LeftMenu Enabled
+setting <https://jira.ez.no/browse/EZP-20959>`__
+
+Administration Interface
+
+`EZP-20978 <https://jira.ez.no/browse/EZP-20978>`__
+
+`Write unit tests for createContent() and updateContent() methods in the
+ContentService <https://jira.ez.no/browse/EZP-20978>`__
+
+Repository & Services (Public API impl)
+
+`EZP-20979 <https://jira.ez.no/browse/EZP-20979>`__
+
+`Write integration tests for createContent() and updateContent() methods
+in the ContentService <https://jira.ez.no/browse/EZP-20979>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21018 <https://jira.ez.no/browse/EZP-21018>`__
+
+`Replace RMF Url management with
+Symfony's <https://jira.ez.no/browse/EZP-21018>`__
+
+REST API v2
+
+`EZP-21035 <https://jira.ez.no/browse/EZP-21035>`__
+
+`User can not be properly created from inside
+storage <https://jira.ez.no/browse/EZP-21035>`__
+
+Legacy Storage engine
+
+`EZP-21064 <https://jira.ez.no/browse/EZP-21064>`__
+
+`Add module\_result in a LegacyResponse
+call <https://jira.ez.no/browse/EZP-21064>`__
+
+Symfony stack
+
+`EZP-21095 <https://jira.ez.no/browse/EZP-21095>`__
+
+`Allow retrieving users by login & email through the User
+Service <https://jira.ez.no/browse/EZP-21095>`__
+
+Public API interfaces, Repository & Services (Public API impl)
+
+`EZP-21143 <https://jira.ez.no/browse/EZP-21143>`__
+
+`performance: do not run legacy pagelayout when using an eZ5
+one <https://jira.ez.no/browse/EZP-21143>`__
+
+`EZP-21240 <https://jira.ez.no/browse/EZP-21240>`__
+
+`unpublish cronjob calls activateextensions() while this is already done
+by runcronjobs.php <https://jira.ez.no/browse/EZP-21240>`__
+
+`EZP-21292 <https://jira.ez.no/browse/EZP-21292>`__
+
+`Missing API Depth Criterion <https://jira.ez.no/browse/EZP-21292>`__
+
+Public API interfaces, Repository & Services (Public API impl)
+
+`EZP-21293 <https://jira.ez.no/browse/EZP-21293>`__
+
+`404 errors within the REST prefix should be valid REST
+404 <https://jira.ez.no/browse/EZP-21293>`__
+
+REST API v2
+
+`EZP-21296 <https://jira.ez.no/browse/EZP-21296>`__
+
+`Logs don't need to be
+versionned <https://jira.ez.no/browse/EZP-21296>`__
+
+GIT
+
+`EZP-21321 <https://jira.ez.no/browse/EZP-21321>`__
+
+`Extend ezpublish/console
+cache:clear <https://jira.ez.no/browse/EZP-21321>`__
+
+Caching, Symfony stack
+
+`EZP-21337 <https://jira.ez.no/browse/EZP-21337>`__
+
+`Return correct HTTP code for access denied
+page <https://jira.ez.no/browse/EZP-21337>`__
+
+Misc
+
+`EZP-21350 <https://jira.ez.no/browse/EZP-21350>`__
+
+`Support pre\_rendering event in
+content/view <https://jira.ez.no/browse/EZP-21350>`__
+
+Misc
+
+`EZP-21385 <https://jira.ez.no/browse/EZP-21385>`__
+
+`Make redirection after publish
+configurable <https://jira.ez.no/browse/EZP-21385>`__
+
+Administration Interface
+
+`EZP-21495 <https://jira.ez.no/browse/EZP-21495>`__
+
+`(Persistence) cache does not support multi repository
+setup <https://jira.ez.no/browse/EZP-21495>`__
+
+Caching, Symfony stack
+
+`EZP-21501 <https://jira.ez.no/browse/EZP-21501>`__
+
+`Support object state group limitation in
+API <https://jira.ez.no/browse/EZP-21501>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21510 <https://jira.ez.no/browse/EZP-21510>`__
+
+`'Clear View cache from here' action ignores CacheThreshold setting,
+performance issues/db deadlocks <https://jira.ez.no/browse/EZP-21510>`__
+
+Caching, Legacy Storage engine
+
+`EZP-21640 <https://jira.ez.no/browse/EZP-21640>`__
+
+`Implement RelationList search
+criterion <https://jira.ez.no/browse/EZP-21640>`__
+
+Public API interfaces, Repository & Services (Public API impl), Search
+
+`EZP-21701 <https://jira.ez.no/browse/EZP-21701>`__
+
+`ez\_render\_field should be able to use current template as
+parameter <https://jira.ez.no/browse/EZP-21701>`__
+
+Symfony stack, Template language
+
+`EZP-21719 <https://jira.ez.no/browse/EZP-21719>`__
+
+`Implement LocationDepth search
+criterion <https://jira.ez.no/browse/EZP-21719>`__
+
+Public API interfaces, Search
+
+`EZP-21733 <https://jira.ez.no/browse/EZP-21733>`__
+
+`Improve exceptions thrown in
+RoleService <https://jira.ez.no/browse/EZP-21733>`__
+
+Public API interfaces, Repository & Services (Public API impl)
+
+`EZP-21793 <https://jira.ez.no/browse/EZP-21793>`__
+
+`Add $matchAlwaysAvailable parameter to
+LanguageCriterion <https://jira.ez.no/browse/EZP-21793>`__
+
+Public API interfaces, Search
+
+`EZP-21865 <https://jira.ez.no/browse/EZP-21865>`__
+
+`Add showInfo parameter for ezgmaplocation field type base
+template <https://jira.ez.no/browse/EZP-21865>`__
+
+Design (templates, CSS, etc.)
+
+`EZP-21881 <https://jira.ez.no/browse/EZP-21881>`__
+
+`Update info banner on
+doc.ez.no <https://jira.ez.no/browse/EZP-21881>`__
+
+Documentation
+
+`EZP-22146 <https://jira.ez.no/browse/EZP-22146>`__
+
+`roles applied to many users cause fatal
+errors <https://jira.ez.no/browse/EZP-22146>`__
+
+Legacy Storage engine, Permissions
+
+`42
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-alpha1%22%2C%225.2-beta1%22%2C%225.2-rc1%22%2C%225.2%22+%29+AND+type%3DImprovement+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Bugs:
+'''''
+
+Key
+
+Summary
+
+components
+
+`EZP-18195 <https://jira.ez.no/browse/EZP-18195>`__
+
+`$result.object is not correctly
+created <https://jira.ez.no/browse/EZP-18195>`__
+
+Extensions/eZ Find, Extensions/eZ Find/Searching
+
+`EZP-19122 <https://jira.ez.no/browse/EZP-19122>`__
+
+`Faulty embed-inline handling <https://jira.ez.no/browse/EZP-19122>`__
+
+Extensions/eZ Online Editor, Extensions/eZ Online Editor/Online Editor
+
+`EZP-19392 <https://jira.ez.no/browse/EZP-19392>`__
+
+`clear cache doesn't remove translation list
+cache <https://jira.ez.no/browse/EZP-19392>`__
+
+Caching
+
+`EZP-19904 <https://jira.ez.no/browse/EZP-19904>`__
+
+`Admin interface redirection to raw treemenu JSON
+output <https://jira.ez.no/browse/EZP-19904>`__
+
+Administration Interface, Extensions/eZ JSCore
+
+`EZP-19979 <https://jira.ez.no/browse/EZP-19979>`__
+
+`Class on ezxml tags are (almost) not
+handled <https://jira.ez.no/browse/EZP-19979>`__
+
+Field types
+
+`EZP-20218 <https://jira.ez.no/browse/EZP-20218>`__
+
+`Object that should not be visible appears in object
+relation(s) <https://jira.ez.no/browse/EZP-20218>`__
+
+Documentation
+
+`EZP-20262 <https://jira.ez.no/browse/EZP-20262>`__
+
+`Classes override issue caused by
+includes <https://jira.ez.no/browse/EZP-20262>`__
+
+Workflows
+
+`EZP-20311 <https://jira.ez.no/browse/EZP-20311>`__
+
+`query parameters get lost when being redirected after
+login <https://jira.ez.no/browse/EZP-20311>`__
+
+Public API interfaces
+
+`EZP-20451 <https://jira.ez.no/browse/EZP-20451>`__
+
+`block\_view\_gui for a manual fetched block don't use override
+templates <https://jira.ez.no/browse/EZP-20451>`__
+
+Extensions/eZ Flow
+
+`EZP-20482 <https://jira.ez.no/browse/EZP-20482>`__
+
+`In IE8, "Enter" key does not work when creating a custom
+tag <https://jira.ez.no/browse/EZP-20482>`__
+
+Extensions/eZ Online Editor/Online Editor
+
+`EZP-20558 <https://jira.ez.no/browse/EZP-20558>`__
+
+`Workflow Event/Approve not working
+correctly <https://jira.ez.no/browse/EZP-20558>`__
+
+Administration Interface
+
+`EZP-20575 <https://jira.ez.no/browse/EZP-20575>`__
+
+`Setup wizard fails to generate yml config when using
+kickstart.ini <https://jira.ez.no/browse/EZP-20575>`__
+
+Install
+
+`EZP-20585 <https://jira.ez.no/browse/EZP-20585>`__
+
+`Tracking NodeID vs. MainNodeID vs. ObjectID
+(contentID) <https://jira.ez.no/browse/EZP-20585>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20588 <https://jira.ez.no/browse/EZP-20588>`__
+
+`Initial export contains only one
+categorypath <https://jira.ez.no/browse/EZP-20588>`__
+
+Extensions/eZ Recommendation
+
+`EZP-20642 <https://jira.ez.no/browse/EZP-20642>`__
+
+`Legacy\_mode:true ignored inside a siteaccess configuration
+group <https://jira.ez.no/browse/EZP-20642>`__
+
+Misc
+
+`EZP-20657 <https://jira.ez.no/browse/EZP-20657>`__
+
+`EmbedToHtml5 Converter doesn't define alignment
+parameters <https://jira.ez.no/browse/EZP-20657>`__
+
+Content (images, XML, PDF, RSS, etc.)
+
+`EZP-20676 <https://jira.ez.no/browse/EZP-20676>`__
+
+`eZ OE: JS error inserting embed-inline tag on empty XML
+block <https://jira.ez.no/browse/EZP-20676>`__
+
+Extensions/eZ Online Editor
+
+`EZP-20752 <https://jira.ez.no/browse/EZP-20752>`__
+
+`EzscriptMonitor - Monitor page is not
+updated <https://jira.ez.no/browse/EZP-20752>`__
+
+Extensions
+
+`EZP-20766 <https://jira.ez.no/browse/EZP-20766>`__
+
+`Wrong default value for CLUSTER\_HEADER\_X\_POWERED\_BY in
+index\_cluster.php <https://jira.ez.no/browse/EZP-20766>`__
+
+Clustering
+
+`EZP-20769 <https://jira.ez.no/browse/EZP-20769>`__
+
+`REST v2: Reading object containing ezimage datatype returns hardcoded (
+and wrong ) results <https://jira.ez.no/browse/EZP-20769>`__
+
+REST API v2
+
+`EZP-20802 <https://jira.ez.no/browse/EZP-20802>`__
+
+`auto-login after account activation does not increase the login
+count <https://jira.ez.no/browse/EZP-20802>`__
+
+Misc
+
+`EZP-20822 <https://jira.ez.no/browse/EZP-20822>`__
+
+`API services phpdoc and input validation
+problems <https://jira.ez.no/browse/EZP-20822>`__
+
+Public API interfaces
+
+`EZP-20874 <https://jira.ez.no/browse/EZP-20874>`__
+
+`ezsys() operator bad behavior with the "querystring"
+parameter <https://jira.ez.no/browse/EZP-20874>`__
+
+Template language
+
+`EZP-20877 <https://jira.ez.no/browse/EZP-20877>`__
+
+`Improve unit test code coverage of
+eZ\\Publish\\Core\\SignalSlot <https://jira.ez.no/browse/EZP-20877>`__
+
+Repository & Services (Public API impl), Test framework
+
+`EZP-20880 <https://jira.ez.no/browse/EZP-20880>`__
+
+`HttpCache purge is not being triggered when permissions
+change <https://jira.ez.no/browse/EZP-20880>`__
+
+Public API interfaces
+
+`EZP-20890 <https://jira.ez.no/browse/EZP-20890>`__
+
+`Headers overriden by
+LegacyKernelController <https://jira.ez.no/browse/EZP-20890>`__
+
+`EZP-20895 <https://jira.ez.no/browse/EZP-20895>`__
+
+`Small Typo in eZContentOperationCollection::updatePriority
+phpdoc <https://jira.ez.no/browse/EZP-20895>`__
+
+Documentation
+
+`EZP-20929 <https://jira.ez.no/browse/EZP-20929>`__
+
+`XML Field Type - Error 500 when passing a default
+value <https://jira.ez.no/browse/EZP-20929>`__
+
+REST API v2
+
+`EZP-20943 <https://jira.ez.no/browse/EZP-20943>`__
+
+`Regression caused by " Remove extraneous op\_code handling in storing
+content relations" <https://jira.ez.no/browse/EZP-20943>`__
+
+Design (templates, CSS, etc.), Legacy Storage engine, Template language
+
+`EZP-20948 <https://jira.ez.no/browse/EZP-20948>`__
+
+`Missing support for binary files
+URI <https://jira.ez.no/browse/EZP-20948>`__
+
+Public API interfaces
+
+`EZP-20950 <https://jira.ez.no/browse/EZP-20950>`__
+
+`Legacy Storage ContentType ContentUpdater updates only current
+version <https://jira.ez.no/browse/EZP-20950>`__
+
+Legacy Storage engine
+
+`EZP-20955 <https://jira.ez.no/browse/EZP-20955>`__
+
+`API: Issues with create permission with Section
+limitation <https://jira.ez.no/browse/EZP-20955>`__
+
+Permissions, Public API interfaces
+
+`EZP-20957 <https://jira.ez.no/browse/EZP-20957>`__
+
+`Misplaced semicolon causes flow to
+break <https://jira.ez.no/browse/EZP-20957>`__
+
+Clustering
+
+`EZP-20968 <https://jira.ez.no/browse/EZP-20968>`__
+
+`Broken navigation for REST documentation on
+GitHub <https://jira.ez.no/browse/EZP-20968>`__
+
+REST API v2
+
+`EZP-20969 <https://jira.ez.no/browse/EZP-20969>`__
+
+`REST v2 "Update location" request is not working as
+intended <https://jira.ez.no/browse/EZP-20969>`__
+
+REST API v2
+
+`EZP-20982 <https://jira.ez.no/browse/EZP-20982>`__
+
+`UrlAlias matcher not working
+correctly <https://jira.ez.no/browse/EZP-20982>`__
+
+GIT, Symfony stack
+
+`EZP-20984 <https://jira.ez.no/browse/EZP-20984>`__
+
+`bugs in API docs <https://jira.ez.no/browse/EZP-20984>`__
+
+Documentation, Public API interfaces
+
+`EZP-20985 <https://jira.ez.no/browse/EZP-20985>`__
+
+`excluded\_uri\_prefixes throwing
+503 <https://jira.ez.no/browse/EZP-20985>`__
+
+Symfony stack
+
+`EZP-20987 <https://jira.ez.no/browse/EZP-20987>`__
+
+`Notice preventing the completion of creating a FieldType draft with
+null fieldSettings <https://jira.ez.no/browse/EZP-20987>`__
+
+Repository & Services (Public API impl)
+
+`EZP-20988 <https://jira.ez.no/browse/EZP-20988>`__
+
+`stale links using non-translatable
+attribute <https://jira.ez.no/browse/EZP-20988>`__
+
+Cronjobs, Database related
+
+`EZP-20992 <https://jira.ez.no/browse/EZP-20992>`__
+
+`Wrong scope in contentViewGenerateError when using DFS and
+user-permissions <https://jira.ez.no/browse/EZP-20992>`__
+
+Caching, Clustering, Permissions
+
+`EZP-20993 <https://jira.ez.no/browse/EZP-20993>`__
+
+`Document scenario list in
+ezrecommendation.ini <https://jira.ez.no/browse/EZP-20993>`__
+
+Documentation, Extensions/eZ Recommendation
+
+`EZP-20995 <https://jira.ez.no/browse/EZP-20995>`__
+
+`content/edit\_draft.tpl cannot be overridden by
+section <https://jira.ez.no/browse/EZP-20995>`__
+
+Design (templates, CSS, etc.), Template language
+
+`EZP-21004 <https://jira.ez.no/browse/EZP-21004>`__
+
+`Error synchronizing content if language is not listed in target
+server's siteaccess <https://jira.ez.no/browse/EZP-21004>`__
+
+Extensions/eZ Content Staging
+
+`EZP-21005 <https://jira.ez.no/browse/EZP-21005>`__
+
+`When changing siteaccess, the autosave's preview is not
+updated <https://jira.ez.no/browse/EZP-21005>`__
+
+Extensions/eZ Autosave
+
+`EZP-21006 <https://jira.ez.no/browse/EZP-21006>`__
+
+`Setup wizard trows PHP warnings & eZ errors on Mysql
+5.6 <https://jira.ez.no/browse/EZP-21006>`__
+
+Database related
+
+`EZP-21009 <https://jira.ez.no/browse/EZP-21009>`__
+
+`Cannot redeclare class eZObjectForwarder in
+ezflow <https://jira.ez.no/browse/EZP-21009>`__
+
+`EZP-21016 <https://jira.ez.no/browse/EZP-21016>`__
+
+`REST: 500 error using an incorrect FieldDefinition
+element <https://jira.ez.no/browse/EZP-21016>`__
+
+Repository & Services (Public API impl), REST API v2
+
+`EZP-21032 <https://jira.ez.no/browse/EZP-21032>`__
+
+`Rest spec missing info about is\_logged\_in cookie when explaining
+session based auth <https://jira.ez.no/browse/EZP-21032>`__
+
+Documentation, REST API v2
+
+`EZP-21046 <https://jira.ez.no/browse/EZP-21046>`__
+
+`DFS cluster: view cache is not expiring in one
+node <https://jira.ez.no/browse/EZP-21046>`__
+
+Clustering
+
+`EZP-21048 <https://jira.ez.no/browse/EZP-21048>`__
+
+`Anchor link attribute is not transformed by
+xsl <https://jira.ez.no/browse/EZP-21048>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21050 <https://jira.ez.no/browse/EZP-21050>`__
+
+`Treemenu broken after EZPESU-2013-011 on
+IE7-8 <https://jira.ez.no/browse/EZP-21050>`__
+
+Administration Interface
+
+`EZP-21054 <https://jira.ez.no/browse/EZP-21054>`__
+
+`Anchor tag is not transformed by
+xsl <https://jira.ez.no/browse/EZP-21054>`__
+
+Design (templates, CSS, etc.), Field types
+
+`EZP-21055 <https://jira.ez.no/browse/EZP-21055>`__
+
+`creating content using API causes memory
+leaks <https://jira.ez.no/browse/EZP-21055>`__
+
+Caching, Repository & Services (Public API impl), SPI interfaces
+
+`EZP-21057 <https://jira.ez.no/browse/EZP-21057>`__
+
+`contentService: Unable to delete a content with an empty file
+attribute <https://jira.ez.no/browse/EZP-21057>`__
+
+Field types, Legacy Storage engine
+
+`EZP-21058 <https://jira.ez.no/browse/EZP-21058>`__
+
+`eZFind: don't fork in updatesearchindex script when using a single
+process <https://jira.ez.no/browse/EZP-21058>`__
+
+Extensions/eZ Find/Indexing
+
+`EZP-21060 <https://jira.ez.no/browse/EZP-21060>`__
+
+`eZ Recommandation : Scenarios try to be loaded from ini
+files. <https://jira.ez.no/browse/EZP-21060>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21063 <https://jira.ez.no/browse/EZP-21063>`__
+
+`eZ Recommandation : Initial export script failed if pcntl extension is
+not install <https://jira.ez.no/browse/EZP-21063>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21076 <https://jira.ez.no/browse/EZP-21076>`__
+
+`recommendation: can not get twice recommendations for same node in same
+page (using different
+scenarios) <https://jira.ez.no/browse/EZP-21076>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21077 <https://jira.ez.no/browse/EZP-21077>`__
+
+`multiple recommendation tags do not work together in one
+template <https://jira.ez.no/browse/EZP-21077>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21078 <https://jira.ez.no/browse/EZP-21078>`__
+
+`output type for recommendations is not
+defineable <https://jira.ez.no/browse/EZP-21078>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21088 <https://jira.ez.no/browse/EZP-21088>`__
+
+`Publishing content with API doesn't trigger indexing
+correctly <https://jira.ez.no/browse/EZP-21088>`__
+
+Extensions/eZ Find, Repository & Services (Public API impl)
+
+`EZP-21089 <https://jira.ez.no/browse/EZP-21089>`__
+
+`Creating an article with public api throw warning on xmltext in regards
+to relations <https://jira.ez.no/browse/EZP-21089>`__
+
+Field types, Public API interfaces
+
+`EZP-21094 <https://jira.ez.no/browse/EZP-21094>`__
+
+`Successful POST /user/sessions doesn't have a Location
+header <https://jira.ez.no/browse/EZP-21094>`__
+
+REST API v2
+
+`EZP-21131 <https://jira.ez.no/browse/EZP-21131>`__
+
+`Regression - %secret% key should be generated at
+install/update <https://jira.ez.no/browse/EZP-21131>`__
+
+Symfony stack
+
+`EZP-21138 <https://jira.ez.no/browse/EZP-21138>`__
+
+`Deleted nodes remain in an eZ Flow
+block <https://jira.ez.no/browse/EZP-21138>`__
+
+Extensions/eZ Flow
+
+`EZP-21155 <https://jira.ez.no/browse/EZP-21155>`__
+
+`DebugByUser is not working correctly in
+preview <https://jira.ez.no/browse/EZP-21155>`__
+
+Administration Interface
+
+`EZP-21156 <https://jira.ez.no/browse/EZP-21156>`__
+
+`Class modification with a lot of cache to
+expire <https://jira.ez.no/browse/EZP-21156>`__
+
+Caching, Database related
+
+`EZP-21187 <https://jira.ez.no/browse/EZP-21187>`__
+
+`Regressions on DemoBundle appearing with
+strict\_variables=true <https://jira.ez.no/browse/EZP-21187>`__
+
+DemoBundle, Template language
+
+`EZP-21188 <https://jira.ez.no/browse/EZP-21188>`__
+
+`"Notice: Undefined variable: response" triggered when viewing a content
+with ezobjectrelationlist <https://jira.ez.no/browse/EZP-21188>`__
+
+Symfony stack
+
+`EZP-21190 <https://jira.ez.no/browse/EZP-21190>`__
+
+`installer fails at package validation using PHP
+5.5 <https://jira.ez.no/browse/EZP-21190>`__
+
+`EZP-21219 <https://jira.ez.no/browse/EZP-21219>`__
+
+`versionread policy not checked in
+ContentService::loadContent <https://jira.ez.no/browse/EZP-21219>`__
+
+Public API interfaces, Repository & Services (Public API impl), Users
+and Access control
+
+`EZP-21220 <https://jira.ez.no/browse/EZP-21220>`__
+
+`Parsing error in REST with "Content-type: application/json;
+charset=utf-8" <https://jira.ez.no/browse/EZP-21220>`__
+
+REST interface
+
+`EZP-21222 <https://jira.ez.no/browse/EZP-21222>`__
+
+`ezRecommendation exports fail when xml blocks include some special
+characters <https://jira.ez.no/browse/EZP-21222>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21226 <https://jira.ez.no/browse/EZP-21226>`__
+
+`ezchecktranslation.php is not handling translatorcomment & location
+nodes <https://jira.ez.no/browse/EZP-21226>`__
+
+Cronjobs
+
+`EZP-21227 <https://jira.ez.no/browse/EZP-21227>`__
+
+`[Rest API] Copy content type will create copy identifier
+wrongly <https://jira.ez.no/browse/EZP-21227>`__
+
+REST API v2
+
+`EZP-21233 <https://jira.ez.no/browse/EZP-21233>`__
+
+`eZDBFileHandler (mysqli only) removed after eZP
+5.0 <https://jira.ez.no/browse/EZP-21233>`__
+
+Documentation
+
+`EZP-21235 <https://jira.ez.no/browse/EZP-21235>`__
+
+`API: user cannot have permissions to edit just himself, the limitation
+owner(self) is broken <https://jira.ez.no/browse/EZP-21235>`__
+
+Documentation, Public API interfaces
+
+`EZP-21237 <https://jira.ez.no/browse/EZP-21237>`__
+
+`Debug by user feature blocks the login
+process <https://jira.ez.no/browse/EZP-21237>`__
+
+`EZP-21264 <https://jira.ez.no/browse/EZP-21264>`__
+
+`The JS REST client does not support parallel
+requests <https://jira.ez.no/browse/EZP-21264>`__
+
+REST Client:JS
+
+`EZP-21274 <https://jira.ez.no/browse/EZP-21274>`__
+
+`Update YUI & jQuery in
+ezsjcore <https://jira.ez.no/browse/EZP-21274>`__
+
+Extensions/eZ JSCore
+
+`EZP-21280 <https://jira.ez.no/browse/EZP-21280>`__
+
+`tree\_root setting ignored in link output from XMLText
+rendering <https://jira.ez.no/browse/EZP-21280>`__
+
+Symfony stack
+
+`EZP-21281 <https://jira.ez.no/browse/EZP-21281>`__
+
+`Warning: Could not generate user hash ! Fallback to anonymous
+hash <https://jira.ez.no/browse/EZP-21281>`__
+
+Symfony stack
+
+`EZP-21284 <https://jira.ez.no/browse/EZP-21284>`__
+
+`No url/href support in API XmlText
+input <https://jira.ez.no/browse/EZP-21284>`__
+
+Symfony stack
+
+`EZP-21289 <https://jira.ez.no/browse/EZP-21289>`__
+
+`object\_remote\_id not handled in
+XmlText <https://jira.ez.no/browse/EZP-21289>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21299 <https://jira.ez.no/browse/EZP-21299>`__
+
+`REST Exceptions with code / previous arguments generate a 500
+error <https://jira.ez.no/browse/EZP-21299>`__
+
+REST API v2
+
+`EZP-21302 <https://jira.ez.no/browse/EZP-21302>`__
+
+`Circular reference detected for service
+"ezpublish.urlalias\_generator" <https://jira.ez.no/browse/EZP-21302>`__
+
+Symfony stack
+
+`EZP-21304 <https://jira.ez.no/browse/EZP-21304>`__
+
+`REST api incorrectly parses requests with uri
+siteaccess <https://jira.ez.no/browse/EZP-21304>`__
+
+REST interface
+
+`EZP-21305 <https://jira.ez.no/browse/EZP-21305>`__
+
+`Object name pattern doesn't support object relation datatype as first
+condition in a fallback <https://jira.ez.no/browse/EZP-21305>`__
+
+Field types
+
+`EZP-21325 <https://jira.ez.no/browse/EZP-21325>`__
+
+`View parameters parsing transforms multiple slashes into one
+slash <https://jira.ez.no/browse/EZP-21325>`__
+
+Design (templates, CSS, etc.)
+
+`EZP-21330 <https://jira.ez.no/browse/EZP-21330>`__
+
+`Documentation improvement:
+[HTTPHeaderSettings] <https://jira.ez.no/browse/EZP-21330>`__
+
+Documentation
+
+`EZP-21334 <https://jira.ez.no/browse/EZP-21334>`__
+
+`Wrong XSLT rendering for some ezxml
+elements <https://jira.ez.no/browse/EZP-21334>`__
+
+Field types, Symfony stack
+
+`EZP-21336 <https://jira.ez.no/browse/EZP-21336>`__
+
+`eZOE: Using IE8, every publish adds another empty paragraph at the
+end. <https://jira.ez.no/browse/EZP-21336>`__
+
+Extensions/eZ Online Editor
+
+`EZP-21343 <https://jira.ez.no/browse/EZP-21343>`__
+
+`ContentStructureMenu cookie causes http request problems and breaks RFC
+2965 <https://jira.ez.no/browse/EZP-21343>`__
+
+Administration Interface
+
+`EZP-21348 <https://jira.ez.no/browse/EZP-21348>`__
+
+`eZOE: table width not saved in
+IE8 <https://jira.ez.no/browse/EZP-21348>`__
+
+Extensions/eZ Online Editor
+
+`EZP-21349 <https://jira.ez.no/browse/EZP-21349>`__
+
+`Impossible to register one slot for multiple
+signals <https://jira.ez.no/browse/EZP-21349>`__
+
+Repository & Services (Public API impl), Symfony stack
+
+`EZP-21351 <https://jira.ez.no/browse/EZP-21351>`__
+
+`Core compiler passes don't allow one service to use same tag with
+varying attributes <https://jira.ez.no/browse/EZP-21351>`__
+
+Symfony stack
+
+`EZP-21354 <https://jira.ez.no/browse/EZP-21354>`__
+
+`Siteaccess part missing in generated symfony
+routes <https://jira.ez.no/browse/EZP-21354>`__
+
+`EZP-21358 <https://jira.ez.no/browse/EZP-21358>`__
+
+`ezjscAjaxContent : Image's exif fields MakerNote and UserComment must
+be base64 encoded <https://jira.ez.no/browse/EZP-21358>`__
+
+Extensions/eZ JSCore, Extensions/eZ Online Editor
+
+`EZP-21361 <https://jira.ez.no/browse/EZP-21361>`__
+
+`Content without reco attribute gets fatal error on
+publish <https://jira.ez.no/browse/EZP-21361>`__
+
+Extensions/eZ Recommendation
+
+`EZP-21365 <https://jira.ez.no/browse/EZP-21365>`__
+
+`eZ Password Expiry support for users with main location outside
+"Users" <https://jira.ez.no/browse/EZP-21365>`__
+
+Extensions/eZ MB Password Expiry
+
+`EZP-21379 <https://jira.ez.no/browse/EZP-21379>`__
+
+`Output filters (CSRF) result is lost when a custom layout is set for
+rendering legacy module views <https://jira.ez.no/browse/EZP-21379>`__
+
+Extensions/eZ Form Token
+
+`EZP-21388 <https://jira.ez.no/browse/EZP-21388>`__
+
+`Object relation fails to be selected with eZ Find
+search <https://jira.ez.no/browse/EZP-21388>`__
+
+Administration Interface, Extensions/eZ Find, Legacy IO
+
+`EZP-21396 <https://jira.ez.no/browse/EZP-21396>`__
+
+`Exif Warning in php 5.3.3 Rhel <https://jira.ez.no/browse/EZP-21396>`__
+
+`EZP-21400 <https://jira.ez.no/browse/EZP-21400>`__
+
+`Discard draft, removes image
+file <https://jira.ez.no/browse/EZP-21400>`__
+
+Extensions/eZ Oracle Database
+
+`EZP-21408 <https://jira.ez.no/browse/EZP-21408>`__
+
+`Use eZ Components from composer in standalone
+install <https://jira.ez.no/browse/EZP-21408>`__
+
+Legacy IO
+
+`EZP-21410 <https://jira.ez.no/browse/EZP-21410>`__
+
+`object name limit does not support multibyte
+charset <https://jira.ez.no/browse/EZP-21410>`__
+
+Language
+
+`EZP-21413 <https://jira.ez.no/browse/EZP-21413>`__
+
+`Documentation Update: ContentViewProvider to be split for
+Content/Location <https://jira.ez.no/browse/EZP-21413>`__
+
+Documentation
+
+`EZP-21420 <https://jira.ez.no/browse/EZP-21420>`__
+
+`PHPUnit tests fail when using Zeta Components from composer and testing
+eZ Publish legacy with an additional
+extension <https://jira.ez.no/browse/EZP-21420>`__
+
+Extensions, Legacy IO
+
+`EZP-21430 <https://jira.ez.no/browse/EZP-21430>`__
+
+`[Admin Interface] Regression on preview (fatal
+error) <https://jira.ez.no/browse/EZP-21430>`__
+
+Administration Interface
+
+`EZP-21433 <https://jira.ez.no/browse/EZP-21433>`__
+
+`embed-inline tags in xmltext fields are not rendered properly by core
+XSL <https://jira.ez.no/browse/EZP-21433>`__
+
+Design (templates, CSS, etc.), Legacy Storage engine, Symfony stack
+
+`EZP-21438 <https://jira.ez.no/browse/EZP-21438>`__
+
+`Improve relation permission handling to use
+view\_embed <https://jira.ez.no/browse/EZP-21438>`__
+
+Permissions
+
+`EZP-21443 <https://jira.ez.no/browse/EZP-21443>`__
+
+`Debug log displayed when using long japaneese strings in
+name <https://jira.ez.no/browse/EZP-21443>`__
+
+`EZP-21446 <https://jira.ez.no/browse/EZP-21446>`__
+
+`Limit for object name trim adds
++1 <https://jira.ez.no/browse/EZP-21446>`__
+
+`EZP-21465 <https://jira.ez.no/browse/EZP-21465>`__
+
+`Cleanup extra lines in the ezurl\_object\_link
+table <https://jira.ez.no/browse/EZP-21465>`__
+
+`EZP-21467 <https://jira.ez.no/browse/EZP-21467>`__
+
+`PHP Notice in
+ezurlaliasquery.php <https://jira.ez.no/browse/EZP-21467>`__
+
+`EZP-21469 <https://jira.ez.no/browse/EZP-21469>`__
+
+`[API] language mask on ezcontentobject incorreclty
+set <https://jira.ez.no/browse/EZP-21469>`__
+
+Language
+
+`EZP-21471 <https://jira.ez.no/browse/EZP-21471>`__
+
+`versionview: (JS) issues with class popup menu if object is not yet
+published <https://jira.ez.no/browse/EZP-21471>`__
+
+Design (templates, CSS, etc.)
+
+`EZP-21479 <https://jira.ez.no/browse/EZP-21479>`__
+
+`error.log entries when loading DB schema from
+extensions <https://jira.ez.no/browse/EZP-21479>`__
+
+Extensions/eZ Demo, Install
+
+`EZP-21482 <https://jira.ez.no/browse/EZP-21482>`__
+
+`Composer lock ICU version higher than the one on
+RH <https://jira.ez.no/browse/EZP-21482>`__
+
+Install, Symfony stack
+
+`EZP-21483 <https://jira.ez.no/browse/EZP-21483>`__
+
+`[Wizard Setup] Install fails at the deploy with error on
+unserializeContentClassAttribute <https://jira.ez.no/browse/EZP-21483>`__
+
+Install
+
+`EZP-21498 <https://jira.ez.no/browse/EZP-21498>`__
+
+`Check file consistency warns about ~
+files <https://jira.ez.no/browse/EZP-21498>`__
+
+Administration Interface
+
+`EZP-21511 <https://jira.ez.no/browse/EZP-21511>`__
+
+`Don't break prioritized languages when fetching eZURLAliasML->getPath
+in different locale <https://jira.ez.no/browse/EZP-21511>`__
+
+Language
+
+`EZP-21522 <https://jira.ez.no/browse/EZP-21522>`__
+
+`Unable to publish an image content with the REST
+API <https://jira.ez.no/browse/EZP-21522>`__
+
+Content (images, XML, PDF, RSS, etc.), Field types, REST API v2
+
+`EZP-21537 <https://jira.ez.no/browse/EZP-21537>`__
+
+`[Demo Interface] My profile email appears with SPAMFILTER
+text <https://jira.ez.no/browse/EZP-21537>`__
+
+DemoBundle
+
+`EZP-21543 <https://jira.ez.no/browse/EZP-21543>`__
+
+`Legacy admin broken <https://jira.ez.no/browse/EZP-21543>`__
+
+Administration Interface
+
+`EZP-21546 <https://jira.ez.no/browse/EZP-21546>`__
+
+`Online Editor not activated <https://jira.ez.no/browse/EZP-21546>`__
+
+Administration Interface
+
+`EZP-21547 <https://jira.ez.no/browse/EZP-21547>`__
+
+`HttpError for "Access denied" (1) is cached, returns "200 OK"
+instead <https://jira.ez.no/browse/EZP-21547>`__
+
+Misc
+
+`EZP-21548 <https://jira.ez.no/browse/EZP-21548>`__
+
+`Clear role assignments cache when dealing with
+locations <https://jira.ez.no/browse/EZP-21548>`__
+
+Caching, Repository & Services (Public API impl)
+
+`EZP-21550 <https://jira.ez.no/browse/EZP-21550>`__
+
+`Changing owner, clearing cache needed for Owner(Self) to
+work <https://jira.ez.no/browse/EZP-21550>`__
+
+Caching, Repository & Services (Public API impl)
+
+`EZP-21558 <https://jira.ez.no/browse/EZP-21558>`__
+
+`DFS/MySQLi ezie error in copy with split DFS
+tables <https://jira.ez.no/browse/EZP-21558>`__
+
+Extensions/eZ Image Editor
+
+`EZP-21561 <https://jira.ez.no/browse/EZP-21561>`__
+
+`eZ Publish 5.2alpha1 LS has a tones of JavaScript errors in admin
+interface <https://jira.ez.no/browse/EZP-21561>`__
+
+Administration Interface
+
+`EZP-21567 <https://jira.ez.no/browse/EZP-21567>`__
+
+`Blank e-mail subject line with multi-byte characters
+(iconv\_mime\_encode: Unknown
+error) <https://jira.ez.no/browse/EZP-21567>`__
+
+Language, Notifications
+
+`EZP-21568 <https://jira.ez.no/browse/EZP-21568>`__
+
+`Typo in
+REST\\Server\\Controller\\Role <https://jira.ez.no/browse/EZP-21568>`__
+
+REST API v2
+
+`EZP-21575 <https://jira.ez.no/browse/EZP-21575>`__
+
+`Missing Legacy signal slot cache clearing on UpdateMetaData while
+updating user <https://jira.ez.no/browse/EZP-21575>`__
+
+Public API interfaces
+
+`EZP-21578 <https://jira.ez.no/browse/EZP-21578>`__
+
+`Matching siteaccess on http header does not
+work <https://jira.ez.no/browse/EZP-21578>`__
+
+REST API v2, Symfony stack
+
+`EZP-21581 <https://jira.ez.no/browse/EZP-21581>`__
+
+`content\_view\_provider.configured service uses wrong matcher
+factory <https://jira.ez.no/browse/EZP-21581>`__
+
+Symfony stack
+
+`EZP-21589 <https://jira.ez.no/browse/EZP-21589>`__
+
+`Boolean values are serialized as string in JSON responses of the REST
+API <https://jira.ez.no/browse/EZP-21589>`__
+
+REST API v2
+
+`EZP-21591 <https://jira.ez.no/browse/EZP-21591>`__
+
+`Querystring lost in
+redirections <https://jira.ez.no/browse/EZP-21591>`__
+
+Misc
+
+`EZP-21599 <https://jira.ez.no/browse/EZP-21599>`__
+
+`Fix regression from EZP-19660 at a higher
+level <https://jira.ez.no/browse/EZP-21599>`__
+
+Workflows
+
+`EZP-21611 <https://jira.ez.no/browse/EZP-21611>`__
+
+`unpublish cronjob uses anonymous
+credentials <https://jira.ez.no/browse/EZP-21611>`__
+
+Cronjobs
+
+`EZP-21612 <https://jira.ez.no/browse/EZP-21612>`__
+
+`handleViewException response not returned in
+ViewController <https://jira.ez.no/browse/EZP-21612>`__
+
+Symfony stack
+
+`EZP-21613 <https://jira.ez.no/browse/EZP-21613>`__
+
+`Compound\\LogicalAnd serialization
+fails <https://jira.ez.no/browse/EZP-21613>`__
+
+Symfony stack
+
+`EZP-21621 <https://jira.ez.no/browse/EZP-21621>`__
+
+`ContentView::setTemplateIdentifier throws InvalidArgumentTypeException
+even with the right type <https://jira.ez.no/browse/EZP-21621>`__
+
+Symfony stack
+
+`EZP-21628 <https://jira.ez.no/browse/EZP-21628>`__
+
+`Symfony routes overriding URLAliases in
+admin <https://jira.ez.no/browse/EZP-21628>`__
+
+Symfony stack
+
+`EZP-21631 <https://jira.ez.no/browse/EZP-21631>`__
+
+`RoutableFragmentRenderer::generateFragmentUri() not compatible with
+Symfony 2.3.5 <https://jira.ez.no/browse/EZP-21631>`__
+
+Symfony stack
+
+`EZP-21636 <https://jira.ez.no/browse/EZP-21636>`__
+
+`Hinclude sub-requests are broken since EZP-21631
+fix <https://jira.ez.no/browse/EZP-21636>`__
+
+Symfony stack
+
+`EZP-21648 <https://jira.ez.no/browse/EZP-21648>`__
+
+`When publishing Content with Location some Location create struct
+properties are not respected <https://jira.ez.no/browse/EZP-21648>`__
+
+Legacy Storage engine, Public API interfaces, Repository & Services
+(Public API impl)
+
+`EZP-21656 <https://jira.ez.no/browse/EZP-21656>`__
+
+`PSpell plugin fails with
+eZFormToken <https://jira.ez.no/browse/EZP-21656>`__
+
+Extensions/eZ Form Token, Extensions/eZ Online Editor
+
+`EZP-21668 <https://jira.ez.no/browse/EZP-21668>`__
+
+`content.tree\_root.location\_id default value should not be
+null <https://jira.ez.no/browse/EZP-21668>`__
+
+Symfony stack
+
+`EZP-21684 <https://jira.ez.no/browse/EZP-21684>`__
+
+`Bug when creating forward url
+alias <https://jira.ez.no/browse/EZP-21684>`__
+
+Symfony stack
+
+`EZP-21685 <https://jira.ez.no/browse/EZP-21685>`__
+
+`[EZ Content Staging] Selection attribute fail in ContentStaging with
+value Zero <https://jira.ez.no/browse/EZP-21685>`__
+
+Extensions/eZ Content Staging
+
+`EZP-21689 <https://jira.ez.no/browse/EZP-21689>`__
+
+`eZDemo navigation broken in a non virtualhost
+enviorment <https://jira.ez.no/browse/EZP-21689>`__
+
+DemoBundle
+
+`EZP-21695 <https://jira.ez.no/browse/EZP-21695>`__
+
+`Cached ESI can not be shared among
+pages <https://jira.ez.no/browse/EZP-21695>`__
+
+Caching, Public API interfaces
+
+`EZP-21696 <https://jira.ez.no/browse/EZP-21696>`__
+
+`addLimitation() new SubtreeLimitation fails with
+InvalidArgumentException <https://jira.ez.no/browse/EZP-21696>`__
+
+Public API interfaces
+
+`EZP-21700 <https://jira.ez.no/browse/EZP-21700>`__
+
+`Search API returning duplicate content
+ids <https://jira.ez.no/browse/EZP-21700>`__
+
+Extensions/eZ Find, Public API interfaces
+
+`EZP-21703 <https://jira.ez.no/browse/EZP-21703>`__
+
+`RoleService does not validate Limitations in assignRoleToUser() and
+assignRoleToUserGroup() methods <https://jira.ez.no/browse/EZP-21703>`__
+
+Repository & Services (Public API impl)
+
+`EZP-21705 <https://jira.ez.no/browse/EZP-21705>`__
+
+`Wrong links generated when using Map\\Host siteaccess
+matching <https://jira.ez.no/browse/EZP-21705>`__
+
+Symfony stack
+
+`EZP-21721 <https://jira.ez.no/browse/EZP-21721>`__
+
+`Displaying an empty XMLText field outputs
+eZXML <https://jira.ez.no/browse/EZP-21721>`__
+
+Field types, Symfony stack
+
+`EZP-21722 <https://jira.ez.no/browse/EZP-21722>`__
+
+`Error with the ez\_render\_field if a custom tag xsl stylesheet is not
+properly loaded <https://jira.ez.no/browse/EZP-21722>`__
+
+Field types, Symfony stack, Template language
+
+`EZP-21737 <https://jira.ez.no/browse/EZP-21737>`__
+
+`Wrong scope in contentViewGenerateError when using DFS and
+user-permissions <https://jira.ez.no/browse/EZP-21737>`__
+
+Caching, Clustering, Permissions
+
+`EZP-21740 <https://jira.ez.no/browse/EZP-21740>`__
+
+`Fix 5.2 upgrade doc <https://jira.ez.no/browse/EZP-21740>`__
+
+Documentation, Upgrading
+
+`EZP-21741 <https://jira.ez.no/browse/EZP-21741>`__
+
+`Persistence cache not cleared on transaction
+rollback <https://jira.ez.no/browse/EZP-21741>`__
+
+Caching, SPI interfaces
+
+`EZP-21749 <https://jira.ez.no/browse/EZP-21749>`__
+
+`Fatal error when editing content with
+ezimage <https://jira.ez.no/browse/EZP-21749>`__
+
+Content (images, XML, PDF, RSS, etc.), Database related
+
+`EZP-21758 <https://jira.ez.no/browse/EZP-21758>`__
+
+`Custom variables are not correctly exposed in legacy templates when
+doing a sub-request <https://jira.ez.no/browse/EZP-21758>`__
+
+Symfony stack, Template language
+
+`EZP-21776 <https://jira.ez.no/browse/EZP-21776>`__
+
+`Simple FieldValue Criterion handler does not escape value when used
+with CONTAINS operator <https://jira.ez.no/browse/EZP-21776>`__
+
+Legacy Storage engine, Search
+
+`EZP-21780 <https://jira.ez.no/browse/EZP-21780>`__
+
+`Map\\URI siteaccess matcher is
+greedy <https://jira.ez.no/browse/EZP-21780>`__
+
+Symfony stack
+
+`EZP-21786 <https://jira.ez.no/browse/EZP-21786>`__
+
+`Using Page fieldtype, valid block items should be passed to the block
+templates <https://jira.ez.no/browse/EZP-21786>`__
+
+Field types, Symfony stack
+
+`EZP-21804 <https://jira.ez.no/browse/EZP-21804>`__
+
+`Duplicate key in ezcontentobject\_attribute when creating new draft
+with untranslatable field <https://jira.ez.no/browse/EZP-21804>`__
+
+Legacy Storage engine, Public API interfaces, Symfony stack
+
+`EZP-21817 <https://jira.ez.no/browse/EZP-21817>`__
+
+`When updating Content untranslatable field is copied instead of
+updated <https://jira.ez.no/browse/EZP-21817>`__
+
+Legacy Storage engine
+
+`EZP-21818 <https://jira.ez.no/browse/EZP-21818>`__
+
+`Translation ESL starts with
+newline <https://jira.ez.no/browse/EZP-21818>`__
+
+Language
+
+`EZP-21832 <https://jira.ez.no/browse/EZP-21832>`__
+
+`New demo content needs permissions update for video content type used
+on landing page <https://jira.ez.no/browse/EZP-21832>`__
+
+DemoBundle
+
+`EZP-21845 <https://jira.ez.no/browse/EZP-21845>`__
+
+`Trashed locations still in persistence cache & accessible in
+API <https://jira.ez.no/browse/EZP-21845>`__
+
+Caching, Repository & Services (Public API impl), SPI interfaces
+
+`EZP-21854 <https://jira.ez.no/browse/EZP-21854>`__
+
+`Default ezgmaplocation\_field template defines a wrong
+height <https://jira.ez.no/browse/EZP-21854>`__
+
+Field types
+
+`EZP-21856 <https://jira.ez.no/browse/EZP-21856>`__
+
+`Unable to run php composer.phar
+install <https://jira.ez.no/browse/EZP-21856>`__
+
+Symfony stack
+
+`EZP-21870 <https://jira.ez.no/browse/EZP-21870>`__
+
+`Fatal error when deleting location with limited content/remove
+permissions <https://jira.ez.no/browse/EZP-21870>`__
+
+Permissions, Public API interfaces
+
+`EZP-21873 <https://jira.ez.no/browse/EZP-21873>`__
+
+`Unable to use ez\_render\_field with
+ezgmaplocation\_field <https://jira.ez.no/browse/EZP-21873>`__
+
+Symfony stack
+
+`EZP-21874 <https://jira.ez.no/browse/EZP-21874>`__
+
+`ParentContentType Limitation does not work correctly with draft
+Content <https://jira.ez.no/browse/EZP-21874>`__
+
+Permissions
+
+`EZP-21876 <https://jira.ez.no/browse/EZP-21876>`__
+
+`Compound matcher throws fatal error after patch from
+EZP-21834 <https://jira.ez.no/browse/EZP-21876>`__
+
+Symfony stack
+
+`EZP-21902 <https://jira.ez.no/browse/EZP-21902>`__
+
+`As a BDD test writer I want behat running on updated demo
+content <https://jira.ez.no/browse/EZP-21902>`__
+
+Test framework
+
+`EZP-21904 <https://jira.ez.no/browse/EZP-21904>`__
+
+`Fatal error after deleting the location of a single location
+object <https://jira.ez.no/browse/EZP-21904>`__
+
+Public API interfaces
+
+`EZP-21913 <https://jira.ez.no/browse/EZP-21913>`__
+
+`Hotfix usage of global in cli
+scripts <https://jira.ez.no/browse/EZP-21913>`__
+
+`EZP-21914 <https://jira.ez.no/browse/EZP-21914>`__
+
+`New stack DB link must be reset in asynchronous publishing
+daemon <https://jira.ez.no/browse/EZP-21914>`__
+
+Symfony stack
+
+`EZP-21917 <https://jira.ez.no/browse/EZP-21917>`__
+
+`ezxml link class attribute not rendering because of wrong
+xsl <https://jira.ez.no/browse/EZP-21917>`__
+
+Content (images, XML, PDF, RSS, etc.)
+
+`EZP-21952 <https://jira.ez.no/browse/EZP-21952>`__
+
+`user anonymous cannot be
+redefined <https://jira.ez.no/browse/EZP-21952>`__
+
+Symfony stack
+
+`EZP-22041 <https://jira.ez.no/browse/EZP-22041>`__
+
+`Documentation: Update eZP 5.1 to 5.2 should be improved in config.yml
+example <https://jira.ez.no/browse/EZP-22041>`__
+
+Documentation, Upgrading
+
+`EZP-22056 <https://jira.ez.no/browse/EZP-22056>`__
+
+`Doc: ContentStaging FAQ: object\_id and node\_id / Source vs
+Target <https://jira.ez.no/browse/EZP-22056>`__
+
+Extensions/eZ Content Staging
+
+`EZP-22180 <https://jira.ez.no/browse/EZP-22180>`__
+
+`SPI: loading (reverse) relations does not check for published
+Content <https://jira.ez.no/browse/EZP-22180>`__
+
+Administration Interface, Caching, Public API interfaces
+
+`EZP-22195 <https://jira.ez.no/browse/EZP-22195>`__
+
+`Memcache configuration issue <https://jira.ez.no/browse/EZP-22195>`__
+
+Symfony stack
+
+`189
+issues <https://jira.ez.no/secure/IssueNavigator.jspa?reset=true&jqlQuery=project%3DEZP+AND+fixVersion+in+%28+%225.2-alpha1%22%2C%225.2-beta1%22%2C%225.2-rc1%22%2C%225.2%22+%29+AND+type%3DBug+ORDER+BY+issuetype+DESC%2C+key+ASC>`__
+
+Document generated by Confluence on Feb 12, 2014 16:43

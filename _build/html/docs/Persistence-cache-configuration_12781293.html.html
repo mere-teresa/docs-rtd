@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Persistence cache configuration &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Configuration_2720538.html">Configuration</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-persistence-cache-configuration">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Persistence cache configuration<a class="headerlink" href="#ez-publish-platform-5-next-persistence-cache-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:sarah&#46;haim-lubczanski&#37;&#52;&#48;ez&#46;no">sarah<span>&#46;</span>haim-lubczanski<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Feb 06, 2014</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="#Persistencecacheconfiguration-Introduction">Introduction</a></li>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Configuration">Configuration</a><ul>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Multirepositorysetup">Multi repository
+setup</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Stashhandlersconfiguration">Stash handlers
+configuration</a><ul>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Generalsettings">General
+settings</a></li>
+<li><a class="reference external" href="#Persistencecacheconfiguration-FileSystem">FileSystem</a><ul>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Availablesettings">Available
+settings</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Persistencecacheconfiguration-APC">APC</a></li>
+<li><a class="reference external" href="#Persistencecacheconfiguration-Memcache">Memcache</a><ul>
+<li><a class="reference external" href="#Persistencecacheconfiguration-ExamplewithMemcache">Example with
+Memcache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p><strong>Tech Note</strong></p>
+<p>Current implementation uses a caching library called
+<a class="reference external" href="http://stash.tedivm.com/">Stash</a>, via
+<a class="reference external" href="https://github.com/tedivm/TedivmStashBundle">Stash-bundle</a>.&nbsp;If this
+changes, then the configuration format will&nbsp;most&nbsp;likely change as
+well.&nbsp;Stash supports the following cache handlers:
+<strong>FileSystem</strong>,&nbsp;<strong>Memcache</strong>, <strong>APC</strong>, <strong>Sqlite</strong>, <strong>XCache</strong> and
+<strong>BlackHole</strong>.</p>
+<p><strong>Cache service</strong></p>
+<p>The cache system is exposed as a &#8220;cache&#8221; service, and can be reused by
+any other service as described on the
+<a class="reference external" href="Persistence-cache_10158280.html">Persistence&nbsp;cache</a> page.</p>
+</div>
+<div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>During Setup wizard and manually using <tt class="docutils literal"><span class="pre">ezpublish:configure``&nbsp;console</span>
+<span class="pre">command</span> <span class="pre">a</span> <span class="pre">default</span> <span class="pre">configuration</span> <span class="pre">is</span> <span class="pre">generated</span> <span class="pre">currently</span> <span class="pre">**using</span>
+<span class="pre">FileSystem**,</span> <span class="pre">using</span> <span class="pre">``%kernel.cache_dir%/stash</span></tt> to store cache files.</p>
+<p>The configuration is placed in ezpublish/config/ezpublish.yml, and looks
+like:</p>
+<p><strong>Default ezpublish.yml</strong></p>
+<p>The default settings used during setup wizard as found in
+<tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish_setup.yml</span></tt>:</p>
+<p><strong>ezpublish_setup.yml</strong></p>
+<p>This setting works&nbsp;across&nbsp;all installs and just caches objects within
+the same request thanks to the <tt class="docutils literal"><span class="pre">inMemory:</span> <span class="pre">true</span></tt> setting.</p>
+<p>If you want to change to another handler, see in <em>Stash handlers
+configuration</em> below for what kind of settings you have available.</p>
+<p>Note for &#8220;inMemory&#8221; cache with long running scripts</p>
+<p>Icon</p>
+<p>Use of <tt class="docutils literal"><span class="pre">inMemory</span></tt> caching with BlackHole or any other cache handler
+should not be used for long running scripts as it will over time return
+stale data, inMemory cache is not shared across requests/processes, so
+invalidation does not happen!</p>
+<div class="section" id="multi-repository-setup">
+<h2>Multi repository setup<a class="headerlink" href="#multi-repository-setup" title="Permalink to this headline">¶</a></h2>
+<p>New in 5.2 is the possibility to select a specific Stash cache pool on a
+siteaccess or sitegroup level, the following example shows use in a
+sitegroup:</p>
+<p><strong>ezpublish.yml site group setting</strong></p>
+<div class="line-block">
+<div class="line">The &#8220;default&#8221; here refers to the name of the cache pool as specified</div>
+</div>
+<p>in the <em>stash</em>&nbsp;configuration block shown above, if your install has
+several repositories (databases), then make sure every group of sites
+using different&nbsp;repositories also uses a different cache pool to avoid
+unwanted effects.
+| NB: We plan to make this more native in the future, so this setting
+will someday not be needed.</p>
+</div>
+</div>
+<div class="section" id="stash-handlers-configuration">
+<h1>Stash handlers configuration<a class="headerlink" href="#stash-handlers-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-settings">
+<h2>General settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
+<p>To check which cache settings are available for your installation, run
+the following command in your terminal :</p>
+</div>
+<div class="section" id="filesystem">
+<h2>FileSystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h2>
+<p>This cache handler is using local filesystem, by default the Symfony
+cache folder, as this is per server, it&nbsp;<strong>does not support multi
+server (cluster) setups</strong>!</p>
+<p>Icon</p>
+<p><strong>We strongly discourage you from storing cache files on NFS</strong>, as it
+defeats the purpose of the cache: speed</p>
+<div class="section" id="available-settings">
+<h3><strong>Available settings</strong><a class="headerlink" href="#available-settings" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">path</span>
+</pre></div>
+</div>
+<p>The path where the cache is placed, default is
+<tt class="docutils literal"><span class="pre">%kernel.cache_dir%/stash</span></tt>, effectively
+<tt class="docutils literal"><span class="pre">ezpublish/cache/&lt;env&gt;/stash</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dirSplit</span>
+</pre></div>
+</div>
+<p>Number of times the cache key should be split up to avoid having to many
+files in each folder, default is 2.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">filePermissions</span>
+</pre></div>
+</div>
+<p>The permissions of the cache file, default is 0660.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dirPermissions</span>
+</pre></div>
+</div>
+<p>The permission of the cache file directories (see dirSplit), default is
+0770.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">memKeyLimit</span>
+</pre></div>
+</div>
+<p>Limit on how many key to path entries are kept in memory during
+execution at a time to avoid having to recalculate the path on key
+lookups, default 200.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">keyHashFunction</span>
+</pre></div>
+</div>
+<p>Algorithm used for creating paths, default md5. Use crc32 on
+Windows<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">``</span></a></p>
+<p>Issues with Microsoft Windows</p>
+<p>Icon</p>
+<p>If you are using a Windows OS, you may encounter an issue
+regarding<strong>long paths for cache directory name</strong>. The paths are long
+because Stash uses md5 to generate unique key that are sanitized really
+quickly.</p>
+<p>Solution is to <strong>change the hash algorithm</strong> used by Stash.</p>
+<p><strong>Specifying key hash function</strong></p>
+<div class="line-block">
+<div class="line"><strong>This configuration is only recommended for Windows users</strong>.</div>
+<div class="line">Note : you can also define <strong>the path</strong> where you want the cache files</div>
+</div>
+<p>to be generated.</p>
+</div>
+</div>
+<div class="section" id="apc">
+<h2>APC<a class="headerlink" href="#apc" title="Permalink to this headline">¶</a></h2>
+<p>This cache handler is using shard memory using APC&#8217;s user cache feature,
+as this is per server, it <strong>does not support multi server (cluster)
+setups</strong>, unless you use PHP-FPM on a dedicated server (this way, user
+cache can be shared among all the workers in one pool).</p>
+<p>Limitation</p>
+<p>Icon</p>
+<div class="line-block">
+<div class="line">As APC user cache is not shared between processes, it is not possible</div>
+</div>
+<p>to clear the user cache from CLI, even if you set <tt class="docutils literal"><span class="pre">apc.enable_cli</span></tt> to
+On.
+| Hence publishing content from a command line script won&#8217;t let you
+properly clear SPI cache.</p>
+<p>Please also note that the default value for&nbsp;<tt class="docutils literal"><span class="pre">apc.shm_size</span></tt> is 128MB.
+However, 256MB is recommended for APC to work properly. For more details
+please refer to the <a class="reference external" href="http://www.php.net/manual/en/apc.configuration.php#ini.apc.shm-size">APC configuration
+manual</a>.</p>
+<p><strong>Available settings</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">ttl</span></tt></td>
+<td>The time to live of the cache in seconds, default set to 500 (8.3 minutes)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">namespace</span></tt></td>
+<td>A namespace to prefix cache keys with to avoid key conflicts with other eZ Publish sites on same eZ Publish installation, default is <tt class="docutils literal"><span class="pre">null</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="memcache">
+<h2>Memcache<a class="headerlink" href="#memcache" title="Permalink to this headline">¶</a></h2>
+<p>This cache handler is using <a class="reference external" href="http://memcached.org/">Memcached, a distributed caching
+solution</a>, <strong>this is the only supported cache
+solution for multi server (cluster) setups</strong>!</p>
+<p>Note</p>
+<p>Icon</p>
+<p>Stash supports both the php <a class="reference external" href="http://php.net/memcache">Memcache</a> and
+<a class="reference external" href="http://php.net/memcached">Memcached</a> extensions. <strong>However Memcached
+is recommended</strong> as it is much more advanced and supports all settings
+below.</p>
+<p>If you have both extensions installed, <strong>Stash will automatically choose
+Memcached</strong>.</p>
+<p><tt class="docutils literal"><span class="pre">servers</span></tt></p>
+<p>Array of Memcached servers, with host/IP, port and weight</p>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">server</span></tt>: Host or IP of your Memcached server</div>
+<div class="line"><tt class="docutils literal"><span class="pre">port</span></tt>: Port where Memcached is listening to (defaults to 11211)</div>
+<div class="line"><tt class="docutils literal"><span class="pre">weight</span></tt>: Weight of the server, when using several Memcached servers</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">prefix_key</span></tt></p>
+<div class="line-block">
+<div class="line">A namespace to prefix cache keys with to avoid key conflicts with</div>
+</div>
+<p>other eZ Publish sites on same eZ Publish installation (default is an
+empty string).
+| Must be the same on all server with the same installation.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-prefix-key">See
+Memcached prefix_key
+option</a>.</p>
+<p><tt class="docutils literal"><span class="pre">compression</span></tt></p>
+<p>default true. <a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-compression">See Memcached compression
+option</a>.</p>
+<p><tt class="docutils literal"><span class="pre">libketama_compatible</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-libketama-compatible">See Memcached libketama_compatible
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">buffer_writes</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-buffer-writes">See Memcached buffer_writes
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">binary_protocol</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-binary-protocol">See Memcached binary_protocol
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">no_block</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-no-block">See Memcached no_block
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">tcp_nodelay</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-tcp-nodelay">See Memcached tcp_nodelay
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">connection_timeout</span></tt></p>
+<p>default 1000.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-connection-timeout">See Memcached connection_timeout
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">retry_timeout</span></tt></p>
+<p>default 0.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-memcached-timeout">See Memcached retry_timeout
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">send_timeout</span></tt></p>
+<p>default 0.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-send-timeout">See Memcached send_timeout
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">recv_timeout</span></tt></p>
+<p>default 0.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-recv-timeout">See Memcached recv_timeout
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">poll_timeout</span></tt></p>
+<p>default 1000.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-poll-timeout">See Memcached poll_timeout
+option</a></p>
+<p><tt class="docutils literal"><span class="pre">cache_lookups</span></tt></p>
+<p>default false.&nbsp;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-cache-lookups">See Memcached cache_lookups
+option</a></p>
+<p><strong>``server_failure_limit``</strong></p>
+<div class="line-block">
+<div class="line">default 0.&nbsp;<a href="#id5"><span class="problematic" id="id6">`</span></a>See PHP Memcached</div>
+</div>
+<p>documentation &lt;<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-server-failure-limit">http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-server-failure-limit</a>&gt;`__</p>
+<p><a href="#id7"><span class="problematic" id="id8">**</span></a><a href="#id9"><span class="problematic" id="id10">``</span></a>socket_send_size ``
+**</p>
+<p>See <a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-socket-send-size">Memcached socket_send_size
+option</a>.</p>
+<p><strong>``socket_recv_size``</strong></p>
+<p>See <a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-socket-recv-size">Memcached socket_recv_size
+option.</a></p>
+<p><strong>``serializer``</strong></p>
+<p>See <a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-serializer">Memcached serializer
+option</a>.</p>
+<p><strong>``hash``</strong></p>
+<p>See <a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-hash">Memcached hash
+option.</a></p>
+<p><strong>``distribution``</strong></p>
+<p>Specifies the method of distributing item keys to the servers.
+See<a class="reference external" href="http://www.php.net/manual/en/memcached.constants.php#memcached.constants.opt-distribution">Memcached distribution
+option.</a></p>
+<p>For in-depth information on the settings, see:
+<a class="reference external" href="http://php.net/Memcached">http://php.net/Memcached</a></p>
+<p>Icon</p>
+<div class="line-block">
+<div class="line">When using Memcache handler, <a href="#id11"><span class="problematic" id="id12">**</span></a>it&#8217;s strongly recommended to also use</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">inMemory</span></tt> cache** (see example below).
+| This will help reducing network traffic between your webserver and
+your Memcached server.</p>
+<div class="section" id="example-with-memcache">
+<h3>Example with Memcache<a class="headerlink" href="#example-with-memcache" title="Permalink to this headline">¶</a></h3>
+<p>Note</p>
+<p>Icon</p>
+<p>This configuration is only recommended for Windows users, but does solve
+this problem.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Persistence cache configuration</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#multi-repository-setup">Multi repository setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stash-handlers-configuration">Stash handlers configuration</a><ul>
+<li><a class="reference internal" href="#general-settings">General settings</a></li>
+<li><a class="reference internal" href="#filesystem">FileSystem</a><ul>
+<li><a class="reference internal" href="#available-settings"><strong>Available settings</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#apc">APC</a></li>
+<li><a class="reference internal" href="#memcache">Memcache</a><ul>
+<li><a class="reference internal" href="#example-with-memcache">Example with Memcache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Persistence-cache-configuration_12781293.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

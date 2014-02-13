@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Configuration &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-configuration">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Configuration<a class="headerlink" href="#ez-publish-platform-5-next-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:gaetano&#46;giunta&#37;&#52;&#48;ez&#46;no">gaetano<span>&#46;</span>giunta<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Jan 17, 2014</p>
+<ul class="simple">
+<li><a class="reference external" href="#Configuration-TheBasics">The Basics</a><ul>
+<li><a class="reference external" href="#Configuration-Example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Configuration-DynamicconfigurationwiththeConfigResolver">Dynamic configuration with the
+ConfigResolver</a><ul>
+<li><a class="reference external" href="#Configuration-Scope">Scope</a></li>
+<li><a class="reference external" href="#Configuration-ConfigResolverUsage">ConfigResolver Usage</a></li>
+<li><a class="reference external" href="#Configuration-InjecttheConfigResolverinyourservices">Inject the ConfigResolver in your
+services</a></li>
+<li><a class="reference external" href="#Configuration-Customlocaleconfiguration%285.1%2B%29">Custom locale configuration
+(5.1+)</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="the-basics">
+<h2>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this headline">¶</a></h2>
+<p>Important</p>
+<p>Icon</p>
+<div class="line-block">
+<div class="line">Configuration is tightly related to the service container.</div>
+<div class="line">To fully understand the following content, you need to be aware of</div>
+</div>
+<p><a class="reference external" href="Service-Container_2719956.html">Symfony&#8217;s service container</a> and
+<a class="reference external" href="http://symfony.com/doc/current/book/service_container.html#service-parameters">its
+configuration</a>.</p>
+<p>Basic configuration handling in eZ Publish is similar to what is
+commonly possible with Symfony. Regarding this, you can define key/value
+pairs in <a class="reference external" href="http://symfony.com/doc/current/book/service_container.html#importing-other-container-configuration-resources">your configuration
+files</a>,
+under the main <strong>parameters</strong> key (like
+in&nbsp;<strong>`parameters.yml &lt;https://github.com/ezsystems/ezpublish5/blob/master/app/config/parameters.yml.dist&gt;`__</strong>).</p>
+<div class="line-block">
+<div class="line">Internally and by convention, keys follow a <strong>dot syntax</strong>&nbsp;where the</div>
+</div>
+<p>different segments follow your configuration hierarchy. Keys are usually
+prefixed by a&nbsp;<em>namespace</em>&nbsp;corresponding to your application.
+| Values can be anything, <strong>including arrays and deep hashes</strong>.</p>
+<p>Icon</p>
+<p>eZ Publish core configuration is prefixed by <strong>ezsettings</strong> namespace,
+while <em>internal</em> configuration (not to be used directly) is prefixed by
+<strong>ezpublish</strong> namespace.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p><strong>Configuration</strong></p>
+<p><strong>Usage from a controller</strong></p>
+</div>
+</div>
+<div class="section" id="dynamic-configuration-with-the-configresolver">
+<h2>Dynamic configuration with the ConfigResolver<a class="headerlink" href="#dynamic-configuration-with-the-configresolver" title="Permalink to this headline">¶</a></h2>
+<p>In eZ Publish, it is fairly common to have different settings depending
+on the current siteaccess (e.g. languages, <a class="reference external" href="View-provider-configuration_2720462.html">view
+provider</a> configuration).</p>
+<div class="section" id="scope">
+<h3>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h3>
+<p><strong>Dynamic configuration&nbsp;</strong>can be resolved depending on a <em>scope</em>.</p>
+<p>Available scopes are (in order of precedence) :</p>
+<ol class="arabic simple">
+<li><em>global</em></li>
+<li>SiteAccess</li>
+<li>SiteAcces group</li>
+<li><em>default</em></li>
+</ol>
+<p>It gives the opportunity to define settings for a given siteaccess, for
+instance, like in the <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Concepts-and-basics/Configuration">legacy INI override
+system</a>.</p>
+<p>This mechanism is not limited to eZ Publish internal settings
+(aka&nbsp;<strong>*ezsettings*&nbsp;namespace</strong>) and is applicable for specific needs
+(bundle related, project related, etc).</p>
+</div>
+<div class="section" id="configresolver-usage">
+<h3>ConfigResolver Usage<a class="headerlink" href="#configresolver-usage" title="Permalink to this headline">¶</a></h3>
+<p>Dynamic configuration is handled by a <strong>config resolver</strong>. It consists
+in a service object mainly exposing&nbsp;<tt class="docutils literal"><span class="pre">hasParameter()</span></tt> and
+<tt class="docutils literal"><span class="pre">getParameter()</span></tt> methods.&nbsp;The idea is to check the different <em>scopes</em>
+available for a given <em>namespace</em>&nbsp;to find the appropriate parameter.</p>
+<p>In order to work with the config resolver, your dynamic settings must
+comply internally to the following name format :
+<tt class="docutils literal"><span class="pre">&lt;namespace&gt;.&lt;scope&gt;.parameter.name</span></tt>.</p>
+<p><strong>Namespace + scope example</strong></p>
+<p>Both&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>getParameter()``&nbsp;and&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>hasParameter()``&nbsp;can take 3 different
+arguments:</p>
+<ol class="arabic simple">
+<li><a href="#id5"><span class="problematic" id="id6">``</span></a>$paramName``&nbsp;(i.e. the name of the parameter you need)</li>
+<li><a href="#id7"><span class="problematic" id="id8">``</span></a>$namespace``&nbsp;(i.e. your application namespace,&nbsp;<em>myapp</em>&nbsp;in the
+previous example. If null, the default namespace will be used, which
+is&nbsp;<strong>ezsettings</strong>&nbsp;by default)</li>
+<li><a href="#id9"><span class="problematic" id="id10">``</span></a>$scope``&nbsp;(i.e. a siteaccess name. If null, the current siteaccess
+will be used)</li>
+</ol>
+</div>
+<div class="section" id="inject-the-configresolver-in-your-services">
+<h3>Inject the ConfigResolver in your services<a class="headerlink" href="#inject-the-configresolver-in-your-services" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <strong>ConfigResolver</strong> in your own services whenever needed.
+To do this, just inject the <tt class="docutils literal"><span class="pre">ezpublish.config.resolver</span> <span class="pre">service</span></tt>:</p>
+</div>
+<div class="section" id="custom-locale-configuration-5-1">
+<h3>Custom locale configuration (5.1+)<a class="headerlink" href="#custom-locale-configuration-5-1" title="Permalink to this headline">¶</a></h3>
+<p>If you need to use a custom locale they can also be configurable in
+<tt class="docutils literal"><span class="pre">ezpublish.yml</span></tt>, adding them to the <em>conversion map</em>:</p>
+<div class="highlight-python"><pre>ezpublish:
+    # Locale conversion map between eZ Publish format (i.e. fre-FR) to POSIX (i.e. fr_FR).
+    # The key is the eZ Publish locale. Check locale.yml in EzPublishCoreBundle to see natively supported locales.
+    locale_conversion:
+        eng-DE: en_DE</pre>
+</div>
+<p>A locale <em>conversion map</em> example <cite>can be found in the ``core`</cite> bundle,
+on
+<tt class="docutils literal"><span class="pre">locale.yml</span></tt> &lt;<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/locale.yml">https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/config/locale.yml</a>&gt;`__.</p>
+<ul class="simple">
+<li><a class="reference external" href="Legacy-configuration_2720546.html">Legacy configuration</a></li>
+<li><a class="reference external" href="Legacy-configuration-injection_8323268.html">Legacy configuration
+injection</a></li>
+<li><a class="reference external" href="Logging-configuration_13468249.html">Logging configuration</a></li>
+<li><a class="reference external" href="Persistence-cache-configuration_12781293.html">Persistence cache
+configuration</a></li>
+<li><a class="reference external" href="View-provider-configuration_2720462.html">View provider
+configuration</a></li>
+</ul>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Configuration</a><ul>
+<li><a class="reference internal" href="#the-basics">The Basics</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-configuration-with-the-configresolver">Dynamic configuration with the ConfigResolver</a><ul>
+<li><a class="reference internal" href="#scope">Scope</a></li>
+<li><a class="reference internal" href="#configresolver-usage">ConfigResolver Usage</a></li>
+<li><a class="reference internal" href="#inject-the-configresolver-in-your-services">Inject the ConfigResolver in your services</a></li>
+<li><a class="reference internal" href="#custom-locale-configuration-5-1">Custom locale configuration (5.1+)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Configuration_2720538.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

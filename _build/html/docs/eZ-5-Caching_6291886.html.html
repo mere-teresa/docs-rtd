@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : eZ 5 Caching &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Features_12781009.html">Features</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-ez-5-caching">
+<h1>eZ Publish Platform 5.&lt;next&gt; : eZ 5 Caching<a class="headerlink" href="#ez-publish-platform-5-next-ez-5-caching" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:christian&#46;bacher&#37;&#52;&#48;ez&#46;no">christian<span>&#46;</span>bacher<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan
+20, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#eZ5Caching-CacheArchitectureforcontentrepository">Cache Architecture for content
+repository</a><ul>
+<li><a class="reference external" href="#eZ5Caching-PUBLICAPICache">PUBLIC API Cache</a><ul>
+<li><a class="reference external" href="#eZ5Caching-Cachedobjectsandmethodsusingcache">Cached objects and methods using
+cache</a></li>
+<li><a class="reference external" href="#eZ5Caching-Thecacherelevantwriteactions">The cache relevant write
+actions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#eZ5Caching-PersistenceSPICache">Persistence SPI Cache</a><ul>
+<li><a class="reference external" href="#eZ5Caching-Cachedobjectsandmethodsusingcache.1">Cached objects and methods using
+cache</a></li>
+<li><a class="reference external" href="#eZ5Caching-Cacherelevantwriteactions">Cache relevant write
+actions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#eZ5Caching-CacheSPI%2FAPI">Cache SPI/API</a></li>
+</ul>
+</div>
+<div class="section" id="cache-architecture-for-content-repository">
+<h1>Cache Architecture for content repository<a class="headerlink" href="#cache-architecture-for-content-repository" title="Permalink to this headline">¶</a></h1>
+<p>The goal is to have transparent cache layers which do not interfere with
+the implementation of the public API and storage engines and where multi
+level caches with different cache strategies can be plugged in.</p>
+<p><img alt="image0" src="docs/attachments/6291886/6520850.jpg" /></p>
+<p>A Level 1 cache could for example be a memory cache which is used only
+in scope of a single request. Other levels could be APC based or
+memcached based caches. Each cache level for PAPI or Persistence
+respectively might be implemented with the same code by doing the actual
+caching via a cache SPI. So the levels&nbsp; of a cache themselves differ by
+there usage of different cache SPI implementations.</p>
+<p>As the caches implement the complete API each cache is able to
+invalidate objects on the relevant write actions. But this implies that
+no other relevant write actions&nbsp; exist which do not use the public API.
+If there are such modules which perform cache relevant write actions not
+using the public API each cache must be able to be purged from &#8220;outside&#8221;
+(e.g. via signal slot). But this should be avoided.</p>
+<p>As higher level caches like http caches/reverse proxies/CDNs already use
+TTLs for invalidating objects and the TTL must increase on the lower
+cache levels the public API Cache is most useful if it has no TTL and
+purges its objects if they change (as a large TTL anyway would imply
+that the objects have to be purged on changes, too).</p>
+<p>Under the hood the publicAPI caches are using the cache SPI (see below)
+which abstracts underlying cache engines like APC or memcached or custom
+cache implementations. This implies that we don&#8217;t make here for now a
+difference between clustered or standalone applications as the
+underlying cache implementation is responsible for handling distributed
+caching.</p>
+<div class="section" id="public-api-cache">
+<h2>PUBLIC API Cache<a class="headerlink" href="#public-api-cache" title="Permalink to this headline">¶</a></h2>
+<p>The public API Cache has to cache objects per user and reflects the
+permission handling by caching UnauthorizedExceptions. In general the
+most important user to handle is the anonymous user, nevertheless the
+more a website provides user generated content or relies on personalized
+views other users will become important as well.&nbsp; The user specific
+cache has to be cleared&nbsp; if permissions change for a this user.&nbsp; Note
+that this is the main objective of the public API cache as the caching
+of the persistence values to reduce load of database calls is done by a
+persistence SPI cache (see below).</p>
+<p>As of lack of concrete usage data the determination of to be cached
+objects is based on guesses (that means we assume that methods using
+cache are either often called or return objects which are seldom
+changed) The following objects are a good point to start with:</p>
+<div class="section" id="cached-objects-and-methods-using-cache">
+<h3>Cached objects and methods using cache<a class="headerlink" href="#cached-objects-and-methods-using-cache" title="Permalink to this headline">¶</a></h3>
+<p>Content (which includes a published version - i.e. archived Content and
+Drafts are not cached)</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContent</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContentByContentInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContentByVersionInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContentByRemoteId</p>
+<p>ContentInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContentInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadContentInfoByRemoteId</p>
+<p>VersionInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadVersionInfoById</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadVersionInfo</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadVersions</p>
+<p>Location</p>
+<p>&nbsp;&nbsp; &nbsp;LocationService::loadLocation</p>
+<p>&nbsp;&nbsp; &nbsp;LocationService::loadLocationByRemoteId</p>
+<p>Relations of published content</p>
+<p>&nbsp;&nbsp; &nbsp;ContentService::loadRelations</p>
+<p>Section</p>
+<p>&nbsp;&nbsp; &nbsp;SectionService::loadSection</p>
+<p>&nbsp;&nbsp; &nbsp;SectionService::loadSections</p>
+<p>ContentType</p>
+<p>&nbsp;&nbsp; &nbsp;ContentTypeService::loadContentType</p>
+<p>&nbsp;&nbsp; &nbsp;ContentTypeService::loadContentTypeByIdentifier</p>
+<p>&nbsp;&nbsp; &nbsp;ContentTypeService::loadContentTypeByRemoteId</p>
+<p>User</p>
+<p>&nbsp;&nbsp; &nbsp;UserService::loadUser</p>
+<p>&nbsp;&nbsp;&nbsp; Repository::canUser</p>
+<p>&nbsp;&nbsp;&nbsp; Repostiory::hasAccess</p>
+</div>
+<div class="section" id="the-cache-relevant-write-actions">
+<h3>The cache relevant write actions<a class="headerlink" href="#the-cache-relevant-write-actions" title="Permalink to this headline">¶</a></h3>
+<p>The cache relevant write actions are those service calls which have
+<strong>*at least*</strong> to purge the listed cached objects:</p>
+<p>Note: We assume for now that Content does not contain relations and
+instead of ContentType the ContentTypeId (see deprecated list)</p>
+<p>ContentService::publishVersion - invalidates ContentInfo [-&gt; Location,
+Reverse-Relations ] , VersionInfos, Content</p>
+<p>ContentService::updateContentMetaData - invalidates ContentInfo [ -&gt;
+Location, Content,&nbsp; Reverse-Relations ]</p>
+<p>SectionService::assignSectionToContent - invalidates ContentInfo [ -&gt;
+Location, Content,&nbsp; Reverse-Relations ]</p>
+<p>ContentService::deleteContent - invalidates all subtrees of content
+including deleted content</p>
+<p>LocationService::updateLocation - invalidates Location</p>
+<p>LocationService::hideLocation - invalidates subtree</p>
+<p>LocationService::unhideLocation - invalidates subtree</p>
+<p>LocationService::moveSubtree - invalidates subtree</p>
+<p>LocationService::deleteLocation - invalidates subtree</p>
+<p>LocationService::swapLocation - invalidates both Locations</p>
+<p>TrashService::trash - invalidates subtree</p>
+<p>SectionService::updateSection - invalidates Sectionlist and Section</p>
+<p>SectionService::deleteSection - invalidates Sectionlist and Section</p>
+<p>UserService::updateUser - invalidates User, Content</p>
+<p>UserService::deleteUser - invalidates User, Content</p>
+<p>RoleService::addPolicy - invalidates canUser, hasAccess</p>
+<p>RoleService::removePolicy - invalidates canUser, hasAccess</p>
+<p>RoleService::assignRoleToUser - invalidates canUser, hasAccess</p>
+<p>RoleService::assignRoleToUserGroup - invalidates canUser, hasAccess</p>
+<p>RoleService::unassignRoleFromUser - invalidates canUser, hasAccess</p>
+<p>RoleService::unassignRoleFromUserGroup - invalidates canUser, hasAccess</p>
+</div>
+</div>
+<div class="section" id="persistence-spi-cache">
+<h2>Persistence SPI Cache<a class="headerlink" href="#persistence-spi-cache" title="Permalink to this headline">¶</a></h2>
+<p>The persistence cache is responsible for reducing database calls. There
+is almost none object embedding so the dependencies for invalidation the
+cache is much simpler:</p>
+<div class="section" id="id1">
+<h3>Cached objects and methods using cache<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Content (which includes a published version - i.e. archived Content and
+Drafts are not cached)</p>
+<p>&nbsp;&nbsp; &nbsp;Content\Handler::load</p>
+<p>ContentInfo</p>
+<p>&nbsp;&nbsp; &nbsp;Content\Handler::loadContentInfo</p>
+<p>VersionInfo</p>
+<p>&nbsp;&nbsp; &nbsp;Content\Handler::loadVersionInfo</p>
+<p>&nbsp;&nbsp; &nbsp;Content\Handler::loadVersions</p>
+<p>Location</p>
+<p>&nbsp;&nbsp; &nbsp;Location\Handler::load</p>
+<p>&nbsp;&nbsp; &nbsp;Location\Handler::loadByRemoteId</p>
+<p>Relations of published content</p>
+<p>&nbsp;&nbsp; &nbsp;Content\Handler::loadRelations</p>
+<p>Section</p>
+<p>&nbsp;&nbsp; &nbsp;Section\Handler::load</p>
+<p>&nbsp;&nbsp; &nbsp;Section\Handler::loadByIdentifier</p>
+<p>SectionList</p>
+<p>&nbsp;&nbsp; &nbsp;Section\Handler::loadAll</p>
+<p>ContentType (cached if published)</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::load</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::loadByIdentifier</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::loadByRemoteId</p>
+<p>ContentTypeGroup</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::loadAllGroups</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::loadGroup</p>
+<p>&nbsp;&nbsp; &nbsp;ContentType\Handler::loadGroupByIdentifier</p>
+<p>User</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::load</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadByLogin</p>
+<p>Role</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadRole</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadRoleByIdentifer</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadRoles</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadRoleAssignmentsByGroupId</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadRoleAssignmentsByRoleId</p>
+<p>PolicyList</p>
+<p>&nbsp;&nbsp; &nbsp;User\Handler::loadPoliciesByUserId</p>
+<p>UrlAlias</p>
+<p>&nbsp;&nbsp; &nbsp;UrlAlias\Handler::loadUrlAlias</p>
+<p>&nbsp;&nbsp; &nbsp;UrlAlias\Handler::lookup</p>
+<p>UrlWildCard</p>
+<p>&nbsp;&nbsp; &nbsp;UrlWildCard\Handler::load</p>
+<p>ObjectState</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::getContentState</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::load</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::loadObjectStates</p>
+<p>ObjectStateGroup</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::loadAllGroups</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::loadGroup</p>
+<p>&nbsp;&nbsp; &nbsp;ObjectState\Handler::loadGroupByIdentifier</p>
+</div>
+<div class="section" id="cache-relevant-write-actions">
+<h3>Cache relevant write actions<a class="headerlink" href="#cache-relevant-write-actions" title="Permalink to this headline">¶</a></h3>
+<p>Content\Handler::publish - invalidates ContentInfo, VersionInfos,
+Content</p>
+<p>Content\Handler::updateMetaData - invalidates ContentInfo</p>
+<p>Section\Handler::assignSectionToContent - invalidates ContentInfo</p>
+<p>Content\Handler::deleteContent - invalidates all subtrees of content
+including deleted content</p>
+<p>Content\Handler::setStatus - invalidates VersionInfo</p>
+<p>Content\Handler::deleteVersion - invalidates VersionInfo</p>
+<p>LocationHandler::changeMainLocation - invalidates ContentInfo &amp; all it&#8217;s
+Location&#8217;s</p>
+<p>Location\Handler::updateLocation - invalidates Location</p>
+<p>Location\Handler::hideLocation - invalidates subtree</p>
+<p>Location\Handler::unhideLocation - invalidates subtree</p>
+<p>Location\Handler::moveSubtree - invalidates subtree</p>
+<p>Location\Handler::deleteLocation - invalidates subtree/removed content</p>
+<p>Location\Handler::swapLocation - invalidates both Locations</p>
+<p>Trash\Handler::trashSubtree - invalidates subtree</p>
+<p>Section\Handler::update - invalidates SectionList and Section</p>
+<p>Section\Handler::delete - invalidates SectionList and Section</p>
+<p>Section\Handler::create - invalidates SectionList</p>
+<p>User\Handler::update - invalidates User</p>
+<p>User\Handler::delete - invalidates User</p>
+<p>User\Handler::deleteRole - invalidates Role, PolicyList</p>
+<p>User\Handler::updateRole - invalidates Role</p>
+<p>User\Handler::addPolicy - invalidates PolicyList, Role</p>
+<p>User\Handler::removePolicy - invalidates PolicyList, Role</p>
+<p>User\Handler::assignRole - invalidates PolicyList, RoleAssignments</p>
+<p>User\Handler::unAssignRole - invalidates PolicyList, RoleAssignments</p>
+<p>User\Handler::updatePolicy - invalidates PolicyList, RoleAssignments</p>
+<p>Cache invalidation of RoleAssigments does here not take changes to
+locations into account(groups), this part of the Persistence SPI is in
+need for a make over: 1. Needs to expose such functionality via
+UserHandler &amp; 2. in a cache friendly manner to avoid need to clear all
+RoleAssignments on all location changes.</p>
+<p>UrlAlias\Handler::removeUrlAliases - invalidates URLAlias</p>
+<p>UrlAlias\Handler::locationMoved - invalidates URLAlias (subtree)</p>
+<p>UrlAlias\Handler::locationDeleted - invalidates URLAlias (subtree)</p>
+<p>UrlWildcard\Handler::remove - invalidates UrlWildcard</p>
+<p>ObjectState\Handler::delete - invalidates ObjectState, ContentState</p>
+<p>ObjectState\Handler::deleteGroup - invalidates ObjectStateGroup,
+ObjectState, ContentState</p>
+<p>ObjectState\Handler::setContentState&nbsp; - invalidates ContentState</p>
+<p>ObjectState\Handler::update - invalidates ObjectState</p>
+<p>ObjectState\Handler::updateGroup - invalidates ObjectStateGroup</p>
+<div class="section" id="cache-spi-api">
+<h4>Cache SPI/API<a class="headerlink" href="#cache-spi-api" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">It has been decided to not come up with our own cache spi, but instead</div>
+</div>
+<p>reuse existing solutions, for the time being
+<a class="reference external" href="http://stash.tedivm.com/">Stash</a>, and in the future PSR based cache
+library.
+| For use in API a simple <a class="reference external" href="https://github.com/ezsystems/ezp-next/pull/194/files#diff-0">cache
+pool</a>
+for object instances is currently proposed, as it will in first round
+only cache a limited amount of objects during request pr user as it
+would otherwise need to know about permissions unlike spi level where
+this is not a concern.</p>
+<p>Future work can be one of (if needed):</p>
+<ul class="simple">
+<li>Exposing cache api for use in application layer<ul>
+<li>Should optimally wait until there is a accepted PSR cache standard
+so we can use this as backend for the API &amp; use in SPI Persistence
+cache</li>
+</ul>
+</li>
+<li>Make a more complex persisted API cache that somehow deals with
+permissions in a efficient way</li>
+</ul>
+</div>
+<div class="section" id="attachments">
+<h4>Attachments:<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line"><img alt="image1" src="docs/images/icons/bullet_blue.gif" /> <a class="reference external" href="attachments/6291886/6520850.jpg">Folie1.jpg</a> (image/jpeg)</div>
+</div>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : eZ 5 Caching</a></li>
+<li><a class="reference internal" href="#cache-architecture-for-content-repository">Cache Architecture for content repository</a><ul>
+<li><a class="reference internal" href="#public-api-cache">PUBLIC API Cache</a><ul>
+<li><a class="reference internal" href="#cached-objects-and-methods-using-cache">Cached objects and methods using cache</a></li>
+<li><a class="reference internal" href="#the-cache-relevant-write-actions">The cache relevant write actions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#persistence-spi-cache">Persistence SPI Cache</a><ul>
+<li><a class="reference internal" href="#id1">Cached objects and methods using cache</a></li>
+<li><a class="reference internal" href="#cache-relevant-write-actions">Cache relevant write actions</a><ul>
+<li><a class="reference internal" href="#cache-spi-api">Cache SPI/API</a></li>
+<li><a class="reference internal" href="#attachments">Attachments:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/eZ-5-Caching_6291886.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

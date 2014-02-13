@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 4.x feature comparison &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Introduction-for-eZ-Publish-developers_11403947.html">Introduction for eZ Publish
+developers</a></li>
+<li><a class="reference external" href="2720567.html">Intro for eZ Publish 4.x/3.x developers</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-4-x-feature-comparison">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 4.x feature comparison<a class="headerlink" href="#ez-publish-platform-5-next-4-x-feature-comparison" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:andre&#46;romcke&#37;&#52;&#48;ez&#46;no">andre<span>&#46;</span>romcke<span>&#64;</span>ez<span>&#46;</span>no</a> on Jan 28,
+2014</p>
+<p>CONTENT OF THIS PAGE IS UNDER REVIEW</p>
+<p>This page represents a comparison between <em>Legacy Stack&nbsp;</em>(aka &#8220;4.x&#8221;
+stack) vs <em>New Stack</em> (aka &#8220;5.x&#8221;- or &#8220;6.x&#8221;-stack); it will be udated as
+new stack matures.&nbsp;Note: Features mentioned on the black list are still
+available in 5.x, but via legacy kernel so you will need to use &#8220;pure
+legacy&#8221; or a mixed setup using &#8220;legacy fallbacks&#8221;.</p>
+<p>For a list of Symfony features supported out of the box, see
+<a class="reference external" href="Symfony-feature-status_15761752.html">here</a>.</p>
+<p>For additional related topics see&nbsp;<a class="reference external" href="Legacy-code-and-features_8323433.html">Legacy code and
+features</a> and&nbsp;<a class="reference external" href="2720567.html">Intro for eZ
+Publish 4.x/3.x developers</a>.</p>
+<div class="section" id="known-existing-integration-white-list">
+<h2>Known existing integration (<strong>white&nbsp;</strong>list):<a class="headerlink" href="#known-existing-integration-white-list" title="Permalink to this headline">¶</a></h2>
+<p>5.x Feature</p>
+<p>4.x Feature</p>
+<p>Note/Limitation</p>
+<p><strong>Content Model</strong></p>
+<div class="section" id="id3">
+<h3><a href="#id1"><span class="problematic" id="id2">**</span></a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>5.x aimed at not adding&nbsp;<strong>any</strong>&nbsp;features in the content/data model
+that would lead to backwards compatibility breaks, new features will
+instead be introduced when we reach 6.x and beyond.</p>
+<p>Content*</p>
+<p>(Content) Object</p>
+<p>(Content) Relation</p>
+<p>(Object) Relation</p>
+<p>Field</p>
+<p>(Object) Attribute</p>
+<p>Missing FieldTypes will cause eZ Publish to return exception, this can
+be avoided by implementing<sup>*&lt;TODO:Add link when article on
+this&gt;*</sup> the FieldType or configuring it as
+&#8220;<a class="reference external" href="The-Null-FieldType_12781027.html">NullType</a>&#8220;</p>
+<p>FieldType</p>
+<p>DataType</p>
+<p>See <a class="reference external" href="FieldTypes_10158198.html">FieldTypes</a> for list of supported
+types, known unsupported FieldTypes are mentioned in <a class="reference external" href="eZ-Publish-Platform-Releases_12781017.html">Known
+issues</a></p>
+<p>Locations</p>
+<p>Node</p>
+<p>Section</p>
+<p>ContentType</p>
+<p>(Content) Class</p>
+<p>FieldDefinition</p>
+<p>(Content) Class Attribute</p>
+<p>FieldGroups</p>
+<p>(Content) Class Attribute Grouping</p>
+<p>ObjectState</p>
+<p>ObjectState</p>
+<p>UrlAlias</p>
+<p>UrlWildcard</p>
+<p>Language</p>
+<p>User</p>
+<p>UserGroup</p>
+<p>Can by design (and intention) only have one location in 5.x when using
+Public API UserService</p>
+<p>Policy</p>
+<p>PolicyLimitation</p>
+<p>Role</p>
+<p>RoleLimitation</p>
+<p>RoleAssignment</p>
+<p>Currently not possible to delete specific assignment by id, can be
+deleted by Role and User.</p>
+<p><strong>Core</strong></p>
+<p>Public API</p>
+<p>n/a</p>
+<p>Legacy/4.x does not have a official public API, almost all internal
+functions are exposes publicly</p>
+<p>REST</p>
+<p>5.1 and higher includes a working read/write REST v2 API, 4.x had a
+readonly REST v1 API as of 4.5</p>
+<p>Development environment</p>
+<p>Development mode</p>
+<p>In 5.x this is provided by Symfony, and web debugger is extended by eZ
+Publish, additional debugging planned and in progress as &#8220;pull request&#8221;.</p>
+<p><strong>Web stack</strong></p>
+<p>5.x web stack <strong>is</strong> Symfony with several eZ features on top</p>
+<p>Controllers</p>
+<p>Modules</p>
+<p>Bundles</p>
+<p>Extensions</p>
+<p>(Twig) Template system</p>
+<p>(eZ) Template system</p>
+<p>ViewProvider</p>
+<p>Override system</p>
+<p>Restricted to <em>viewLocation</em>&nbsp;in 5.0, <em>viewContent added</em> in 5.1, for
+changing presentation logic.</p>
+<p>Controller override</p>
+<p>n/a</p>
+<p>5.2 added feature for being able to also use override system of View
+Provider to also be able to override content controller under your own
+conditions to be able to modify behavior.</p>
+<p>Theme system</p>
+<p>Design system</p>
+<p>Planned to use
+<a class="reference external" href="https://github.com/liip/LiipThemeBundle">LiipThemeBundle</a>,
+potentially in version 5.3.</p>
+<p>HTTP Cache</p>
+<p>View- / Static- Cache</p>
+<p>For anonymous users with <a class="reference external" href="HttpCache_6291892.html">content aware
+caching</a> since 5.0, also for logged in users
+with <a class="reference external" href="Context-aware-HTTP-cache_14712846.html">context aware caching</a>
+since 5.2</p>
+<p>SiteAccess</p>
+<p>Site access</p>
+<p>Custom Url, host, port and combination matching to a specific set of
+settings</p>
+<p>SiteAccessGroup</p>
+<p>n/a</p>
+<p>New in 5.x, grouping of related SiteAccesses and common settings for
+them, typically used to denote a &#8220;Site&#8221;</p>
+<p>CSRF</p>
+<p>eZ FormToken</p>
+<p>Provided by Symfony</p>
+<p><strong>Data</strong></p>
+<p>Persistence cache</p>
+<p>Cluster- / Class- / ClassAttribute- / var- / &#8220;Global&#8221;- cache</p>
+<p>Introduced in 5.1, multi repository (aka multi-db) setups support added
+in 5.2.</p>
+<p>IO</p>
+<p>Cluster (-ing of files)</p>
+<p>Currently uses 4.x cluster system, new and simpler file clustering is
+planned for 6.x however this is abstracted away by the API and will only
+affect how cluster setups are configured.</p>
+<p>Multi repository</p>
+<p>Multi-db</p>
+<p>Supported, however see note on &#8220;Persistence cache&#8221;.</p>
+<p>\* When referring a specific instance of any of the content model
+entries, either &#8220;object&#8221; or &#8220;item&#8221; is normal to append depending on
+context. In our BDD specifications the domain names have &#8220;object&#8221;
+appended to them forming &#8220;Content object(s)&#8221;, &#8220;Location object(s)&#8221; and
+so on.</p>
+</div>
+</div>
+<div class="section" id="known-missing-in-symfony-stack-black-grey-list">
+<h2>Known missing in Symfony stack (<strong>black/grey</strong> list):<a class="headerlink" href="#known-missing-in-symfony-stack-black-grey-list" title="Permalink to this headline">¶</a></h2>
+<p>Note: Missing integration doesn&#8217;t mean the system can not use the
+feature in a new installation relying on the new stack, but if it needs,
+it shall rely on a fallback to the legacy stack. For instance: a website
+with a shop system could be done in twig and rely on legacy only for the
+fallback for shop parts.</p>
+<p>Feature</p>
+<p>Note/Limitation</p>
+<p><strong>Core</strong></p>
+<p>Rating</p>
+<p>User Rating not currently supported by API (the service to deal with
+ratings, rating field type already exists), planned to be implemented
+later when some convention for FieldType provided API&#8217;s are established.</p>
+<p>Shop</p>
+<p>No shop or field(/data) types related to shop currently supported by
+API, see <a class="reference external" href="eZ-Publish-Platform-Releases_12781017.html">Known issues</a>.
+This is planned for &#8220;6.x&#8221; or a release shortly thereafter.</p>
+<p>eZComment</p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezcomments/">ezcomments</a> is not
+supported by API, and is not planned to be supported either. Instead of
+having it part of the API, it was replaced in 5.2 with a
+<a class="reference external" href="https://github.com/ezsystems/CommentsBundle">CommentsBundle</a> that
+will provide an agnostic system to integrate 3rd party comment services.
+Out of the box supporting Disqus and Facebook integration but can via
+custom integration can also work with other 3rd party systems (example:
+service, content model based comments or even ezcomments)</p>
+<p>Content Editing</p>
+<p>Content editing module is not implemented yet, but custom needs can for
+instance be solved with <a class="reference external" href="eZ-Publish-Public-API_1736723.html">Public
+API</a>+Symfony controllers or use
+of <a class="reference external" href="https://github.com/ezsystems/ez-js-rest-client">javascript REST
+client</a> + <a class="reference external" href="eZ-Publish-REST-API_6292277.html">REST
+API</a>.</p>
+<p>Module Permissions</p>
+<p>Controller / Bundle Permissions is not integrated with eZ Publish
+permission system yet, currently standard Symfony firewall rules need to
+be used. Public API however has full support for permissions and
+<a class="reference external" href="Limitations_15204365.html">limitations</a>, and is as of 5.2 known to
+support legacy most edge cases.</p>
+<p>UrlAlias Routing</p>
+<p>UrlAlias has the same model as before and hence does not support routing
+directly to a bundle:controller:action</p>
+<p>Workflow</p>
+<p>Planned for future version, see Shop. Simple workflows already possible
+by using Symfony evens and Public API &#8220;Signals&#8221;.</p>
+<p>Information Collector</p>
+<p>Planned as a Form builder UI basically using Symfony Forms + swiftmailer
+for mail transport, might reuse content types similarly to how
+Information Collector did it.</p>
+<p>Package system</p>
+<p>Planned to return as a import/export system which uses either API or SPI
+directly to replicate some or full amount of content from one repository
+to another, preferred format: XML using XML reader/writer.</p>
+<p>Menu management</p>
+<p>Not currently planned, might come back in the form of page layout
+designer (using similar concepts as Page FieldType).</p>
+<p>PDF Export</p>
+<p>Not currently planned, could be re-implemented outside of Core</p>
+<p>RSS feeds</p>
+<p>Currently no API for managing RSS feeds, REST view can be used as basis
+of feeds.</p>
+<p>Frontend Editing</p>
+<p>See &#8220;Content Editing&#8221;.</p>
+<p>Be aware that eZ Flow timeline feature is not available in the legacy
+admin (only in front end editing), hence not usable on the new stack.</p>
+<p>Preview</p>
+<p>Planned for 5.3, versions before that uses legacy for preview.</p>
+<p>Search</p>
+<p>Search API exists, but front end is currently using legacy fallback
+(ezfind &amp; ezsearch) and 5.x Search SPI Solr implementation is currently
+work in progress but rapidly maturing as of 5.2.</p>
+<p>User module</p>
+<p>User login, login handlers, change-password, forgot-password, register,
+profile and editing currently uses legacy fallback, planned for 5.3</p>
+<p>oAuth 2.0</p>
+<p>oAuth 1.0 supported in REST v1 in legacy, planned for new stack and REST
+v2 for future 5.x version.</p>
+<p><strong>Extensions</strong></p>
+<p>(aka Bundles)</p>
+<p>eZ Tags</p>
+<p>Planned for future 5.x version, still community supported in legacy
+stack on 5.x.</p>
+<p>eZ SI</p>
+<p>eZ SI is purely legacy, not required in Symfony as it support ESI
+natively. ez SI is still supported in legacy stack on 5.x.</p>
+<p>eZ Content staging</p>
+<p>No equivalent yet on the new stack, still supported in legacy stack on
+5.x.</p>
+<p>eZ Style editor</p>
+<p>No equivalent on the new stack, still supported in legacy stack on 5.x
+up until 5.1.</p>
+<p>eZ Survey</p>
+<p>No equivalent yet on the new stack, still supported in legacy stack on
+5.x.</p>
+<p>*</p>
+<p>For other extensions still supported on legacy, see
+<a class="reference external" href="http://doc.ez.no/List-of-eZ-Publish-extensions-and-their-support-options">http://doc.ez.no/List-of-eZ-Publish-extensions-and-their-support-options</a></p>
+<p>For additional comparison between 4.x/legacy stack vs 5.x stack, see the
+following community provided spreadsheet provided &#8220;as is&#8221; with no
+guarantee on accuracy of
+content:&nbsp;<a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AgGKn8SQ_akMdFQ3VU0wMlR3cENxTDZ2dkhUcVN2SWc#gid=0">https://docs.google.com/spreadsheet/ccc?key=0AgGKn8SQ_akMdFQ3VU0wMlR3cENxTDZ2dkhUcVN2SWc#gid=0</a></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 4.x feature comparison</a><ul>
+<li><a class="reference internal" href="#known-existing-integration-white-list">Known existing integration (<strong>white&nbsp;</strong>list):</a><ul>
+<li><a class="reference internal" href="#id3">**</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-missing-in-symfony-stack-black-grey-list">Known missing in Symfony stack (<strong>black/grey</strong> list):</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/4.x-feature-comparison_15761755.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : 5. Other recipes &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public API</a></li>
+<li><a class="reference external" href="Public-API-Cookbook_5046311.html">Public API Cookbook</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-5-other-recipes">
+<h1>eZ Publish Platform 5.&lt;next&gt; : 5. Other recipes<a class="headerlink" href="#ez-publish-platform-5-next-5-other-recipes" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:bertrand&#46;dunogier&#37;&#52;&#48;ez&#46;no">bertrand<span>&#46;</span>dunogier<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on
+Aug 02, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#id-5.Otherrecipes-Assigningsectiontocontent">Assigning section to
+content</a></li>
+<li><a class="reference external" href="#id-5.Otherrecipes-Creatingacontenttype">Creating a content type</a></li>
+</ul>
+<div class="section" id="assigning-section-to-content">
+<h2>Assigning section to content<a class="headerlink" href="#assigning-section-to-content" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/docb22/ez-publish-cookbook/tree/master/EzSystems/CookBookBundle/Command/AssignContentToSectionCommand.php">https://github.com/ezsystems/CookbookBundle/tree/master/Command/AssignContentToSectionCommand.php</a></p>
+<p>The Section a Content belongs to can be set during creation, using the
+<tt class="docutils literal"><span class="pre">ContentCreateStruct::$sectionId</span></tt> property. However, as for many
+Repository objects properties, the section can&#8217;t be changed using a
+<tt class="docutils literal"><span class="pre">ContentUpdateStruct</span></tt>. The reason is still the same: changing a
+Content&#8217;s section will affect the subtrees referenced by its Locations.
+For this reason, it is required that you use the SectionService to
+change the Section of a Content.</p>
+<p><strong>assign section to content</strong></p>
+<p>This operation involves the <tt class="docutils literal"><span class="pre">SectionService</span></tt>, as well as the
+<tt class="docutils literal"><span class="pre">ContentService</span></tt>.</p>
+<p><strong>assign section to content</strong></p>
+<p>We use <tt class="docutils literal"><span class="pre">ContentService::loadContentInfo()</span></tt> to get the Content we want
+to update the Section for.</p>
+<p><strong>assign section to content</strong></p>
+<p>SectionService::loadSection() is then used to load the Section we want
+to assign our Content to. Note that there is no SectionInfo object.
+Sections are quite simple, and we don&#8217;t need to separate their metadata
+from their actual data. However, <tt class="docutils literal"><span class="pre">SectionCreateStruct</span></tt> and
+<tt class="docutils literal"><span class="pre">`SectionUpdateStruct</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/SectionUpdateStruct.html">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/Content/SectionUpdateStruct.html</a>&gt;`__
+objects must still be used to create and update sections.</p>
+<p><strong>assign section to content</strong></p>
+<p>The actual update operation is done using
+SectionService::assignSection(), with the ContentInfo and the Section as
+arguments.</p>
+<p>Icon</p>
+<p>SectionService::assignSection() won&#8217;t return the updated Content, as it
+has no knowledge of those objects. To get the Content with the newly
+assigned Location, you need to reload the ContentInfo using
+<tt class="docutils literal"><span class="pre">`ContentService::loadContentInfo()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadContentInfo">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentService.html#method_loadContentInfo</a>&gt;`__.
+This is also valid for descendants of Content. If you have any stored in
+your execution state, you need to reload them. Otherwise you would be
+using outdated Content data.</p>
+</div>
+<div class="section" id="creating-a-content-type">
+<h2>Creating a content type<a class="headerlink" href="#creating-a-content-type" title="Permalink to this headline">¶</a></h2>
+<p>Full code</p>
+<p>Icon</p>
+<p><a class="reference external" href="https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentTypeCommand.php">https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentTypeCommand.php</a></p>
+<p>Creating a <tt class="docutils literal"><span class="pre">ContentType</span></tt> is actually almost more complex than creating
+Content. It really isn&#8217;t as common, and didn&#8217;t &#8220;deserve&#8221; the same kind
+of API as Content did.</p>
+<p>Let&#8217;s split the code in three major parts.</p>
+<p>First, we need to load the <tt class="docutils literal"><span class="pre">ContentTypeGroup</span></tt> our <tt class="docutils literal"><span class="pre">ContentType</span></tt> will
+be created in. We do this using
+<tt class="docutils literal"><span class="pre">`ContentTypeService::loadContentTypeGroupByIdentifier()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_loadContentTypeGroupByIdentifier">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_loadContentTypeGroupByIdentifier</a>&gt;`__,
+which gives us back a <tt class="docutils literal"><span class="pre">ContentTypeGroup</span></tt> object. As for content, we
+then request a <tt class="docutils literal"><span class="pre">ContentTypeCreateStruct</span></tt> from the
+<tt class="docutils literal"><span class="pre">ContentTypeService</span></tt>, using
+<tt class="docutils literal"><span class="pre">ContentTypeService::newContentTypeCreateStruct()</span></tt>, with the desired
+identifier as the argument.</p>
+<p>Using the create struct&#8217;s properties, we can set the type&#8217;s properties:</p>
+<ul class="simple">
+<li>the main language (<tt class="docutils literal"><span class="pre">mainLanguageCode</span></tt>) for the type is set to
+eng-GB,</li>
+<li>the content name generation pattern (<tt class="docutils literal"><span class="pre">nameSchema</span></tt>) is set to
+&#8216;&lt;title&gt;&#8217;: content of this type will be named as their &#8216;title&#8217; field.</li>
+<li>the human readable name for our type is set using the <tt class="docutils literal"><span class="pre">names</span></tt>
+property. We give it a hash, indexed by the locale (&#8216;eng-GB&#8217;) the
+name is set in. This locale must exist in the system.</li>
+<li>the same way that we have set the <tt class="docutils literal"><span class="pre">names</span></tt> property, we can set
+human readable descriptions, again as hashes indexed by locale code.</li>
+</ul>
+<p>The next big part is to add FieldDefinition objects to our ContentType.</p>
+<p>We need to create a <tt class="docutils literal"><span class="pre">FieldDefinitionCreateStruct</span></tt> object for each
+<tt class="docutils literal"><span class="pre">FieldDefinition</span></tt> our <tt class="docutils literal"><span class="pre">ContentType</span></tt> will be made of. Those objects
+are obtained using
+<tt class="docutils literal"><span class="pre">`ContentTypeService::newFieldDefinitionCreateStruct()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_newFieldDefinitionCreateStruct">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/ContentTypeService.html#method_newFieldDefinitionCreateStruct</a>&gt;`__.
+This method expects the FieldDefinition identifier and its type as
+arguments. The identifiers match the ones from eZ Publish 4
+(<tt class="docutils literal"><span class="pre">ezstring</span></tt> for TextLine, etc).</p>
+<p>Each field&#8217;s properties are set using the create struct&#8217;s properties:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">names</span></tt> and <tt class="docutils literal"><span class="pre">descriptions</span></tt> are set using hashes indexed by the
+locale code, and with the name or description as an argument.</li>
+<li>The <tt class="docutils literal"><span class="pre">fieldGroup</span></tt> is set to &#8216;content&#8217;</li>
+<li>Fields are ordered using the <tt class="docutils literal"><span class="pre">position</span></tt> property, ordered
+numerically in ascending order. We set it to an integer.</li>
+<li>The translatable, required ans searchable boolean flags are set using
+their respective property: <tt class="docutils literal"><span class="pre">isTranslatable</span></tt>, <tt class="docutils literal"><span class="pre">isRequired</span></tt> and
+<tt class="docutils literal"><span class="pre">isSearchable</span></tt>.</li>
+</ul>
+<p>Once the properties for each create struct are set, the field is added
+to the ContentType create struct using
+<tt class="docutils literal"><span class="pre">`ContentTypeCreateStruct::addFieldDefinition()</span></tt> &lt;<a class="reference external" href="http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/ContentType/ContentTypeCreateStruct.html#method_addFieldDefinition">http://apidoc.ez.no/sami/trunk/NS/html/eZ/Publish/API/Repository/Values/ContentType/ContentTypeCreateStruct.html#method_addFieldDefinition</a>&gt;`__.</p>
+<p>The last step is the same as for Content: we create a content type draft
+using <tt class="docutils literal"><span class="pre">ContentTypeService::createContentType()</span></tt>, with the
+<tt class="docutils literal"><span class="pre">ContentTypeCreateStruct</span></tt> and an array of <tt class="docutils literal"><span class="pre">ContentTypeGroup</span></tt> objects
+are arguments. We then publish the ContentType draft using
+<tt class="docutils literal"><span class="pre">ContentTypeService::publishContentTypeDraft()</span></tt>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : 5. Other recipes</a><ul>
+<li><a class="reference internal" href="#assigning-section-to-content">Assigning section to content</a></li>
+<li><a class="reference internal" href="#creating-a-content-type">Creating a content type</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/5.-Other-recipes_6292987.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

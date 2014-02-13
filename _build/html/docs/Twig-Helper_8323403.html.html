@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Twig Helper &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Templating_8323395.html">Templating</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-twig-helper">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Twig Helper<a class="headerlink" href="#ez-publish-platform-5-next-twig-helper" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Oct 07, 2013</p>
+<p>eZ Publish <strong>5.1+</strong> comes with a Twig helper as a <a class="reference external" href="http://symfony.com/doc/master/cookbook/templating/global_variables.html">global
+variable</a>
+named <strong>``ezpublish``</strong>.</p>
+<p>This helper is accessible from all Twig templates and allows you to
+easily retrieve useful information.</p>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p>Property</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.siteaccess</span></tt></p>
+<p>Returns the current siteaccess.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.rootLocation</span></tt></p>
+<p>Returns the root Location object</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.requestedUriString</span></tt></p>
+<p>Returns the requested URI string (also known as semanticPathInfo).</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.systemUriString</span></tt></p>
+<p>Returns the &#8220;system&#8221; URI string. System URI is the URI for internal
+content controller. If current route is not an URLAlias, then the
+current Pathinfo is returned.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.viewParameters</span></tt></p>
+<p>Returns the view parameters as a hash.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.viewParametersString</span></tt></p>
+<p>Returns the view parameters as a string.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt></p>
+<p>Returns legacy information.</p>
+</div>
+<div class="section" id="legacy">
+<h2>Legacy<a class="headerlink" href="#legacy" title="Permalink to this headline">¶</a></h2>
+<p>Icon</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt> is only available <strong>when viewing content in legacy
+fallback</strong> (e.g. no corresponding Twig templates)</p>
+<p>The <tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt> property returns an object of
+type&nbsp;<a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/ParameterBag.html">ParameterBag</a>,
+which is a container for key/value pairs, and contains additional
+properties to retrieve/handle legacy information.</p>
+<p>Property</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy.all</span></tt></p>
+<p>Returns all the parameters, with all the contained information.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy.keys</span></tt></p>
+<p>Returns the parameter keys only.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy.get</span></tt></p>
+<p>Returns a parameter by name.</p>
+<p><tt class="docutils literal"><span class="pre">ezpublish.legacy.has</span></tt></p>
+<p>Returns true if the parameter is defined.</p>
+<div class="section" id="listing-the-available-parameters">
+<h3>Listing the available parameters<a class="headerlink" href="#listing-the-available-parameters" title="Permalink to this headline">¶</a></h3>
+<p>You can list the available parameters in <tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt> by using
+the <tt class="docutils literal"><span class="pre">ezpublish.legacy.keys</span></tt> property, as shown in the following
+example:</p>
+<p><strong>Example on retrieving the available parameters under
+ezpublish.legacy</strong></p>
+<p>which will give a result similar to:</p>
+<div class="highlight-python"><pre>array
+  0 =&gt; string 'view_parameters' (length=15)
+  1 =&gt; string 'path' (length=4)
+  2 =&gt; string 'title_path' (length=10)
+  3 =&gt; string 'section_id' (length=10)
+  4 =&gt; string 'node_id' (length=7)
+  5 =&gt; string 'navigation_part' (length=15)
+  6 =&gt; string 'content_info' (length=12)
+  7 =&gt; string 'template_list' (length=13)
+  8 =&gt; string 'cache_ttl' (length=9)
+  9 =&gt; string 'is_default_navigation_part' (length=26)
+  10 =&gt; string 'css_files' (length=9)
+  11 =&gt; string 'js_files' (length=8)
+  12 =&gt; string 'css_files_configured' (length=20)
+  13 =&gt; string 'js_files_configured' (length=19)</pre>
+</div>
+</div>
+<div class="section" id="retrieving-legacy-information">
+<h3>Retrieving legacy information<a class="headerlink" href="#retrieving-legacy-information" title="Permalink to this headline">¶</a></h3>
+<p>Legacy information is accessible by using the <tt class="docutils literal"><span class="pre">ezpublish.legacy.get</span></tt>
+property, which will allow you to access all data contained in
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Templates/The-pagelayout/Variables-in-pagelayout#module_result">$module_result</a>,
+from the legacy kernel.</p>
+<p>This allows you to import information directly into twig templates. For
+more details please check the available examples on using the
+<a href="#id1"><span class="problematic" id="id2">``</span></a>ezpublish.legacy.get``&nbsp;property&nbsp;for retrieving&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/Legacy+template+fallback#Legacytemplatefallback-Persistentvariable">persistent
+variables</a>
+and
+<a class="reference external" href="https://confluence.ez.no/display/EZP/Legacy+template+fallback#Legacytemplatefallback-Assets">assets</a>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>As a usage example, if you want to access the legacy information related
+to &#8216;content_info&#8217; you can do it, as shown in the following example:</p>
+<p><strong>Example on accessing &#8216;content_info&#8217; under ezpublish.legacy</strong></p>
+<p>The previous call will return the contents on the &#8216;content_info&#8217; as an
+<tt class="docutils literal"><span class="pre">array</span></tt>, and if we <tt class="docutils literal"><span class="pre">dump</span></tt> it the result will be similar to the
+following:</p>
+<div class="highlight-python"><pre>array
+  'object_id' =&gt; string '57' (length=2)
+  'node_id' =&gt; string '2' (length=1)
+  'parent_node_id' =&gt; string '1' (length=1)
+  'class_id' =&gt; string '23' (length=2)
+  'class_identifier' =&gt; string 'landing_page' (length=12)
+  'remote_id' =&gt; string '8a9c9c761004866fb458d89910f52bee' (length=32)
+  'node_remote_id' =&gt; string 'f3e90596361e31d496d4026eb624c983' (length=32)
+  'offset' =&gt; boolean false
+  'viewmode' =&gt; string 'full' (length=4)
+  'navigation_part_identifier' =&gt; string 'ezcontentnavigationpart' (length=23)
+  'node_depth' =&gt; string '1' (length=1)
+  'url_alias' =&gt; string '' (length=0)
+  'current_language' =&gt; string 'eng-GB' (length=6)
+  'language_mask' =&gt; string '3' (length=1)
+  'main_node_id' =&gt; string '2' (length=1)
+  'main_node_url_alias' =&gt; boolean false
+  'persistent_variable' =&gt;
+    array
+      'css_files' =&gt;
+        array
+          0 =&gt; string 'video.css' (length=9)
+      'js_files' =&gt;
+        array
+          0 =&gt; string 'video.js' (length=8)
+  'class_group' =&gt; boolean false
+  'state' =&gt;
+    array
+      2 =&gt; string '1' (length=1)
+  'state_identifier' =&gt;
+    array
+      0 =&gt; string 'ez_lock/not_locked' (length=18)
+  'parent_class_id' =&gt; string '1' (length=1)
+  'parent_class_identifier' =&gt; string 'folder' (length=6)
+  'parent_node_remote_id' =&gt; string '629709ba256fe317c3ddcee35453a96a' (length=32)
+  'parent_object_remote_id' =&gt; string 'e5c9db64baadb82ab8db54f0e2192ec3' (length=32)</pre>
+</div>
+<p>Additionally, for retrieving information contained in &#8216;content_info&#8217;
+such as the current language of the content in the page you can do it
+like in the following example:</p>
+<p><strong>Example on retrieving &#8216;current_language&#8217;</strong></p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Twig Helper</a><ul>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#legacy">Legacy</a><ul>
+<li><a class="reference internal" href="#listing-the-available-parameters">Listing the available parameters</a></li>
+<li><a class="reference internal" href="#retrieving-legacy-information">Retrieving legacy information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Twig-Helper_8323403.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

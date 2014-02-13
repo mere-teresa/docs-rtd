@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Content view &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-content-view">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Content view<a class="headerlink" href="#ez-publish-platform-5-next-content-view" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Feb 12, 2014</p>
+<ul class="simple">
+<li><a class="reference external" href="#Contentview-TheViewController">The ViewController</a></li>
+<li><a class="reference external" href="#Contentview-Viewselection">View selection</a></li>
+<li><a class="reference external" href="#Contentview-Locationviewtemplate">Location view template</a><ul>
+<li><a class="reference external" href="#Contentview-Availablevariables">Available variables</a></li>
+<li><a class="reference external" href="#Contentview-Templateinheritance">Template inheritance</a></li>
+<li><a class="reference external" href="#Contentview-Renderingcontent%27sfields">Rendering content&#8217;s
+fields</a><ul>
+<li><a class="reference external" href="#Contentview-GettingrawFieldvalue">Getting raw Field value</a></li>
+<li><a class="reference external" href="#Contentview-UsingtheFieldType%27stemplateblock">Using the FieldType&#8217;s template
+block</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Contentview-RenderingContentname">Rendering Content name</a><ul>
+<li><a class="reference external" href="#Contentview-NamepropertyinContentInfo">Name property in
+ContentInfo</a></li>
+<li><a class="reference external" href="#Contentview-Translatedname">Translated name</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Contentview-Exposingadditionalvariables">Exposing additional
+variables</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#Contentview-Makinglinkstootherlocations">Making links to other
+locations</a></li>
+<li><a class="reference external" href="#Contentview-Renderembeddedcontentobjects">Render embedded content
+objects</a><ul>
+<li><a class="reference external" href="#Contentview-Usingez_contentcontroller">Using&nbsp;ez_content
+controller</a><ul>
+<li><a class="reference external" href="#Contentview-Availablearguments">Available arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="the-viewcontroller">
+<h2>The ViewController<a class="headerlink" href="#the-viewcontroller" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish comes with a native controller to display your content, known
+as the <strong>``ViewController``</strong>. It is called each time you try to reach a
+content from its <strong>Url Alias</strong> (<em>good looking</em> URI generated for any
+content) and is able to render any content previously edited in the
+admin interface or via the <a class="reference external" href="eZ-Publish-Public-API_1736723.html">eZ Publish Public
+API</a>.</p>
+<p>It can also be called directly by its direct URI :
+<tt class="docutils literal"><span class="pre">/content/location/&lt;locationId&gt;</span></tt></p>
+<p>A content can also have different <strong>view types</strong> (full page, abstract in
+a list, block in a landing page...). By default the view type is
+<strong>full</strong> (for full page), but it can be anything (<em>line</em>, <em>block</em>...).</p>
+<p>Important note regarding visibility</p>
+<p>Icon</p>
+<p>Location visibility flag, which you can change with hide/unhide in
+admin, is not permission based and thus acts as a simple potential
+filter. <strong>It is not meant to restrict access to content</strong>.</p>
+<p>If you need to restrict access to a given content, use <strong>Sections or
+Object states</strong>, which are permission based.</p>
+</div>
+<div class="section" id="view-selection">
+<h2>View selection<a class="headerlink" href="#view-selection" title="Permalink to this headline">¶</a></h2>
+<p>To display a content, the ViewController uses a view manager which
+selects the appropriate template depending on matching rules.</p>
+<p>Icon</p>
+<p>For more information about the <strong>view provider configuration</strong>, please
+<a class="reference external" href="View-provider-configuration_2720462.html">refer to the dedicated
+page</a>.</p>
+<p>Icon</p>
+<p>You can also <a class="reference external" href="How-to-use-a-custom-controller-to-display-a-content-or-location_13468497.html">use your own custom controller to render a
+content/location</a>.</p>
+</div>
+<div class="section" id="location-view-template">
+<h2>Location view template<a class="headerlink" href="#location-view-template" title="Permalink to this headline">¶</a></h2>
+<p>A content view template is like any other template, with several
+specific aspects.</p>
+<div class="section" id="available-variables">
+<h3>Available variables<a class="headerlink" href="#available-variables" title="Permalink to this headline">¶</a></h3>
+<p>Variable name</p>
+<p>Type</p>
+<p>Description</p>
+<p><strong>``location``</strong></p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Location.php">eZ\Publish\Core\Repository\Values\Content\Location</a>` &lt;<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php">https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php</a>&gt;`__</p>
+<div class="line-block">
+<div class="line">The location object. Contains meta information on the content</div>
+</div>
+<p>(<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/ContentInfo.php">ContentInfo</a>)
+| (only when accessing a location)</p>
+<p><tt class="docutils literal"><span class="pre">content</span></tt></p>
+<p><a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php">eZ\Publish\Core\Repository\Values\Content\Content</a></p>
+<p>The content object, containing all fields and version information
+(<a class="reference external" href="https://github.com/ezsystems/ezp-next/blob/master/eZ/Publish/Core/Repository/Values/Content/VersionInfo.php">VersionInfo</a>)</p>
+<p><tt class="docutils literal"><span class="pre">noLayout</span></tt></p>
+<p>Boolean</p>
+<div class="line-block">
+<div class="line">If true, indicates if the content/location is to be displayed without</div>
+</div>
+<p>any pagelayout (i.e. AJAX, sub-requests...).
+| It&#8217;s generally <tt class="docutils literal"><span class="pre">false</span></tt> when displaying a content in view type
+<strong>full</strong>.</p>
+<p><tt class="docutils literal"><span class="pre">viewBaseLayout</span></tt></p>
+<p>String</p>
+<p>The base layout template to use when the view is requested to be
+generated outside of the pagelayout (when <tt class="docutils literal"><span class="pre">noLayout</span></tt> is true).</p>
+</div>
+<div class="section" id="template-inheritance">
+<h3>Template inheritance<a class="headerlink" href="#template-inheritance" title="Permalink to this headline">¶</a></h3>
+<p>Like any template, a content view template can use <a class="reference external" href="http://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts">template
+inheritance</a>.
+However keep in mind that your content can be also requested via
+<a class="reference external" href="http://symfony.com/doc/current/book/templating.html#embedding-controllers">sub-requests</a>
+(see below how to render embedded content objects). In this case your
+template should probably not extend your main layout.</p>
+<p>In this regard, it is recommended to use inheritance this way:</p>
+</div>
+<div class="section" id="rendering-content-s-fields">
+<h3>Rendering content&#8217;s fields<a class="headerlink" href="#rendering-content-s-fields" title="Permalink to this headline">¶</a></h3>
+<p>As stated above, a view template receives the requested Content object,
+holding all fields.</p>
+<p>In order to display the fields&#8217; value the way you want, you can either
+manipulate the Field Value object itself or use a template.</p>
+<div class="section" id="getting-raw-field-value">
+<h4>Getting raw Field value<a class="headerlink" href="#getting-raw-field-value" title="Permalink to this headline">¶</a></h4>
+<p>Having access to the Content object in the template, you can use <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/Repository/Values/Content/Content.php">its
+public
+methods</a>
+to access to all the information you need. You can also
+use&nbsp;<a class="reference external" href="ez_field_value_17105557.html">ez_field_value</a> helper to get
+the Field value in the current language if translation is available.</p>
+</div>
+<div class="section" id="using-the-fieldtype-s-template-block">
+<h4>Using the FieldType&#8217;s template block<a class="headerlink" href="#using-the-fieldtype-s-template-block" title="Permalink to this headline">¶</a></h4>
+<p>All built-in FieldTypes come with <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/views/content_fields.html.twig">a piece of Twig template
+code</a>
+you can take advantage of by calling <tt class="docutils literal"><span class="pre">ez_render_field()</span></tt> helper.</p>
+<p>Refer to <tt class="docutils literal"><span class="pre">`ez_render_field()</span></tt> reference
+page &lt;ez_render_field_12779554.html&gt;`__ for further information.</p>
+<p>Icon</p>
+<p>As this makes use of reusable templates, <strong>using ``ez_render_field()``
+is the recommended way and is to be considered as a best practice</strong>.</p>
+</div>
+</div>
+<div class="section" id="rendering-content-name">
+<h3>Rendering Content name<a class="headerlink" href="#rendering-content-name" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>name</strong> of a content is its generic &#8220;title&#8221;, generated by the
+repository considering several rules in the FieldDefinition. It usually
+consists in the normalized value of the first field.</p>
+<p>There are 2 different ways to access to this special property:</p>
+<ul class="simple">
+<li>Through the name property of ContentInfo (not translated).</li>
+<li>Through VersionInfo with the TranslationHelper (translated).</li>
+</ul>
+<div class="section" id="name-property-in-contentinfo">
+<h4>Name property in ContentInfo<a class="headerlink" href="#name-property-in-contentinfo" title="Permalink to this headline">¶</a></h4>
+<p>This property is the actual content name, but <strong>in main language only</strong>
+(so it is not translated).</p>
+</div>
+<div class="section" id="translated-name">
+<h4>Translated name<a class="headerlink" href="#translated-name" title="Permalink to this headline">¶</a></h4>
+<p>Icon</p>
+<p>The TranslationHelper service is available as of version 5.2 / 2013.09</p>
+<p>The <em>translated name</em> is held in <tt class="docutils literal"><span class="pre">VersionInfo</span></tt> object, in the names
+property which consists of hash indexed by locale. You can easily
+retrieve it in the right language via the <tt class="docutils literal"><span class="pre">TranslationHelper</span></tt> service.</p>
+<p>You can refer to <a class="reference external" href="ez_content_name_17105551.html">ez_content_name() reference
+page</a> for further information.</p>
+<p>Icon</p>
+<p>The helper will respect the prioritized languages.</p>
+<p>If there is no translation for your prioritized languages, the helper
+will always return the name in the main language.</p>
+<p>You can also <strong>force a locale</strong> in a 2nd argument:</p>
+</div>
+</div>
+<div class="section" id="exposing-additional-variables">
+<h3>Exposing additional variables<a class="headerlink" href="#exposing-additional-variables" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to expose additional variables in a content view
+template. See&nbsp;<a class="reference external" href="Parameters-injection-in-content-views_8323330.html">parameters injection in content
+views</a>&nbsp;or&nbsp;<a class="reference external" href="How-to-use-a-custom-controller-to-display-a-content-or-location_13468497.html">use
+your own custom controller to render a
+content/location</a>.</p>
+</div>
+</div>
+<div class="section" id="making-links-to-other-locations">
+<h2>Making links to other locations<a class="headerlink" href="#making-links-to-other-locations" title="Permalink to this headline">¶</a></h2>
+<p>Linking to other locations is fairly easy and is done with
+<cite>native&nbsp;``path()`</cite> Twig
+helper &lt;<a class="reference external" href="http://symfony.com/doc/2.3/book/templating.html#linking-to-pages">http://symfony.com/doc/2.3/book/templating.html#linking-to-pages</a>&gt;`__
+(or <tt class="docutils literal"><span class="pre">url()</span></tt> if you want to generate absolute URLs). You just have to
+pass it the Location object and <tt class="docutils literal"><span class="pre">path()</span></tt> will generate the URLAlias
+for you.</p>
+<p>If you don&#8217;t have the Location object, but only its ID, you can generate
+the URLAlias the following way:</p>
+<p>Under the hood</p>
+<p>Icon</p>
+<p>In the backend, <tt class="docutils literal"><span class="pre">path()</span></tt> uses the Router to generate links.</p>
+<p>This makes also easy to generate links from PHP, via the <tt class="docutils literal"><span class="pre">router</span></tt>
+service.</p>
+</div>
+<div class="section" id="render-embedded-content-objects">
+<h2>Render embedded content objects<a class="headerlink" href="#render-embedded-content-objects" title="Permalink to this headline">¶</a></h2>
+<p>Rendering an embedded content from a Twig template is pretty straight
+forward as you just need to <strong>do a subrequest with ``ez_content``
+controller</strong>.</p>
+<div class="section" id="using-ez-content-controller">
+<h3>Using&nbsp;<tt class="docutils literal"><span class="pre">ez_content</span></tt> controller<a class="headerlink" href="#using-ez-content-controller" title="Permalink to this headline">¶</a></h3>
+<p>This controller is exactly the same as&nbsp;<a class="reference external" href="Content-view_8323263.html">the ViewController presented
+above</a> and has 2 main actions:</p>
+<ul class="simple">
+<li><strong>``viewLocation``</strong> to render a location (same as when accessing a
+content through an URLAlias)</li>
+<li><strong>``viewContent``</strong> to render a content</li>
+</ul>
+<p>You can use this controller from templates with the following syntax:</p>
+<p><strong>eZ Publish 5.1+ / Symfony 2.2+</strong></p>
+<p>The example above allows you to render a Location which ID is <strong>123</strong>,
+with the view type&nbsp;<strong>line</strong>.</p>
+<p>Icon</p>
+<p>Reference of <tt class="docutils literal"><span class="pre">ez_content</span></tt> controller follow the syntax of <em>controllers
+as a service</em>, <a class="reference external" href="http://symfony.com/doc/current/cookbook/controller/service.html">as explained in Symfony
+documentation</a>.</p>
+<div class="section" id="available-arguments">
+<h4>Available arguments<a class="headerlink" href="#available-arguments" title="Permalink to this headline">¶</a></h4>
+<p>As any controller, you can pass arguments to <tt class="docutils literal"><span class="pre">ez_content:viewLocation</span></tt>
+or <tt class="docutils literal"><span class="pre">ez_content:viewContent</span></tt> to fit your needs.</p>
+<p>Name</p>
+<p>Description</p>
+<p>Type</p>
+<p>Default value</p>
+<p><tt class="docutils literal"><span class="pre">locationId</span></tt></p>
+<div class="line-block">
+<div class="line">Id of the location you want to render.</div>
+<div class="line"><strong>Only for ``ez_content:viewLocation``</strong></div>
+</div>
+<p>integer</p>
+<p>N/A</p>
+<p><tt class="docutils literal"><span class="pre">contentId</span></tt></p>
+<div class="line-block">
+<div class="line">Id of the content you want to render.</div>
+<div class="line"><strong>Only for ``ez_content:viewContent``</strong></div>
+</div>
+<p>integer</p>
+<p>N/A</p>
+<p><tt class="docutils literal"><span class="pre">viewType</span></tt></p>
+<div class="line-block">
+<div class="line">The view type you want to render your content/location in.</div>
+<div class="line">Will be used by the ViewManager to select corresponding template,</div>
+</div>
+<p>according to defined rules.</p>
+<p>Example: full, line, my_custom_view, ...</p>
+<p>string</p>
+<p>full</p>
+<p><tt class="docutils literal"><span class="pre">layout</span></tt></p>
+<p>Indicates if the sub-view needs to use the main layout (see <a class="reference external" href="Content-view_8323263.html">available
+variables in a view template</a>)</p>
+<p>boolean</p>
+<p>false</p>
+<p><tt class="docutils literal"><span class="pre">params</span></tt></p>
+<p>Hash of variables you want to inject to sub-template, key being the
+exposed variable name.</p>
+<p>Icon</p>
+<p>Available as of eZ Publish 5.1</p>
+<p>hash</p>
+<p>empty hash</p>
+<p>ESI</p>
+<p>Just as for regular Symfony controllers, you can take advantage of ESI
+and use different cache levels:</p>
+<p><strong>Using ESI (eZ Publish 5.1+ / Symfony 2.2+)</strong></p>
+<p>&nbsp;Asynchronous rendering</p>
+<p>Symfony also supports asynchronous content rendering with the help
+of&nbsp;<a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a>&nbsp;library.</p>
+<p><strong>Asynchronous rendering (eZ Publish 5.1+ / Symfony 2.2+)</strong></p>
+<p>Icon</p>
+<p><a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a> needs to be properly
+included in your layout to work.</p>
+<p>Please <a class="reference external" href="http://symfony.com/doc/current/book/templating.html#asynchronous-content-with-hinclude-js">refer to Symfony
+documentation</a>
+for all available options.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Content view</a><ul>
+<li><a class="reference internal" href="#the-viewcontroller">The ViewController</a></li>
+<li><a class="reference internal" href="#view-selection">View selection</a></li>
+<li><a class="reference internal" href="#location-view-template">Location view template</a><ul>
+<li><a class="reference internal" href="#available-variables">Available variables</a></li>
+<li><a class="reference internal" href="#template-inheritance">Template inheritance</a></li>
+<li><a class="reference internal" href="#rendering-content-s-fields">Rendering content&#8217;s fields</a><ul>
+<li><a class="reference internal" href="#getting-raw-field-value">Getting raw Field value</a></li>
+<li><a class="reference internal" href="#using-the-fieldtype-s-template-block">Using the FieldType&#8217;s template block</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rendering-content-name">Rendering Content name</a><ul>
+<li><a class="reference internal" href="#name-property-in-contentinfo">Name property in ContentInfo</a></li>
+<li><a class="reference internal" href="#translated-name">Translated name</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exposing-additional-variables">Exposing additional variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#making-links-to-other-locations">Making links to other locations</a></li>
+<li><a class="reference internal" href="#render-embedded-content-objects">Render embedded content objects</a><ul>
+<li><a class="reference internal" href="#using-ez-content-controller">Using&nbsp;<tt class="docutils literal"><span class="pre">ez_content</span></tt> controller</a><ul>
+<li><a class="reference internal" href="#available-arguments">Available arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Content-view_8323263.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

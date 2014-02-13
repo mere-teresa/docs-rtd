@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Requirements for doing a normal installation &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Normal-installation_7438509.html">Normal installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-requirements-for-doing-a-normal-installation">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Requirements for doing a normal installation<a class="headerlink" href="#ez-publish-platform-5-next-requirements-for-doing-a-normal-installation" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Nov 14,
+2013</p>
+<p>eZ Publish makes use of and depends on five important things:</p>
+<ol class="arabic simple">
+<li>A web server</li>
+<li>The server-side PHP scripting engine</li>
+<li>A database server</li>
+<li>An image conversion system (optional)</li>
+<li>The Zeta Components library</li>
+</ol>
+<p>The first three things should be in place before an eZ Publish
+installation is deployed. The image conversion system is optional and is
+only needed if you&#8217;re planning to use eZ Publish with images. The web
+server and the server-side PHP scripting engine have to run on the same
+machine. The database server may run on a different computer.</p>
+<p>Please visit the <a class="reference external" href="Requirements_7438502.html">requirements page</a> to
+check if your platform fully supports installing eZ Publish, then come
+back for the extra details which follow.</p>
+<div class="section" id="web-server">
+<h2>Web server<a class="headerlink" href="#web-server" title="Permalink to this headline">¶</a></h2>
+<p>Currently, only the <a class="reference external" href="http://httpd.apache.org/">Apache</a>web server is
+supported. On Linux/UNIX based systems, it is recommended to use the
+latest version of the 2.2.x branch (applies also to cluster mode). Note
+that it must run in &#8220;prefork&#8221; mode instead of &#8220;threaded&#8221; mode - the
+reason for this is because some of the libraries that PHP extensions use
+might not be thread-safe.</p>
+<p>Nginx and Lighttpd are known to work as well but are currently not
+supported. &#8220;Rewrite&#8221; rules for those web servers can be found online,
+f.e. on the forums on <a class="reference external" href="http://share.ez.no">share.ez.no</a>.</p>
+<p>On Windows, it is recommended to use MS IIS 7 or higher (with Microsoft
+URL Rewrite Module 1.1 or higher). Apache 2.x for Windows is not
+supported since it only exists in &#8220;threaded&#8221; mode.</p>
+</div>
+<div class="section" id="server-side-php-scripting-engine">
+<h2>Server-side PHP scripting engine<a class="headerlink" href="#server-side-php-scripting-engine" title="Permalink to this headline">¶</a></h2>
+<p>PHP is free software and can be downloaded from
+<a class="reference external" href="http://www.php.net">http://www.php.net</a>. The full list of extensions
+needed can be found on the <a class="reference external" href="Requirements_7438502.html">requirements
+page</a>. Info on some caveats can be found
+below:</p>
+<div class="section" id="zlib-extension">
+<h3>Zlib extension<a class="headerlink" href="#zlib-extension" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that zlib support in PHP is enabled, otherwise the <a class="reference external" href="The-setup-wizard_7438516.html">setup
+wizard</a> will not be able to unpack
+downloaded packages during the installation process.</p>
+</div>
+<div class="section" id="dom-extension">
+<h3>DOM extension<a class="headerlink" href="#dom-extension" title="Permalink to this headline">¶</a></h3>
+<p>In most cases, <a class="reference external" href="http://www.php.net/dom">DOM functions</a> are enabled by
+default as they are included in the PHP core. However, some Linux
+distributions have PHP without compiled-in support for DOM. Instead,
+they provide DOM as a shared module in a separate RPM package called
+&#8220;php-xml&#8221;.</p>
+</div>
+<div class="section" id="php-cli">
+<h3>PHP CLI<a class="headerlink" href="#php-cli" title="Permalink to this headline">¶</a></h3>
+<p>Since version 5.0, it is necessary to have <a class="reference external" href="http://www.php.net/manual/en/features.commandline.php">PHP
+CLI</a>
+installed, as using php from the command line is needed during the setup
+process. Also, some features like
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Notifications">notifications</a>,
+delayed search indexing, upgrade scripts, the collaboration system
+(content approval), clearing caches from within the command line, etc.
+will not work without php cli access.</p>
+</div>
+<div class="section" id="curl">
+<h3>CURL<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h3>
+<p>It is recommended to enable <a class="reference external" href="http://www.php.net/curl">CURL</a> support,
+otherwise some features like <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Reference/Configuration-files/site.ini/ProxySettings/ProxyServer">outbound connections via
+proxy</a>
+and SSL support for eZSoap will not work.</p>
+</div>
+<div class="section" id="php-memory-limit-issue">
+<h3>PHP memory limit issue<a class="headerlink" href="#php-memory-limit-issue" title="Permalink to this headline">¶</a></h3>
+<p>eZ Publish needs at least 64 MB of memory in order to complete the setup
+wizard. Normal operation requires about 32 MB. However, it is highly
+recommended that you keep the 64 MB setting since eZ Publish consumes a
+lot more memory as you reindex the content, execute upgrade scripts,
+etc. Multilingual sites will also require at least 64 MB.</p>
+<p>As of PHP 5.2.1 and later, there is no need to change the default
+&#8220;<tt class="docutils literal"><span class="pre">memory_limit</span></tt>&#8221; setting (it is set to 128 MB by default), but make
+sure to check your setup anyway.</p>
+</div>
+<div class="section" id="php-timezone">
+<h3>PHP timezone<a class="headerlink" href="#php-timezone" title="Permalink to this headline">¶</a></h3>
+<p>You need to set the
+&#8220;<a class="reference external" href="http://www.php.net/manual/en/ref.datetime.php#ini.date.timezone">date.timezone</a>&#8221;
+value in the &#8220;<tt class="docutils literal"><span class="pre">php.ini</span></tt>&#8221; configuration file. If this setting is not
+specified, you will most likely receive error messages like &#8220;It is not
+safe to rely on the system&#8217;s timezone settings&#8221; when running eZ Publish
+on PHP 5. The following example shows how the corresponding line in
+&#8220;<tt class="docutils literal"><span class="pre">php.ini</span></tt>&#8221; looks like:</p>
+<div class="highlight-python"><pre>date.timezone = &lt;timezone&gt;</pre>
+</div>
+<p>Refer to the <a class="reference external" href="http://www.php.net/timezones">PHP documentation</a> for
+the list of supported timezones. Don&#8217;t forget to restart Apache after
+editing &#8220;<tt class="docutils literal"><span class="pre">php.ini</span></tt>&#8221;.</p>
+</div>
+<div class="section" id="session-parameters">
+<h3>Session parameters<a class="headerlink" href="#session-parameters" title="Permalink to this headline">¶</a></h3>
+<p>eZ Publish sessions are handled by the Symfony stack, through session
+handlers. For that to be set up, additional <tt class="docutils literal"><span class="pre">yml</span></tt> configuration are
+required, which you can find in the&nbsp;<a class="reference external" href="Session_8323282.html">Session</a>
+chapter.</p>
+</div>
+<div class="section" id="other-php-configuration-settings">
+<h3>Other php configuration settings<a class="headerlink" href="#other-php-configuration-settings" title="Permalink to this headline">¶</a></h3>
+<p>See the <a class="reference external" href="http://symfony.com/doc/current/reference/requirements.html">Symfony
+documentation</a>
+for the recommended <tt class="docutils literal"><span class="pre">php.ini</span></tt> settings for Symfony, as well as
+the<a class="reference external" href="https://confluence.ez.no/display/EZP/Virtual+host+example">Vhost
+example</a>
+for the recommended <tt class="docutils literal"><span class="pre">php.ini</span></tt> settings for eZ Publish.</p>
+</div>
+</div>
+<div class="section" id="zeta-components-library">
+<h2>Zeta Components library<a class="headerlink" href="#zeta-components-library" title="Permalink to this headline">¶</a></h2>
+<p>Zeta Components (formerly eZ Components) is an enterprise-ready, general
+purpose library of PHP components which can be used used independently
+or together for PHP application development. They can be downloaded from
+<a class="reference external" href="http://ezcomponents.org/download">http://ezcomponents.org/download</a>,
+or installed using different methods such as Pear, Composer, Github
+etc... The <a class="reference external" href="http://ezcomponents.org/docs/install">online
+documentation</a> has detailed
+instructions on installing them on the webserver.</p>
+<p>The correct version of the Zeta Components required for running eZ
+Publish always comes bundled with eZ Publish package itself, so there is
+no need to install them separately.</p>
+<p>It is possible to use a single instance of the Zeta Components library
+and share it between multiple installations of eZ Publish. Such
+configuration is complex and falls outside the scope of this document.</p>
+</div>
+<div class="section" id="database-server">
+<h2>Database server<a class="headerlink" href="#database-server" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish stores miscellaneous data structures and actual content using
+a relational database. This means that a database server has to be
+available for eZ Publish at all times. Follow this link to the eZ
+Publish <a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Installation/Normal-installation/Requirements-for-doing-a-normal-installation">requirements
+page</a>
+to find which database solutions eZ Publish is compatible with.</p>
+<p>eZ Publish 5 requires a UTF-8 database and support for transactions,
+which for MySQL means using the `` InnoDB`` storage engine.</p>
+<p>The setup wizard will automatically detect the database server during
+operation of the setup wizard if it is running on the same computer that
+operates as web server.</p>
+<p>Note that eZ Publish 5 does not support
+<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Features/Clustering">clustering</a>
+mode for PostgreSQL databases. The clustering code is optimized for best
+performance on MySQL databases using the `` InnoDB`` storage engine.</p>
+<div class="section" id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<p>Even if you are not going to run eZ Publish in a clustered environment,
+the use of <tt class="docutils literal"><span class="pre">InnoDB</span></tt> is required. This storage engine makes it possible
+to use transaction-safe tables in a MySQL database. (Database
+transaction support is enabled by default in eZ Publish. This feature
+makes the system less vulnerable to database errors and inconsistencies
+due to aborted requests.) Contact your database administrator if you are
+unsure about whether <tt class="docutils literal"><span class="pre">InnoDB</span></tt> is available on your server.</p>
+<p>MySQL can be tweaked with a lot of settings, but one setting which is
+required to set to a higher value
+is&nbsp;<a class="reference external" href="http://dev.mysql.com/doc/refman/5.0/en/innodb-parameters.html#sysvar_innodb_buffer_pool_size">innodb_buffer_pool_size</a>
+, by default it is set to 8mb, but it needs at least to be set to 128mb,
+or as the mysql doc says up to 80% of system memory on dedicated
+database server.</p>
+<p><strong>Known issue with running PHP5.3 on MySQL:</strong>&nbsp;Some people (like Windows
+users with both IPv4 and IPv6 installed ) experience problems connecting
+to the database server using host names like &#8220;<tt class="docutils literal"><span class="pre">localhost</span></tt>&#8221;... If you
+experience problems, try using IPv4 address like &#8220;<tt class="docutils literal"><span class="pre">127.0.0.1</span></tt>&#8221;. This
+is due to a connectivity problem when running PHP5.3 on MySQL. So,
+please replace the database server name &#8220;<tt class="docutils literal"><span class="pre">localhost</span></tt>&#8221; with the IP
+address of the machine, or &#8220;<tt class="docutils literal"><span class="pre">127.0.0.1</span></tt>&#8221;, which is reserved for the
+local host.</p>
+</div>
+<div class="section" id="postgressql">
+<h3>PostgresSQL<a class="headerlink" href="#postgressql" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use PostgreSQL, make sure the &#8220;<tt class="docutils literal"><span class="pre">pgcrypto</span></tt>&#8221; module is
+installed. On Linux/UNIX, you may need to install a separate package
+called &#8220;<tt class="docutils literal"><span class="pre">postgresql-contrib</span></tt>&#8221; (refer to the <a class="reference external" href="http://www.postgresql.org/docs/8.3/static/contrib.html">PostgreSQL
+documentation</a>
+for more information), which contains the &#8220;<tt class="docutils literal"><span class="pre">pgcrypto</span></tt>&#8221; module. The
+&#8220;<tt class="docutils literal"><span class="pre">pgcrypto</span></tt>&#8221; module provides cryptographic functions for PostgreSQL,
+including the &#8220;digest&#8221; function, which is needed for eZ Publish. When
+setting up a PostgreSQL database for eZ Publish, you will have to
+register these functions in the database. Refer to the &#8220;Setting up a
+database&#8221; part of the &#8220;<a class="reference external" href="Installing-eZ-Publish-on-a-Linux-UNIX-based-system_7438581.html">Installing eZ Publish on a Linux-UNIX based
+system</a>&#8221;
+and &#8220;<a class="reference external" href="Installing-eZ-Publish-on-Windows_7438583.html">Installing eZ Publish on
+Windows</a>&#8221;
+documentation pages (depending on the target OS) for more information.</p>
+</div>
+<div class="section" id="oracle-compatibility">
+<h3>Oracle compatibility<a class="headerlink" href="#oracle-compatibility" title="Permalink to this headline">¶</a></h3>
+<p>To be able to use eZ Publish on oracle you will need the&nbsp;<a class="reference external" href="http://doc.ez.no/Extensions/eZ-Publish-extensions/eZ-Publish-Extension-for-Oracle-R-database">eZ Publish
+Extension for Oracle®
+Database</a>
+extension, as well as the php <a class="reference external" href="http://it2.php.net/manual/en/book.oci8.php">oci8
+extension</a>.</p>
+<p>Please note that installing eZ Publish via the setup wizard directly on
+an Oracle database is currently not supported.</p>
+<p>Icon</p>
+<p>Supported only on eZ Publish 5.0, which is also the last version
+supporting Oracle on full legacy installations, which support does not
+include REST API usage.</p>
+</div>
+</div>
+<div class="section" id="image-conversion-system-optional">
+<h2>Image conversion system (optional)<a class="headerlink" href="#image-conversion-system-optional" title="Permalink to this headline">¶</a></h2>
+<p>In order to resize, convert or modify images, eZ Publish needs to make
+use of an image conversion system. One of the following software
+packages (both are free) can be used:</p>
+<ul class="simple">
+<li>GD2 (comes with PHP)</li>
+<li>ImageMagick
+(<a class="reference external" href="http://www.imagemagick.org">http://www.imagemagick.org</a>)</li>
+</ul>
+<p>ImageMagick supports more formats than GD and usually produces better
+results (better scaling, etc.). The setup wizard will automatically
+detect the pre-installed image conversion system(s).</p>
+<p>The installation and setup of required software solutions (outlined
+above) is far beyond the scope of this document. Please refer to the
+homepage and documentation of the different software solutions.</p>
+</div>
+<div class="section" id="limitation-on-some-file-systems-when-storing-large-number-of-content-files">
+<h2>Limitation on some file systems when storing large number of content files<a class="headerlink" href="#limitation-on-some-file-systems-when-storing-large-number-of-content-files" title="Permalink to this headline">¶</a></h2>
+<p>eZ Publish stores all binary content (e.g. images, PDFs etc) on disc in
+<tt class="docutils literal"><span class="pre">var/storage</span></tt> using a similar folder structure to the content tree,
+creating one folder for each object. In most file systems used under
+Linux (especially ext2 + ext3) there is a hard limit of 32.000 to the
+maximum number of sub-folders which can be created in one folder. This
+means that it is not possible to store more than 31999 objects under one
+parent object.</p>
+<p>To get around this limitation without changing the file system, you can
+split your content tree so that you don&#8217;t have more than 32k content
+files (example: images) in the same folder.</p>
+<p>Other file systems support more file/folder entries per folder:</p>
+<ul class="simple">
+<li>ext4: 64.000</li>
+<li>ReiserFS: roughly 1.2 million</li>
+<li>ZFS: 2^48 (a really big number: 281474976710656)!</li>
+</ul>
+<p>Note that those filesystems might not be fully supported by eZ Publish,
+please check out the <a class="reference external" href="Requirements_7438502.html">requirements page</a>
+for details.</p>
+</div>
+<div class="section" id="ez-publish-on-nfs-file-systems">
+<h2>eZ Publish on NFS file systems<a class="headerlink" href="#ez-publish-on-nfs-file-systems" title="Permalink to this headline">¶</a></h2>
+<p>Please be aware that it&#8217;s not advisable to run eZ Publish on NFS file
+systems as you may experience issues. The cause of the issues may be
+performance, as NFS will slow down on heavy network traffic, slow access
+to files, or file access concurrency regarding file lock. Also, eZ
+Publish currently uses
+the&nbsp;<a class="reference external" href="http://php.net/manual/en/function.flock.php">flock()</a>&nbsp;PHP
+function, which is not considered stable for NFS shares.</p>
+<p>NFS should only be used to store distributed data such as cache, or
+binary files,&nbsp;in clustered environments.</p>
+</div>
+<div class="section" id="network-connectivity">
+<h2>Network connectivity<a class="headerlink" href="#network-connectivity" title="Permalink to this headline">¶</a></h2>
+<p>During execution of the setup wizard, the web server will need to
+download some content from the internet.</p>
+<p>If the web server can not access directly the internet, or if it has to
+go through a proxy, workarounds have to be taken. See the <a class="reference external" href="The-setup-wizard_7438516.html">setup
+wizard</a> documentation page for
+possible workarounds</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments:<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>It is
+<a href="#id1"><span class="problematic" id="id2">``</span></a>session.gc_probability and not session_gc_probability - and why is this not in a gray box? ``</p>
+<p><img alt="image0" src="docs/images/icons/contenttypes/comment_16.png" /> Posted by <a class="reference external" href="mailto:tim&#46;bucker&#37;&#52;&#48;ez&#46;no">tim<span>&#46;</span>bucker<span>&#64;</span>ez<span>&#46;</span>no</a> at May 28, 2013 14:26</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Requirements for doing a normal installation</a><ul>
+<li><a class="reference internal" href="#web-server">Web server</a></li>
+<li><a class="reference internal" href="#server-side-php-scripting-engine">Server-side PHP scripting engine</a><ul>
+<li><a class="reference internal" href="#zlib-extension">Zlib extension</a></li>
+<li><a class="reference internal" href="#dom-extension">DOM extension</a></li>
+<li><a class="reference internal" href="#php-cli">PHP CLI</a></li>
+<li><a class="reference internal" href="#curl">CURL</a></li>
+<li><a class="reference internal" href="#php-memory-limit-issue">PHP memory limit issue</a></li>
+<li><a class="reference internal" href="#php-timezone">PHP timezone</a></li>
+<li><a class="reference internal" href="#session-parameters">Session parameters</a></li>
+<li><a class="reference internal" href="#other-php-configuration-settings">Other php configuration settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zeta-components-library">Zeta Components library</a></li>
+<li><a class="reference internal" href="#database-server">Database server</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#postgressql">PostgresSQL</a></li>
+<li><a class="reference internal" href="#oracle-compatibility">Oracle compatibility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-conversion-system-optional">Image conversion system (optional)</a></li>
+<li><a class="reference internal" href="#limitation-on-some-file-systems-when-storing-large-number-of-content-files">Limitation on some file systems when storing large number of content files</a></li>
+<li><a class="reference internal" href="#ez-publish-on-nfs-file-systems">eZ Publish on NFS file systems</a></li>
+<li><a class="reference internal" href="#network-connectivity">Network connectivity</a></li>
+<li><a class="reference internal" href="#comments">Comments:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Requirements-for-doing-a-normal-installation_7438584.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

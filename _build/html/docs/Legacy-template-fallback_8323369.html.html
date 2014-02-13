@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Legacy template fallback &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="MVC-and-Application_2719826.html">MVC and Application</a></li>
+<li><a class="reference external" href="Content-view_8323263.html">Content view</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-legacy-template-fallback">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Legacy template fallback<a class="headerlink" href="#ez-publish-platform-5-next-legacy-template-fallback" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Oct 07, 2013</p>
+<p>Icon</p>
+<p>The following <strong>does not apply</strong> to siteaccesses configured with
+<strong>``legacy_mode: true``</strong></p>
+<p>When the standard view provider is not able to select an appropriate
+template for a given content, <strong>the system fallbacks to the legacy
+kernel and delegates the view selection to it</strong>.&nbsp;This ensures that a
+content is always displayed and hence eases project migration from eZ
+Publish v4.x to v5.x</p>
+<ul class="simple">
+<li><a class="reference external" href="#Legacytemplatefallback-Pagelayoutandmainblock">Pagelayout and main
+block</a><ul>
+<li><a class="reference external" href="#Legacytemplatefallback-Baselayoutforlegacyfallback">Base layout for legacy
+fallback</a></li>
+<li><a class="reference external" href="#Legacytemplatefallback-Blockname">Block name</a></li>
+<li><a class="reference external" href="#Legacytemplatefallback-Modulelayout">Module layout</a><ul>
+<li><a class="reference external" href="#Legacytemplatefallback-Displayinglegacymoduleresult">Displaying legacy module
+result</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#Legacytemplatefallback-Persistentvariable">Persistent variable</a></li>
+<li><a class="reference external" href="#Legacytemplatefallback-Assets">Assets</a></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="pagelayout-and-main-block">
+<h2>Pagelayout and main block<a class="headerlink" href="#pagelayout-and-main-block" title="Permalink to this headline">¶</a></h2>
+<p>When falling back to the legacy kernel, <strong>the old ``content/view``
+module is run</strong> to return the appropriate view for the given content.
+However, the pagelayout is not rendered as it needs to be still rendered
+by Twig in the Symfony part, for consistency. In this regard, the system
+uses the <strong>Decorator design pattern</strong> to include the generated view in
+your layout.</p>
+<p>For this to work, you need to configure 2 things :</p>
+<ol class="arabic simple">
+<li>Which template you want to use as a base template for legacy fallback</li>
+<li>The name of the block to use in your layout</li>
+</ol>
+<div class="section" id="base-layout-for-legacy-fallback">
+<h3>Base layout for legacy fallback<a class="headerlink" href="#base-layout-for-legacy-fallback" title="Permalink to this headline">¶</a></h3>
+<p>You can configure this by setting
+the&nbsp;<tt class="docutils literal"><span class="pre">ezpublish_legacy.&lt;siteaccess_or_siteaccess_group&gt;.view_default_layout</span></tt>
+config key.</p>
+<p><strong>Example:</strong></p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+</div>
+<div class="section" id="block-name">
+<h3>Block name<a class="headerlink" href="#block-name" title="Permalink to this headline">¶</a></h3>
+<p>Internally when rendering the view coming from the legacy kernel, a Twig
+template is created on the fly. This template extends the pagelayout you
+configured and includes the content inside a block. The name of this
+block is configurable as well (default is <tt class="docutils literal"><span class="pre">content</span></tt>).</p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+<p><strong>my_layout.html.twig</strong></p>
+</div>
+<div class="section" id="module-layout">
+<h3>Module layout<a class="headerlink" href="#module-layout" title="Permalink to this headline">¶</a></h3>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>The module layout setting is available from eZ Publish 5.1.</p>
+<p>The module layout can also be defined the same way as the base layout,
+by setting the&nbsp;<tt class="docutils literal"><span class="pre">ezpublish_legacy.&lt;scope&gt;.module_default_layout</span></tt>
+config key. This layout is used to handle &#8220;non content&#8221; related legacy
+requests.</p>
+<div class="section" id="displaying-legacy-module-result">
+<h4>Displaying legacy module result<a class="headerlink" href="#displaying-legacy-module-result" title="Permalink to this headline">¶</a></h4>
+<p>This makes your base layout reusable. However, content generated by
+legacy modules (i.e. <tt class="docutils literal"><span class="pre">/ezinfo/about</span></tt>) will not be automatically
+inserted as your layout will be rendered as a regular template,
+receiving <tt class="docutils literal"><span class="pre">module_result</span></tt> variable coming from the legacy kernel. The
+solution is to use 2 different templates, one for the global layout, and
+another for legacy module rendering:</p>
+<p><strong>AcmeDemoBundle::layout.html.twig</strong></p>
+<p><strong>AcmeDemoBundle::layout_legacy.html.twig</strong></p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+</div>
+</div>
+</div>
+<div class="section" id="persistent-variable">
+<h2>Persistent variable<a class="headerlink" href="#persistent-variable" title="Permalink to this headline">¶</a></h2>
+<p>The persistent variable is a special variable in legacy templates that
+you can set in order to pass values from the content template to the
+pagelayout. This variable, among others, is accessible from the
+configured Twig pagelayout thanks to the helper <tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt>.</p>
+<p>Actually, all data <cite>contained in ``$module_result`</cite> in the legacy
+kernel &lt;<a class="reference external" href="http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Templates/The-pagelayout/Variables-in-pagelayout#module_result">http://doc.ez.no/eZ-Publish/Technical-manual/4.x/Templates/The-pagelayout/Variables-in-pagelayout#module_result</a>&gt;`__
+is exposed.</p>
+<p><strong>Access to the persistent variable</strong></p>
+</div>
+<div class="section" id="assets">
+<h2>Assets<a class="headerlink" href="#assets" title="Permalink to this headline">¶</a></h2>
+<p>Like the persistent variable, it is possible to require css and/or
+javascripts assets from a content template through the legacy
+<tt class="docutils literal"><span class="pre">ezscript_require()</span></tt> and <tt class="docutils literal"><span class="pre">ezcss_require()</span></tt> template operators.</p>
+<p>You can easily retrieve those requested assets from the legacy template
+in the Twig pagelayout with the <tt class="docutils literal"><span class="pre">ezpublish.legacy</span></tt> helper.</p>
+<p><strong>Getting assets requested from a legacy template</strong></p>
+<p>Assetic incompatibility</p>
+<p>Icon</p>
+<p><strong>Warning:</strong> If you use Assetic to combine and/or compress your assets,
+please note that <tt class="docutils literal"><span class="pre">`javascripts</span></tt> and <tt class="docutils literal"><span class="pre">stylesheets</span></tt> Twig
+tags &lt;<a class="reference external" href="http://symfony.com/doc/current/cookbook/assetic/asset_management.html#assets">http://symfony.com/doc/current/cookbook/assetic/asset_management.html#assets</a>&gt;`__
+currently don&#8217;t support variable file lists, so you won&#8217;t be able to use
+them with the example above.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Legacy template fallback</a><ul>
+<li><a class="reference internal" href="#pagelayout-and-main-block">Pagelayout and main block</a><ul>
+<li><a class="reference internal" href="#base-layout-for-legacy-fallback">Base layout for legacy fallback</a></li>
+<li><a class="reference internal" href="#block-name">Block name</a></li>
+<li><a class="reference internal" href="#module-layout">Module layout</a><ul>
+<li><a class="reference internal" href="#displaying-legacy-module-result">Displaying legacy module result</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#persistent-variable">Persistent variable</a></li>
+<li><a class="reference internal" href="#assets">Assets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Legacy-template-fallback_8323369.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

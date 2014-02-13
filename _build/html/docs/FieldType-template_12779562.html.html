@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : FieldType template &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Developing-with-eZ-Publish-5_2720528.html">Developing with eZ Publish
+5</a></li>
+<li><a class="reference external" href="Extending-eZ-Publish-5_1736733.html">Extending eZ Publish 5</a></li>
+<li><a class="reference external" href="Field-Type-API-and-best-practices_2719880.html">Field Type API and best
+practices</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-fieldtype-template">
+<h1>eZ Publish Platform 5.&lt;next&gt; : FieldType template<a class="headerlink" href="#ez-publish-platform-5-next-fieldtype-template" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on May 10, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#FieldTypetemplate-DefiningyourFieldTypetemplate">Defining your FieldType
+template</a><ul>
+<li><a class="reference external" href="#FieldTypetemplate-Exposedvariables">Exposed variables</a></li>
+<li><a class="reference external" href="#FieldTypetemplate-Reusingblocks">Reusing blocks</a></li>
+<li><a class="reference external" href="#FieldTypetemplate-Registeringyourtemplate">Registering your
+template</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="defining-your-fieldtype-template">
+<h1>Defining your FieldType template<a class="headerlink" href="#defining-your-fieldtype-template" title="Permalink to this headline">¶</a></h1>
+<p>In order to be used by <tt class="docutils literal"><span class="pre">`ez_render_field()</span></tt> Twig
+helper &lt;ez_render_field_12779554.html&gt;`__, you need to define a
+<strong>template containing a block</strong> dedicated to the Field display.</p>
+<p>This block consists on a piece of template receiving specific variables
+you can use to make the display vary.</p>
+<p>Icon</p>
+<p>You will find examples with built-in FieldTypes in
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/views/content_fields.html.twig">EzPublishCoreBundle/Resources/views/content_fields.html.twig</a></p>
+<p><strong>Template for a FieldType with &#8220;myfieldtype&#8221; identifier</strong></p>
+<p>Icon</p>
+<p>By convention, your block <strong>must</strong> be named
+<tt class="docutils literal"><span class="pre">&lt;fieldTypeIdentifier&gt;_field</span></tt>.</p>
+<div class="section" id="exposed-variables">
+<h2>Exposed variables<a class="headerlink" href="#exposed-variables" title="Permalink to this headline">¶</a></h2>
+<p>Name</p>
+<p>Type</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">field</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Values\Content\Field</span></tt></p>
+<p>The field to display</p>
+<p><tt class="docutils literal"><span class="pre">contentInfo</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Values\Content\ContentInfo</span></tt></p>
+<p>The ContentInfo to which the field belongs to</p>
+<p><tt class="docutils literal"><span class="pre">versionInfo</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">eZ\Publish\API\Repository\Values\Content\VersionInfo</span></tt></p>
+<p>The VersionInfo to which the field belongs to</p>
+<p><tt class="docutils literal"><span class="pre">fieldSettings</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mixed</span></tt></p>
+<p>Settings of the field (depends on the FieldType)</p>
+<p><tt class="docutils literal"><span class="pre">parameters</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">hash</span></tt></p>
+<p>Options passed to <tt class="docutils literal"><span class="pre">ez_render_field()</span></tt> under the <tt class="docutils literal"><span class="pre">parameters</span></tt> key</p>
+<p><tt class="docutils literal"><span class="pre">attr</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">hash</span></tt></p>
+<div class="line-block">
+<div class="line">The attributes to add the generate the HTML markup.</div>
+<div class="line">Contains at least a <strong>``class``</strong> entry, containing</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">&lt;fieldtypeidentifier&gt;-field</span></tt></p>
+</div>
+<div class="section" id="reusing-blocks">
+<h2>Reusing blocks<a class="headerlink" href="#reusing-blocks" title="Permalink to this headline">¶</a></h2>
+<p>To ease FieldType template development, you can take advantage of all
+defined blocks by using the <a class="reference external" href="http://twig.sensiolabs.org/doc/functions/block.html">block()
+function</a>.</p>
+<p>You can for example take advantage of <tt class="docutils literal"><span class="pre">simple_block_field</span></tt>,
+<tt class="docutils literal"><span class="pre">simple_inline_field</span></tt> or <tt class="docutils literal"><span class="pre">field_attributes</span></tt> blocks provided in
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/views/content_fields.html.twig#L413">content_fields.html.twig</a>.</p>
+<p>Warning</p>
+<p>Icon</p>
+<p>To be able to reuse built-in blocks, <strong>your template must inherit from
+``EzPublishCoreBundle::content_fields.html.twig``</strong>.</p>
+</div>
+<div class="section" id="registering-your-template">
+<h2>Registering your template<a class="headerlink" href="#registering-your-template" title="Permalink to this headline">¶</a></h2>
+<p>To make your template available, you must register it to the system.</p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+<p>Icon</p>
+<p>You can define these rules in a dedicated file instead of
+<tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish.yml</span></tt>.&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/import+settings+from+a+bundle">Read the cookbook recipe to learn
+more about
+it</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : FieldType template</a></li>
+<li><a class="reference internal" href="#defining-your-fieldtype-template">Defining your FieldType template</a><ul>
+<li><a class="reference internal" href="#exposed-variables">Exposed variables</a></li>
+<li><a class="reference internal" href="#reusing-blocks">Reusing blocks</a></li>
+<li><a class="reference internal" href="#registering-your-template">Registering your template</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/FieldType-template_12779562.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

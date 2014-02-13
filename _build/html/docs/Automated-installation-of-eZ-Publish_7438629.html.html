@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : Automated installation of eZ Publish &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="Installation-and-Upgrade-Guides_6292016.html">Installation and Upgrade
+Guides</a></li>
+<li><a class="reference external" href="Installation_7438500.html">Installation</a></li>
+<li><a class="reference external" href="Automated-installation_7438514.html">Automated installation</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-automated-installation-of-ez-publish">
+<h1>eZ Publish Platform 5.&lt;next&gt; : Automated installation of eZ Publish<a class="headerlink" href="#ez-publish-platform-5-next-automated-installation-of-ez-publish" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:andrea&#46;melo&#37;&#52;&#48;ez&#46;no">andrea<span>&#46;</span>melo<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:ricardo&#46;correia&#37;&#52;&#48;ez&#46;no">ricardo<span>&#46;</span>correia<span>&#64;</span>ez<span>&#46;</span>no</a> on Jun 17,
+2013</p>
+<p>Depending on the target system, please refer to either <a class="reference external" href="Installing-eZ-Publish-on-a-Linux-UNIX-based-system_7438581.html">&#8220;Installing eZ
+Publish on a Linux/UNIX based
+system&#8221;</a>
+or <a class="reference external" href="Installing-eZ-Publish-on-Windows_7438583.html">&#8220;Installing eZ Publish on
+Windows&#8221;</a> for
+information other steps needed to do an installation, the step below is
+to be done before executing the setup wizard.</p>
+<div class="section" id="configuring-the-kickstart-system">
+<h2>Configuring the kickstart system<a class="headerlink" href="#configuring-the-kickstart-system" title="Permalink to this headline">¶</a></h2>
+<p>The behavior of the automated installation is controlled by the
+&#8220;<tt class="docutils literal"><span class="pre">kickstart.ini</span></tt>&#8221; configuration file. This file makes it possible to
+specify parameters for each installation step of the web based setup
+wizard. For example, by providing the database connection parameters,
+the corresponding setup wizard step will have the input forms
+pre-filled. It is also possible to instruct the wizard to skip certain
+steps.</p>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<p>Create a copy of the &#8220;<tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt>kickstart.ini-dist&#8221; file
+(located in the root of your eZ Publish installation) and make sure that
+the copy is named &#8220;<tt class="docutils literal"><span class="pre">ezpublish_legacy/</span></tt><tt class="docutils literal"><span class="pre">kickstart.ini</span></tt>&#8221; (located in
+the root of eZ Publish).</p>
+<p>The following example shows how this can be done on a Linux/UNIX based
+system:</p>
+<ol class="arabic">
+<li><p class="first">Navigate into the eZ Publish directory:</p>
+<div class="highlight-python"><pre>$ cd /path/to/ezpublish_legacy/</pre>
+</div>
+</li>
+<li><p class="first">Copy and rename the configuration file:</p>
+<div class="highlight-python"><pre>$ cp kickstart.ini-dist kickstart.ini</pre>
+</div>
+</li>
+</ol>
+<div class="section" id="security-issues">
+<h4>Security issues<a class="headerlink" href="#security-issues" title="Permalink to this headline">¶</a></h4>
+<p>The web server must have read access to the &#8220;<tt class="docutils literal"><span class="pre">kickstart.ini</span></tt>&#8221; file
+during the installation process. This might become a security problem at
+a later stage if the file contains usernames, passwords, etc. To prevent
+this from happening, it is recommended to do one of the following:</p>
+<ul class="simple">
+<li>Remove the file when the installation has completed.</li>
+<li>Use rewrite rules to make sure that it is not readable from outside.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration-blocks">
+<h3>Configuration blocks<a class="headerlink" href="#configuration-blocks" title="Permalink to this headline">¶</a></h3>
+<p>The &#8220;<tt class="docutils literal"><span class="pre">kickstart.ini</span></tt>&#8221; file contains a configuration block for every
+step of the setup wizard. The block names are encapsulated by square
+brackets. The following list shows an overview of the available blocks.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[email_settings]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[database_choice]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[database_init]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[language_options]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[site_types]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[site_access]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[site_details]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[site_admin]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[security]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">[registration]</span></tt></li>
+</ul>
+<p>In the default kickstart file, everything is commented out. The blocks
+and the corresponding settings have to be uncommented in order to take
+effect. This can be done by removing the hash (&#8220;#&#8221;) characters from the
+start of the lines that you should be activated. Make sure that there
+are no leading whitespace characters at the start of the lines.</p>
+</div>
+<div class="section" id="configuration-parameters">
+<h3>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Each parameter takes a text string as an input value. Some parameters
+are able to handle an array of strings. The following examples
+demonstrate the two parameter types.</p>
+<ul>
+<li><p class="first">Single parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Server</span><span class="o">=</span><span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Array parameter:</p>
+<div class="highlight-python"><pre>Title[]
+Title[news]=The news site
+Title[forums]=The forum site</pre>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="documentation-and-examples">
+<h3>Documentation and examples<a class="headerlink" href="#documentation-and-examples" title="Permalink to this headline">¶</a></h3>
+<p>The &#8220;<tt class="docutils literal"><span class="pre">kickstart.ini</span></tt>&#8221; file contains documentation in the file
+itself. Please refer to the embedded instructions and examples for a
+detailed explanation of the steps. The following table shows how the
+examples / inline instructions deal with required and optional
+parameters.</p>
+<p><strong>Syntax</strong></p>
+<p><strong>Description</strong></p>
+<p><tt class="docutils literal"><span class="pre">&lt;value&gt;</span></tt></p>
+<p>Angle brackets indicate that the parameter value is required, example:</p>
+<p><tt class="docutils literal"><span class="pre">[value]</span></tt></p>
+<p>Squared brackets indicate that the parameter value is optional, example:</p>
+<p>A parameter will only take effect if it has been uncommented. Remove the
+leading hash (&#8220;#&#8221;) and make sure that there ar no whitespace characters
+at the start of the lines that include the uncommented parameters.</p>
+</div>
+<div class="section" id="skipping-steps">
+<h3>Skipping steps<a class="headerlink" href="#skipping-steps" title="Permalink to this headline">¶</a></h3>
+<p>A step can be skipped by uncommenting and setting the &#8220;<tt class="docutils literal"><span class="pre">Continue</span></tt>&#8221;
+parameter to &#8220;<tt class="docutils literal"><span class="pre">true</span></tt>&#8221;. This parameter can be used for each step /
+block. The following table shows the outcome for the different
+configurations of the &#8220;<tt class="docutils literal"><span class="pre">Continue</span></tt>&#8221; parameter.</p>
+<p><strong>Assignment</strong></p>
+<p><strong>Result</strong></p>
+<p><tt class="docutils literal"><span class="pre">Continue=false</span></tt></p>
+<p>The step will be shown and the input values will be pre-filled with the
+values (if any) defined in the &#8220;kickstart.ini&#8221; configuration file. This
+is the same as when the &#8220;<tt class="docutils literal"><span class="pre">Continue</span></tt>&#8221; parameter is missing or if it
+has been commented out.</p>
+<p><tt class="docutils literal"><span class="pre">Continue=true</span></tt></p>
+<p>The system will automatically use the values defined in the kickstart
+file and thus the step will not be shown. However, if something goes
+wrong (missing or wrong values, etc.), the step will be shown.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : Automated installation of eZ Publish</a><ul>
+<li><a class="reference internal" href="#configuring-the-kickstart-system">Configuring the kickstart system</a><ul>
+<li><a class="reference internal" href="#initialization">Initialization</a><ul>
+<li><a class="reference internal" href="#security-issues">Security issues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-blocks">Configuration blocks</a></li>
+<li><a class="reference internal" href="#configuration-parameters">Configuration parameters</a></li>
+<li><a class="reference internal" href="#documentation-and-examples">Documentation and examples</a></li>
+<li><a class="reference internal" href="#skipping-steps">Skipping steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/Automated-installation-of-eZ-Publish_7438629.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

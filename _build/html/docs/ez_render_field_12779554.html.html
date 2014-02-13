@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eZ Publish Platform 5.&lt;next&gt; : ez_render_field &mdash; Doc eZ Publish 2014 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Doc eZ Publish 2014 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <ol class="arabic simple">
+<li><a class="reference external" href="index.html">eZ Publish Platform 5.&lt;next&gt;</a></li>
+<li><a class="reference external" href="eZ-Publish-Platform-Documentation_1114149.html">eZ Publish Platform
+Documentation</a></li>
+<li><a class="reference external" href="6291674.html">Development &amp; Administration Guides</a></li>
+<li><a class="reference external" href="Reference_10158191.html">Reference</a></li>
+<li><a class="reference external" href="Twig-functions_12779535.html">Twig functions</a></li>
+</ol>
+<div class="section" id="ez-publish-platform-5-next-ez-render-field">
+<h1>eZ Publish Platform 5.&lt;next&gt; : ez_render_field<a class="headerlink" href="#ez-publish-platform-5-next-ez-render-field" title="Permalink to this headline">¶</a></h1>
+<p>Added by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a> , edited by <a class="reference external" href="mailto:jerome&#46;vieilledent&#37;&#52;&#48;ez&#46;no">jerome<span>&#46;</span>vieilledent<span>&#64;</span>ez<span>&#46;</span>no</a>
+on Oct 07, 2013</p>
+<ul class="simple">
+<li><a class="reference external" href="#ez_render_field-Description">Description</a></li>
+<li><a class="reference external" href="#ez_render_field-PrototypeandArguments">Prototype and Arguments</a></li>
+<li><a class="reference external" href="#ez_render_field-Overrideafieldtemplateblock">Override a field template
+block</a><ul>
+<li><a class="reference external" href="#ez_render_field-Inlineoverride">Inline override</a></li>
+<li><a class="reference external" href="#ez_render_field-Inlineoverrideusingcurrenttemplate">Inline override using current
+template</a></li>
+<li><a class="reference external" href="#ez_render_field-Globaloverride">Global override</a></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">ez_render_field()</span></tt> is a Twig helper allowing to display a Content&#8217;s
+Field value, taking advantage of the template block exposed by the
+FieldType used.</p>
+<p>Icon</p>
+<p>Template blocks for built-in FieldTypes <a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/views/content_fields.html.twig">reside in
+EzPublishCoreBundle</a>.</p>
+</div>
+<div class="section" id="prototype-and-arguments">
+<h2>Prototype and Arguments<a class="headerlink" href="#prototype-and-arguments" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">ez_render_field(</span> <span class="pre">eZ\Publish\Core\Repository\Values\Content\Content</span> <span class="pre">content,</span> <span class="pre">string</span> <span class="pre">fieldDefinitionIdentifier[,</span> <span class="pre">hash</span> <span class="pre">params]&nbsp;)</span></tt></p>
+<p>Argument name</p>
+<p>Type</p>
+<p>Description</p>
+<p><tt class="docutils literal"><span class="pre">content</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">eZ\Publish\Core\Repository\Values\Content\Content</span></tt></p>
+<p>Content object the displayable field belongs to.</p>
+<p><tt class="docutils literal"><span class="pre">fieldDefinitionIdentifier</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">string</span></tt></p>
+<p>The identifier the Field is referenced by.</p>
+<p><tt class="docutils literal"><span class="pre">params</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">hash</span></tt></p>
+<p>Hash of parameters that will be passed to the template block.</p>
+<p>By default you can pass 2 entries:</p>
+<ul class="simple">
+<li><strong>``lang``</strong> (to override the current language, must be a valid
+locale with xxx-YY format)</li>
+<li><strong>``template``</strong> (to override the template to use, see below)</li>
+<li><tt class="docutils literal"><span class="pre">attr</span></tt> (hash of HTML attributes you want to add to the inner
+markup)</li>
+<li><tt class="docutils literal"><span class="pre">parameters</span></tt> (arbitrary parameters to pass to the template block)</li>
+</ul>
+<p>Icon</p>
+<p>Some FieldTypes might expect specific entries under the <tt class="docutils literal"><span class="pre">parameters</span></tt>
+key, like
+<a class="reference external" href="https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Bundle/EzPublishCoreBundle/Resources/views/content_fields.html.twig#L279">ezgmaplocation</a>.</p>
+</div>
+<div class="section" id="override-a-field-template-block">
+<h2>Override a field template block<a class="headerlink" href="#override-a-field-template-block" title="Permalink to this headline">¶</a></h2>
+<p>In some cases, you may not want to use the built-in field template block
+as it might not fit your markup needs. In this case, you can choose to
+override the template block to use by specifying your own template. You
+can do this inline when calling <tt class="docutils literal"><span class="pre">ez_render_field()</span></tt>, or globally by
+prepending a field template to use by the helper.</p>
+<p>Icon</p>
+<p>Your template block must comply to a regular FieldType template block,
+<a class="reference external" href="FieldType-template_12779562.html">as explained in the FieldType
+documentation</a>.</p>
+<div class="section" id="inline-override">
+<h3>Inline override<a class="headerlink" href="#inline-override" title="Permalink to this headline">¶</a></h3>
+<p>You can easily use the template you need by filling the <tt class="docutils literal"><span class="pre">template</span></tt>
+entry in the <tt class="docutils literal"><span class="pre">params</span></tt> argument.</p>
+<p>The code above will load <tt class="docutils literal"><span class="pre">my_field_template.html.twig</span></tt> located in
+<tt class="docutils literal"><span class="pre">AcmeTestBundle/Resources/views/fields/</span></tt>.</p>
+</div>
+<div class="section" id="inline-override-using-current-template">
+<h3>Inline override using current template<a class="headerlink" href="#inline-override-using-current-template" title="Permalink to this headline">¶</a></h3>
+<p>Version compatibility</p>
+<p>Icon</p>
+<p>Inline override using current template is possible as of <strong>5.2 /
+2013.11</strong></p>
+<p>If you want to override a specific field template only once (i.e.
+because your override would be only valid in your current template), you
+can specify the current template to be the source of the field block.</p>
+<p><strong>Inline override using current template</strong></p>
+<p>Limitation</p>
+<p>Icon</p>
+<p><strong>Using ``_self`` will only work if your current template is extending
+another one.</strong></p>
+<p>This is basically the same limitation than for <a class="reference external" href="http://symfony.com/doc/current/book/forms.html#global-form-theming">Symfony form
+themes</a>.</p>
+</div>
+<div class="section" id="global-override">
+<h3>Global override<a class="headerlink" href="#global-override" title="Permalink to this headline">¶</a></h3>
+<p>In the case where you want to systematically reuse a field template
+instead of the default one, you can append it to the field templates
+list to use by&nbsp;<tt class="docutils literal"><span class="pre">ez_render_field()</span></tt>.</p>
+<p>To make your template available, you must register it to the system.</p>
+<p><strong>ezpublish/config/ezpublish.yml</strong></p>
+<p>Icon</p>
+<p>You can define these rules in a dedicated file instead of
+<tt class="docutils literal"><span class="pre">ezpublish/config/ezpublish.yml</span></tt>.&nbsp;<a class="reference external" href="https://confluence.ez.no/display/EZP/import+settings+from+a+bundle">Read the cookbook recipe to learn
+more about
+it</a>.</p>
+<p>Document generated by Confluence on Feb 12, 2014 16:43</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">eZ Publish Platform 5.&lt;next&gt; : ez_render_field</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#prototype-and-arguments">Prototype and Arguments</a></li>
+<li><a class="reference internal" href="#override-a-field-template-block">Override a field template block</a><ul>
+<li><a class="reference internal" href="#inline-override">Inline override</a></li>
+<li><a class="reference internal" href="#inline-override-using-current-template">Inline override using current template</a></li>
+<li><a class="reference internal" href="#global-override">Global override</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/docs/ez_render_field_12779554.html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Doc eZ Publish 2014 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, eZ Systems.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
